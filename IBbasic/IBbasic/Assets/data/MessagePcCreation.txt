@@ -1,0 +1,10 @@
+<yl>CHARACTER CREATION</yl>
+<gn>Create Your Character</gn>
+<bu>1. Image:</bu> Select your character's Image by pressing on the token and portrait images.
+<bu>2. Name:</bu> Press Name and then type in your character's Name in the text box.
+<bu>3. Race:</bu> Press Race to cycle through the available races.
+<gy>Note: The Player's Guide (press the Player's Guide button) provides an in-depth explaination of the Races and Classes.</gy>
+<bu>4. Gender:</bu> Press Gender to cycle through the genders.
+<bu>5. Class:</bu> Press Class to cycle through the available classes for the race you selected above.
+<bu>6. Roll Stats:</bu> To re-roll attributes, press the 'Roll Stats' button to randomly generate new attribute scores for strength, dexterity, constitution, intelligence, wisdom, and charisma.<gy>(Note: the numbers after the '+' are bonus modifiers to your attributes based on the Race you selected.)</gy>
+7. Press <yl>'Finished'</yl> when completed.  <gy>You cannot go back to this page and change your character once you press 'Finished'.</gy>

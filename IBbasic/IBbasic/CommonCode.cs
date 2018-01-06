@@ -2403,95 +2403,95 @@ namespace IBbasic
             }
             return 1;
         }
-        /*
-        public System.Drawing.Bitmap LoadBitmapGDI(string filename) //change this to LoadBitmapGDI
+        
+        public SKBitmap LoadBitmap(string filename) //change this to LoadBitmapGDI
         {
-            System.Drawing.Bitmap bm = null;
-            bm = LoadBitmapGDI(filename, gv.mod); //change this to LoadBitmapGDI
+            SKBitmap bm = null;
+            bm = LoadBitmap(filename, gv.mod); //change this to LoadBitmapGDI
             return bm;
         }
-        public System.Drawing.Bitmap LoadBitmapGDI(string filename, Module mdl) //change this to LoadBitmapGDI
+        public SKBitmap LoadBitmap(string filename, Module mdl) //change this to LoadBitmapGDI
         {
-            System.Drawing.Bitmap bm = null;
-
+            SKBitmap bm = null;
+            /*
             try
             {
                 //default graphics locations
                 if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".png"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".png");
+                    Stream fileStream = File.OpenRead(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".png");
+                    bm = SKBitmap.Decode(fileStream);
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".PNG"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".PNG");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".PNG");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".jpg"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".jpg");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename + ".jpg");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename);
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\" + filename);
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".png"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".png");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".png");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".PNG"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".PNG");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename + ".PNG");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename);
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\tiles\\" + filename);
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".png"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".png");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".png");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".PNG"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".PNG");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".PNG");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".jpg"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".jpg");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename + ".jpg");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename);
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\portraits\\" + filename);
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".png"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".png");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".png");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".jpg"))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".jpg");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename + ".jpg");
                 }
                 else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename))
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename);
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\ui\\" + filename);
                 }
 
                 else
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\missingtexture.png");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\missingtexture.png");
                 }		
             }
             catch (Exception ex)
             {
                 if (bm == null)
                 {
-                    bm = new System.Drawing.Bitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\missingtexture.png");
+                    bm = new SKBitmap(gv.mainDirectory + "\\default\\NewModule\\graphics\\missingtexture.png");
                     return bm;
                 }
                 gv.errorLog(ex.ToString());
             }
-
+            */
             return bm;
         }
-        */
         public string loadTextToString(string filename)
         {
             string txt = null;
@@ -2578,9 +2578,8 @@ namespace IBbasic
                 bmp = null;
             }
         }
-        public SKBitmap LoadBitmap(string file) //change this to LoadBitmap
-        {
-            /*
+        /*public SKBitmap LoadBitmap(string file) //change this to LoadBitmap
+        {            
             // Loads from file using System.Drawing.Image
             using (var bitmap = LoadBitmapGDI(file)) //change this to LoadBitmapGDI
             {
@@ -2614,9 +2613,9 @@ namespace IBbasic
                     tempStream.Position = 0;
                     return new SharpDX.Direct2D1.Bitmap(gv.renderTarget2D, size, tempStream, stride, bitmapProperties);
                 }
-            }*/
+            }
             return new SKBitmap();
-        }
+        }*/
         /*public SharpDX.Direct2D1.Bitmap ConvertGDIBitmapToD2D(System.Drawing.Bitmap gdibitmap)
         {
             var sourceArea = new System.Drawing.Rectangle(0, 0, gdibitmap.Width, gdibitmap.Height);

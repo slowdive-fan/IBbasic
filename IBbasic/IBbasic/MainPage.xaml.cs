@@ -115,7 +115,7 @@ namespace IBbasic
                     var p = new SKPath();
                     p.MoveTo(e.Location);
                     //temporaryPaths[e.Id] = p;
-                    string file = LoadTextAndroid("test3d.mod");
+                    //string file = LoadTextAndroid("test3d.mod");
                     break;
                 case SKTouchAction.Moved:
                     // the stroke, while pressed
@@ -300,7 +300,7 @@ namespace IBbasic
             return System.IO.File.ReadAllText(filePath);
         }
         
-        public string LoadTextAndroid(string filename)
+        /*public string LoadTextAndroid(string filename)
         {
             //Android
             var path = global::Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/LanternaEngine/modules";
@@ -324,7 +324,7 @@ namespace IBbasic
             }
 
             return System.IO.File.ReadAllText(filePath);
-        }
+        }*/
         
         public void readWriteWin10()
         {

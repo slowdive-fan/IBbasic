@@ -1,0 +1,4 @@
+<yl>ADVENTURE MAP</yl>
+<gn>1. Move:</gn> Move your character by pressing one of the arrow buttons or tapping on a map square (left, right, up, down) adjacent to your character.
+<gn>2. Map Info:</gn> Tap on buildings, props, people, etc. to show additional information if available.
+<gn>3. Toggle Buttons:</gn> there are a number of toggle buttons on the bottom of the screen when the settings button (rusty gear buton) is toggled on.
