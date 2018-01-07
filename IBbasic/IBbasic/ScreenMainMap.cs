@@ -1074,7 +1074,7 @@ namespace IBbasic
                             float scalerY = gv.cc.GetFromTileBitmapList(tile).Height / gv.tileSizeInPixels;
                             int brX = (int)(minimapSquareSizeInPixels * scalerX);
                             int brY = (int)(minimapSquareSizeInPixels * scalerY);
-                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, brX, brY);
+                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, x * minimapSquareSizeInPixels + brX, y * minimapSquareSizeInPixels + brY);
                             device.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), dst, src);
                         }
                     }
@@ -1090,7 +1090,7 @@ namespace IBbasic
                             float scalerY = gv.cc.GetFromTileBitmapList(tile).Height / gv.tileSizeInPixels;
                             int brX = (int)(minimapSquareSizeInPixels * scalerX);
                             int brY = (int)(minimapSquareSizeInPixels * scalerY);
-                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, brX, brY);
+                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, x * minimapSquareSizeInPixels + brX, y * minimapSquareSizeInPixels + brY);
                             device.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), dst, src);
                         }
                     }
@@ -1106,7 +1106,7 @@ namespace IBbasic
                             float scalerY = gv.cc.GetFromTileBitmapList(tile).Height / gv.tileSizeInPixels;
                             int brX = (int)(minimapSquareSizeInPixels * scalerX);
                             int brY = (int)(minimapSquareSizeInPixels * scalerY);
-                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, brX, brY);
+                            SKRect dst = new SKRect(x * minimapSquareSizeInPixels, y * minimapSquareSizeInPixels, x * minimapSquareSizeInPixels + brX, y * minimapSquareSizeInPixels + brY);
                             device.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), dst, src);
                         }
                     }

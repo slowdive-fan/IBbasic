@@ -36,7 +36,7 @@ namespace IBbasic
 
             gv = new GameView();
 
-            SetUpBitmap();
+            //SetUpBitmap();
 
             Device.StartTimer(TimeSpan.FromSeconds(1f / 30), () =>
             {
@@ -53,7 +53,7 @@ namespace IBbasic
             SKSurface surface = e.Surface;
             SKCanvas canvas = surface.Canvas;
 
-            canvas.Clear(SKColors.Blue);
+            canvas.Clear(SKColors.Black);
 
             gv.Render(canvas);
             /*

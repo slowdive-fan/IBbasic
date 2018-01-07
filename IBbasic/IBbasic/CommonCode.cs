@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace IBbasic
 {
@@ -2413,6 +2414,8 @@ namespace IBbasic
         public SKBitmap LoadBitmap(string filename, Module mdl) //change this to LoadBitmapGDI
         {
             SKBitmap bm = null;
+            var fileService = DependencyService.Get<ISaveAndLoadBitmap>();
+            bm = fileService.LoadBitmap(filename);
             /*
             try
             {

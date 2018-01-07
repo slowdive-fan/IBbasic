@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using IBbasic;
 
 namespace IBbasic.UWP
 {
@@ -21,7 +22,7 @@ namespace IBbasic.UWP
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
-    {
+    {        
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -40,6 +41,7 @@ namespace IBbasic.UWP
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
+            
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -53,6 +55,9 @@ namespace IBbasic.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 Xamarin.Forms.Forms.Init(e);
+
+                IBbasic.App.ScreenWidth = (int)Window.Current.Bounds.Width;
+                IBbasic.App.ScreenHeight = (int)Window.Current.Bounds.Height;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

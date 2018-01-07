@@ -19,7 +19,14 @@ namespace IBbasic.Droid
 
             base.OnCreate(bundle);
 
+            this.RequestedOrientation = ScreenOrientation.Landscape;
+            this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            App.ScreenWidth = (int)(Resources.DisplayMetrics.WidthPixels);
+            App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels);
+
             LoadApplication(new App());
         }
     }
