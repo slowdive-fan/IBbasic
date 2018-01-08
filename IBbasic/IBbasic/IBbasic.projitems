@@ -54,7 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IbRect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ISaveAndLoadBitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ISaveAndLoadText.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISaveAndLoad.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Item.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ItemRefs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JournalEntry.cs" />
@@ -112,8 +112,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\test3d.mod" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\TheElderinStone.mod" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\test3d.mod" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\data\CombatUILayout.json" />
@@ -3928,5 +3927,10 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_portrait_frame.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\walk_block.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\walk_pass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\3dArea1.are" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\containerTrapDC15.dlg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\new3DareaSmall.are" />
   </ItemGroup>
 </Project>

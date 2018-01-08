@@ -1,35 +1,41 @@
 ﻿using System.Linq;
-using Xamarin.Forms;
 using Foundation;
-using IBbasic.iOS;
 using System.IO;
 using System.Threading.Tasks;
+using Xamarin.Forms;
+using IBbasic.iOS;
 using SkiaSharp;
 using System.Reflection;
+using System.Collections.Generic;
 
-[assembly: Dependency(typeof(SaveAndLoadBitmap_iOS))]
+[assembly: Dependency(typeof(SaveAndLoad_iOS))]
 namespace IBbasic.iOS
 {
-    public class SaveAndLoadBitmap_iOS : ISaveAndLoadBitmap
+    public class SaveAndLoad_iOS : ISaveAndLoad
     {
-        public static string DocumentsPath
+        #region ISaveAndLoad Text implementation
+        public void SaveText(string filename, string text)
         {
-            get
-            {
-                var documentsDirUrl = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomain.User).Last();
-                return documentsDirUrl.Path;
-            }
+            /*string path = CreatePathToFile(filename);
+            using (StreamWriter sw = File.CreateText(path))
+                await sw.WriteAsync(text);*/
         }
+        public string LoadText(string filename)
+        {
+            return "";
+            /*string path = CreatePathToFile(filename);
+            using (StreamReader sr = File.OpenText(path))
+                return await sr.ReadToEndAsync();*/
+        }
+        #endregion        
 
         #region ISaveAndLoad implementation
-
         public void SaveBitmap(string filename, SKBitmap bmp)
         {
             //StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             //StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
             //await FileIO.WriteTextAsync(sampleFile, bmp);
         }
-
         public SKBitmap LoadBitmap(string filename)
         {
             Assembly assembly = GetType().GetTypeInfo().Assembly;
@@ -82,17 +88,29 @@ namespace IBbasic.iOS
 
 
         }
+        #endregion
+
+        public List<string> GetAllFilesWithExtension(string folderPath, string extension)
+        {
+            List<string> list = new List<string>();
+            return list;
+        }
 
         public bool FileExists(string filename)
         {
             return File.Exists(CreatePathToFile(filename));
         }
-
-        #endregion
-
         static string CreatePathToFile(string fileName)
         {
             return Path.Combine(DocumentsPath, fileName);
+        }
+        public static string DocumentsPath
+        {
+            get
+            {
+                var documentsDirUrl = NSFileManager.DefaultManager.GetUrls(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomain.User).Last();
+                return documentsDirUrl.Path;
+            }
         }
     }
 }

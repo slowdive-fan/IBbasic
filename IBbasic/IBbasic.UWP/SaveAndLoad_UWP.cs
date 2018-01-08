@@ -1,26 +1,42 @@
 ﻿using IBbasic.UWP;
 using SkiaSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(SaveAndLoadBitmap_UWP))]
+[assembly: Dependency(typeof(SaveAndLoad_UWP))]
 namespace IBbasic.UWP
-{
-    public class SaveAndLoadBitmap_UWP : ISaveAndLoadBitmap
+{    
+    public class SaveAndLoad_UWP : ISaveAndLoad
     {
-        #region ISaveAndLoad implementation
+        #region ISaveAndLoad Text implementation
+        public void SaveText(string filename, string text)
+        {
+            /*StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteTextAsync(sampleFile, text);*/
+        }
+        public string LoadText(string filename)
+        {
+            return "";
+            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
+            string text = await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
+            return text;*/
+        }        
+        #endregion
 
+        #region ISaveAndLoad Bitmap implementation
         public void SaveBitmap(string filename, SKBitmap bmp)
         {
             //StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             //StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
             //await FileIO.WriteTextAsync(sampleFile, bmp);
         }
-
         public SKBitmap LoadBitmap(string filename)
         {
             Assembly assembly = GetType().GetTypeInfo().Assembly;
@@ -71,7 +87,14 @@ namespace IBbasic.UWP
             //SKBitmap text = await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
             //return text;
 
-            
+
+        }
+        #endregion
+
+        public List<string> GetAllFilesWithExtension(string folderPath, string extension)
+        {
+            List<string> list = new List<string>();
+            return list;
         }
 
         public bool FileExists(string filename)
@@ -87,7 +110,5 @@ namespace IBbasic.UWP
                 return false;
             }
         }
-
-        #endregion
     }
 }

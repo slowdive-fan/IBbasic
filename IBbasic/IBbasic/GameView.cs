@@ -384,7 +384,7 @@ namespace IBbasic
         }	
 	    public void resetGame()
 	    {
-		    mod = cc.LoadModule(mod.moduleName + ".mod");
+            mod = cc.LoadModule(mod.moduleName + "\\" + mod.moduleName + ".mod");
             //reset log number of lines based on the value from the Module's mod file
             log.numberOfLinesToShow = mod.logNumberOfLines;            
                         

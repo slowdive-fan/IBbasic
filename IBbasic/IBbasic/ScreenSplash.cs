@@ -183,7 +183,7 @@ namespace IBbasic
                 if (Path.GetFileName(file) != "NewModule.mod")
                 {
                     // Process each file
-                    ModuleInfo modinfo = gv.cc.LoadModuleFileInfo(file);
+                    Module modinfo = gv.cc.LoadModuleFileInfo(file);
                     if (modinfo == null)
                     {
                         gv.sf.MessageBox("returned a null module");

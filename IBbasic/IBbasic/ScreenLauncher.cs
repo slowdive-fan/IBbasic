@@ -6,7 +6,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
+using Xamarin.Forms;
 
 namespace IBbasic
 {
@@ -21,7 +23,7 @@ namespace IBbasic
         private IbbButton btnGetUpdates = null;
         private IBminiTextBox description;
 	    //private List<Module> moduleList = new List<Module>();
-        private List<ModuleInfo> moduleInfoList = new List<ModuleInfo>();
+        private List<Module> moduleInfoList = new List<Module>();
         public List<ModuleInfo> modsAvailableList = new List<ModuleInfo>();
         private List<SKBitmap> titleList = new List<SKBitmap>();
 	    private int moduleIndex = 0;
@@ -43,7 +45,7 @@ namespace IBbasic
 	
         //when click on "Get Updates"
         //download mod_available.json from server
-        public void downloadFile(string filename, string outFolder)
+        /*public void downloadFile(string filename, string outFolder)
         {
             using (WebClient webClient = new WebClient())
             {
@@ -57,9 +59,9 @@ namespace IBbasic
                     gv.sf.MessageBox("Error Downloading: " + ex.ToString());
                 }
             }
-        }
+        }*/
         //convert to object
-        public void loadModsAvailableList()
+        /*public void loadModsAvailableList()
         {
             modsAvailableList.Clear();
             try
@@ -72,9 +74,9 @@ namespace IBbasic
                 }
             }
             catch { }
-        }
+        }*/
         //compare to moduleInfoList and add any that are not there and assign button name
-        public void setupModuleInfoListAndButtonText()
+        /*public void setupModuleInfoListAndButtonText()
         {
             //go through all moduleInfoList items and set buttonText to PLAY
             foreach (ModuleInfo modInfo in moduleInfoList)
@@ -104,7 +106,7 @@ namespace IBbasic
                     moduleInfoList.Add(modAvail);
                 }
             }            
-        }
+        }*/
         
         /*public void loadModuleFiles()
         {
@@ -131,23 +133,42 @@ namespace IBbasic
         {
             moduleInfoList.Clear();
             titleList.Clear();
-            string[] files;
 
-            files = Directory.GetFiles(gv.mainDirectory + "\\modules", "*.mod", SearchOption.AllDirectories);
-            foreach (string file in files)
-            {
-                if (Path.GetFileName(file) != "NewModule.mod")
+            var fileService = DependencyService.Get<ISaveAndLoad>();
+            List<string> modList = fileService.GetAllFilesWithExtension("modules", ".mod");
+            foreach (string file in modList)
+            {                
+                // Process each file
+                Module modinfo = gv.cc.LoadModuleFileInfo(file);
+                if (modinfo == null)
                 {
-                    // Process each file
-                    ModuleInfo modinfo = gv.cc.LoadModuleFileInfo(file);
-                    if (modinfo == null)
-                    {
-                        gv.sf.MessageBox("returned a null module");
-                    }
-                    moduleInfoList.Add(modinfo);
-                    titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));
+                    gv.sf.MessageBox("returned a null module");
                 }
-            }            
+                moduleInfoList.Add(modinfo);
+                titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));                
+            }
+
+            // note that the prefix includes the trailing period '.' that is required
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".mod"))
+                {
+                    if (res != "NewModule.mod")
+                    {
+                        // Process each file
+                        Module modinfo = gv.cc.LoadModuleFileInfo(res);
+                        if (modinfo == null)
+                        {
+                            gv.sf.MessageBox("returned a null module");
+                        }
+                        moduleInfoList.Add(modinfo);
+                        titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            }
+            //Stream stream = assembly.GetManifestResourceStream(resourcePrefix + "SharedTextResource.txt");
         }
 
         public void setControlsStart()
@@ -229,7 +250,7 @@ namespace IBbasic
             //DRAW DESCRIPTION BOX
             if ((moduleInfoList.Count > 0) && (moduleIndex < moduleInfoList.Count))
 		    {
-                btnModuleName.Text = moduleInfoList[moduleIndex].buttonText + " MODULE";
+                btnModuleName.Text = "PLAY MODULE";
                 drawLauncherControls();
 
                 string textToSpan = "<gn>" + moduleInfoList[moduleIndex].moduleLabelName + "</gn><br>";
@@ -286,15 +307,15 @@ namespace IBbasic
 			        }	    	
 			        else if (btnModuleName.getImpact(x, y))
 			        {
-                        if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
-                        {
-                            //load the mod since we only have the ModuleInfo                            
-                            gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
-                            gv.resetGame();
-                            gv.cc.LoadSaveListItems();
-                            gv.screenType = "title";
-                        }
-                        else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
+                        //if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
+                        //{
+                        //load the mod since we only have the ModuleInfo                            
+                        gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + "\\" + moduleInfoList[moduleIndex].moduleName + ".mod");
+                        gv.resetGame();
+                        gv.cc.LoadSaveListItems();
+                        gv.screenType = "title";
+                        //}
+                        /*else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
                         {
                             //download and replace existing file
                             downloadFile(moduleInfoList[moduleIndex].moduleName + ".mod", gv.mainDirectory + "\\modules");
@@ -311,14 +332,14 @@ namespace IBbasic
                             loadModuleInfoFiles();
                             loadModsAvailableList();
                             setupModuleInfoListAndButtonText();
-                        }
+                        }*/
                     }
-                    else if (btnGetUpdates.getImpact(x, y))
+                    /*else if (btnGetUpdates.getImpact(x, y))
                     {
                         downloadFile("mods_available.json", gv.mainDirectory + "\\modules");
                         loadModsAvailableList();
                         setupModuleInfoListAndButtonText();
-                    }
+                    }*/
                     break;
 		
 		        case MouseEventType.EventType.MouseMove:

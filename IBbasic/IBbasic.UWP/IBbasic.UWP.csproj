@@ -96,8 +96,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveAndLoadBitmap_UWP.cs" />
-    <Compile Include="SaveAndLoadText_UWP.cs" />
+    <Compile Include="SaveAndLoad_UWP.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

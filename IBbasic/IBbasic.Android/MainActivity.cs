@@ -24,8 +24,19 @@ namespace IBbasic.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            App.ScreenWidth = (int)(Resources.DisplayMetrics.WidthPixels);
-            App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels);
+            int dim1 = (int)(Resources.DisplayMetrics.WidthPixels);
+            int dim2 = (int)(Resources.DisplayMetrics.HeightPixels);
+
+            if (dim1 >= dim2)
+            {
+                App.ScreenWidth = dim1;
+                App.ScreenHeight = dim2;
+            }
+            else
+            {
+                App.ScreenWidth = dim2;
+                App.ScreenHeight = dim1;
+            }
 
             LoadApplication(new App());
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Xamarin.Forms;
@@ -987,127 +988,12 @@ namespace IBbasic
         //LOAD MODULE
         public Module LoadModule(string folderAndFilename)
         {
-            Module toReturn = new Module();
-            try
+            Module toReturn = null;
+            // deserialize JSON directly from a file
+            using (StreamReader file = File.OpenText(GetModulePath(folderAndFilename) + "\\" + folderAndFilename))
             {
-                //used for opening the entire module files
-                using (StreamReader sr = File.OpenText(GetModulePath(folderAndFilename) + "\\" + folderAndFilename))
-                {
-                    string s = "";
-                    string keyword = "";
-                    gv.mod.moduleImageDataList.Clear();
-                    moduleBitmapList.Clear();
-                    ImageData imd;
-                    //toReturn.moduleAreasObjects.Clear();
-                    Area ar;
-                    //toReturn.moduleEncountersList.Clear();
-                    Encounter enc;
-                    //toReturn.moduleConvoList.Clear();
-                    Convo cnv;
-
-                    for (int i = 0; i < 99999; i++)
-                    {
-                        s = sr.ReadLine();
-
-                        #region Look for keyword line
-                        if (s == null)
-                        {
-                            break;
-                        }
-                        else if (s.Equals("END"))
-                        {
-                            break;
-                        }
-                        else if (s.Equals(""))
-                        {
-                            continue;
-                        }
-                        else if (s.Equals("MODULEINFO"))
-                        {
-                            keyword = "MODULEINFO";
-                            continue;
-                        }
-                        else if (s.Equals("TITLEIMAGE"))
-                        {
-                            keyword = "TITLEIMAGE";
-                            continue;
-                        }
-                        else if (s.Equals("MODULE"))
-                        {
-                            keyword = "MODULE";
-                            continue;
-                        }
-                        else if (s.Equals("AREAS"))
-                        {
-                            keyword = "AREAS";
-                            continue;
-                        }
-                        else if (s.Equals("ENCOUNTERS"))
-                        {
-                            keyword = "ENCOUNTERS";
-                            continue;
-                        }
-                        else if (s.Equals("CONVOS"))
-                        {
-                            keyword = "CONVOS";
-                            continue;
-                        }
-                        else if (s.Equals("IMAGES"))
-                        {
-                            keyword = "IMAGES";
-                            continue;
-                        }
-                        #endregion
-
-                        #region Process line if not a keyword line
-                        if (keyword.Equals("MODULEINFO"))
-                        {
-                            continue;
-                        }
-                        else if (keyword.Equals("TITLEIMAGE"))
-                        {
-                            imd = (ImageData)JsonConvert.DeserializeObject(s, typeof(ImageData));
-                            toReturn.moduleImageDataList.Add(imd);
-                            //TODO moduleBitmapList.Add(imd.name, ConvertGDIBitmapToD2D(gv.bsc.ConvertImageDataToBitmap(imd)));
-                        }
-                        else if (keyword.Equals("MODULE"))
-                        {
-                            toReturn = (Module)JsonConvert.DeserializeObject(s, typeof(Module));
-                        }
-                        else if (keyword.Equals("AREAS"))
-                        {
-                            ar = (Area)JsonConvert.DeserializeObject(s, typeof(Area));
-                            toReturn.moduleAreasObjects.Add(ar);
-                        }
-                        else if (keyword.Equals("ENCOUNTERS"))
-                        {
-                            enc = (Encounter)JsonConvert.DeserializeObject(s, typeof(Encounter));
-                            toReturn.moduleEncountersList.Add(enc);
-                        }
-                        else if (keyword.Equals("CONVOS"))
-                        {
-                            cnv = (Convo)JsonConvert.DeserializeObject(s, typeof(Convo));
-                            toReturn.moduleConvoList.Add(cnv);
-                        }
-                        else if (keyword.Equals("IMAGES"))
-                        {
-                            imd = (ImageData)JsonConvert.DeserializeObject(s, typeof(ImageData));
-                            if (!toReturn.moduleImageDataList.Contains(imd))
-                            {
-                                toReturn.moduleImageDataList.Add(imd);
-                            }
-                            if (!moduleBitmapList.ContainsKey(imd.name))
-                            {
-                                //TODO moduleBitmapList.Add(imd.name, ConvertGDIBitmapToD2D(gv.bsc.ConvertImageDataToBitmap(imd)));
-                            }
-                        }
-                        #endregion
-                    }                    
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox("Failed to read Module for " + folderAndFilename + ": " + ex.ToString());
+                JsonSerializer serializer = new JsonSerializer();
+                toReturn = (Module)serializer.Deserialize(file, typeof(Module));
             }
 
             if (File.Exists("override/data.json"))
@@ -1165,66 +1051,18 @@ namespace IBbasic
 
             return toReturn;
         }
-        public ModuleInfo LoadModuleFileInfo(string folderAndFilename)
+        public Module LoadModuleFileInfo(string folderAndFilename)
         {
-            ModuleInfo toReturn = null;
-            try
+            Module toReturn = null;
+            var fileService = DependencyService.Get<ISaveAndLoad>();
+            string s = fileService.LoadText(folderAndFilename);                        
+            using (StringReader file = new StringReader(s))
             {
-                //used for loading up the launcher screen only
-                using (StreamReader sr = File.OpenText(folderAndFilename))
-                {
-                    string s = "";
-                    string keyword = "";
-                    moduleBitmapList.Clear();
-                    ImageData imd;
-
-                    for (int i = 0; i < 99999; i++)
-                    {
-                        s = sr.ReadLine();
-
-                        if (s == null)
-                        {
-                            break;
-                        }
-                        else if (s.Equals(""))
-                        {
-                            continue;
-                        }
-                        else if (s.Equals("MODULEINFO"))
-                        {
-                            keyword = "MODULEINFO";
-                            continue;
-                        }
-                        else if (s.Equals("TITLEIMAGE"))
-                        {
-                            keyword = "TITLEIMAGE";
-                            continue;
-                        }
-                        else if (s.Equals("MODULE"))
-                        {
-                            keyword = "MODULE";
-                            break;
-                        }
-
-                        if (keyword.Equals("MODULEINFO"))
-                        {
-                            toReturn = (ModuleInfo)JsonConvert.DeserializeObject(s, typeof(ModuleInfo));
-                        }
-                        else if (keyword.Equals("TITLEIMAGE"))
-                        {
-                            imd = (ImageData)JsonConvert.DeserializeObject(s, typeof(ImageData));
-                            //TODO moduleBitmapList.Add(imd.name, ConvertGDIBitmapToD2D(gv.bsc.ConvertImageDataToBitmap(imd)));
-                        }
-                    }
-                }
+                JsonSerializer serializer = new JsonSerializer();
+                toReturn = (Module)serializer.Deserialize(file, typeof(Module));
             }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox("Failed to open ModuleInfo for " + folderAndFilename + ": " + ex.ToString());
-            }  
-            
             return toReturn;
-        }        
+        }
         public string GetModulePath(string modname)
         {
             if (modname.Equals("NewModule.mod"))
@@ -2414,7 +2252,7 @@ namespace IBbasic
         public SKBitmap LoadBitmap(string filename, Module mdl) //change this to LoadBitmapGDI
         {
             SKBitmap bm = null;
-            var fileService = DependencyService.Get<ISaveAndLoadBitmap>();
+            var fileService = DependencyService.Get<ISaveAndLoad>();
             bm = fileService.LoadBitmap(filename);
             /*
             try
