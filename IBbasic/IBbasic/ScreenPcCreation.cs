@@ -814,8 +814,11 @@ namespace IBbasic
                     p.baseLuck = 3;
                 }
             }
-
-            gv.sf.UpdateStats(p);
+            try
+            {
+                gv.sf.UpdateStats(p);
+            }
+            catch { }
             p.hp = p.hpMax;
             p.sp = p.spMax;
         }

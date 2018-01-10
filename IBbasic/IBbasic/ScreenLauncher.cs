@@ -135,40 +135,21 @@ namespace IBbasic
             titleList.Clear();
 
             var fileService = DependencyService.Get<ISaveAndLoad>();
-            List<string> modList = fileService.GetAllFilesWithExtension("modules", ".mod");
+            List<string> modList = fileService.GetAllModuleFiles();
             foreach (string file in modList)
-            {                
-                // Process each file
-                Module modinfo = gv.cc.LoadModuleFileInfo(file);
-                if (modinfo == null)
-                {
-                    gv.sf.MessageBox("returned a null module");
-                }
-                moduleInfoList.Add(modinfo);
-                titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));                
-            }
-
-            // note that the prefix includes the trailing period '.' that is required
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
             {
-                if (res.EndsWith(".mod"))
+                string s = fileService.GetModuleFileString(file);
+                using (StringReader sr = new StringReader(s))
                 {
-                    if (res != "NewModule.mod")
+                    JsonSerializer serializer = new JsonSerializer();
+                    Module modinfo = (Module)serializer.Deserialize(sr, typeof(Module));
+                    if (modinfo != null)
                     {
-                        // Process each file
-                        Module modinfo = gv.cc.LoadModuleFileInfo(res);
-                        if (modinfo == null)
-                        {
-                            gv.sf.MessageBox("returned a null module");
-                        }
                         moduleInfoList.Add(modinfo);
                         titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));
-                    }
-                }
-                System.Diagnostics.Debug.WriteLine("found resource: " + res);
+                    }                    
+                }                                
             }
-            //Stream stream = assembly.GetManifestResourceStream(resourcePrefix + "SharedTextResource.txt");
         }
 
         public void setControlsStart()
@@ -310,7 +291,7 @@ namespace IBbasic
                         //if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
                         //{
                         //load the mod since we only have the ModuleInfo                            
-                        gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + "\\" + moduleInfoList[moduleIndex].moduleName + ".mod");
+                        gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
                         gv.resetGame();
                         gv.cc.LoadSaveListItems();
                         gv.screenType = "title";

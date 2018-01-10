@@ -7,6 +7,7 @@ using IBbasic.iOS;
 using SkiaSharp;
 using System.Reflection;
 using System.Collections.Generic;
+using System;
 
 [assembly: Dependency(typeof(SaveAndLoad_iOS))]
 namespace IBbasic.iOS
@@ -26,6 +27,71 @@ namespace IBbasic.iOS
             /*string path = CreatePathToFile(filename);
             using (StreamReader sr = File.OpenText(path))
                 return await sr.ReadToEndAsync();*/
+        }
+        public string GetModuleFileString(string modFilename)
+        {
+            //asset module
+            if (modFilename.StartsWith("IBbasic."))
+            {
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream(modFilename);
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                //try from personal folder first
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+                var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+                else //try from external folder
+                {
+                    /*Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                    filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + modFilename;
+                    if (File.Exists(filePath))
+                    {
+                        return File.ReadAllText(filePath);
+                    }*/
+                }
+            }
+            return "";
+        }
+        public string GetAreaFileString(string modFolder, string areaFilename)
+        {
+            //try asset area            
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + areaFilename + ".are");
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
+            var filePath = documentsPath + "/modules/" + modFolder + "/" + areaFilename + ".are";
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else //try from external folder
+            {
+                /*Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + areaFilename + ".are";
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }*/
+            }
+            return "";
         }
         #endregion        
 
@@ -90,7 +156,7 @@ namespace IBbasic.iOS
         }
         #endregion
 
-        public List<string> GetAllFilesWithExtension(string folderPath, string extension)
+        public List<string> GetAllModuleFiles()
         {
             List<string> list = new List<string>();
             return list;

@@ -4287,12 +4287,16 @@ namespace IBbasic
         }
         public void ReCalcSavingThrowBases(Player pc)
         {
-            if (!pc.playerClass.name.Equals("newClass"))
+            try
             {
-                pc.baseFortitude = pc.playerClass.baseFortitudeAtLevel[pc.classLevel];
-                pc.baseReflex = pc.playerClass.baseReflexAtLevel[pc.classLevel];
-                pc.baseWill = pc.playerClass.baseWillAtLevel[pc.classLevel];
+                if (!pc.playerClass.name.Equals("newClass"))
+                {
+                    pc.baseFortitude = pc.playerClass.baseFortitudeAtLevel[pc.classLevel];
+                    pc.baseReflex = pc.playerClass.baseReflexAtLevel[pc.classLevel];
+                    pc.baseWill = pc.playerClass.baseWillAtLevel[pc.classLevel];
+                }
             }
+            catch { }
         }
         public int CalcSavingThrowModifiersReflex(Player pc)
         {

@@ -290,7 +290,7 @@ namespace IBbasic
             }
             else //this is a fixed module
             {
-                mod = cc.LoadModule(fixedModule + "/" + fixedModule + ".mod");
+                mod = cc.LoadModule(fixedModule + ".mod");
                 resetGame();
                 cc.LoadSaveListItems();
                 screenType = "title";
@@ -335,10 +335,10 @@ namespace IBbasic
             screenPartyRoster = new ScreenPartyRoster(mod,this);
 
             //TOOLSET SCREENS
-            tsModule = new ToolsetScreenModule(this);
-            tsAreaEditor = new ToolsetScreenAreaEditor(this);
-            tsMainMenu = new ToolsetScreenMainMenu(this);
-            tsConvoEditor = new ToolsetScreenConvoEditor(this);
+            //tsModule = new ToolsetScreenModule(this);
+            //tsAreaEditor = new ToolsetScreenAreaEditor(this);
+            //tsMainMenu = new ToolsetScreenMainMenu(this);
+            //tsConvoEditor = new ToolsetScreenConvoEditor(this);
             
 	    }
         public void LoadStandardImages()
@@ -384,7 +384,7 @@ namespace IBbasic
         }	
 	    public void resetGame()
 	    {
-            mod = cc.LoadModule(mod.moduleName + "\\" + mod.moduleName + ".mod");
+            mod = cc.LoadModule(mod.moduleName + ".mod");
             //reset log number of lines based on the value from the Module's mod file
             log.numberOfLinesToShow = mod.logNumberOfLines;            
                         

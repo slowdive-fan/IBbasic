@@ -55,6 +55,71 @@ namespace IBbasic.Droid
             }
             return "";
         }
+        public string GetModuleFileString(string modFilename)
+        {
+            //asset module
+            if (modFilename.StartsWith("IBbasic."))
+            {
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream(modFilename);
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                //try from personal folder first
+                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+                var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+                else //try from external folder
+                {
+                    Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                    filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + modFilename;
+                    if (File.Exists(filePath))
+                    {
+                        return File.ReadAllText(filePath);
+                    }
+                }
+            }
+            return "";
+        }
+        public string GetAreaFileString(string modFolder, string areaFilename)
+        {
+            //try asset area            
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + areaFilename + ".are");
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }            
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
+            var filePath = documentsPath + "/modules/" + modFolder + "/" + areaFilename + ".are";
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else //try from external folder
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + areaFilename + ".are";
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+            }            
+            return "";
+        }
         #endregion
 
         #region ISaveAndLoad Bitmap implementation
@@ -118,7 +183,7 @@ namespace IBbasic.Droid
         }
         #endregion
 
-        public List<string> GetAllFilesWithExtension(string folderPath, string extension)
+        public List<string> GetAllModuleFiles()
         {
             List<string> list = new List<string>();
 
@@ -126,7 +191,7 @@ namespace IBbasic.Droid
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if (res.EndsWith(extension))
+                if (res.EndsWith(".mod"))
                 {
                     list.Add(res);
                 }
@@ -134,30 +199,33 @@ namespace IBbasic.Droid
 
             //search in personal folder
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + folderPath);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/modules");
             directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
+            foreach (Java.IO.File d in directory.ListFiles())
             {
-                if (f.IsFile)
+                if (d.IsDirectory)
                 {
-                    try
+                    Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
+                    foreach (Java.IO.File f in modDirectory.ListFiles())
                     {
-                        if (f.Name.EndsWith(extension))
+                        try
                         {
-                            list.Add(folderPath + "/" + f.Name);
+                            if (f.Name.EndsWith(".mod"))
+                            {
+                                list.Add(f.Name);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                        catch (Exception ex)
+                        {
 
+                        }
                     }
                 }
             }
 
             //search in external folder
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + folderPath);
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules");
             directory.Mkdirs();
             //check to see if Lanterna2 exists, if not copy it over
             foreach (Java.IO.File d in directory.ListFiles())
@@ -169,9 +237,9 @@ namespace IBbasic.Droid
                     {
                         try
                         {
-                            if (f.Name.EndsWith(extension))
+                            if (f.Name.EndsWith(".mod"))
                             {
-                                list.Add(folderPath + "/" + d.Name + "/" + f.Name);
+                                list.Add(f.Name);
                             }
                         }
                         catch (Exception ex)

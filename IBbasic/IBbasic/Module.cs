@@ -6,6 +6,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Drawing;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace IBbasic
 {
@@ -128,15 +129,29 @@ namespace IBbasic
 
         }
               
-        public bool setCurrentArea(string filename, GameView gv)
+        public bool setCurrentArea(string areaFilename, GameView gv)
         {
             try
             {
                 foreach (Area area in this.moduleAreasObjects)
                 {
-                    if (area.Filename.Equals(filename))
+                    if (area.Filename.Equals(areaFilename))
                     {
                         this.currentArea = area;
+                        return true;
+                    }
+                }
+                //didn't find the area in the mod list so try and load it
+                var fileService = DependencyService.Get<ISaveAndLoad>();
+                string s = fileService.GetAreaFileString(this.moduleName, areaFilename);
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Area are = (Area)serializer.Deserialize(sr, typeof(Area));
+                    if (are != null)
+                    {
+                        this.moduleAreasObjects.Add(are);
+                        this.currentArea = are;
                         return true;
                     }
                 }

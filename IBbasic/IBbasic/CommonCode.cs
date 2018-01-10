@@ -383,7 +383,7 @@ namespace IBbasic
                 }
                 else //this is a fixed module
                 {
-                    gv.mod = gv.cc.LoadModule(gv.fixedModule + "/" + gv.fixedModule + ".mod");
+                    gv.mod = gv.cc.LoadModule(gv.fixedModule + ".mod");
                     gv.resetGame();
                     gv.cc.LoadSaveListItems();
                     gv.screenType = "title";
@@ -986,14 +986,15 @@ namespace IBbasic
         }
 
         //LOAD MODULE
-        public Module LoadModule(string folderAndFilename)
+        public Module LoadModule(string file)
         {
             Module toReturn = null;
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(GetModulePath(folderAndFilename) + "\\" + folderAndFilename))
+            var fileService = DependencyService.Get<ISaveAndLoad>();
+            string s = fileService.GetModuleFileString(file);
+            using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                toReturn = (Module)serializer.Deserialize(file, typeof(Module));
+                toReturn = (Module)serializer.Deserialize(sr, typeof(Module));
             }
 
             if (File.Exists("override/data.json"))
@@ -1051,15 +1052,15 @@ namespace IBbasic
 
             return toReturn;
         }
-        public Module LoadModuleFileInfo(string folderAndFilename)
+        public Module LoadModuleFileInfo(string file)
         {
             Module toReturn = null;
             var fileService = DependencyService.Get<ISaveAndLoad>();
-            string s = fileService.LoadText(folderAndFilename);                        
-            using (StringReader file = new StringReader(s))
+            string s = fileService.GetModuleFileString(file);
+            using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                toReturn = (Module)serializer.Deserialize(file, typeof(Module));
+                toReturn = (Module)serializer.Deserialize(sr, typeof(Module));                
             }
             return toReturn;
         }

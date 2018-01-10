@@ -17,11 +17,13 @@ namespace IBbasic
     {
         void SaveText(string filename, string text);
         string LoadText(string filename);
-        
+        string GetModuleFileString(string modFilename);
+        string GetAreaFileString(string modFolder, string areaFilename);
+
         void SaveBitmap(string filename, SKBitmap bmp);
         SKBitmap LoadBitmap(string filename);
 
-        List<string> GetAllFilesWithExtension(string folderPath, string extension);        
+        List<string> GetAllModuleFiles();        
 
         bool FileExists(string filename);
     }
