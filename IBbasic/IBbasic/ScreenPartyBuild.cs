@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms;
 
 namespace IBbasic
 {
@@ -58,38 +59,26 @@ namespace IBbasic
         public void loadPlayerList()
         {
             pcList.Clear();
-            string[] files;
-            if (Directory.Exists(gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\characters"))
+            List<string> files;
+            files = DependencyService.Get<ISaveAndLoad>().GetFiles("\\saves\\" + gv.mod.moduleName + "\\characters", ".saves." + gv.mod.moduleName + ".characters", ".json");
+            foreach (string file in files)
             {
-                files = Directory.GetFiles(gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\characters", "*.json");
-                foreach (string file in files)
+                try
                 {
-                    try
-                    {
-                        AddCharacterToList(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        gv.sf.MessageBox(ex.ToString());
-                        gv.errorLog(ex.ToString());
-                    }
+                    AddCharacterToList(file);
                 }
-            }
+                catch (Exception ex)
+                {
+                    gv.sf.MessageBox(ex.ToString());
+                    gv.errorLog(ex.ToString());
+                }
+            }            
         }
         public void AddCharacterToList(string filename)
         {
             try
             {
-                Player newPc = LoadPlayer(filename); //ex: filename = "ezzbel.json"
-                //newPc.token = gv.cc.LoadBitmap(newPc.tokenFilename);
-                //newPc.portrait = gv.cc.LoadBitmap(newPc.portraitFilename);
-                
-                //backwards compatible with Elderin Stone Paladin
-                if (newPc.classTag.Equals("newPlayerClassTag_525"))
-                {
-                    newPc.classTag = "paladin";
-                }
-               
+                Player newPc = LoadPlayer(filename); //ex: filename = "ezzbel.json"               
                 newPc.playerClass = gv.cc.getPlayerClass(newPc.classTag);
                 newPc.race = gv.cc.getRace(newPc.raceTag);
                 //check to see if already in party before adding

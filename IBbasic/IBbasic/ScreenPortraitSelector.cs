@@ -48,41 +48,6 @@ namespace IBbasic
         public void LoadPlayerPortraitList()
         {
             playerPortraitList.Clear();
-            //OVERRIDE
-            try
-            {
-                //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\override"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\override", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("pptr_"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!playerPortraitList.Contains(fileNameWithOutExt))
-                                {
-                                    playerPortraitList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
             //MODULE SPECIFIC
             try
             {

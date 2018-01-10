@@ -18,7 +18,9 @@ namespace IBbasic
         void SaveText(string filename, string text);
         string LoadText(string filename);
         string GetModuleFileString(string modFilename);
-        string GetAreaFileString(string modFolder, string areaFilename);
+        string GetModuleAssetFileString(string modFolder, string assetFilename);
+        string GetDataAssetFileString(string assetFilename);
+        List<string> GetFiles(string path, string assetPath, string endsWith);
 
         void SaveBitmap(string filename, SKBitmap bmp);
         SKBitmap LoadBitmap(string filename);

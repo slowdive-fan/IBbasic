@@ -989,22 +989,18 @@ namespace IBbasic
         public Module LoadModule(string file)
         {
             Module toReturn = null;
-            var fileService = DependencyService.Get<ISaveAndLoad>();
-            string s = fileService.GetModuleFileString(file);
+            string s = DependencyService.Get<ISaveAndLoad>().GetModuleFileString(file);
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 toReturn = (Module)serializer.Deserialize(sr, typeof(Module));
             }
-
-            if (File.Exists("override/data.json"))
+            s = DependencyService.Get<ISaveAndLoad>().GetDataAssetFileString("data.json");
+            using (StringReader sr = new StringReader(s))
             {
-                this.datafile = this.datafile.loadDataFile("override/data.json");
-            }
-            else if (File.Exists("default/NewModule/data/data.json"))
-            {
-                this.datafile = this.datafile.loadDataFile("default/NewModule/data/data.json");
-            }
+                JsonSerializer serializer = new JsonSerializer();
+                this.datafile = (Data)serializer.Deserialize(sr, typeof(Data));
+            }            
             //ITEMS
             allItemsList.Clear();
             foreach (Item it in datafile.dataItemsList)
@@ -1055,8 +1051,7 @@ namespace IBbasic
         public Module LoadModuleFileInfo(string file)
         {
             Module toReturn = null;
-            var fileService = DependencyService.Get<ISaveAndLoad>();
-            string s = fileService.GetModuleFileString(file);
+            string s = DependencyService.Get<ISaveAndLoad>().GetModuleFileString(file);
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();

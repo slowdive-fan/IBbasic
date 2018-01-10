@@ -62,11 +62,11 @@ namespace IBbasic.iOS
             }
             return "";
         }
-        public string GetAreaFileString(string modFolder, string areaFilename)
+        public string GetModuleAssetFileString(string modFolder, string assetFilename)
         {
             //try asset area            
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + areaFilename + ".are");
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + assetFilename);
             if (stream != null)
             {
                 using (var reader = new System.IO.StreamReader(stream))
@@ -77,7 +77,7 @@ namespace IBbasic.iOS
             //try from personal folder first
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
-            var filePath = documentsPath + "/modules/" + modFolder + "/" + areaFilename + ".are";
+            var filePath = documentsPath + "/modules/" + modFolder + "/" + assetFilename;
             if (File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);
@@ -90,6 +90,20 @@ namespace IBbasic.iOS
                 {
                     return File.ReadAllText(filePath);
                 }*/
+            }
+            return "";
+        }
+        public string GetDataAssetFileString(string assetFilename)
+        {
+            //try asset area            
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.data." + assetFilename);
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
             }
             return "";
         }
@@ -159,6 +173,46 @@ namespace IBbasic.iOS
         public List<string> GetAllModuleFiles()
         {
             List<string> list = new List<string>();
+            return list;
+        }
+        public List<string> GetFiles(string path, string assetPath, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(assetPath)))
+                {
+                    list.Add(res);
+                }
+            }
+            /*
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }*/
             return list;
         }
 

@@ -142,8 +142,7 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                var fileService = DependencyService.Get<ISaveAndLoad>();
-                string s = fileService.GetAreaFileString(this.moduleName, areaFilename);
+                string s = DependencyService.Get<ISaveAndLoad>().GetModuleAssetFileString(this.moduleName, areaFilename + ".are");
                 using (StringReader sr = new StringReader(s))
                 {
                     JsonSerializer serializer = new JsonSerializer();
