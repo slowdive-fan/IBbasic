@@ -52,38 +52,6 @@ namespace IBbasic
         public void LoadPlayerTokenList()
         {
             playerTokenList.Clear();
-            try
-            {
-                //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\override"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\override", "*.png");
-                    //directory.mkdirs(); 
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("pc_"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                playerTokenList.Add(fileNameWithOutExt);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
             //MODULE SPECIFIC
             try
             {
@@ -107,11 +75,12 @@ namespace IBbasic
             }
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
                     //directory.mkdirs(); 
                     foreach (string file in files)
                     {
@@ -133,7 +102,7 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -143,39 +112,7 @@ namespace IBbasic
         }
         public void LoadPropTokenList()
         {
-            playerTokenList.Clear();
-            try
-            {
-                //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\override"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\override", "*.png");
-                    //directory.mkdirs(); 
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if ((filename.StartsWith("prp_")) || (filename.StartsWith("tkn_")))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                playerTokenList.Add(fileNameWithOutExt);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
+            playerTokenList.Clear();            
             //MODULE SPECIFIC
             try
             {
@@ -199,11 +136,12 @@ namespace IBbasic
             }
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
                     //directory.mkdirs(); 
                     foreach (string file in files)
                     {
@@ -225,7 +163,7 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {

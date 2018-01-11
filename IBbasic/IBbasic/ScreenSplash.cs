@@ -175,10 +175,11 @@ namespace IBbasic
         public List<string> loadModuleNamesToList()
         {
             List<string> retList = new List<string>();
-            string[] files;
+            //string[] files;
 
-            files = Directory.GetFiles(gv.mainDirectory + "\\modules", "*.mod", SearchOption.AllDirectories);
-            foreach (string file in files)
+            //files = Directory.GetFiles(gv.mainDirectory + "\\modules", "*.mod", SearchOption.AllDirectories);
+            List<string> modList = gv.GetAllModuleFiles();
+            foreach (string file in modList)
             {
                 if (Path.GetFileName(file) != "NewModule.mod")
                 {

@@ -21,6 +21,23 @@ namespace IBbasic.iOS
             using (StreamWriter sw = File.CreateText(path))
                 await sw.WriteAsync(text);*/
         }
+        public void SaveSettings(Settings toggleSettings)
+        {
+
+        }
+        public void SaveCharacter(string pathAndFilename, Player pc)
+        {
+
+        }
+        public void SaveModule(string modFolder, string modFilename)
+        {
+
+        }
+        public void SaveSaveGame(string pathAndFilename, SaveGame save)
+        {
+
+        }
+
         public string LoadText(string filename)
         {
             return "";
@@ -105,6 +122,47 @@ namespace IBbasic.iOS
                     return reader.ReadToEnd();
                 }
             }
+            return "";
+        }
+        public string GetSettingsString()
+        {
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
+            var filePath = documentsPath + "/settings.json";
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            /*else //try from external folder
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/settings.json";
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+            }*/
+            return "";
+        }
+        public string GetSaveFileString(string filename)
+        {
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "/saves/" + filename;
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            /*else //try from external folder
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/saves/" + filename;
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+            }*/
             return "";
         }
         #endregion        

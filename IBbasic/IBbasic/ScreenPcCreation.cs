@@ -114,11 +114,12 @@ namespace IBbasic
             playerTokenList.Clear();
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\pctokens"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\pctokens", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\pctokens"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\pctokens", "*.png");
                     foreach (string file in files)
                     {
                         try
@@ -136,58 +137,25 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
                 gv.sf.MessageBox(ex.ToString());
                 gv.errorLog(ex.ToString());
-            }
-            try
-            {
-                //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\PlayerTokens"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\PlayerTokens", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.EndsWith("_pc.png"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!playerTokenList.Contains(fileNameWithOutExt))
-                                {
-                                    playerTokenList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
+            }            
         }
         public void LoadPlayerPortraitList()
         {
             playerPortraitList.Clear();
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\portraits"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\portraits", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\portraits"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\portraits", "*.png");
                     foreach (string file in files)
                     {
                         try
@@ -205,47 +173,13 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
                 gv.sf.MessageBox(ex.ToString());
                 gv.errorLog(ex.ToString());
-            }
-            try
-            {
-                //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\PlayerPortraits"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\PlayerPortraits", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if ((filename.EndsWith(".png")) || (filename.EndsWith(".PNG")))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!playerPortraitList.Contains(fileNameWithOutExt))
-                                {
-                                    playerPortraitList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
+            }            
         }
 
         public void setControlsStart()
@@ -833,13 +767,14 @@ namespace IBbasic
         }
         public void SaveCharacter(Player p)
         {
-            string filename = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\characters\\" + pc.tag + ".json";
+            gv.SaveCharacter("\\saves\\" + gv.mod.moduleName + "\\characters\\" + pc.tag + ".json", p);
+            /*string filename = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\characters\\" + pc.tag + ".json";
             gv.cc.MakeDirectoryIfDoesntExist(filename);
             string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(filename))
             {
                 sw.Write(json.ToString());
-            }
+            }*/
         }
     }
 }

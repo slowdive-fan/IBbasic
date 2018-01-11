@@ -444,27 +444,17 @@ namespace IBbasic
         public void loadSettings()
         {
             toggleSettings = new Settings();
-            try
+            string s = this.GetSettingsString();
+            using (StringReader sr = new StringReader(s))
             {
-                // deserialize JSON directly from a file
-                using (StreamReader file = File.OpenText(mainDirectory + "\\settings.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    toggleSettings = (Settings)serializer.Deserialize(file, typeof(Settings));
-                }
-            }
-            catch { }
+                JsonSerializer serializer = new JsonSerializer();
+                toggleSettings = (Settings)serializer.Deserialize(sr, typeof(Settings));                
+            }            
         }
         public void saveSettings()
         {
             //SAVE THE FILE
-            string filepath = mainDirectory + "\\settings.json";
-            cc.MakeDirectoryIfDoesntExist(filepath);
-            string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(filepath))
-            {
-                sw.Write(json.ToString());
-            }
+            SaveSettings(toggleSettings);
         }
         private void fillCharList()
         {
@@ -1412,6 +1402,52 @@ namespace IBbasic
             }*/
             return 0;
         }
+
+        public void SaveSettings(Settings tglSettings)
+        {
+            DependencyService.Get<ISaveAndLoad>().SaveSettings(tglSettings);
+        }
+        public void SaveSaveGame(string pathAndFilename, SaveGame save)
+        {
+            DependencyService.Get<ISaveAndLoad>().SaveSaveGame(pathAndFilename, save);
+        }
+        public void SaveCharacter(string pathAndFilename, Player pc)
+        {
+            DependencyService.Get<ISaveAndLoad>().SaveCharacter(pathAndFilename, pc);
+        }
+        public List<string> GetFiles(string path, string assetPath, string endsWith)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetFiles(path, assetPath, endsWith);
+        }
+        public string GetModuleFileString(string modFilename)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetModuleFileString(modFilename);
+        }
+        public string GetModuleAssetFileString(string modFolder, string assetFilename)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetModuleAssetFileString(modFolder, assetFilename);
+        }
+        public string GetDataAssetFileString(string assetFilename)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetDataAssetFileString(assetFilename);
+        }
+        public SKBitmap LoadBitmap(string filename)
+        {
+            return DependencyService.Get<ISaveAndLoad>().LoadBitmap(filename);
+        }
+        public List<string> GetAllModuleFiles()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
+        }
+        public string GetSettingsString()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetSettingsString();
+        }
+        public string GetSaveFileString(string filename)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetSaveFileString(filename);
+        }
+
 
         public void errorLog(string text)
         {

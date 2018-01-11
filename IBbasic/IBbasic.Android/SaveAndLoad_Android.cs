@@ -23,6 +23,41 @@ namespace IBbasic.Droid
                 sw.Write(text);
             }                
         }
+        public void SaveSettings(Settings toggleSettings)
+        {
+            //try personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "/settings.json";            
+            string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
+        }
+        public void SaveCharacter(string pathAndFilename, Player pc)
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "\\" + pathAndFilename;
+            string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
+        }
+        public void SaveModule(string modFolder, string modFilename)
+        {
+
+        }
+        public void SaveSaveGame(string pathAndFilename, SaveGame save)
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "\\" + pathAndFilename;
+            string json = JsonConvert.SerializeObject(save, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
+        }
         public string LoadText(string folderAndFilename)
         {
             //asset module
@@ -125,10 +160,6 @@ namespace IBbasic.Droid
         {
             //try asset area            
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                int x = 0;
-            }
             Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.data." + assetFilename);
             if (stream != null)
             {
@@ -137,6 +168,47 @@ namespace IBbasic.Droid
                     return reader.ReadToEnd();
                 }
             }            
+            return "";
+        }
+        public string GetSettingsString()
+        {
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
+            var filePath = documentsPath + "/settings.json";
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else //try from external folder
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/settings.json";
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+            }
+            return "";
+        }
+        public string GetSaveFileString(string filename)
+        {
+            //try from personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "/saves/" + filename;
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else //try from external folder
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                filePath = sdCard.AbsolutePath + "/IBbasic/saves/" + filename;
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
+            }
             return "";
         }
         #endregion

@@ -72,11 +72,12 @@ namespace IBbasic
             //DEFAULTS
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
                     foreach (string file in files)
                     {
                         try
@@ -97,7 +98,7 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -107,42 +108,7 @@ namespace IBbasic
         }
         public void LoadConvoDefaultNpcPortraitList()
         {
-            playerPortraitList.Clear();
-            //OVERRIDE
-            try
-            {
-                //Load from module folder first
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\override"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\override", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if ((filename.StartsWith("ptr_")) || (filename.StartsWith("pptr_")) || (filename.StartsWith("nar_")))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!playerPortraitList.Contains(fileNameWithOutExt))
-                                {
-                                    playerPortraitList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.sf.MessageBox(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
+            playerPortraitList.Clear();            
             //MODULE SPECIFIC
             try
             {
@@ -167,11 +133,12 @@ namespace IBbasic
             //DEFAULTS
             try
             {
+                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
                 //Load from PlayerTokens folder last
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
+                //string[] files;
+                //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                //{
+                    //files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
                     foreach (string file in files)
                     {
                         try
@@ -192,7 +159,7 @@ namespace IBbasic
                             gv.errorLog(ex.ToString());
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {

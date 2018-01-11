@@ -219,10 +219,11 @@ namespace IBbasic
                 }
             }
             // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(gv.mainDirectory + "\\default\\NewModule\\data\\" + filename))
+            string s = gv.GetDataAssetFileString(filename);
+            using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                toReturn = (Player)serializer.Deserialize(file, typeof(Player));
+                toReturn = (Player)serializer.Deserialize(sr, typeof(Player));
             }
             return toReturn;
         }
@@ -499,10 +500,11 @@ namespace IBbasic
             SaveGame m = new SaveGame();
             try
             {
-                using (StreamReader file = File.OpenText(gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename))
+                string s = gv.GetSaveFileString(filename);
+                using (StringReader sr = new StringReader(s))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    m = (SaveGame)serializer.Deserialize(file, typeof(SaveGame));
+                    m = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
                 }
             }
             catch { }
@@ -642,13 +644,14 @@ namespace IBbasic
             saveMod.minutesSinceLastRationConsumed = gv.mod.minutesSinceLastRationConsumed;
 
             //SAVE THE FILE
-            string filepath = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename;
+            gv.SaveSaveGame("\\saves\\" + gv.mod.moduleName + "\\" + filename, saveMod);
+            /*string filepath = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename;
             MakeDirectoryIfDoesntExist(filepath);
             string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(filepath))
             {
                 sw.Write(json.ToString());
-            }
+            }*/
 
             //SAVE THE FILE
             //filepath = "C:\\Users\\Slowdive\\Dropbox\\IceBlink2mini\\saves\\" + gv.mod.moduleName + "\\" + filename;
@@ -665,12 +668,18 @@ namespace IBbasic
             //  load a new module (actually already have a new module at this point from launch screen		
             //  load the saved game module
             SaveGame saveMod = null;
+            string strg = gv.GetSaveFileString(filename);
+            using (StringReader sr = new StringReader(strg))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                saveMod = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
+            }
             // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename))
+            /*using (StreamReader file = File.OpenText(gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 saveMod = (SaveGame)serializer.Deserialize(file, typeof(SaveGame));
-            }
+            }*/
             if (saveMod == null) { return false; }
             //  replace parts of new module with parts of saved game module
             //
@@ -989,13 +998,13 @@ namespace IBbasic
         public Module LoadModule(string file)
         {
             Module toReturn = null;
-            string s = DependencyService.Get<ISaveAndLoad>().GetModuleFileString(file);
+            string s = gv.GetModuleFileString(file);
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 toReturn = (Module)serializer.Deserialize(sr, typeof(Module));
             }
-            s = DependencyService.Get<ISaveAndLoad>().GetDataAssetFileString("data.json");
+            s = gv.GetDataAssetFileString("data.json");
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -1051,7 +1060,7 @@ namespace IBbasic
         public Module LoadModuleFileInfo(string file)
         {
             Module toReturn = null;
-            string s = DependencyService.Get<ISaveAndLoad>().GetModuleFileString(file);
+            string s = gv.GetModuleFileString(file);
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -1059,14 +1068,14 @@ namespace IBbasic
             }
             return toReturn;
         }
-        public string GetModulePath(string modname)
+        /*public string GetModulePath(string modname)
         {
             if (modname.Equals("NewModule.mod"))
             {
                 return gv.mainDirectory + "\\default\\NewModule";
             }
             return gv.mainDirectory + "\\modules";
-        }        
+        }*/        
         //SAVE MODULE
         public void saveFiles()
         {
@@ -1246,7 +1255,7 @@ namespace IBbasic
                     }
                 }
 
-                try
+                /*try
                 {
                     string directory = gv.mainDirectory + "\\override";
                     if (!Directory.Exists(directory)) // if folder does not exist, create it and copy contents from previous folder
@@ -1259,7 +1268,7 @@ namespace IBbasic
                 catch (Exception e)
                 {
                     gv.sf.MessageBox("failed to save 'data.json' to 'override' directory: " + e.ToString());
-                }                
+                }*/                
             }
             catch { gv.sf.MessageBox("failed to createFiles"); }
         }
@@ -2248,8 +2257,7 @@ namespace IBbasic
         public SKBitmap LoadBitmap(string filename, Module mdl) //change this to LoadBitmapGDI
         {
             SKBitmap bm = null;
-            var fileService = DependencyService.Get<ISaveAndLoad>();
-            bm = fileService.LoadBitmap(filename);
+            bm = gv.LoadBitmap(filename);
             /*
             try
             {
@@ -2331,24 +2339,7 @@ namespace IBbasic
         }
         public string loadTextToString(string filename)
         {
-            string txt = null;
-            try
-            {
-                if (File.Exists(GetModulePath(filename) + "\\data\\" + filename))
-                {
-                    txt = File.ReadAllText(GetModulePath(filename) + "\\data\\" + filename);
-                }
-                else if (File.Exists(gv.mainDirectory + "\\default\\NewModule\\data\\" + filename))
-                {
-                    txt = File.ReadAllText(gv.mainDirectory + "\\default\\NewModule\\data\\" + filename);
-                }
-            }
-            catch (Exception ex)
-            {
-                gv.errorLog(ex.ToString());
-                return null;
-            }
-            return txt;
+            return gv.GetDataAssetFileString(filename);
         }
         public void MakeDirectoryIfDoesntExist(string filenameAndFullPath)
         {

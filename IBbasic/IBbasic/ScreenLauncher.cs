@@ -134,11 +134,10 @@ namespace IBbasic
             moduleInfoList.Clear();
             titleList.Clear();
 
-            var fileService = DependencyService.Get<ISaveAndLoad>();
-            List<string> modList = fileService.GetAllModuleFiles();
+            List<string> modList = gv.GetAllModuleFiles();
             foreach (string file in modList)
             {
-                string s = fileService.GetModuleFileString(file);
+                string s = gv.GetModuleFileString(file);
                 using (StringReader sr = new StringReader(s))
                 {
                     JsonSerializer serializer = new JsonSerializer();

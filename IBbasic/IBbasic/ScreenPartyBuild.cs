@@ -59,8 +59,7 @@ namespace IBbasic
         public void loadPlayerList()
         {
             pcList.Clear();
-            List<string> files;
-            files = DependencyService.Get<ISaveAndLoad>().GetFiles("\\saves\\" + gv.mod.moduleName + "\\characters", ".saves." + gv.mod.moduleName + ".characters", ".json");
+            List<string> files = gv.GetFiles("\\saves\\" + gv.mod.moduleName + "\\characters", ".saves." + gv.mod.moduleName + ".characters", ".json");
             foreach (string file in files)
             {
                 try
