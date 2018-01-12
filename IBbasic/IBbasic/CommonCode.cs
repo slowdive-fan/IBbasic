@@ -501,10 +501,13 @@ namespace IBbasic
             try
             {
                 string s = gv.GetSaveFileString(filename);
-                using (StringReader sr = new StringReader(s))
+                if (s != "")
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    m = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
+                    using (StringReader sr = new StringReader(s))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        m = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
+                    }
                 }
             }
             catch { }

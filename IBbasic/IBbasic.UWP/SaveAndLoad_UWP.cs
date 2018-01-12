@@ -1,8 +1,10 @@
 ﻿using IBbasic.UWP;
+using Newtonsoft.Json;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -22,11 +24,24 @@ namespace IBbasic.UWP
         }
         public void SaveSettings(Settings toggleSettings)
         {
-
+            //try personal folder first
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "/settings.json";
+            string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
         }
         public void SaveCharacter(string pathAndFilename, Player pc)
         {
-
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "\\" + pathAndFilename;
+            string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
         }
         public void SaveModule(string modFolder, string modFilename)
         {
@@ -34,7 +49,13 @@ namespace IBbasic.UWP
         }
         public void SaveSaveGame(string pathAndFilename, SaveGame save)
         {
-
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = documentsPath + "\\" + pathAndFilename;
+            string json = JsonConvert.SerializeObject(save, Newtonsoft.Json.Formatting.Indented);
+            using (StreamWriter sw = new StreamWriter(filePath))
+            {
+                sw.Write(json.ToString());
+            }
         }
 
         public string LoadText(string filename)
@@ -59,9 +80,20 @@ namespace IBbasic.UWP
             }
             else
             {
+                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+                //try asset area            
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + modFolder + "." + modFilename);
+                if (stream != null)
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+
                 //try from personal folder first
                 var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
                 var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
                 if (File.Exists(filePath))
                 {
@@ -83,7 +115,7 @@ namespace IBbasic.UWP
         {
             //try asset area            
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + assetFilename);
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + modFolder + "." + assetFilename);
             if (stream != null)
             {
                 using (var reader = new System.IO.StreamReader(stream))
@@ -231,6 +263,16 @@ namespace IBbasic.UWP
         public List<string> GetAllModuleFiles()
         {
             List<string> list = new List<string>();
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".mod"))
+                {
+                    list.Add(res);
+                }
+            }
+
             return list;
         }
         public List<string> GetFiles(string path, string assetPath, string endsWith)
@@ -243,7 +285,7 @@ namespace IBbasic.UWP
             {
                 if ((res.EndsWith(endsWith)) && (res.Contains(assetPath)))
                 {
-                    list.Add(res);
+                    list.Add(GetFileNameFromResource(res));
                 }
             }
             /*
@@ -286,6 +328,13 @@ namespace IBbasic.UWP
             {
                 return false;
             }
+        }
+        public string GetFileNameFromResource(string res)
+        {
+            string filename = "";
+            List<string> parts = res.Split('.').ToList();
+            filename = parts[parts.Count - 2] + "." + parts[parts.Count - 1];
+            return filename;
         }
     }
 }

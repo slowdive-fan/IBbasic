@@ -105,9 +105,20 @@ namespace IBbasic.Droid
             }
             else
             {
+                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+                //try asset area            
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + modFilename);
+                if (stream != null)
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+
                 //try from personal folder first
                 var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
                 var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
                 if (File.Exists(filePath))
                 {

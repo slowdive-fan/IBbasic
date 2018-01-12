@@ -445,11 +445,14 @@ namespace IBbasic
         {
             toggleSettings = new Settings();
             string s = this.GetSettingsString();
-            using (StringReader sr = new StringReader(s))
+            if (s != "")
             {
-                JsonSerializer serializer = new JsonSerializer();
-                toggleSettings = (Settings)serializer.Deserialize(sr, typeof(Settings));                
-            }            
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    toggleSettings = (Settings)serializer.Deserialize(sr, typeof(Settings));
+                }
+            }
         }
         public void saveSettings()
         {
@@ -747,8 +750,10 @@ namespace IBbasic
         {
             int mir = 1;
             if (mirror) { mir = -1; }
-            float xscl = 1f + (((float)1 * 2 * scaler) / squareSize);
-            float yscl = 1f + (((float)1 * 2 * scaler) / squareSize);
+            float xscl = 1f;
+            float yscl = 1f;
+            //float xscl = 1f + (((float)1 * 2 * scaler) / squareSize);
+            //float yscl = 1f + (((float)1 * 2 * scaler) / squareSize);
             float angleInDegrees = (angleInRadians * 360f) / (float)(Math.PI * 2);
 
             canvas.Save();

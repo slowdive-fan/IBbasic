@@ -25,6 +25,7 @@ namespace IBbasic
         public List<FloatyText> floatyTextPool = new List<FloatyText>();
         public IBminiTextBox floatyTextBox;
         public int mapStartLocXinPixels;
+        public int map3DViewStartLocXinPixels;
         public int movementDelayInMiliseconds = 100;
         private long timeStamp = 0;
         private bool finishedMove = true;
@@ -1166,8 +1167,637 @@ namespace IBbasic
         }
         public void draw3dView()
         {
+            map3DViewStartLocXinPixels = 2 * gv.squareSize - 10;
+            int scaler = gv.scaler * 2;
+
+            //draw backdrop
+            string backdrop = gv.mod.currentArea.Layer1Filename[gv.mod.PlayerLocationY * gv.mod.currentArea.MapSizeX + gv.mod.PlayerLocationX];
+            IbRect src = new IbRect(0, 0, 87, 87);
+            IbRect dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 88 * scaler, 88 * scaler);
+            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+
+            //draw far row
+            for (int col = -2; col <= 2; col++)
+            {
+                int row = 3;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw front
+                int index = GetSquareIndex(col, row);
+                string wallset = gv.mod.currentArea.Layer2Filename[index];
+                string overlay = gv.mod.currentArea.Layer3Filename[index];
+
+                try
+                {
+                    if (col == -2)
+                    {
+                        int tlX = -4 * scaler;
+                        int tlY = 0;
+                        int brX = 16 * scaler;
+                        int brY = 88 * scaler;
+                        src = new IbRect(188, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                    else if (col == 2)
+                    {
+                        int tlX = 76 * scaler;
+                        int tlY = 0;
+                        int brX = 16 * scaler;
+                        int brY = 88 * scaler;
+                        src = new IbRect(188, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                    else
+                    {
+                        int step = 1;
+                        if (col == 0) { step = 4; }
+                        else if (col == 1) { step = 7; }
+                        int tlY = 0;
+                        int brX = 16 * scaler;
+                        int brY = 88 * scaler;
+                        for (int ii = 0; ii < 3; ii++)
+                        {
+                            if (ii == 1) { src = new IbRect(172, 0, 16, 88); }
+                            else { src = new IbRect(188, 0, 16, 88); }
+                            int tlX = ((((step + ii) * 8) - 4) * scaler);
+                            dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            if (!wallset.Equals("none"))
+                            {
+                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            }
+                            if (!overlay.Equals("none"))
+                            {
+                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            //draw middle row
+            for (int col = -2; col < 0; col++)
+            {
+                int row = 2;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw front
+                int index = GetSquareIndex(col, row);
+                string wallset = gv.mod.currentArea.Layer2Filename[index];
+                string overlay = gv.mod.currentArea.Layer3Filename[index];
+                string trigImage = GetTriggerImageAtSquare(col, row);
+                int tlY = 0;
+                int tlX = 0;
+                int brX = 0;
+                int brY = 0;
+
+                try
+                {
+                    if (col == -2)
+                    {
+                        //draw front (8)
+                        tlX = 0 * scaler;
+                        brX = 16 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(144, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                        //draw right side
+                        tlX = 8 * scaler;
+                        brX = 12 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(160, 0, 12, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                    else if (col == -1)
+                    {
+                        //draw front (24)
+                        tlX = 0 * scaler;
+                        brX = 40 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(120, 0, 40, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                        if (!trigImage.Equals("none"))
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            int tlYY = tlY + 40 * scaler;
+                            int tlXX = tlX + 14 * scaler;
+                            brX = 12 * scaler;
+                            brY = 12 * scaler;
+                            dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                        //draw right side
+                        tlX = 32 * scaler;
+                        brX = 12 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(160, 0, 12, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                }
+                catch { }
+            }
+            for (int col = 2; col >= 0; col--)
+            {
+                int row = 2;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw front
+                int index = GetSquareIndex(col, row);
+                string wallset = gv.mod.currentArea.Layer2Filename[index];
+                string overlay = gv.mod.currentArea.Layer3Filename[index];
+                string trigImage = GetTriggerImageAtSquare(col, row);
+                int tlY = 0;
+                int tlX = 0;
+                int brX = 0;
+                int brY = 0;
+
+                try
+                {
+                    if (col == 2)
+                    {
+                        //draw left side
+                        tlX = 68 * scaler;
+                        brX = 12 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(160, 0, 12, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                        }
+                        //draw front (8)
+                        tlX = 72 * scaler;
+                        brX = 16 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(120, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                        if (!trigImage.Equals("none"))
+                        {
+                            src = new IbRect(0, 0, 8, 48);
+                            int tlYY = tlY + 40 * scaler;
+                            int tlXX = tlX + 14 * scaler;
+                            brX = 2 * scaler;
+                            brY = 12 * scaler;
+                            dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                    }
+                    else if (col == 1)
+                    {
+                        //draw left side
+                        tlX = 44 * scaler;
+                        brX = 12 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(160, 0, 12, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                        }
+                        //draw front (24)
+                        tlX = 48 * scaler;
+                        brX = 40 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(120, 0, 40, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                        if (!trigImage.Equals("none"))
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            int tlYY = tlY + 40 * scaler;
+                            int tlXX = tlX + 14 * scaler;
+                            brX = 12 * scaler;
+                            brY = 12 * scaler;
+                            dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                    }
+                    else if (col == 0)
+                    {
+                        //draw front (24)
+                        tlX = 24 * scaler;
+                        brX = 40 * scaler;
+                        brY = 88 * scaler;
+                        src = new IbRect(120, 0, 40, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                        if (!trigImage.Equals("none"))
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            int tlYY = tlY + 40 * scaler;
+                            int tlXX = tlX + 14 * scaler;
+                            brX = 12 * scaler;
+                            brY = 12 * scaler;
+                            dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                    }
+                }
+                catch { }
+            }
+            for (int col = -2; col <= 2; col++)
+            {
+                int row = 1;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw left
+                if (col < 0)
+                {
+                    //string tile = GetLeftWallTile(col, row);
+                    int index = GetSquareIndex(col, row);
+                    string wallset = gv.mod.currentArea.Layer2Filename[index];
+                    string overlay = gv.mod.currentArea.Layer3Filename[index];
+                    string trigImage = GetTriggerImageAtSquare(col, row);
+                    int tlX = ((((col + 2) * 24) - 8) * scaler);
+                    int tlY = 0;
+                    int brX = 24 * scaler;
+                    int brY = 88 * scaler;
+
+                    try
+                    {
+                        src = new IbRect(96, 0, 24, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (col == -2)
+                        {
+                            src = new IbRect(104, 0, 8, 88);
+                            dst = new IbRect(((((col + 2) * 24) - 0) * scaler) + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 8 * scaler, 88 * scaler);
+                        }
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                    catch { }
+                }
+                //draw right
+                if (col > 0)
+                {
+                    int index = GetSquareIndex(col, row);
+                    string wallset = gv.mod.currentArea.Layer2Filename[index];
+                    string overlay = gv.mod.currentArea.Layer3Filename[index];
+                    int tlX = ((((col + 2) * 24) - 24) * scaler);
+                    int tlY = 0;
+                    int brX = 24 * scaler;
+                    int brY = 88 * scaler;
+
+                    try
+                    {
+                        src = new IbRect(96, 0, 24, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (col == 2)
+                        {
+                            src = new IbRect(104, 0, 8, 88);
+                            dst = new IbRect(((((col + 2) * 24) - 16) * scaler) + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 8 * scaler, 88 * scaler);
+                        }
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                        }
+                    }
+                    catch { }
+                }
+            }
+
+            //draw near row
+            for (int col = -1; col <= 1; col++)
+            {
+                int row = 1;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw front
+                //string tile = GetFrontWallTile(col, row);
+                int index = GetSquareIndex(col, row);
+                string wallset = gv.mod.currentArea.Layer2Filename[index];
+                string overlay = gv.mod.currentArea.Layer3Filename[index];
+                string trigImage = GetTriggerImageAtSquare(col, row);
+                int tlX = ((((col + 1) * 56) - 48) * scaler);
+                int tlY = 0;
+                int brX = 72 * scaler;
+                int brY = 88 * scaler;
+
+                try
+                {
+                    src = new IbRect(24, 0, 72, 88);
+                    dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                    if (col == -1)
+                    {
+                        src = new IbRect(72, 0, 24, 88);
+                        dst = new IbRect(((((col + 1) * 56) - 0) * scaler) + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 24 * scaler, 88 * scaler);
+                    }
+                    else if (col == 1)
+                    {
+                        src = new IbRect(24, 0, 24, 88);
+                        dst = new IbRect(((((col + 1) * 56) - 48) * scaler) + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 24 * scaler, 88 * scaler);
+                    }
+                    if (!wallset.Equals("none"))
+                    {
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                    }
+                    if (!overlay.Equals("none"))
+                    {
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                    }
+                    if (!trigImage.Equals("none"))
+                    {
+                        int tlYY = tlY + 40 * scaler;
+                        int tlXX = tlX + 28 * scaler;
+                        brY = 24 * scaler;
+                        if (col == -1)
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            tlXX = tlX + 56 * scaler;
+                            brX = 24 * scaler;
+                        }
+                        else if (col == 0)
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            tlXX = tlX + 28 * scaler;
+                            brX = 24 * scaler;
+                        }
+                        else if (col == 1)
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            tlXX = tlX + 0 * scaler;
+                            brX = 24 * scaler;
+                        }
+                        dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                    }
+                }
+                catch { }
+            }
+            for (int col = -1; col <= 1; col++)
+            {
+                int row = 0;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw left
+                if (col == -1)
+                {
+                    //string tile = GetLeftWallTile(col, row);
+                    int index = GetSquareIndex(col, row);
+                    string wallset = gv.mod.currentArea.Layer2Filename[index];
+                    string overlay = gv.mod.currentArea.Layer3Filename[index];
+                    int tlX = 0;
+                    int tlY = 0;
+                    int brX = 16 * scaler;
+                    int brY = 88 * scaler;
+
+                    try
+                    {
+                        src = new IbRect(0, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        }
+                    }
+                    catch { }
+                }
+                //draw right
+                if (col == 1)
+                {
+                    int index = GetSquareIndex(col, row);
+                    string wallset = gv.mod.currentArea.Layer2Filename[index];
+                    string overlay = gv.mod.currentArea.Layer3Filename[index];
+                    int tlX = 72 * scaler;
+                    int tlY = 0;
+                    int brX = 16 * scaler;
+                    int brY = 88 * scaler;
+
+                    try
+                    {
+                        src = new IbRect(0, 0, 16, 88);
+                        dst = new IbRect(tlX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                        if (!wallset.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                        }
+                        if (!overlay.Equals("none"))
+                        {
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                        }
+                    }
+                    catch { }
+                }
+            }
+            for (int col = 0; col <= 0; col++)
+            {
+                int row = 0;
+                //check if square is on map first
+                if (!IsSquareOnMap(col, row))
+                {
+                    continue;
+                }
+                //draw currently on square Trigger Image
+                if (col == 0)
+                {
+                    //string tile = GetLeftWallTile(col, row);
+                    int index = GetSquareIndex(col, row);
+                    string trigImage = GetTriggerImageAtSquare(col, row);
+
+                    try
+                    {
+                        if (!trigImage.Equals("none"))
+                        {
+                            src = new IbRect(0, 0, 48, 48);
+                            int tlXX = 20 * scaler;
+                            int tlYY = 40 * scaler;
+                            int brX = 48 * scaler;
+                            int brY = 48 * scaler;
+                            dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), tlYY + (1 * gv.squareSize * gv.scaler), brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                    }
+                    catch { }
+                }
+            }
+        }
+        public string GetTriggerImageAtSquare(int col, int row)
+        {
+            string filename = "none";
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    int x = 0;
+                    int y = 0;
+                    if (gv.mod.PlayerFacingDirection == 0) //NORTH
+                    {
+                        //change x and y to this direction
+                        x = gv.mod.PlayerLocationX + col;
+                        y = gv.mod.PlayerLocationY - row;
+                    }
+                    else if (gv.mod.PlayerFacingDirection == 1) //EAST
+                    {
+                        //change x and y to this direction
+                        x = gv.mod.PlayerLocationX + row;
+                        y = gv.mod.PlayerLocationY + col;
+                    }
+                    else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+                    {
+                        //change x and y to this direction
+                        x = gv.mod.PlayerLocationX - col;
+                        y = gv.mod.PlayerLocationY + row;
+                    }
+                    else //WEST
+                    {
+                        //change x and y to this direction
+                        x = gv.mod.PlayerLocationX - row;
+                        y = gv.mod.PlayerLocationY - col;
+                    }
+                    if ((p.X == x) && (p.Y == y))
+                    {
+                        return t.ImageFileName;
+                    }
+                }
+            }
+            return filename;
+        }
+        public int GetSquareIndex(int col, int row)
+        {
+            if (gv.mod.PlayerFacingDirection == 0) //NORTH
+            {
+                //change x and y to this direction
+                int x = gv.mod.PlayerLocationX + col;
+                int y = gv.mod.PlayerLocationY - row;
+                return y * gv.mod.currentArea.MapSizeX + x;
+            }
+            else if (gv.mod.PlayerFacingDirection == 1) //EAST
+            {
+                //change x and y to this direction
+                int x = gv.mod.PlayerLocationX + row;
+                int y = gv.mod.PlayerLocationY + col;
+                return y * gv.mod.currentArea.MapSizeX + x;
+            }
+            else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+            {
+                //change x and y to this direction
+                int x = gv.mod.PlayerLocationX - col;
+                int y = gv.mod.PlayerLocationY + row;
+                return y * gv.mod.currentArea.MapSizeX + x;
+            }
+            else //WEST
+            {
+                //change x and y to this direction
+                int x = gv.mod.PlayerLocationX - row;
+                int y = gv.mod.PlayerLocationY - col;
+                return y * gv.mod.currentArea.MapSizeX + x;
+            }
+        }
+        public void draw3dViewOld()
+        {
             mapStartLocXinPixels = 2 * gv.squareSize - 10;
-            int scaler = 4;
+            int scaler = gv.scaler * 2;
+
             //draw backdrop
             string backdrop = GetWallBackDrop();
             IbRect src = new IbRect(0, 0, 87, 87);
