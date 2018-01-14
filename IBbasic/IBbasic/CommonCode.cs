@@ -2040,7 +2040,13 @@ namespace IBbasic
         {
             try
             {
-                gv.screenConvo.currentConvo = gv.mod.getConvoByName(tag);
+                bool foundConvo = gv.mod.setCurrentConvo(tag, gv);
+                if (!foundConvo)
+                {
+                    gv.sf.MessageBox("Convo: " + tag + " does not exist in the module...check the spelling of the 'cnv.ConvoFileName'");
+                    return;
+                }
+                //gv.screenConvo.currentConvo = gv.mod.getConvoByName(tag);
                 if (gv.screenConvo.currentConvo != null)
                 {
                     gv.screenType = "convo";
@@ -2131,7 +2137,12 @@ namespace IBbasic
         {
             try
             {
-                gv.mod.currentEncounter = gv.mod.getEncounter(name);
+                bool foundEnc = gv.mod.setCurrentEncounter(name, gv);
+                if (!foundEnc)
+                {
+                    gv.sf.MessageBox("Encounter: " + name + " does not exist in the module...check the spelling of the 'enc.encounterName'");
+                    return;
+                }
                 if (gv.mod.currentEncounter.encounterCreatureRefsList.Count > 0)
                 {
                     gv.screenCombat.doCombatSetup();

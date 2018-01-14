@@ -128,7 +128,7 @@ namespace IBbasic
         {
 
         }
-              
+
         public bool setCurrentArea(string areaFilename, GameView gv)
         {
             try
@@ -151,6 +151,72 @@ namespace IBbasic
                     {
                         this.moduleAreasObjects.Add(are);
                         this.currentArea = are;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                gv.errorLog(ex.ToString());
+                return false;
+            }
+        }
+        public bool setCurrentEncounter(string EncFilename, GameView gv)
+        {
+            try
+            {
+                foreach (Encounter enc in this.moduleEncountersList)
+                {
+                    if (enc.encounterName.Equals(EncFilename))
+                    {
+                        this.currentEncounter = enc;
+                        return true;
+                    }
+                }
+                //didn't find the area in the mod list so try and load it
+                string s = gv.GetModuleAssetFileString(this.moduleName, EncFilename + ".enc");
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Encounter enc = (Encounter)serializer.Deserialize(sr, typeof(Encounter));
+                    if (enc != null)
+                    {
+                        this.moduleEncountersList.Add(enc);
+                        this.currentEncounter = enc;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                gv.errorLog(ex.ToString());
+                return false;
+            }
+        }
+        public bool setCurrentConvo(string ConvoFilename, GameView gv)
+        {
+            try
+            {
+                foreach (Convo cnv in this.moduleConvoList)
+                {
+                    if (cnv.ConvoFileName.Equals(ConvoFilename))
+                    {
+                        gv.screenConvo.currentConvo = cnv;
+                        return true;
+                    }
+                }
+                //didn't find the area in the mod list so try and load it
+                string s = gv.GetModuleAssetFileString(this.moduleName, ConvoFilename + ".dlg");
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Convo cnv = (Convo)serializer.Deserialize(sr, typeof(Convo));
+                    if (cnv != null)
+                    {
+                        this.moduleConvoList.Add(cnv);
+                        gv.screenConvo.currentConvo = cnv;
                         return true;
                     }
                 }

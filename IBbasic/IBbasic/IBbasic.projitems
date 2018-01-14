@@ -335,7 +335,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pc_m_fig1_pc.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pc_m_fig2_pc.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pc_m_wiz_pc.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pc_stealth.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pptr_BeanL.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pptr_DwarfClericFemale2_L.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\pptr_DwarfClericFemale_L.png" />

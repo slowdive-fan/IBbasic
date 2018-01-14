@@ -182,8 +182,8 @@ namespace IBbasic
             //this.Width = 785; //785
             //this.Height = 480; //480
 
-            //screenWidth = this.Width;
-            //screenHeight = this.Height;
+            //screenWidth = 2436;
+            //screenHeight = 1125;
             screenWidth = App.ScreenWidth;
             screenHeight = App.ScreenHeight;
             /*
