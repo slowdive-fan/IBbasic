@@ -500,7 +500,7 @@ namespace IBbasic
             SaveGame m = new SaveGame();
             try
             {
-                string s = gv.GetSaveFileString(filename);
+                string s = gv.GetSaveFileString(gv.mod.moduleName, filename);
                 if (s != "")
                 {
                     using (StringReader sr = new StringReader(s))
@@ -647,7 +647,7 @@ namespace IBbasic
             saveMod.minutesSinceLastRationConsumed = gv.mod.minutesSinceLastRationConsumed;
 
             //SAVE THE FILE
-            gv.SaveSaveGame("\\saves\\" + gv.mod.moduleName + "\\" + filename, saveMod);
+            gv.SaveSaveGame(gv.mod.moduleName, filename, saveMod);
             /*string filepath = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename;
             MakeDirectoryIfDoesntExist(filepath);
             string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
@@ -671,7 +671,7 @@ namespace IBbasic
             //  load a new module (actually already have a new module at this point from launch screen		
             //  load the saved game module
             SaveGame saveMod = null;
-            string strg = gv.GetSaveFileString(filename);
+            string strg = gv.GetSaveFileString(gv.mod.moduleName, filename);
             using (StringReader sr = new StringReader(strg))
             {
                 JsonSerializer serializer = new JsonSerializer();

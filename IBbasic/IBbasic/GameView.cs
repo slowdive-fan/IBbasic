@@ -133,20 +133,7 @@ namespace IBbasic
 
             //this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GameView_MouseWheel);
             mainDirectory = Directory.GetCurrentDirectory();
-            /*
-            try
-            {
-                playerButtonClick.SoundLocation = mainDirectory + "\\default\\NewModule\\sounds\\btn_click.wav";
-                playerButtonClick.Load();
-            }
-            catch (Exception ex) { errorLog(ex.ToString()); } 
-            try
-            {
-                playerButtonEnter.SoundLocation = mainDirectory + "\\default\\NewModule\\sounds\\btn_hover.wav";
-                playerButtonEnter.Load();
-            }
-            catch (Exception ex) { errorLog(ex.ToString()); }
-            */
+            
             //this.MinimumSize = new Size(100, 100);
 
             #region screen size selection
@@ -182,27 +169,9 @@ namespace IBbasic
             //this.Width = 785; //785
             //this.Height = 480; //480
 
-            //screenWidth = 2436;
-            //screenHeight = 1125;
             screenWidth = App.ScreenWidth;
             screenHeight = App.ScreenHeight;
-            /*
-#if __ANDROID__
-	            screenWidth = (int)Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density;
-	            screenWidth = (int)Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density;
-#endif
-
-#if __IOS___
-	            screenWidth = UIScreen.MainScreen.Bounds.Height; 
-	            screenWidth = UIScreen.MainScreen.Bounds.Width;
-#endif
-
-#if __UWP__
-	            screenWidth = Window.Current.Bounds.Height; 
-	            screenWidth = Window.Current.Bounds.Width;
-#endif
-            */
-
+            
             if (screenWidth > screenHeight)
             {
                 scaler = screenHeight / defaultScreenDesignHeight;
@@ -258,7 +227,7 @@ namespace IBbasic
             //TODOanimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
 
             log = new IB2HtmlLogBox(this);
-            log.tbXloc = (8 * uiSquareSize) + oXshift + (2 * scaler);
+            log.tbXloc = (8 * uiSquareSize) + oXshift / 2 + (8 * scaler);
             log.tbYloc = 2;
             log.tbWidth = 3 * uiSquareSize; //add one char because the word wrap calculates word length plus one space at end
             log.tbHeight = 4 * uiSquareSize;
@@ -301,7 +270,7 @@ namespace IBbasic
             gameTimerStopwatch.Start();
             previousTime = gameTimerStopwatch.ElapsedMilliseconds;
             //gameTimer.Start();
-        }
+        }        
         public void setupFonts()
         {
             fontWidth = 6 * scaler;
@@ -1004,10 +973,10 @@ namespace IBbasic
                 {
                     for (int y = 0; y <= 2; y++)
                     {
-                        DrawText("FPS:" + fps.ToString(), x + 5, screenHeight - txtH - 5 + y, "bk");
+                        DrawText("FPS:" + fps.ToString(), x + 5, screenHeight - oYshift - txtH - 5 + y, "bk");
                     }
                 }
-                DrawText("FPS:" + fps.ToString(), 5, screenHeight - txtH - 5, "wh");
+                DrawText("FPS:" + fps.ToString(), 5, screenHeight - oYshift - txtH - 5, "wh");
             }
             if (itemListSelector.showIBminiItemListSelector)
             {
@@ -1161,6 +1130,20 @@ namespace IBbasic
                 }
                 if (touchEnabled)
                 {
+                    //do touch scrolling if in a scrolling text box
+                    if (showMessageBox)
+                    {
+                        messageBox.onTouchSwipe(eX, eY, eventType);
+                    }
+                    else if ((screenType.Equals("main")) || (screenType.Equals("combat")))
+                    {
+                        log.onTouchSwipe(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsConvoEditor"))
+                    {
+                        //tsConvoEditor.onTouchSwipe(eX, eY, eventType);
+                    }
+
                     //TOOLSET SCREENS
                     if (screenType.Equals("tsModule"))
                     {
@@ -1412,9 +1395,9 @@ namespace IBbasic
         {
             DependencyService.Get<ISaveAndLoad>().SaveSettings(tglSettings);
         }
-        public void SaveSaveGame(string pathAndFilename, SaveGame save)
+        public void SaveSaveGame(string modName, string filename, SaveGame save)
         {
-            DependencyService.Get<ISaveAndLoad>().SaveSaveGame(pathAndFilename, save);
+            DependencyService.Get<ISaveAndLoad>().SaveSaveGame(modName, filename, save);
         }
         public void SaveCharacter(string pathAndFilename, Player pc)
         {
@@ -1448,9 +1431,9 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetSettingsString();
         }
-        public string GetSaveFileString(string filename)
+        public string GetSaveFileString(string modName, string filename)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetSaveFileString(filename);
+            return DependencyService.Get<ISaveAndLoad>().GetSaveFileString(modName, filename);
         }
 
 

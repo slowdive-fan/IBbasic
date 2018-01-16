@@ -40,6 +40,20 @@ namespace IBbasic.Droid
 
             LoadApplication(new App());
         }
+               
+        /*public bool OnKeyUp(int keyCode, KeyEvent event)
+        {
+                super.onKeyUp(keyCode,event);
+            try
+            {
+                mGameView.KeyUp(keyCode, event);
+            }
+            catch (Exception ex)
+            {
+                //print exception
+            }
+            return true;
+        }*/
     }
 }
 

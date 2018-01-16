@@ -48,10 +48,12 @@ namespace IBbasic.Droid
         {
 
         }
-        public void SaveSaveGame(string pathAndFilename, SaveGame save)
+        public void SaveSaveGame(string modName, string filename, SaveGame save)
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\" + pathAndFilename;
+            var filePath = documentsPath + "/saves/" + modName + "/" + filename;
+            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+            file.Directory.Create(); // If the directory already exists, this method does nothing.
             string json = JsonConvert.SerializeObject(save, Newtonsoft.Json.Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(filePath))
             {
@@ -202,11 +204,11 @@ namespace IBbasic.Droid
             }
             return "";
         }
-        public string GetSaveFileString(string filename)
+        public string GetSaveFileString(string modName, string filename)
         {
             //try from personal folder first
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "/saves/" + filename;
+            var filePath = documentsPath + "/saves/" + modName + "/" + filename;
             if (File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);
@@ -214,7 +216,7 @@ namespace IBbasic.Droid
             else //try from external folder
             {
                 Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                filePath = sdCard.AbsolutePath + "/IBbasic/saves/" + filename;
+                filePath = sdCard.AbsolutePath + "/IBbasic/saves/" + modName + "/" + filename;
                 if (File.Exists(filePath))
                 {
                     return File.ReadAllText(filePath);

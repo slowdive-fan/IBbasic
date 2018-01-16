@@ -26,7 +26,10 @@ namespace IBbasic
         public int tbXloc = 10;
         public int tbYloc = 10;
         public float fontHeightToWidthRatio = 1.0f;
-        public IbbButton btnReturn = null;        
+        public IbbButton btnReturn = null;
+        public bool touchIsDown = false;
+        public int touchMoveDeltaY = 0;
+        public int lastTouchMoveLocationY = 0;
 
         public IBminiMessageBox()
         {
@@ -157,6 +160,58 @@ namespace IBbasic
             if (currentTopLineIndex < 0)
             {
                 currentTopLineIndex = 0;
+            }
+        }
+        private bool isTouchWithinTextBox(int eX, int eY)
+        {
+            if ((eX > (int)(currentLocX * gv.scaler))
+                    && (eX < (int)(tbWidth * gv.scaler) + (int)(currentLocX * gv.scaler))
+                    && (eY > (int)(currentLocY * gv.scaler))
+                    && (eY < (int)(tbHeight * gv.scaler) + (int)(currentLocY * gv.scaler)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void onTouchSwipe(int eX, int eY, MouseEventType.EventType eventType)
+        {
+            if (isTouchWithinTextBox(eX, eY))
+            {
+                switch (eventType)
+                {
+                    case MouseEventType.EventType.MouseDown:
+
+                        touchIsDown = true;
+                        lastTouchMoveLocationY = eY;
+                        touchMoveDeltaY = 0;
+                        break;
+
+                    case MouseEventType.EventType.MouseMove:
+
+                        touchMoveDeltaY = lastTouchMoveLocationY - eY;
+                        if (touchMoveDeltaY > gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        else if (touchMoveDeltaY< -1 * gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(-1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        break;
+
+                    case MouseEventType.EventType.MouseUp:
+
+                        touchIsDown = false;
+                        touchMoveDeltaY = 0;
+                        break;
+                }
             }
         }
         /*private bool isMouseWithinTextBox(MouseEventArgs e)

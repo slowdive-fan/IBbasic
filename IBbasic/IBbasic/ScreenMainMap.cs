@@ -144,7 +144,7 @@ namespace IBbasic
         }
         public void createButtonsPanel()
         {
-            buttonPanelLocX = 0 - gv.oXshift + (gv.pS * gv.scaler);
+            buttonPanelLocX = -gv.oXshift / 2 + (gv.pS * gv.scaler);
             buttonPanelLocY = 0;
 
             if (tglPortraits == null)
@@ -809,7 +809,8 @@ namespace IBbasic
         }
         public void createArrowsPanel()
         {
-            arrowPanelLocX = (8 * gv.uiSquareSize) + gv.oXshift;
+            arrowPanelLocX = (8 * gv.uiSquareSize) + gv.oXshift / 2 + (8 * gv.scaler);
+            //arrowPanelLocX = (8 * gv.uiSquareSize);
             arrowPanelLocY = (4 * gv.uiSquareSize);
                         
             if (btnArrowUp == null)
@@ -871,144 +872,6 @@ namespace IBbasic
             btnArrowWait.Y = arrowPanelLocY + 1 * gv.uiSquareSize;
             btnArrowWait.Height = (int)(gv.ibbheight * gv.scaler);
             btnArrowWait.Width = (int)(gv.ibbwidthR * gv.scaler);
-
-            /*
-            //create buttons panel
-            IB2Panel newPanel = new IB2Panel(gv);
-            newPanel.tag = "arrowPanel";
-            newPanel.backgroundImageFilename = "none";
-            newPanel.shownLocX = 272 + gv.oXshift / gv.scaler;
-            newPanel.shownLocY = 136;
-            newPanel.Width = 102;
-            newPanel.Height = 102;
-
-            //button
-            IB2Button newButton = new IB2Button(gv);
-            newButton.tag = "ctrlUpArrow";
-            newButton.ImgFilename = "btn_small";
-            newButton.ImgOffFilename = "btn_small_off";
-            newButton.ImgOnFilename = "btn_small_on";
-            newButton.Img2Filename = "ctrl_up_arrow";
-            newButton.Img2OffFilename = "";
-            newButton.Img3Filename = "";
-            newButton.GlowFilename = "btn_small_glow";
-            newButton.btnState = buttonState.Normal;
-            newButton.btnNotificationOn = false;
-            newButton.glowOn = false;
-            newButton.Text = "";
-            newButton.Quantity = "";
-            newButton.HotKey = "";
-            newButton.X = 34;
-            newButton.Y = 0;
-            newButton.IBScript = "none";
-            newButton.Width = 34;
-            newButton.Height = 34;
-            newButton.scaler = 0.8f;
-            newButton.show = true;
-            newPanel.buttonList.Add(newButton);
-
-            //button
-            newButton = new IB2Button(gv);
-            newButton.tag = "ctrlLeftArrow";
-            newButton.ImgFilename = "btn_small";
-            newButton.ImgOffFilename = "btn_small_off";
-            newButton.ImgOnFilename = "btn_small_on";
-            newButton.Img2Filename = "ctrl_left_arrow";
-            newButton.Img2OffFilename = "";
-            newButton.Img3Filename = "";
-            newButton.GlowFilename = "btn_small_glow";
-            newButton.btnState = buttonState.Normal;
-            newButton.btnNotificationOn = false;
-            newButton.glowOn = false;
-            newButton.Text = "";
-            newButton.Quantity = "";
-            newButton.HotKey = "";
-            newButton.X = 0;
-            newButton.Y = 34;
-            newButton.IBScript = "none";
-            newButton.Width = 34;
-            newButton.Height = 34;
-            newButton.scaler = 0.8f;
-            newButton.show = true;
-            newPanel.buttonList.Add(newButton);
-
-            //button
-            newButton = new IB2Button(gv);
-            newButton.tag = "ctrlRightArrow";
-            newButton.ImgFilename = "btn_small";
-            newButton.ImgOffFilename = "btn_small_off";
-            newButton.ImgOnFilename = "btn_small_on";
-            newButton.Img2Filename = "ctrl_right_arrow";
-            newButton.Img2OffFilename = "";
-            newButton.Img3Filename = "";
-            newButton.GlowFilename = "btn_small_glow";
-            newButton.btnState = buttonState.Normal;
-            newButton.btnNotificationOn = false;
-            newButton.glowOn = false;
-            newButton.Text = "";
-            newButton.Quantity = "";
-            newButton.HotKey = "";
-            newButton.X = 68;
-            newButton.Y = 34;
-            newButton.IBScript = "none";
-            newButton.Width = 34;
-            newButton.Height = 34;
-            newButton.scaler = 0.8f;
-            newButton.show = true;
-            newPanel.buttonList.Add(newButton);
-
-            //button
-            newButton = new IB2Button(gv);
-            newButton.tag = "ctrlDownArrow";
-            newButton.ImgFilename = "btn_small";
-            newButton.ImgOffFilename = "btn_small_off";
-            newButton.ImgOnFilename = "btn_small_on";
-            newButton.Img2Filename = "ctrl_down_arrow";
-            newButton.Img2OffFilename = "";
-            newButton.Img3Filename = "";
-            newButton.GlowFilename = "btn_small_glow";
-            newButton.btnState = buttonState.Normal;
-            newButton.btnNotificationOn = false;
-            newButton.glowOn = false;
-            newButton.Text = "";
-            newButton.Quantity = "";
-            newButton.HotKey = "";
-            newButton.X = 34;
-            newButton.Y = 68;
-            newButton.IBScript = "none";
-            newButton.Width = 34;
-            newButton.Height = 34;
-            newButton.scaler = 0.8f;
-            newButton.show = true;
-            newPanel.buttonList.Add(newButton);
-
-            //button
-            newButton = new IB2Button(gv);
-            newButton.tag = "btnWait";
-            newButton.ImgFilename = "btn_small";
-            newButton.ImgOffFilename = "btn_small_off";
-            newButton.ImgOnFilename = "btn_small_on";
-            newButton.Img2Filename = "btnwait";
-            newButton.Img2OffFilename = "";
-            newButton.Img3Filename = "";
-            newButton.GlowFilename = "btn_small_glow";
-            newButton.btnState = buttonState.Normal;
-            newButton.btnNotificationOn = false;
-            newButton.glowOn = false;
-            newButton.Text = "";
-            newButton.Quantity = "";
-            newButton.HotKey = "";
-            newButton.X = 34;
-            newButton.Y = 34;
-            newButton.IBScript = "none";
-            newButton.Width = 34;
-            newButton.Height = 34;
-            newButton.scaler = 0.8f;
-            newButton.show = true;
-            newPanel.buttonList.Add(newButton);
-
-            mainUiLayout.panelList.Add(newPanel);
-            */
         }
         
         //MAIN SCREEN UPDATE
@@ -2727,12 +2590,24 @@ namespace IBbasic
 
             int txtH = (int)gv.fontHeight;
             int xLoc = 1 * gv.uiSquareSize + (2 * gv.scaler);
+            if (gv.mod.currentArea.Is3dArea)
+            {
+                xLoc = map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler);
+            }
             int yLoc = (7 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
+            if (gv.mod.currentArea.Is3dArea)
+            {
+                yLoc = (6 * gv.uiSquareSize) - (2 * gv.fontHeight);
+            }
             if (showTogglePanel)
             {
                 yLoc = (6 * gv.uiSquareSize) + gv.oYshift - gv.fontHeight - gv.fontHeight;
+                if (gv.mod.currentArea.Is3dArea)
+                {
+                    yLoc = (6 * gv.uiSquareSize) - (2 * gv.fontHeight);
+                }
             }
-                      
+
             for (int x = 0; x <= 2; x++)
             {
                 for (int y = 0; y <= 2; y++)
@@ -2875,8 +2750,8 @@ namespace IBbasic
         {
             if (gv.mod.currentArea.Is3dArea)
             {
-                int width3 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
-                int height3 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
+                int width3 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png").Width;
+                int height3 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png").Height;
                 IbRect src3 = new IbRect(0, 0, width3, height3);
                 IbRect dst3 = new IbRect(0 - (170 * gv.scaler), 0 - (102 * gv.scaler), width3 * gv.scaler, height3 * gv.scaler);
                 gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png"), src3, dst3);
@@ -2893,7 +2768,7 @@ namespace IBbasic
             int width = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Width;
             int height = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Height;
             IbRect src = new IbRect(0, 0, width, height);
-            IbRect dst = new IbRect(8 * gv.uiSquareSize + (gv.oXshift / gv.scaler) * gv.scaler, 0, width * gv.scaler, height * gv.scaler);
+            IbRect dst = new IbRect(gv.log.tbXloc - (2 * gv.scaler), gv.log.tbYloc, width * gv.scaler, height * gv.scaler);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
                         
             createArrowsPanel();

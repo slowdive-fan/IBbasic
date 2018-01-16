@@ -43,7 +43,12 @@ namespace IBbasic
         private IbbButton btnCollapseAllNodes = null;
         private IbbButton btnSettings = null;
         private IbbButton btnHelp = null;
-        
+
+        //touch scrolling stuff
+        public bool touchIsDown = false;
+        public int touchMoveDeltaY = 0;
+        public int lastTouchMoveLocationY = 0;
+
         //Convo Nodes
         public IbbToggle tglParentNode = null;
         public IbbToggle tglSelectedNode = null;
@@ -2077,15 +2082,6 @@ namespace IBbasic
                 currentTopLineIndex = 0;
             }
         }
-        private bool isMouseWithinTextBox(int x, int y)
-        {
-            if (x < mapStartLocXinPixels) { return false; }
-            if (y < 0) { return false; }
-            if (x > mapStartLocXinPixels + gv.squareSize * gv.scaler * 10) { return false; }
-            if (y > gv.squareSize * gv.scaler * 10) { return false; }
-            return true;
-            
-        }
         /*public void onMouseWheel(object sender, MouseEventArgs e)
         {
             int eX = e.X - gv.oXshift;
@@ -2102,6 +2098,53 @@ namespace IBbasic
                 }
             }
         }*/
+        private bool isMouseWithinTextBox(int x, int y)
+        {
+            if (x < mapStartLocXinPixels) { return false; }
+            if (y < 0) { return false; }
+            if (x > mapStartLocXinPixels + gv.squareSize * gv.scaler * 10) { return false; }
+            if (y > gv.squareSize * gv.scaler * 10) { return false; }
+            return true;
+
+        }
+        public void onTouchSwipe(int eX, int eY, MouseEventType.EventType eventType)
+        {
+            if (isMouseWithinTextBox(eX, eY))
+            {                
+                switch (eventType)
+                {
+                    case MouseEventType.EventType.MouseDown:
+
+                        touchIsDown = true;
+                        lastTouchMoveLocationY = eY;
+                        touchMoveDeltaY = 0;
+                        break;
+
+                    case MouseEventType.EventType.MouseMove:
+
+                        touchMoveDeltaY = lastTouchMoveLocationY - eY;
+                        if (touchMoveDeltaY > gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        else if (touchMoveDeltaY< -1 * gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(-1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        break;
+
+                    case MouseEventType.EventType.MouseUp:
+
+                        touchIsDown = false;
+                        touchMoveDeltaY = 0;
+                        break;
+                }
+            }
+        }
         public int getIndexOfCondSelected()
         {
             if ((tglCond1Radio.toggleOn) && (editNode.conditions.Count > 0))
