@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace IBbasic
 {
@@ -12,6 +13,7 @@ namespace IBbasic
     {
         //private Module gv.mod;
         private GameView gv;
+        bool dialogOpen = false;
 
         //private IbbButton btnUnzip = null;
         //private IbbButton btnZip = null;
@@ -116,42 +118,7 @@ namespace IBbasic
                     }
                     else if (btnCreate.getImpact(x, y))
                     {
-                        //tutorialQuickStartGuide();
-                        List<string> itlist = new List<string>();
-                        itlist.Add("New Module");
-
-                        var list2 = loadModuleNamesToList();
-                        foreach (string s in list2)
-                        {
-                            itlist.Add(s);
-                        }
-                        
-                        /*TODO using (ListItemSelector itSel = new ListItemSelector(gv, itlist, "Module to Edit"))
-                        {
-                            var ret = itSel.ShowDialog();
-
-                            if (ret == DialogResult.OK)
-                            {
-                                //MessageBox.Show("you selected index: " + itSel.selectedIndex);
-                                if (itSel.selectedIndex == 0)
-                                {
-                                    gv.mod = gv.cc.LoadModule("NewModule.mod");
-                                    gv.resetGame();
-                                    gv.screenType = "tsModule";
-                                }
-                                else if (itSel.selectedIndex > 0)
-                                {
-                                    //MessageBox.Show("opening an existing module");
-                                    gv.mod = gv.cc.LoadModule(itlist[itSel.selectedIndex] + ".mod");
-                                    gv.resetGame();
-                                    gv.screenType = "tsModule";
-                                }
-                                else
-                                {
-                                    MessageBox.Show("didn't find a selection");
-                                }
-                            }
-                        }*/
+                        SelectModuleToEdit();
                     }
                     break;
 
@@ -172,12 +139,48 @@ namespace IBbasic
             }
         }
 
+        public async void OnAlertYesNoClicked()
+        {
+            string myinput = await gv.InputBox();
+            btnCreate.Text = myinput;
+            gv.touchEnabled = true;
+        }
+        public async void SelectModuleToEdit()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("New Module");
+
+            var list2 = loadModuleNamesToList();
+            foreach (string s in list2)
+            {
+                itlist.Add(s);
+            }
+                        
+            string selectedModule = await gv.ListViewPage(itlist, "Module to Edit");
+            
+            //btnCreate.Text = selectedModule;
+
+            if (selectedModule.Equals("New Module"))
+            {
+                gv.mod = gv.cc.LoadModule("NewModule.mod");
+                gv.resetGame();
+                gv.screenType = "tsModule";
+            }
+            else
+            {
+                gv.mod = gv.cc.LoadModule(selectedModule + ".mod");
+                gv.resetGame();
+                gv.screenType = "tsModule";
+            }
+            
+            gv.touchEnabled = true;
+        }
+
         public List<string> loadModuleNamesToList()
         {
             List<string> retList = new List<string>();
-            //string[] files;
-
-            //files = Directory.GetFiles(gv.mainDirectory + "\\modules", "*.mod", SearchOption.AllDirectories);
             List<string> modList = gv.GetAllModuleFiles();
             foreach (string file in modList)
             {

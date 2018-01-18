@@ -34,7 +34,7 @@ namespace IBbasic
 
             mainDirectory = Directory.GetCurrentDirectory();
 
-            gv = new GameView();
+            gv = new GameView(this);
 
             //SetUpBitmap();
 

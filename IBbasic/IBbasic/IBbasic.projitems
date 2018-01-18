@@ -59,6 +59,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ItemRefs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JournalEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JournalQuest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ListViewPage1.xaml.cs">
+      <DependentUpon>ListViewPage1.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)LocalInt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LocalString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
@@ -3931,5 +3935,11 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\3dArea1.are" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\containerTrapDC15.dlg" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\new3DareaSmall.are" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ListViewPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

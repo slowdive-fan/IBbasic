@@ -354,115 +354,7 @@ namespace IBbasic
 
                         if (btnAreaEditor.getImpact(x, y))
                         {
-                            //tutorialQuickStartGuide();
-                            List<string> itlist = new List<string>();
-                            itlist.Add("New 2D 10x10 Area");
-                            itlist.Add("New 2D 20x20 Area");
-                            itlist.Add("New 3D 10x10 Area");
-                            itlist.Add("New 3D 20x20 Area");
-                            foreach (Area a in gv.mod.moduleAreasObjects)
-                            {
-                                itlist.Add(a.Filename);
-                            }
-
-                            /*using (ListItemSelector itSel = new ListItemSelector(gv, itlist, "Area to Edit"))
-                            {
-                                var ret = itSel.ShowDialog();
-
-                                if (ret == DialogResult.OK)
-                                {
-                                    if (itSel.selectedIndex == 0)
-                                    {
-                                        Area newArea = new Area();
-                                        newArea.Filename = "new2DareaSmall_" + gv.mod.getNextIdNumber();
-                                        newArea.MapSizeX = 10;
-                                        newArea.MapSizeY = 10;
-                                        newArea.Is3dArea = false;
-                                        newArea.SetAllToGrass();
-                                        gv.mod.moduleAreasObjects.Add(newArea);
-                                        gv.mod.currentArea = newArea;
-                                        gv.screenType = "tsAreaEditor";
-                                        showMainMenuPanels = false;
-                                        tglMainMenu.toggleOn = false;
-                                        gv.tsAreaEditor.mapSquareSizeScaler = 1;
-                                        return true;
-                                    }
-                                    else if (itSel.selectedIndex == 1)
-                                    {
-                                        Area newArea = new Area();
-                                        newArea.Filename = "new2DareaLarge_" + gv.mod.getNextIdNumber();
-                                        newArea.MapSizeX = 20;
-                                        newArea.MapSizeY = 20;
-                                        newArea.Is3dArea = false;
-                                        newArea.SetAllToGrass();
-                                        gv.mod.moduleAreasObjects.Add(newArea);
-                                        gv.mod.currentArea = newArea;
-                                        gv.screenType = "tsAreaEditor";
-                                        showMainMenuPanels = false;
-                                        tglMainMenu.toggleOn = false;
-                                        gv.tsAreaEditor.mapSquareSizeScaler = 2;
-                                        return true;
-                                    }
-                                    else if (itSel.selectedIndex == 2)
-                                    {
-                                        Area newArea = new Area();
-                                        newArea.Filename = "new3DareaSmall_" + gv.mod.getNextIdNumber();
-                                        newArea.MapSizeX = 10;
-                                        newArea.MapSizeY = 10;
-                                        newArea.Is3dArea = true;
-                                        newArea.SetAllToGrass3D();
-                                        gv.mod.moduleAreasObjects.Add(newArea);
-                                        gv.mod.currentArea = newArea;
-                                        gv.screenType = "tsAreaEditor";
-                                        showMainMenuPanels = false;
-                                        tglMainMenu.toggleOn = false;
-                                        gv.tsAreaEditor.mapSquareSizeScaler = 1;
-                                        return true;
-                                    }
-                                    else if (itSel.selectedIndex == 3)
-                                    {
-                                        Area newArea = new Area();
-                                        newArea.Filename = "new3DareaLarge_" + gv.mod.getNextIdNumber();
-                                        newArea.MapSizeX = 20;
-                                        newArea.MapSizeY = 20;
-                                        newArea.Is3dArea = true;
-                                        newArea.SetAllToGrass3D();
-                                        gv.mod.moduleAreasObjects.Add(newArea);
-                                        gv.mod.currentArea = newArea;
-                                        gv.screenType = "tsAreaEditor";
-                                        showMainMenuPanels = false;
-                                        tglMainMenu.toggleOn = false;
-                                        gv.tsAreaEditor.mapSquareSizeScaler = 2;
-                                        return true;
-                                    }
-                                    else if (itSel.selectedIndex > 3)
-                                    {
-                                        bool foundArea = gv.mod.setCurrentArea(itlist[itSel.selectedIndex], gv);
-                                        if (!foundArea)
-                                        {
-                                            MessageBox.Show("Area: " + itlist[itSel.selectedIndex] + " does not exist in the module...check the spelling of the 'area.Filename'");
-                                            return true;
-                                        }
-                                        gv.screenType = "tsAreaEditor";
-                                        showMainMenuPanels = false;
-                                        tglMainMenu.toggleOn = false;
-                                        if (gv.mod.currentArea.MapSizeX > 10)
-                                        {
-                                            gv.tsAreaEditor.mapSquareSizeScaler = 2;
-                                        }
-                                        else
-                                        {
-                                            gv.tsAreaEditor.mapSquareSizeScaler = 1;
-                                        }
-                                        return true;
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("didn't find a selection");
-                                        return true;
-                                    }
-                                }
-                            }*/
+                            SelectAreaToEdit();
                             return true;
                         }
                         else if (btnEncounterEditor.getImpact(x, y))
@@ -472,68 +364,7 @@ namespace IBbasic
                         }
                         else if (btnConvoEditor.getImpact(x, y))
                         {
-                            List<string> itlist = new List<string>();
-                            itlist.Add("New Conversation");
-                            foreach (Convo cnv in gv.mod.moduleConvoList)
-                            {
-                                itlist.Add(cnv.ConvoFileName);
-                            }
-
-                            /*using (ListItemSelector itSel = new ListItemSelector(gv, itlist, "Convo to Edit"))
-                            {
-                                var ret = itSel.ShowDialog();
-
-                                if (ret == DialogResult.OK)
-                                {
-                                    if (itSel.selectedIndex == 0)
-                                    {
-                                        Convo newConvo = new Convo();
-                                        newConvo.ConvoFileName = "newConversation_" + gv.mod.getNextIdNumber();
-                                        //TODO setup first node as root
-                                        ContentNode contentNode = new ContentNode();
-                                        contentNode.idNum = newConvo.NextIdNum;
-                                        contentNode.conversationText = "root";
-                                        newConvo.subNodes.Add(contentNode);
-                                        gv.mod.moduleConvoList.Add(newConvo);
-                                        return true;
-                                    }                                    
-                                    else if (itSel.selectedIndex > 0)
-                                    {
-                                        string tag = itlist[itSel.selectedIndex];
-                                        try
-                                        {
-                                            gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(tag);
-                                            gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);                                            
-                                            gv.tsConvoEditor.resetAllParentIds();
-                                            gv.tsConvoEditor.ResetTreeView();
-                                            gv.tsConvoEditor.parentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
-                                            gv.cc.ResetAllVariablesUsedList();
-                                            if (gv.screenConvo.currentConvo != null)
-                                            {
-                                                gv.screenType = "tsConvoEditor";
-                                                showMainMenuPanels = false;
-                                                tglMainMenu.toggleOn = false;
-                                            }
-                                            else
-                                            {
-                                                gv.sf.MessageBox("failed to find conversation in list with tag: " + tag);
-                                            }
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            gv.sf.MessageBox("failed to open conversation with tag: " + tag);
-                                            gv.errorLog(ex.ToString());
-                                        }
-                                        return true;
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("didn't find a selection");
-                                        return true;
-                                    }
-                                }
-                            }
-                            */
+                            SelectConvoToEdit();
                             return true;
                         }
                         else if (btnContainerEditor.getImpact(x, y))
@@ -587,7 +418,176 @@ namespace IBbasic
                     break;
             }
             return false;
-        }        
+        }
+        public async void SelectAreaToEdit()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("New 2D 10x10 Area");
+            itlist.Add("New 2D 20x20 Area");
+            itlist.Add("New 3D 10x10 Area");
+            itlist.Add("New 3D 20x20 Area");
+            foreach (Area a in gv.mod.moduleAreasObjects)
+            {
+                itlist.Add(a.Filename);
+            }
+
+            string selectedArea = await gv.ListViewPage(itlist, "Area to Edit");
+
+            gv.touchEnabled = true;
+
+            if (selectedArea.Equals("New 2D 10x10 Area"))
+            {
+                Area newArea = new Area();
+                newArea.Filename = "new2DareaSmall_" + gv.mod.getNextIdNumber();
+                newArea.MapSizeX = 10;
+                newArea.MapSizeY = 10;
+                newArea.Is3dArea = false;
+                newArea.SetAllToGrass();
+                gv.mod.moduleAreasObjects.Add(newArea);
+                gv.mod.currentArea = newArea;
+                gv.screenType = "tsAreaEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                gv.tsAreaEditor.mapSquareSizeScaler = 1;
+            }
+            else if (selectedArea.Equals("New 2D 20x20 Area"))
+            {
+                Area newArea = new Area();
+                newArea.Filename = "new2DareaLarge_" + gv.mod.getNextIdNumber();
+                newArea.MapSizeX = 20;
+                newArea.MapSizeY = 20;
+                newArea.Is3dArea = false;
+                newArea.SetAllToGrass();
+                gv.mod.moduleAreasObjects.Add(newArea);
+                gv.mod.currentArea = newArea;
+                gv.screenType = "tsAreaEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                gv.tsAreaEditor.mapSquareSizeScaler = 2;
+            }
+            else if (selectedArea.Equals("New 3D 10x10 Area"))
+            {
+                Area newArea = new Area();
+                newArea.Filename = "new3DareaSmall_" + gv.mod.getNextIdNumber();
+                newArea.MapSizeX = 10;
+                newArea.MapSizeY = 10;
+                newArea.Is3dArea = true;
+                newArea.SetAllToGrass3D();
+                gv.mod.moduleAreasObjects.Add(newArea);
+                gv.mod.currentArea = newArea;
+                gv.screenType = "tsAreaEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                gv.tsAreaEditor.mapSquareSizeScaler = 1;
+            }
+            else if (selectedArea.Equals("New 3D 20x20 Area"))
+            {
+                Area newArea = new Area();
+                newArea.Filename = "new3DareaLarge_" + gv.mod.getNextIdNumber();
+                newArea.MapSizeX = 20;
+                newArea.MapSizeY = 20;
+                newArea.Is3dArea = true;
+                newArea.SetAllToGrass3D();
+                gv.mod.moduleAreasObjects.Add(newArea);
+                gv.mod.currentArea = newArea;
+                gv.screenType = "tsAreaEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                gv.tsAreaEditor.mapSquareSizeScaler = 2;
+            }
+            else
+            {
+                bool foundArea = gv.mod.setCurrentArea(selectedArea, gv);
+                if (!foundArea)
+                {
+                    gv.sf.MessageBox("Area: " + selectedArea + " does not exist in the module...check the spelling of the 'area.Filename'");
+                    return;
+                }
+                gv.screenType = "tsAreaEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                if (gv.mod.currentArea.MapSizeX > 10)
+                {
+                    gv.tsAreaEditor.mapSquareSizeScaler = 2;
+                }
+                else
+                {
+                    gv.tsAreaEditor.mapSquareSizeScaler = 1;
+                }
+            }            
+        }
+        public async void SelectConvoToEdit()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("New Conversation");
+            foreach (Convo cnv in gv.mod.moduleConvoList)
+            {
+                itlist.Add(cnv.ConvoFileName);
+            }
+
+            string selectedConvo = await gv.ListViewPage(itlist, "Conversation to Edit");
+
+            gv.touchEnabled = true;
+
+            if (selectedConvo.Equals("New Conversation"))
+            {
+                Convo newConvo = new Convo();
+                newConvo.ConvoFileName = "newConversation_" + gv.mod.getNextIdNumber();
+                //TODO setup first node as root
+                ContentNode contentNode = new ContentNode();
+                contentNode.idNum = newConvo.NextIdNum;
+                contentNode.conversationText = "root";
+                newConvo.subNodes.Add(contentNode);
+                gv.mod.moduleConvoList.Add(newConvo);
+                gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName);
+                gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
+                gv.tsConvoEditor.resetAllParentIds();
+                gv.tsConvoEditor.ResetTreeView();
+                gv.tsConvoEditor.parentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
+                gv.cc.ResetAllVariablesUsedList();
+                if (gv.screenConvo.currentConvo != null)
+                {
+                    gv.screenType = "tsConvoEditor";
+                    showMainMenuPanels = false;
+                    tglMainMenu.toggleOn = false;
+                }
+                else
+                {
+                    gv.sf.MessageBox("failed to find conversation in list with tag: " + selectedConvo);
+                }
+            }
+            else
+            {
+                try
+                {
+                    gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(selectedConvo);
+                    gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
+                    gv.tsConvoEditor.resetAllParentIds();
+                    gv.tsConvoEditor.ResetTreeView();
+                    gv.tsConvoEditor.parentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
+                    gv.cc.ResetAllVariablesUsedList();
+                    if (gv.screenConvo.currentConvo != null)
+                    {
+                        gv.screenType = "tsConvoEditor";
+                        showMainMenuPanels = false;
+                        tglMainMenu.toggleOn = false;
+                    }
+                    else
+                    {
+                        gv.sf.MessageBox("failed to find conversation in list with tag: " + selectedConvo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    gv.sf.MessageBox("failed to open conversation with tag: " + selectedConvo);
+                    gv.errorLog(ex.ToString());
+                }
+            }
+        }
         public void incrementalSaveModule()
         {
             gv.cc.incrementalSave();

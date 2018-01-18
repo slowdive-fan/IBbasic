@@ -7,11 +7,13 @@ using Newtonsoft.Json;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace IBbasic
 {
     public class GameView
     {
+        ContentPage cp;
         SKCanvas canvas;
         //this class is handled differently than Android version
         public float screenDensity;
@@ -122,10 +124,10 @@ namespace IBbasic
         public int reportFPScount = 0;
         //TODOpublic Timer animationTimer = new Timer();
 
-        public GameView()
+        public GameView(ContentPage conPage)
         {
             //InitializeComponent();
-
+            cp = conPage;
             cc = new CommonCode(this);
             mod = new Module();
             bsc = new BitmapStringConversion();
@@ -304,10 +306,10 @@ namespace IBbasic
             screenPartyRoster = new ScreenPartyRoster(mod,this);
 
             //TOOLSET SCREENS
-            //tsModule = new ToolsetScreenModule(this);
-            //tsAreaEditor = new ToolsetScreenAreaEditor(this);
-            //tsMainMenu = new ToolsetScreenMainMenu(this);
-            //tsConvoEditor = new ToolsetScreenConvoEditor(this);
+            tsModule = new ToolsetScreenModule(this);
+            tsAreaEditor = new ToolsetScreenAreaEditor(this);
+            tsMainMenu = new ToolsetScreenMainMenu(this);
+            tsConvoEditor = new ToolsetScreenConvoEditor(this);
             
 	    }
         public void LoadStandardImages()
@@ -1375,6 +1377,83 @@ namespace IBbasic
                 return existingTextInputValue;
             }*/
             return "none";
+        }
+        public Task<string> InputBox()
+        {
+            // wait in this proc, until user did his input 
+            var tcs = new TaskCompletionSource<string>();
+
+            var lblTitle = new Label { Text = "Title", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblMessage = new Label { Text = "Enter new text:" };
+            var txtInput = new Entry { Text = "" };
+
+            var btnOk = new Button
+            {
+                Text = "Ok",
+                WidthRequest = 100,
+                BackgroundColor = Xamarin.Forms.Color.FromRgb(0.8, 0.8, 0.8),
+            };
+            btnOk.Clicked += async (s, e) =>
+            {
+                // close page
+                var result = txtInput.Text;
+                await cp.Navigation.PopModalAsync();
+                // pass result
+                tcs.SetResult(result);
+            };
+
+            var btnCancel = new Button
+            {
+                Text = "Cancel",
+                WidthRequest = 100,
+                BackgroundColor = Xamarin.Forms.Color.FromRgb(0.8, 0.8, 0.8)
+            };
+            btnCancel.Clicked += async (s, e) =>
+            {
+                // close page
+                await cp.Navigation.PopModalAsync();
+                // pass empty result
+                tcs.SetResult("");
+            };
+
+            var slButtons = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                Children = { btnOk, btnCancel },
+            };
+
+            var layout = new StackLayout
+            {
+                Padding = new Thickness(0, 40, 0, 0),
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Children = { lblTitle, lblMessage, txtInput, slButtons },
+            };
+
+            // create and show page
+            var page = new ContentPage();
+            page.Content = layout;
+            cp.Navigation.PushModalAsync(page);
+            // open keyboard
+            //txtInput.Focus();
+
+            // code is waiting her, until result is passed with tcs.SetResult() in btn-Clicked
+            // then proc returns the result
+            return tcs.Task;
+        }
+        public Task<string> ListViewPage(List<string> list, string headerText)
+        {
+            // wait in this proc, until user did his input 
+            var tcs = new TaskCompletionSource<string>();
+            
+            // create and show page
+            var page = new ListViewPage1(tcs, list, headerText);
+            cp.Navigation.PushModalAsync(page);
+            
+            // code is waiting her, until result is passed with tcs.SetResult() in btn-Clicked
+            // then proc returns the result
+            return tcs.Task;
         }
         public int DialogReturnInteger(string headerText, int existingIntInputValue)
         {
