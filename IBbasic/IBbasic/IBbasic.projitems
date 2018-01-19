@@ -72,6 +72,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MouseEventType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MoveOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NumericDialog.xaml.cs">
+      <DependentUpon>NumericDialog.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)PathFinderEncounters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayerClass.cs" />
@@ -3938,6 +3942,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ListViewPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)NumericDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

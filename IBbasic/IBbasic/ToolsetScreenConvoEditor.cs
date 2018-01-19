@@ -2186,30 +2186,45 @@ namespace IBbasic
             return 0;
         }
 
-        public void changeConvoFileName()
+        public async void changeConvoFileName()
         {
-            string title = "Change the Conversation Filename.";
-            currentConvo.ConvoFileName = gv.DialogReturnString(title, currentConvo.ConvoFileName);
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Change the Conversation Filename:", currentConvo.ConvoFileName);
+            currentConvo.ConvoFileName = myinput;
+            gv.touchEnabled = true;
+            //string title = "Change the Conversation Filename.";
+            //currentConvo.ConvoFileName = gv.DialogReturnString(title, currentConvo.ConvoFileName);
         }
-        public void changeDefaultNpcName()
+        public async void changeDefaultNpcName()
         {
-            string title = "Change the default NPC name that will be shown in the log box.";
-            currentConvo.DefaultNpcName = gv.DialogReturnString(title, currentConvo.DefaultNpcName);            
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Change the default NPC name that will be shown in the log box:", currentConvo.DefaultNpcName);
+            currentConvo.DefaultNpcName = myinput;
+            gv.touchEnabled = true;
+            //string title = "Change the default NPC name that will be shown in the log box.";
+            //currentConvo.DefaultNpcName = gv.DialogReturnString(title, currentConvo.DefaultNpcName);            
         }
-        public void changeNodeText()
+        public async void changeNodeText()
         {
-            string title = "Change this node's conversation text.";
-            editNode.conversationText = gv.DialogReturnString(title, editNode.conversationText);            
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Change this node's conversation text:", editNode.conversationText);
+            editNode.conversationText = myinput;
+            gv.touchEnabled = true;
+            //string title = "Change this node's conversation text.";
+            //editNode.conversationText = gv.DialogReturnString(title, editNode.conversationText);            
         }
-        public void changeNodeNpcName()
+        public async void changeNodeNpcName()
         {
-            string title = "Change the node's NPC name that will be shown in the log box.";
-            editNode.NodeNpcName = gv.DialogReturnString(title, editNode.NodeNpcName);
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Change the node's NPC name that will be shown in the log box:", editNode.NodeNpcName);
+            editNode.NodeNpcName = myinput;
+            gv.touchEnabled = true;
+            //string title = "Change the node's NPC name that will be shown in the log box.";
+            //editNode.NodeNpcName = gv.DialogReturnString(title, editNode.NodeNpcName);
         }
 
-        public void changeActionScript()
-        {
-            /*
+        public async void changeActionScript()
+        {            
             if (editNode == null) { return; }
 
             List<string> types = new List<string>(); //container, transition, conversation, encounter, script
@@ -2219,7 +2234,12 @@ namespace IBbasic
                 types.Add(s.name);
             }
 
-            using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.actions[getIndexOfActionSelected()].a_script))
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(types, "Select a script from the list");
+            editNode.actions[getIndexOfActionSelected()].a_script = selected;
+            gv.touchEnabled = true;
+
+            /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.actions[getIndexOfActionSelected()].a_script))
             {
                 var ret = itSel.ShowDialog();
 
@@ -2227,14 +2247,18 @@ namespace IBbasic
                 {
                     editNode.actions[getIndexOfActionSelected()].a_script = itSel.selectedAreaName;
                 }
-            }
-            */
+            }*/            
         }
-        public void changeActionParm1()
+        public async void changeActionParm1()
         {
             if (editNode == null) { return; }
-            string title = "Enter the first parameter for this script.";
-            editNode.actions[getIndexOfActionSelected()].a_parameter_1 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the first parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_1);
+            editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput;
+            gv.touchEnabled = true;
+
+            //string title = "Enter the first parameter for this script.";
+            //editNode.actions[getIndexOfActionSelected()].a_parameter_1 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
 
             //start of an idea for intelligent system
             /*
@@ -2259,31 +2283,39 @@ namespace IBbasic
             }   
             */
         }
-        public void changeActionParm2()
+        public async void changeActionParm2()
         {
             if (editNode == null) { return; }
-            string title = "Enter the second parameter for this script.";
-            editNode.actions[getIndexOfActionSelected()].a_parameter_2 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the second parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_2);
+            editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the second parameter for this script.";
+            //editNode.actions[getIndexOfActionSelected()].a_parameter_2 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
         }
-        public void changeActionParm3()
+        public async void changeActionParm3()
         {
             if (editNode == null) { return; }
-            string title = "Enter the third parameter for this script.";
-            editNode.actions[getIndexOfActionSelected()].a_parameter_3 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the third parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_3);
+            editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the third parameter for this script.";
+            //editNode.actions[getIndexOfActionSelected()].a_parameter_3 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
         }
-        public void changeActionParm4()
+        public async void changeActionParm4()
         {
             if (editNode == null) { return; }
-            string title = "Enter the fourth parameter for this script.";
-            editNode.actions[getIndexOfActionSelected()].a_parameter_4 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the fourth parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_4);
+            editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the fourth parameter for this script.";
+            //editNode.actions[getIndexOfActionSelected()].a_parameter_4 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
         }
 
-        public void changeCondScript()
-        {
-            /*
+        public async void changeCondScript()
+        {            
             if (editNode == null) { return; }
 
             List<string> types = new List<string>(); //container, transition, conversation, encounter, script
@@ -2293,7 +2325,12 @@ namespace IBbasic
                 types.Add(s.name);
             }
 
-            using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.conditions[getIndexOfCondSelected()].c_script))
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(types, "Select a script from the list");
+            editNode.conditions[getIndexOfCondSelected()].c_script = selected;
+            gv.touchEnabled = true;
+
+            /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.conditions[getIndexOfCondSelected()].c_script))
             {
                 var ret = itSel.ShowDialog();
 
@@ -2301,36 +2338,47 @@ namespace IBbasic
                 {
                     editNode.conditions[getIndexOfCondSelected()].c_script = itSel.selectedAreaName;
                 }
-            }
-            */
+            }*/
         }
-        public void changeCondParm1()
+        public async void changeCondParm1()
         {
             if (editNode == null) { return; }
-            string title = "Enter the first parameter for this script.";
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the first parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
+            editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the first parameter for this script.";
+            //editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
         }
-        public void changeCondParm2()
+        public async void changeCondParm2()
         {
             if (editNode == null) { return; }
-            string title = "Enter the second parameter for this script.";
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the second parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
+            editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the second parameter for this script.";
+            //editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
         }
-        public void changeCondParm3()
+        public async void changeCondParm3()
         {
             if (editNode == null) { return; }
-            string title = "Enter the third parameter for this script.";
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the third parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
+            editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the third parameter for this script.";
+            //editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
         }
-        public void changeCondParm4()
+        public async void changeCondParm4()
         {
             if (editNode == null) { return; }
-            string title = "Enter the fourth parameter for this script.";
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
-
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter the fourth parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
+            editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput;
+            gv.touchEnabled = true;
+            //string title = "Enter the fourth parameter for this script.";
+            //editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
         }
         
         public void PushToUndoStack()

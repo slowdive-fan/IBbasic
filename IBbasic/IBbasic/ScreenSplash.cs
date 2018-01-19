@@ -118,6 +118,8 @@ namespace IBbasic
                     }
                     else if (btnCreate.getImpact(x, y))
                     {
+                        //GetNumInput();
+                        //GetStringInput();
                         SelectModuleToEdit();
                     }
                     break;
@@ -139,10 +141,18 @@ namespace IBbasic
             }
         }
 
-        public async void OnAlertYesNoClicked()
+        public async void GetStringInput()
         {
-            string myinput = await gv.InputBox();
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("enter a string:","main directory: " + gv.mainDirectory);
             btnCreate.Text = myinput;
+            gv.touchEnabled = true;
+        }
+        public async void GetNumInput()
+        {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("test number", 999);
+            btnCreate.Text = myinput.ToString();
             gv.touchEnabled = true;
         }
         public async void SelectModuleToEdit()

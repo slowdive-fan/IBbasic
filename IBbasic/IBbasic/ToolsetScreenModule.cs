@@ -287,8 +287,12 @@ namespace IBbasic
                     break;
             }
         }
-        public void changeModuleName()
+        public async void changeModuleName()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Choose a Name for this Module:", gv.mod.moduleName);
+            gv.mod.moduleName = myinput;
+            gv.touchEnabled = true;
             /*
             using (TextInputDialog itSel = new TextInputDialog(gv, "Choose a Name for this Module.", gv.mod.moduleName))
             {                
@@ -308,8 +312,12 @@ namespace IBbasic
             }
             */
         }
-        public void changeModuleDescription()
+        public async void changeModuleDescription()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Create a description for this Module:", gv.mod.moduleDescription);
+            gv.mod.moduleDescription = myinput;
+            gv.touchEnabled = true;
             /*using (TextInputDialog itSel = new TextInputDialog(gv, "Create a description for this Module.", gv.mod.moduleDescription))
             {
                 var ret = itSel.ShowDialog();
@@ -327,8 +335,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeModuleCredits()
+        public async void changeModuleCredits()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Enter any credits for this Module:", gv.mod.moduleCredits);
+            gv.mod.moduleCredits = myinput;
+            gv.touchEnabled = true;
             /*using (TextInputDialog itSel = new TextInputDialog(gv, "Enter any credits for this Module.", gv.mod.moduleCredits))
             {
                 var ret = itSel.ShowDialog();
@@ -346,8 +358,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeModuleVersion()
+        public async void changeModuleVersion()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the module version (must be an integer):", gv.mod.moduleVersion);
+            gv.mod.moduleVersion = myinput;
+            gv.touchEnabled = true;
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Enter the module version", gv.mod.moduleVersion))
             {
                 var ret = itSel.ShowDialog();
@@ -358,8 +374,21 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeStartingArea()
+        public async void changeStartingArea()
         {
+            gv.touchEnabled = false;
+
+            List<string> areas = new List<string>();
+            foreach (Area a in gv.mod.moduleAreasObjects)
+            {
+                areas.Add(a.Filename);
+            }
+
+            string selectedArea = await gv.ListViewPage(areas, "Select the starting area");
+            gv.mod.startingArea = selectedArea;
+                        
+            gv.touchEnabled = true;
+
             /*List<string> areas = new List<string>();
             foreach (Area a in gv.mod.moduleAreasObjects)
             {
@@ -375,8 +404,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeStartingLocationX()
+        public async void changeStartingLocationX()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the starting X location in starting area (must be an integer):", gv.mod.startingPlayerPositionX);
+            gv.mod.startingPlayerPositionX = myinput;
+            gv.touchEnabled = true;
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Enter the starting X location in starting area", gv.mod.startingPlayerPositionX))
             {
                 var ret = itSel.ShowDialog();
@@ -387,8 +420,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeStartingLocationY()
+        public async void changeStartingLocationY()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the starting X location in starting area (must be an integer):", gv.mod.startingPlayerPositionY);
+            gv.mod.startingPlayerPositionY = myinput;
+            gv.touchEnabled = true;
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Enter the starting X location in starting area", gv.mod.startingPlayerPositionY))
             {
                 var ret = itSel.ShowDialog();
@@ -399,8 +436,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeStartingGold()
+        public async void changeStartingGold()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the players starting gold amount (must be an integer):", gv.mod.partyGold);
+            gv.mod.partyGold = myinput;
+            gv.touchEnabled = true;
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Enter the players starting gold amount", gv.mod.partyGold))
             {
                 var ret = itSel.ShowDialog();

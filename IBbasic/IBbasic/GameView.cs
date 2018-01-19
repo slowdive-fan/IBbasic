@@ -1378,14 +1378,16 @@ namespace IBbasic
             }*/
             return "none";
         }
-        public Task<string> InputBox()
+        public Task<string> StringInputBox(string headerText, string existingTextInputValue)
         {
             // wait in this proc, until user did his input 
             var tcs = new TaskCompletionSource<string>();
 
-            var lblTitle = new Label { Text = "Title", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
-            var lblMessage = new Label { Text = "Enter new text:" };
-            var txtInput = new Entry { Text = "" };
+            var lblTitle = new Label { Text = "Text Entry", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblMessage = new Label { Text = headerText };
+            var txtInput = new Editor { Text = existingTextInputValue };
+            //txtInput.HorizontalOptions = LayoutOptions.FillAndExpand;
+            txtInput.VerticalOptions = LayoutOptions.FillAndExpand;
 
             var btnOk = new Button
             {
@@ -1413,7 +1415,80 @@ namespace IBbasic
                 // close page
                 await cp.Navigation.PopModalAsync();
                 // pass empty result
-                tcs.SetResult("");
+                tcs.SetResult(existingTextInputValue);
+            };
+
+            var slButtons = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                Children = { btnOk, btnCancel },
+            };
+
+            var layout = new StackLayout
+            {
+                Padding = new Thickness(0, 40, 0, 0),
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Orientation = StackOrientation.Vertical,
+                Children = { lblTitle, lblMessage, txtInput, slButtons },
+            };
+
+            // create and show page
+            var page = new ContentPage();
+            page.Content = layout;
+            cp.Navigation.PushModalAsync(page);
+            // open keyboard
+            //txtInput.Focus();
+
+            // code is waiting her, until result is passed with tcs.SetResult() in btn-Clicked
+            // then proc returns the result
+            return tcs.Task;
+        }
+        public Task<int> NumInputBox(string headerText, int existingIntValue)
+        {
+            // wait in this proc, until user did his input 
+            var tcs = new TaskCompletionSource<int>();
+
+            var lblTitle = new Label { Text = "Integer Entry", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblMessage = new Label { Text = headerText };
+            var txtInput = new Entry { Text = existingIntValue.ToString(), Keyboard = Keyboard.Numeric };
+
+            var btnOk = new Button
+            {
+                Text = "Ok",
+                WidthRequest = 100,
+                BackgroundColor = Xamarin.Forms.Color.FromRgb(0.8, 0.8, 0.8),
+            };
+            btnOk.Clicked += async (s, e) =>
+            {
+                // close page
+                int resultInt = existingIntValue;
+                try
+                {
+                    resultInt = Convert.ToInt32(txtInput.Text);
+                }
+                catch
+                {
+                    await cp.DisplayAlert("Error!", "That was not an integer...returning original value.", "OK");
+                }
+                //var result = txtInput.Text;
+                await cp.Navigation.PopModalAsync();
+                // pass result
+                tcs.SetResult(resultInt);
+            };
+
+            var btnCancel = new Button
+            {
+                Text = "Cancel",
+                WidthRequest = 100,
+                BackgroundColor = Xamarin.Forms.Color.FromRgb(0.8, 0.8, 0.8)
+            };
+            btnCancel.Clicked += async (s, e) =>
+            {
+                // close page
+                await cp.Navigation.PopModalAsync();
+                // pass empty result
+                tcs.SetResult(existingIntValue);
             };
 
             var slButtons = new StackLayout

@@ -3720,8 +3720,12 @@ namespace IBbasic
             return true;
         }
 
-        public void changeAreaName()
+        public async void changeAreaName()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Change the Area Name:", gv.mod.currentArea.Filename);
+            gv.mod.currentArea.Filename = myinput;
+            gv.touchEnabled = true;
             /*using (TextInputDialog itSel = new TextInputDialog(gv, "Change the Area Name.", gv.mod.currentArea.Filename))
             {
                 var ret = itSel.ShowDialog();
@@ -3739,8 +3743,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeAreaInGameName()
+        public async void changeAreaInGameName()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Choose an In-Game Area Name:", gv.mod.currentArea.inGameAreaName);
+            gv.mod.currentArea.inGameAreaName = myinput;
+            gv.touchEnabled = true;
             /*using (TextInputDialog itSel = new TextInputDialog(gv, "Choose an In-Game Area Name.", gv.mod.currentArea.inGameAreaName))
             {
                 var ret = itSel.ShowDialog();
@@ -3758,8 +3766,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeAreaVisibleDistance()
+        public async void changeAreaVisibleDistance()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter Area Visible Distance for Fog-of-War on 2D maps (must be an integer):", gv.mod.currentArea.AreaVisibleDistance);
+            gv.mod.currentArea.AreaVisibleDistance = myinput;
+            gv.touchEnabled = true;
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Enter Area Visible Distance for Fog-of-War", gv.mod.currentArea.AreaVisibleDistance))
             {
                 var ret = itSel.ShowDialog();
@@ -3770,13 +3782,21 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeTimePerSquare()
+        public async void changeTimePerSquare()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Time Elapse per Square Moved (must be an integer):", gv.mod.currentArea.TimePerSquare);
+            gv.mod.currentArea.TimePerSquare = myinput;
+            gv.touchEnabled = true;
             //string title = "Time Elapse per Square Moved";
             //gv.mod.currentArea.TimePerSquare = gv.DialogReturnInteger(title, gv.mod.currentArea.TimePerSquare);
         }
-        public void changeTriggerTag()
+        public async void changeTriggerTag()
         {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Choose a unique (must be unique) tag for this trigger:", selectedTrigger.TriggerTag);
+            selectedTrigger.TriggerTag = myinput;
+            gv.touchEnabled = true;
             /*if (selectedTrigger == null) { return; }
             using (TextInputDialog itSel = new TextInputDialog(gv, "Choose a unique (must be unique) tag for this trigger.", selectedTrigger.TriggerTag))
             {
@@ -3795,8 +3815,12 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeNumberOfScriptCallsRemaining()
+        public async void changeNumberOfScriptCallsRemaining()
         {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Number of times this trigger will be triggered before disabling the trigger (combat trigger feature only):", selectedTrigger.numberOfScriptCallsRemaining);
+            selectedTrigger.numberOfScriptCallsRemaining = myinput;
+            gv.touchEnabled = true;
             /*if (selectedTrigger == null) { return; }
             using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Number of times this trigger will be triggered before disabling the trigger (combat trigger feature only)", selectedTrigger.numberOfScriptCallsRemaining))
             {
@@ -3808,9 +3832,9 @@ namespace IBbasic
                 }
             }*/
         }
-        public void changeEventType(int eventNumber)
+        public async void changeEventType(int eventNumber)
         {
-            /*if (selectedTrigger == null) { return; }
+            if (selectedTrigger == null) { return; }
             List<string> types = new List<string>(); //container, transition, conversation, encounter, script
             types.Add("none");
             types.Add("conversation");
@@ -3821,7 +3845,11 @@ namespace IBbasic
 
             if (eventNumber == 1)
             {
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event1Type))
+                gv.touchEnabled = false;                                
+                string selected = await gv.ListViewPage(types, "Select the type of event");
+                selectedTrigger.Event1Type = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event1Type))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -3829,11 +3857,15 @@ namespace IBbasic
                     {
                         selectedTrigger.Event1Type = itSel.selectedAreaName;
                     }
-                }
+                }*/
             }
             else if (eventNumber == 2)
             {
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event2Type))
+                gv.touchEnabled = false;
+                string selected = await gv.ListViewPage(types, "Select the type of event");
+                selectedTrigger.Event2Type = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event2Type))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -3841,11 +3873,15 @@ namespace IBbasic
                     {
                         selectedTrigger.Event2Type = itSel.selectedAreaName;
                     }
-                }
+                }*/
             }
             else if (eventNumber == 3)
             {
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event3Type))
+                gv.touchEnabled = false;
+                string selected = await gv.ListViewPage(types, "Select the type of event");
+                selectedTrigger.Event3Type = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select the type of event", types, selectedTrigger.Event3Type))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -3853,12 +3889,12 @@ namespace IBbasic
                     {
                         selectedTrigger.Event3Type = itSel.selectedAreaName;
                     }
-                }
-            }*/
+                }*/
+            }
         }
-        public void changeEventFilenameOrTag(int eventNumber)
+        public async void changeEventFilenameOrTag(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             
             List<string> types = new List<string>(); //container, transition, conversation, encounter, script
@@ -3902,7 +3938,11 @@ namespace IBbasic
                         types.Add(s.name);
                     }
                 }
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event1FilenameOrTag))
+                gv.touchEnabled = false;
+                string selected = await gv.ListViewPage(types, "Select an item from the list");
+                selectedTrigger.Event1FilenameOrTag = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event1FilenameOrTag))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -3910,7 +3950,7 @@ namespace IBbasic
                     {
                         selectedTrigger.Event1FilenameOrTag = itSel.selectedAreaName;
                     }
-                }
+                }*/
             }
             else if (eventNumber == 2)
             {
@@ -3950,7 +3990,11 @@ namespace IBbasic
                         types.Add(s.name);
                     }
                 }
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event2FilenameOrTag))
+                gv.touchEnabled = false;
+                string selected = await gv.ListViewPage(types, "Select an item from the list");
+                selectedTrigger.Event2FilenameOrTag = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event2FilenameOrTag))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -3958,7 +4002,7 @@ namespace IBbasic
                     {
                         selectedTrigger.Event2FilenameOrTag = itSel.selectedAreaName;
                     }
-                }
+                }*/
             }
             else if (eventNumber == 3)
             {
@@ -3998,7 +4042,11 @@ namespace IBbasic
                         types.Add(s.name);
                     }
                 }
-                using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event3FilenameOrTag))
+                gv.touchEnabled = false;
+                string selected = await gv.ListViewPage(types, "Select an item from the list");
+                selectedTrigger.Event3FilenameOrTag = selected;
+                gv.touchEnabled = true;
+                /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select an item from the list", types, selectedTrigger.Event3FilenameOrTag))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4006,18 +4054,21 @@ namespace IBbasic
                     {
                         selectedTrigger.Event3FilenameOrTag = itSel.selectedAreaName;
                     }
-                }
-            }
-            */
+                }*/
+            }            
         }
-        public void changeEventTransitionLocationX(int eventNumber)
+        public async void changeEventTransitionLocationX(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
-                if (!selectedTrigger.Event1Type.Equals("transition")) { return; }                
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event1TransPointX))
+                if (!selectedTrigger.Event1Type.Equals("transition")) { return; }
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("X location on map transitioning to (must be an integer):", selectedTrigger.Event1TransPointX);
+                selectedTrigger.Event1TransPointX = myinput;
+                gv.touchEnabled = true;
+                /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event1TransPointX))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4025,12 +4076,16 @@ namespace IBbasic
                     {
                         selectedTrigger.Event1TransPointX = itSel.numInput;
                     }
-                }                
+                }*/                
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("transition")) { return; }
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event2TransPointX))
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("X location on map transitioning to (must be an integer):", selectedTrigger.Event2TransPointX);
+                selectedTrigger.Event2TransPointX = myinput;
+                gv.touchEnabled = true;
+                /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event2TransPointX))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4038,12 +4093,16 @@ namespace IBbasic
                     {
                         selectedTrigger.Event2TransPointX = itSel.numInput;
                     }
-                }
+                }*/
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("transition")) { return; }
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event3TransPointX))
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("X location on map transitioning to (must be an integer):", selectedTrigger.Event3TransPointX);
+                selectedTrigger.Event3TransPointX = myinput;
+                gv.touchEnabled = true;
+                /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "X location on map transitioning to", selectedTrigger.Event3TransPointX))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4051,63 +4110,52 @@ namespace IBbasic
                     {
                         selectedTrigger.Event3TransPointX = itSel.numInput;
                     }
-                }
+                }*/
             }
-            */
+            
         }
-        public void changeEventTransitionLocationY(int eventNumber)
+        public async void changeEventTransitionLocationY(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
                 if (!selectedTrigger.Event1Type.Equals("transition")) { return; }
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Y location on map transitioning to", selectedTrigger.Event1TransPointY))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        selectedTrigger.Event1TransPointY = itSel.numInput;
-                    }
-                }
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("Y location on map transitioning to (must be an integer):", selectedTrigger.Event1TransPointY);
+                selectedTrigger.Event1TransPointY = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("transition")) { return; }
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Y location on map transitioning to", selectedTrigger.Event2TransPointY))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        selectedTrigger.Event2TransPointY = itSel.numInput;
-                    }
-                }
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("Y location on map transitioning to (must be an integer):", selectedTrigger.Event2TransPointY);
+                selectedTrigger.Event3TransPointY = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("transition")) { return; }
-                using (NumberSelectorDialog itSel = new NumberSelectorDialog(gv, "Y location on map transitioning to", selectedTrigger.Event3TransPointY))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        selectedTrigger.Event3TransPointY = itSel.numInput;
-                    }
-                }
+                gv.touchEnabled = false;
+                int myinput = await gv.NumInputBox("Y location on map transitioning to (must be an integer):", selectedTrigger.Event3TransPointY);
+                selectedTrigger.Event3TransPointY = myinput;
+                gv.touchEnabled = true;
             }
-            */
+            
         }
-        public void changeEventParm1(int eventNumber)
+        public async void changeEventParm1(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
                 if (!selectedTrigger.Event1Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event1Parm1))
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event1Parm1);
+                selectedTrigger.Event1Parm1 = myinput;
+                gv.touchEnabled = true;
+                /*using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event1Parm1))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4122,12 +4170,16 @@ namespace IBbasic
                             MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
                         }
                     }
-                }
+                }*/
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event2Parm1))
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event2Parm1);
+                selectedTrigger.Event2Parm1 = myinput;
+                gv.touchEnabled = true;
+                /*using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event2Parm1))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4142,12 +4194,16 @@ namespace IBbasic
                             MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
                         }
                     }
-                }
+                }*/
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event3Parm1))
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event3Parm1);
+                selectedTrigger.Event3Parm1 = myinput;
+                gv.touchEnabled = true;
+                /*using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event3Parm1))
                 {
                     var ret = itSel.ShowDialog();
 
@@ -4162,207 +4218,98 @@ namespace IBbasic
                             MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
                         }
                     }
-                }
+                }*/
             }
-            */            
+                     
         }
-        public void changeEventParm2(int eventNumber)
+        public async void changeEventParm2(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
                 if (!selectedTrigger.Event1Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event1Parm2))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event1Parm2 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event1Parm2);
+                selectedTrigger.Event1Parm2 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event2Parm2))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event2Parm2 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event2Parm2);
+                selectedTrigger.Event2Parm2 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event3Parm2))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event3Parm2 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event3Parm2);
+                selectedTrigger.Event3Parm2 = myinput;
+                gv.touchEnabled = true;
             }
-            */
+            
         }
-        public void changeEventParm3(int eventNumber)
+        public async void changeEventParm3(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
                 if (!selectedTrigger.Event1Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event1Parm3))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event1Parm3 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event1Parm3);
+                selectedTrigger.Event1Parm3 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event2Parm3))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event2Parm3 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event2Parm3);
+                selectedTrigger.Event2Parm3 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event3Parm3))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event3Parm3 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event3Parm3);
+                selectedTrigger.Event3Parm3 = myinput;
+                gv.touchEnabled = true;
             }
-            */
+            
         }
-        public void changeEventParm4(int eventNumber)
+        public async void changeEventParm4(int eventNumber)
         {
-            /*
+            
             if (selectedTrigger == null) { return; }
             if (eventNumber == 1)
             {
                 if (!selectedTrigger.Event1Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event1Parm4))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event1Parm4 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event1Parm4);
+                selectedTrigger.Event1Parm4 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 2)
             {
                 if (!selectedTrigger.Event2Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event2Parm4))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event2Parm4 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event2Parm4);
+                selectedTrigger.Event2Parm4 = myinput;
+                gv.touchEnabled = true;
             }
             else if (eventNumber == 3)
             {
                 if (!selectedTrigger.Event3Type.Equals("script")) { return; }
-                using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the first parameter for this script", selectedTrigger.Event3Parm4))
-                {
-                    var ret = itSel.ShowDialog();
-
-                    if (ret == DialogResult.OK)
-                    {
-                        if (itSel.textInput.Length > 0)
-                        {
-                            selectedTrigger.Event3Parm4 = itSel.textInput;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Entering a blank text is not allowed...will use 'none' instead");
-                        }
-                    }
-                }
-            }
-            */
+                gv.touchEnabled = false;
+                string myinput = await gv.StringInputBox("Enter the parameter for this script:", selectedTrigger.Event3Parm4);
+                selectedTrigger.Event3Parm4 = myinput;
+                gv.touchEnabled = true;
+            }            
         }
     }
 }
