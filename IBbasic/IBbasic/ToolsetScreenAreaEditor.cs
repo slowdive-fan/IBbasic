@@ -139,7 +139,7 @@ namespace IBbasic
             description.tbHeight = 6 * gv.squareSize;
             description.showBoxBorder = false;
 
-            foreach (string f in gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png"))
+            foreach (string f in gv.GetTileFiles(gv.mod.moduleName, ".png"))
             {
                 string filenameNoExt = Path.GetFileNameWithoutExtension(f);
                 if (filenameNoExt.StartsWith("t_"))

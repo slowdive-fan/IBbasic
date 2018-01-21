@@ -1553,13 +1553,25 @@ namespace IBbasic
         {
             DependencyService.Get<ISaveAndLoad>().SaveSaveGame(modName, filename, save);
         }
-        public void SaveCharacter(string pathAndFilename, Player pc)
+        public void SaveCharacter(string modName, string filename, Player pc)
         {
-            DependencyService.Get<ISaveAndLoad>().SaveCharacter(pathAndFilename, pc);
+            DependencyService.Get<ISaveAndLoad>().SaveCharacter(modName, filename, pc);
         }
-        public List<string> GetFiles(string path, string assetPath, string endsWith)
+        public void SaveModuleAsset(string modFolder, string assetFilenameWithExtension, string json)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetFiles(path, assetPath, endsWith);
+            DependencyService.Get<ISaveAndLoad>().SaveModuleAssetFile(modFolder, assetFilenameWithExtension, json);
+        }
+        public List<string> GetTileFiles(string modFolder, string endsWith)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetTileFiles(modFolder, endsWith);
+        }
+        public List<string> GetGraphicsFiles(string modFolder, string endsWith)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetGraphicsFiles(modFolder, endsWith);
+        }
+        public List<string> GetCharacterFiles(string modFolder, string endsWith)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetCharacterFiles(modFolder, endsWith);
         }
         public string GetModuleFileString(string modFilename)
         {
@@ -1580,6 +1592,18 @@ namespace IBbasic
         public List<string> GetAllModuleFiles()
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
+        }
+        public List<string> GetAllAreaFilenames()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetAllAreaFilenames(mod.moduleName);
+        }
+        public List<string> GetAllConvoFilenames()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetAllConvoFilenames(mod.moduleName);
+        }
+        public List<string> GetAllEncounterFilenames()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetAllEncounterFilenames(mod.moduleName);
         }
         public string GetSettingsString()
         {

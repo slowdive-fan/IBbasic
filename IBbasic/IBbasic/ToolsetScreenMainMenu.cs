@@ -428,9 +428,12 @@ namespace IBbasic
             itlist.Add("New 2D 20x20 Area");
             itlist.Add("New 3D 10x10 Area");
             itlist.Add("New 3D 20x20 Area");
-            foreach (Area a in gv.mod.moduleAreasObjects)
+
+            List<string> areasFromModFolder = gv.GetAllAreaFilenames();
+
+            foreach (string a in areasFromModFolder)
             {
-                itlist.Add(a.Filename);
+                itlist.Add(a);
             }
 
             string selectedArea = await gv.ListViewPage(itlist, "Area to Edit");
@@ -524,9 +527,11 @@ namespace IBbasic
 
             List<string> itlist = new List<string>();
             itlist.Add("New Conversation");
-            foreach (Convo cnv in gv.mod.moduleConvoList)
+            List<string> convosFromModFolder = gv.GetAllConvoFilenames();
+
+            foreach (string cnv in convosFromModFolder)
             {
-                itlist.Add(cnv.ConvoFileName);
+                itlist.Add(cnv);
             }
 
             string selectedConvo = await gv.ListViewPage(itlist, "Conversation to Edit");
@@ -543,7 +548,7 @@ namespace IBbasic
                 contentNode.conversationText = "root";
                 newConvo.subNodes.Add(contentNode);
                 gv.mod.moduleConvoList.Add(newConvo);
-                gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName);
+                gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName, gv);
                 gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
                 gv.tsConvoEditor.resetAllParentIds();
                 gv.tsConvoEditor.ResetTreeView();
@@ -564,7 +569,7 @@ namespace IBbasic
             {
                 try
                 {
-                    gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(selectedConvo);
+                    gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(selectedConvo, gv);
                     gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
                     gv.tsConvoEditor.resetAllParentIds();
                     gv.tsConvoEditor.ResetTreeView();
@@ -590,7 +595,8 @@ namespace IBbasic
         }
         public void incrementalSaveModule()
         {
-            gv.cc.incrementalSave();
+            //gv.cc.incrementalSave();
+            gv.cc.saveFiles();
         }
     }
 }

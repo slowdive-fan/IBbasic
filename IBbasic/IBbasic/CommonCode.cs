@@ -1092,10 +1092,10 @@ namespace IBbasic
                 saveAsFiles();
                 return;
             }
-            string file = gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + ".mod";
+            //string file = gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + ".mod";
             try
             {
-                createFiles(file);
+                createFiles();
                 gv.sf.MessageBox("Moduled saved");
             }
             catch (Exception e)
@@ -1151,7 +1151,7 @@ namespace IBbasic
                     if (!File.Exists(backupDir + "\\" + fileName + "(" + i.ToString() + ").mod"))
                     {
                         incrementFileName = fileName + "(" + i.ToString() + ").mod";
-                        createFiles(backupDir + "\\" + incrementFileName);
+                        //createFiles(backupDir + "\\" + incrementFileName);
                         break;
                     }
                 }
@@ -1161,7 +1161,7 @@ namespace IBbasic
                 string file = gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + ".mod";
                 try
                 {
-                    createFiles(file);
+                    //createFiles(file);
                     gv.sf.MessageBox("Moduled saved");
                 }
                 catch
@@ -1170,7 +1170,7 @@ namespace IBbasic
                 }
             }
         }
-        public void createFiles(string fullPathFilename)
+        public void createFiles()
         {
             try
             {
@@ -1192,10 +1192,6 @@ namespace IBbasic
                         }
                     }
                 }
-                //save module info
-                saveModuleInfo(gv.mod, fullPathFilename);
-                //save title image
-                saveTitleImage(gv.mod, fullPathFilename);
                 //fill module items, creatures, props
                 gv.mod.moduleItemsList.Clear();
                 foreach (Item it in allItemsList)
@@ -1222,16 +1218,27 @@ namespace IBbasic
                     }
                 }
                 //save mod
-                saveModule(gv.mod, fullPathFilename);
+                string output = JsonConvert.SerializeObject(gv.mod, Formatting.None);
+                gv.SaveModuleAsset(gv.mod.moduleName, gv.mod.moduleName + ".mod", output);
                 //save areas
-                saveAreas(gv.mod, fullPathFilename);
+                foreach (Area a in gv.mod.moduleAreasObjects)
+                {
+                    output = JsonConvert.SerializeObject(a, Formatting.None);
+                    gv.SaveModuleAsset(gv.mod.moduleName, a.Filename + ".are", output);
+                }
                 //save encounters
-                saveEncounters(gv.mod, fullPathFilename);
+                foreach (Encounter enc in gv.mod.moduleEncountersList)
+                {
+                    output = JsonConvert.SerializeObject(enc, Formatting.None);
+                    gv.SaveModuleAsset(gv.mod.moduleName, enc.encounterName + ".enc", output);
+                }
                 //save convos
-                saveConvos(gv.mod, fullPathFilename);
-                //save images
-                saveImages(gv.mod, fullPathFilename);
-
+                foreach (Convo c in gv.mod.moduleConvoList)
+                {
+                    output = JsonConvert.SerializeObject(c, Formatting.None);
+                    gv.SaveModuleAsset(gv.mod.moduleName, c.ConvoFileName + ".dlg", output);
+                }
+                /*
                 //fill datafile items, creatures, props
                 datafile.dataItemsList.Clear();
                 foreach (Item it in allItemsList)
@@ -1257,7 +1264,7 @@ namespace IBbasic
                         datafile.dataPropsList.Add(it.DeepCopy());
                     }
                 }
-
+                */
                 /*try
                 {
                     string directory = gv.mainDirectory + "\\override";
@@ -1271,78 +1278,10 @@ namespace IBbasic
                 catch (Exception e)
                 {
                     gv.sf.MessageBox("failed to save 'data.json' to 'override' directory: " + e.ToString());
-                }*/                
+                }*/
             }
             catch { gv.sf.MessageBox("failed to createFiles"); }
-        }
-        public void saveModuleInfo(Module mod, string moduleFullPathFilename)
-        {
-            File.WriteAllText(moduleFullPathFilename, "MODULEINFO" + Environment.NewLine);
-            //create ModuleInfo object
-            ModuleInfo modinfo = new ModuleInfo();
-            modinfo.moduleName = mod.moduleName;
-            modinfo.moduleLabelName = mod.moduleLabelName;
-            modinfo.moduleVersion = mod.moduleVersion;
-            modinfo.moduleDescription = mod.moduleDescription;
-            modinfo.titleImageName = mod.titleImageName;
-            string output = JsonConvert.SerializeObject(modinfo, Formatting.None);
-            File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-        }
-        public void saveTitleImage(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "TITLEIMAGE" + Environment.NewLine);
-            foreach (ImageData imd in mod.moduleImageDataList)
-            {
-                //save out title image if one exists in the imagelist
-                if (imd.name.Equals(mod.titleImageName))
-                {
-                    string output = JsonConvert.SerializeObject(imd, Formatting.None);
-                    File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-                }
-            }
-        }
-        public void saveModule(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "MODULE" + Environment.NewLine);
-            string output = JsonConvert.SerializeObject(mod, Formatting.None);
-            File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-        }
-        public void saveAreas(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "AREAS" + Environment.NewLine);
-            foreach (Area a in mod.moduleAreasObjects)
-            {
-                string output = JsonConvert.SerializeObject(a, Formatting.None);
-                File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-            }
-        }
-        public void saveEncounters(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "ENCOUNTERS" + Environment.NewLine);
-            foreach (Encounter enc in mod.moduleEncountersList)
-            {
-                string output = JsonConvert.SerializeObject(enc, Formatting.None);
-                File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-            }
-        }
-        public void saveConvos(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "CONVOS" + Environment.NewLine);
-            foreach (Convo c in mod.moduleConvoList)
-            {
-                string output = JsonConvert.SerializeObject(c, Formatting.None);
-                File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-            }
-        }
-        public void saveImages(Module mod, string moduleFullPathFilename)
-        {
-            File.AppendAllText(moduleFullPathFilename, "IMAGES" + Environment.NewLine);
-            foreach (ImageData imd in mod.moduleImageDataList)
-            {
-                string output = JsonConvert.SerializeObject(imd, Formatting.None);
-                File.AppendAllText(moduleFullPathFilename, output + Environment.NewLine);
-            }
-        }
+        }        
         public void createDirectory(string fullPath)
         {
             try

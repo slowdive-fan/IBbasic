@@ -22,16 +22,21 @@ namespace IBbasic
         string GetSettingsString();
         string GetDataAssetFileString(string assetFilename);
         string GetSaveFileString(string modName, string filename);
-        List<string> GetFiles(string path, string assetPath, string endsWith);
+        List<string> GetGraphicsFiles(string modFolder, string endsWith);
+        List<string> GetTileFiles(string modFolder, string endsWith);
+        List<string> GetCharacterFiles(string modFolder, string endsWith);
         void SaveSettings(Settings toggleSettings);
-        void SaveCharacter(string pathAndFilename, Player pc);
-        void SaveModule(string modFolder, string modFilename);
+        void SaveCharacter(string modName, string filename, Player pc);
+        void SaveModuleAssetFile(string modFolder, string assetFilenameWithExtension, string json);
         void SaveSaveGame(string modName, string filename, SaveGame save);
 
         void SaveBitmap(string filename, SKBitmap bmp);
         SKBitmap LoadBitmap(string filename);
 
-        List<string> GetAllModuleFiles();        
+        List<string> GetAllModuleFiles();
+        List<string> GetAllAreaFilenames(string modFolder);
+        List<string> GetAllConvoFilenames(string modFolder);
+        List<string> GetAllEncounterFilenames(string modFolder);
 
         bool FileExists(string filename);
     }

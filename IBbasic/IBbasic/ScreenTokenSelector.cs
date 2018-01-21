@@ -75,14 +75,14 @@ namespace IBbasic
             }
             try
             {
-                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
+                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from PlayerTokens folder last
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
                 //{
-                    //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
-                    //directory.mkdirs(); 
-                    foreach (string file in files)
+                //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
+                //directory.mkdirs(); 
+                foreach (string file in files)
                     {
                         try
                         {
@@ -136,14 +136,14 @@ namespace IBbasic
             }
             try
             {
-                List<string> files = gv.GetFiles("\\modules\\" + gv.mod.moduleName, ".graphics.", ".png");
+                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from PlayerTokens folder last
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
                 //{
-                    //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
-                    //directory.mkdirs(); 
-                    foreach (string file in files)
+                //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
+                //directory.mkdirs(); 
+                foreach (string file in files)
                     {
                         try
                         {

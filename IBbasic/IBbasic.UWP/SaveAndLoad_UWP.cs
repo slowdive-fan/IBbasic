@@ -33,17 +33,17 @@ namespace IBbasic.UWP
                 sw.Write(json.ToString());
             }
         }
-        public void SaveCharacter(string pathAndFilename, Player pc)
+        public void SaveCharacter(string modName, string filename, Player pc)
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\" + pathAndFilename;
+            var filePath = documentsPath + "\\saves\\" + modName + "\\characters\\" + filename;
             string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(filePath))
             {
                 sw.Write(json.ToString());
             }
         }
-        public void SaveModule(string modFolder, string modFilename)
+        public void SaveModuleAssetFile(string modFolder, string assetFilenameWithExtension, string json)
         {
 
         }
@@ -277,6 +277,51 @@ namespace IBbasic.UWP
 
             return list;
         }
+        public List<string> GetAllAreaFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".mod"))
+                {
+                    list.Add(res);
+                }
+            }
+
+            return list;
+        }
+        public List<string> GetAllConvoFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".mod"))
+                {
+                    list.Add(res);
+                }
+            }
+
+            return list;
+        }
+        public List<string> GetAllEncounterFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".mod"))
+                {
+                    list.Add(res);
+                }
+            }
+
+            return list;
+        }
         public List<string> GetFiles(string path, string assetPath, string endsWith)
         {
             List<string> list = new List<string>();
@@ -286,6 +331,126 @@ namespace IBbasic.UWP
             foreach (var res in assembly.GetManifestResourceNames())
             {
                 if ((res.EndsWith(endsWith)) && (res.Contains(assetPath)))
+                {
+                    list.Add(GetFileNameFromResource(res));
+                }
+            }
+            /*
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }*/
+            return list;
+        }
+        public List<string> GetGraphicsFiles(string modFolder, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(".graphics.")))
+                {
+                    list.Add(GetFileNameFromResource(res));
+                }
+            }
+            /*
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }*/
+            return list;
+        }
+        public List<string> GetTileFiles(string modFolder, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(".tiles.")))
+                {
+                    list.Add(GetFileNameFromResource(res));
+                }
+            }
+            /*
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }*/
+            return list;
+        }
+        public List<string> GetCharacterFiles(string modFolder, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(".saves." + modFolder + ".characters")))
                 {
                     list.Add(GetFileNameFromResource(res));
                 }

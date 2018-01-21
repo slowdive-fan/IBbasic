@@ -34,19 +34,31 @@ namespace IBbasic.Droid
                 sw.Write(json.ToString());
             }
         }
-        public void SaveCharacter(string pathAndFilename, Player pc)
+        public void SaveCharacter(string modName, string filename, Player pc)
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\" + pathAndFilename;
+            var filePath = documentsPath + "/saves/" + modName + "/characters/" + filename;
             string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
             using (StreamWriter sw = new StreamWriter(filePath))
             {
                 sw.Write(json.ToString());
             }
         }
-        public void SaveModule(string modFolder, string modFilename)
+        public void SaveModuleAssetFile(string modFolder, string assetFilenameWithExtension, string json)
         {
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + assetFilenameWithExtension;
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(filePath))
+                {
+                    sw.Write(json.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
         }
         public void SaveSaveGame(string modName, string filename, SaveGame save)
         {
@@ -355,7 +367,81 @@ namespace IBbasic.Droid
             }
             return list;
         }
-        public List<string> GetFiles(string path, string assetPath, string endsWith)
+        public List<string> GetAllAreaFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+                        
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder);
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                try
+                {
+                    if (f.Name.EndsWith(".are"))
+                    {
+                        list.Add(Path.GetFileNameWithoutExtension(f.Name));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return list;
+        }
+        public List<string> GetAllConvoFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+                        
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                try
+                {
+                    if (f.Name.EndsWith(".dlg"))
+                    {
+                        list.Add(Path.GetFileNameWithoutExtension(f.Name));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return list;
+        }
+        public List<string> GetAllEncounterFilenames(string modFolder)
+        {
+            List<string> list = new List<string>();
+                        
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder);
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                try
+                {
+                    if (f.Name.EndsWith(".enc"))
+                    {
+                        list.Add(Path.GetFileNameWithoutExtension(f.Name));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return list;
+        }
+        public List<string> GetGraphicsFiles(string modFolder, string endsWith)
         {
             List<string> list = new List<string>();
 
@@ -363,7 +449,7 @@ namespace IBbasic.Droid
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.EndsWith(endsWith)) && (res.Contains(assetPath)))
+                if ((res.EndsWith(endsWith)) && (res.Contains(".graphics.")))
                 {
                     list.Add(GetFileNameFromResource(res));
                 }
@@ -371,7 +457,7 @@ namespace IBbasic.Droid
 
             //search in personal folder
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/modules/" + modFolder + "/graphics");
             directory.Mkdirs();
             foreach (Java.IO.File f in directory.ListFiles())
             {
@@ -383,7 +469,87 @@ namespace IBbasic.Droid
 
             //search in external folder
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/graphics");
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+            return list;
+        }
+        public List<string> GetTileFiles(string modFolder, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(".tiles.")))
+                {
+                    list.Add(GetFileNameFromResource(res));
+                }
+            }
+
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/modules/" + modFolder + "/graphics");
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/graphics");
+            directory.Mkdirs();
+            //check to see if Lanterna2 exists, if not copy it over
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+            return list;
+        }
+        public List<string> GetCharacterFiles(string modFolder, string endsWith)
+        {
+            List<string> list = new List<string>();
+
+            //search in assets
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.EndsWith(endsWith)) && (res.Contains(".saves." + modFolder + ".characters")))
+                {
+                    list.Add(GetFileNameFromResource(res));
+                }
+            }
+
+            //search in personal folder
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Java.IO.File directory = new Java.IO.File(documentsPath + "/saves/" + modFolder + "/characters");
+            directory.Mkdirs();
+            foreach (Java.IO.File f in directory.ListFiles())
+            {
+                if (f.Name.EndsWith(endsWith))
+                {
+                    list.Add(f.Name);
+                }
+            }
+
+            //search in external folder
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/saves/" + modFolder + "/characters");
             directory.Mkdirs();
             //check to see if Lanterna2 exists, if not copy it over
             foreach (Java.IO.File f in directory.ListFiles())

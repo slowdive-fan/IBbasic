@@ -287,11 +287,30 @@ namespace IBbasic
             }
             return null;
         }
-        public Convo getConvoByName(string name)
+        public Convo getConvoByName(string name, GameView gv)
         {
-            foreach (Convo e in this.moduleConvoList)
+            try
             {
-                if (e.ConvoFileName.Equals(name)) return e;
+                foreach (Convo e in this.moduleConvoList)
+                {
+                    if (e.ConvoFileName.Equals(name)) return e;
+                }
+                //didn't find the area in the mod list so try and load it
+                string s = gv.GetModuleAssetFileString(this.moduleName, name + ".dlg");
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Convo cnv = (Convo)serializer.Deserialize(sr, typeof(Convo));
+                    if (cnv != null)
+                    {
+                        this.moduleConvoList.Add(cnv);
+                        return cnv;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.errorLog(ex.ToString());
             }
             return null;
         }
