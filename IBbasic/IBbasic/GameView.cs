@@ -226,7 +226,7 @@ namespace IBbasic
 
             setupFonts();
 
-            //TODOanimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
+            //TODO animationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
 
             log = new IB2HtmlLogBox(this);
             log.tbXloc = (8 * uiSquareSize) + oXshift / 2 + (8 * scaler);
@@ -740,9 +740,9 @@ namespace IBbasic
             srcRect.Bottom = source.Top + source.Height;
 
             //used for sprites
-            SKRect dst = new SKRect(dstRect.Left, dstRect.Top, dstRect.Right, dstRect.Bottom);
-            SKRect src = new SKRect(srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom);
-            canvas.DrawBitmap(bitmap, src, dst);
+            //SKRect dst = new SKRect(dstRect.Left, dstRect.Top, dstRect.Right, dstRect.Bottom);
+            //SKRect src = new SKRect(srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom);
+            canvas.DrawBitmap(bitmap, srcRect, dstRect);
             canvas.Restore();
         }
 

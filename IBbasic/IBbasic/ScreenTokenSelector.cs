@@ -83,25 +83,25 @@ namespace IBbasic
                 //files = Directory.GetFiles(gv.mainDirectory + "\\\\default\\NewModule\\graphics", "*.png");
                 //directory.mkdirs(); 
                 foreach (string file in files)
+                {
+                    try
                     {
-                        try
+                        string filename = Path.GetFileName(file);
+                        if (filename.StartsWith("pc_"))
                         {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("pc_"))
+                            string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
+                            if (!playerTokenList.Contains(fileNameWithOutExt))
                             {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!playerTokenList.Contains(fileNameWithOutExt))
-                                {
-                                    playerTokenList.Add(fileNameWithOutExt);
-                                }
+                                playerTokenList.Add(fileNameWithOutExt);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            gv.sf.MessageBox(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
                     }
+                    catch (Exception ex)
+                    {
+                        gv.sf.MessageBox(ex.ToString());
+                        gv.errorLog(ex.ToString());
+                    }
+                }
                 //}
             }
             catch (Exception ex)
