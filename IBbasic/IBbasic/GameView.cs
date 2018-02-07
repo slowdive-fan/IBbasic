@@ -122,6 +122,9 @@ namespace IBbasic
         public bool stillProcessingGameLoop = false;
         public float fps = 0;
         public int reportFPScount = 0;
+        public bool animationTimerOn = false;
+        public long animationStartTime = 0;
+        public int animationDelayTime = 0;
         //TODOpublic Timer animationTimer = new Timer();
 
         public GameView(ContentPage conPage)
@@ -572,6 +575,9 @@ namespace IBbasic
         //Animation Timer Stuff
         public void postDelayed(string type, int delay)
         {
+            animationTimerOn = true;
+            animationStartTime = gameTimerStopwatch.ElapsedMilliseconds; //get the current total amount of ms since the game launched
+            animationDelayTime = delay;
             /*if (type.Equals("doAnimation"))
             {
                 animationTimer.Enabled = true;
@@ -583,13 +589,10 @@ namespace IBbasic
                 animationTimer.Start();
             }*/
         }
-        private void AnimationTimer_Tick(object sender, EventArgs e)
+        private void AnimationTimer_Tick()
         {
-            /*
-            animationTimer.Enabled = false;
-            animationTimer.Stop();
+            animationTimerOn = false;
             screenCombat.doAnimationController();
-            */
         }
         
         public void gameTimer_Tick(SKCanvasView sk_canvas)
@@ -599,9 +602,16 @@ namespace IBbasic
                 stillProcessingGameLoop = true; //starting the game loop so do not allow another tick call to run until finished with this tick call.
                 long current = gameTimerStopwatch.ElapsedMilliseconds; //get the current total amount of ms since the game launched
                 int elapsed = (int)(current - previousTime); //calculate the total ms elapsed since the last time through the game loop
+                if (animationTimerOn) //do combat animation stuff
+                {
+                    long timePassed = current - animationStartTime;
+                    if (timePassed > animationDelayTime)
+                    {
+                        AnimationTimer_Tick();
+                    }
+                }
                 Update(elapsed); //runs AI and physics
-                //Render(); //draw the screen frame
-                sk_canvas.InvalidateSurface();
+                sk_canvas.InvalidateSurface(); //draw the screen frame
                 if (reportFPScount >= 10)
                 {
                     reportFPScount = 0;
