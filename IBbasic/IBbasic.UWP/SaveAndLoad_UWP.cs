@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.Storage;
 using Xamarin.Forms;
 
@@ -15,59 +17,87 @@ namespace IBbasic.UWP
 {    
     public class SaveAndLoad_UWP : ISaveAndLoad
     {
-        #region ISaveAndLoad Text implementation
-        public void SaveText(string filename, string text)
+        public string ConvertFullPath(string fullPath, string replaceWith)
         {
-            /*StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(sampleFile, text);*/
+            string convertedFullPath = "";
+            convertedFullPath = fullPath.Replace("\\", replaceWith);
+            return convertedFullPath;
         }
-        public void SaveSettings(Settings toggleSettings)
+        public string ConvertFullPath(string fullPath, string toReplace, string replaceWith)
         {
-            //try personal folder first
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\settings.json";
-            string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(filePath))
-            {
-                sw.Write(json.ToString());
-            }
-        }
-        public void SaveCharacter(string modName, string filename, Player pc)
-        {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\saves\\" + modName + "\\characters\\" + filename;
-            string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(filePath))
-            {
-                sw.Write(json.ToString());
-            }
-        }
-        public void SaveModuleAssetFile(string modFolder, string assetFilenameWithExtension, string json)
-        {
-
-        }
-        public void SaveSaveGame(string modName, string filename, SaveGame save)
-        {
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\IBbasic\\saves\\" + modName + "\\" + filename;
-            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
-            file.Directory.Create(); // If the directory already exists, this method does nothing.
-            string json = JsonConvert.SerializeObject(save, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(filePath))
-            {
-                sw.Write(json.ToString());
-            }
+            string convertedFullPath = "";
+            convertedFullPath = fullPath.Replace(toReplace, replaceWith);
+            return convertedFullPath;
         }
 
-        public string LoadText(string filename)
+        public void CreateUserFolders()
         {
-            return "";
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
-            string text = await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
-            return text;*/
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string dir = storageFolder.Path + "\\modules";
+            Directory.CreateDirectory(dir);
+            dir = storageFolder.Path + "\\saves";
+            Directory.CreateDirectory(dir);
         }
+        public void SaveText(string fullPath, string text)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
+            string dir = Path.GetDirectoryName(convertedFullPath);
+            Directory.CreateDirectory(dir);
+            using (StreamWriter sw = File.CreateText(convertedFullPath))
+            {
+                sw.Write(text);
+            }
+        }
+        public string LoadStringFromUserFolder(string fullPath)
+        {
+            string text = "";
+            //check in module folder first
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
+            if (File.Exists(convertedFullPath))
+            {
+                text = File.ReadAllText(convertedFullPath);
+                return text;
+            }
+            return text;
+        }
+        public string LoadStringFromAssetFolder(string fullPath)
+        {
+            string text = "";
+            //check in Assests folder last
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(fullPath, "."));
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                text = reader.ReadToEnd();
+            }
+            return text;
+        }
+        public string LoadStringFromEitherFolder(string assetFolderpath, string userFolderpath)
+        {
+            string text = "";
+            //check in module folder first
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string convertedFullPath = storageFolder.Path + ConvertFullPath(userFolderpath, "\\");
+            if (File.Exists(convertedFullPath))
+            {
+                text = File.ReadAllText(convertedFullPath);
+                return text;
+            }
+            //check in Assests folder last
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(assetFolderpath, "."));
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
+            }
+            return text;
+        }
+
         public string GetModuleFileString(string modFilename)
         {
             //asset module
@@ -83,17 +113,6 @@ namespace IBbasic.UWP
             else
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
-                //try asset area            
-                Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + modFolder + "." + modFilename);
-                if (stream != null)
-                {
-                    using (var reader = new System.IO.StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }
-
                 //try from personal folder first
                 var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
@@ -110,158 +129,193 @@ namespace IBbasic.UWP
                         return File.ReadAllText(filePath);
                     }*/
                 }
+                //try asset area            
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + modFolder + "." + modFilename);
+                if (stream != null)
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
             }
             return "";
         }
-        public string GetModuleAssetFileString(string modFolder, string assetFilename)
+
+        public SKBitmap LoadBitmap(string filename, Module mdl)
         {
-            //try asset area            
+            SKBitmap bm = null;
+            try
+            {
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".png"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".png");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".PNG"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".PNG");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename);
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".png"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".png");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".PNG"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".PNG");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".jpg"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".jpg");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename);
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".png"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".png");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".PNG"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".PNG");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename);
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".png"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".png");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".PNG"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".PNG");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename);
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".png"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".png");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".PNG"))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".PNG");
+                }
+                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename))
+                {
+                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename);
+                }
+                //STOP here if already found bitmap
+                if (bm != null)
+                {
+                    return bm;
+                }
+                //If not found then try in Asset folder
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename);
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".png");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".jpg");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename);
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename + ".png");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename + ".jpg");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename);
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename + ".png");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename + ".jpg");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics.ui_missingtexture.png");
+                }
+                SKManagedStream skStream = new SKManagedStream(stream);
+                return SKBitmap.Decode(skStream);
+            }
+            catch (Exception ex)
+            {
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics.ui_missingtexture.png");
+                SKManagedStream skStream = new SKManagedStream(stream);
+                return SKBitmap.Decode(skStream);
+            }
+        }
+
+        public List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension)
+        {
+            List<string> list = new List<string>();
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(folderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
+            foreach (string file in files)
+            {
+                list.Add(Path.GetFileName(file));
+            }
+            return list;
+        }
+        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
+        {
+            List<string> list = new List<string>();
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + modFolder + "." + assetFilename);
-            if (stream != null)
+            foreach (var res in assembly.GetManifestResourceNames())
             {
-                using (var reader = new System.IO.StreamReader(stream))
+                if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
                 {
-                    return reader.ReadToEnd();
+                    list.Add(res);
                 }
             }
-            //try from personal folder first
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
-            var filePath = documentsPath + "/modules/" + modFolder + "/" + assetFilename;
-            if (File.Exists(filePath))
-            {
-                return File.ReadAllText(filePath);
-            }
-            else //try from external folder
-            {
-                /*Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                filePath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFolder + "/" + areaFilename + ".are";
-                if (File.Exists(filePath))
-                {
-                    return File.ReadAllText(filePath);
-                }*/
-            }
-            return "";
+            return list;
         }
-        public string GetDataAssetFileString(string assetFilename)
+        public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
-            //try asset area            
+            List<string> list = new List<string>();
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            if (Directory.Exists(storageFolder.Path + ConvertFullPath(userFolderpath, "\\")))
+            {
+                string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(userFolderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    list.Add(Path.GetFileName(file));
+                }
+            }
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.data." + assetFilename);
-            if (stream != null)
+            foreach (var res in assembly.GetManifestResourceNames())
             {
-                using (var reader = new System.IO.StreamReader(stream))
+                if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
-                    return reader.ReadToEnd();
+                    string[] split = res.Split('.');
+                    list.Add(Path.GetFileName(split[split.Length - 2] + "." + split[split.Length - 1]));
                 }
             }
-            return "";
+            return list;
         }
-        public string GetSettingsString()
-        {
-            //try from personal folder first
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            //string modFolder = Path.GetFileNameWithoutExtension(areaFilename);
-            var filePath = documentsPath + "/settings.json";
-            if (File.Exists(filePath))
-            {
-                return File.ReadAllText(filePath);
-            }
-            /*else //try from external folder
-            {
-                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                filePath = sdCard.AbsolutePath + "/IBbasic/settings.json";
-                if (File.Exists(filePath))
-                {
-                    return File.ReadAllText(filePath);
-                }
-            }*/
-            return "";
-        }
-        public string GetSaveFileString(string modName, string filename)
-        {
-            //try from personal folder first
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = documentsPath + "\\IBbasic\\saves\\" + modName + "\\" + filename;
-            if (File.Exists(filePath))
-            {
-                return File.ReadAllText(filePath);
-            }
-            /*else //try from external folder
-            {
-                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                filePath = sdCard.AbsolutePath + "/IBbasic/saves/" + filename;
-                if (File.Exists(filePath))
-                {
-                    return File.ReadAllText(filePath);
-                }
-            }*/
-            return "";
-        }
-        #endregion
-
-        #region ISaveAndLoad Bitmap implementation
-        public void SaveBitmap(string filename, SKBitmap bmp)
-        {
-            //StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            //StorageFile sampleFile = await localFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-            //await FileIO.WriteTextAsync(sampleFile, bmp);
-        }
-        public SKBitmap LoadBitmap(string filename)
-        {
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename);
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".png");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".jpg");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename);
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename + ".png");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.tiles." + filename + ".jpg");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename);
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename + ".png");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.ui." + filename + ".jpg");
-            }
-            if (stream == null)
-            {
-                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics.ui_missingtexture.png");
-            }
-            SKManagedStream skStream = new SKManagedStream(stream);
-
-            //Stream fileStream = File.OpenRead("btn_small_on.png");
-            return SKBitmap.Decode(skStream);
-
-            //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            //StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
-            //SKBitmap text = await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
-            //return text;
-
-
-        }
-        #endregion
-
         public List<string> GetAllModuleFiles()
         {
             List<string> list = new List<string>();
@@ -274,234 +328,78 @@ namespace IBbasic.UWP
                     list.Add(res);
                 }
             }
-
-            return list;
-        }
-        public List<string> GetAllAreaFilenames(string modFolder)
-        {
-            List<string> list = new List<string>();
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if (res.EndsWith(".mod"))
-                {
-                    list.Add(res);
-                }
-            }
-
-            return list;
-        }
-        public List<string> GetAllConvoFilenames(string modFolder)
-        {
-            List<string> list = new List<string>();
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if (res.EndsWith(".mod"))
-                {
-                    list.Add(res);
-                }
-            }
-
-            return list;
-        }
-        public List<string> GetAllEncounterFilenames(string modFolder)
-        {
-            List<string> list = new List<string>();
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if (res.EndsWith(".mod"))
-                {
-                    list.Add(res);
-                }
-            }
-
-            return list;
-        }
-        public List<string> GetFiles(string path, string assetPath, string endsWith)
-        {
-            List<string> list = new List<string>();
-
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if ((res.EndsWith(endsWith)) && (res.Contains(assetPath)))
-                {
-                    list.Add(GetFileNameFromResource(res));
-                }
-            }
-            /*
             //search in personal folder
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
-            directory.Mkdirs();
-            foreach (Java.IO.File f in directory.ListFiles())
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string[] files = Directory.GetFiles(storageFolder.Path + "\\modules", "*.mod", SearchOption.AllDirectories);
+            foreach (string file in files)
             {
-                if (f.Name.EndsWith(endsWith))
+                if (Path.GetFileName(file) != "NewModule.mod")
                 {
-                    list.Add(f.Name);
+                    list.Add(Path.GetFileName(file));
                 }
             }
 
-            //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }*/
-            return list;
-        }
-        public List<string> GetGraphicsFiles(string modFolder, string endsWith)
-        {
-            List<string> list = new List<string>();
-
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if ((res.EndsWith(endsWith)) && (res.Contains(".graphics.")))
-                {
-                    list.Add(GetFileNameFromResource(res));
-                }
-            }
-            /*
-            //search in personal folder
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
-            directory.Mkdirs();
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }
-
-            //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }*/
-            return list;
-        }
-        public List<string> GetTileFiles(string modFolder, string endsWith)
-        {
-            List<string> list = new List<string>();
-
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if ((res.EndsWith(endsWith)) && (res.Contains(".tiles.")))
-                {
-                    list.Add(GetFileNameFromResource(res));
-                }
-            }
-            /*
-            //search in personal folder
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
-            directory.Mkdirs();
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }
-
-            //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }*/
-            return list;
-        }
-        public List<string> GetCharacterFiles(string modFolder, string endsWith)
-        {
-            List<string> list = new List<string>();
-
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                if ((res.EndsWith(endsWith)) && (res.Contains(".saves." + modFolder + ".characters")))
-                {
-                    list.Add(GetFileNameFromResource(res));
-                }
-            }
-            /*
-            //search in personal folder
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/" + path);
-            directory.Mkdirs();
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }
-
-            //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/" + path);
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
-            {
-                if (f.Name.EndsWith(endsWith))
-                {
-                    list.Add(f.Name);
-                }
-            }*/
             return list;
         }
 
-        public bool FileExists(string filename)
+        MediaPlayer playerAreaMusic;
+        public void CreateAreaMusicPlayer()
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            try
+            playerAreaMusic = new MediaPlayer();
+            playerAreaMusic.IsLoopingEnabled = true;
+            playerAreaMusic.AutoPlay = false;
+            playerAreaMusic.Volume = 0.5;
+        }
+        public void LoadAreaMusicFile(string fullPath)
+        {
+            string filename = Path.GetFileName(fullPath);
+            if (filename != "none")
             {
-                localFolder.GetFileAsync(filename).AsTask().Wait();
-                return true;
+                //check in module folder first
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
+                string convertedFullPathUri = ConvertFullPath(fullPath, "/");
+                if (File.Exists(convertedFullPath))
+                {
+                    playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appdata:///local" + convertedFullPathUri));
+                }
+                else if (File.Exists(convertedFullPath + ".mp3"))
+                {
+                    playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appdata:///local" + convertedFullPathUri + ".mp3"));
+                }
             }
-            catch
+            if (playerAreaMusic != null)
             {
-                return false;
+                //playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/" + fileName));
+                //playerAreaMusic.MediaEnded += OnPlaybackEnded;
             }
         }
-        public string GetFileNameFromResource(string res)
+        public void PlayAreaMusic()
         {
-            string filename = "";
-            List<string> parts = res.Split('.').ToList();
-            filename = parts[parts.Count - 2] + "." + parts[parts.Count - 1];
-            return filename;
+            if (playerAreaMusic == null || playerAreaMusic.Source == null)
+            {
+                return;
+            }
+
+            if (playerAreaMusic.PlaybackSession.PlaybackState == MediaPlaybackState.Playing)
+            {
+                playerAreaMusic.Pause();
+                playerAreaMusic.PlaybackSession.Position = TimeSpan.FromSeconds(0);
+                playerAreaMusic.Play();
+            }
+            else
+            {
+                playerAreaMusic.Play();
+            }
+        }
+        public void StopAreaMusic()
+        {
+            playerAreaMusic.Pause();
+            playerAreaMusic.PlaybackSession.Position = TimeSpan.FromSeconds(0);
+        }
+        public void PauseAreaMusic()
+        {
+            playerAreaMusic.Pause();
         }
     }
 }

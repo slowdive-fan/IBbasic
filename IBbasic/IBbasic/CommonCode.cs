@@ -219,8 +219,8 @@ namespace IBbasic
                 }
             }
             // deserialize JSON directly from a file
-            string s = gv.GetDataAssetFileString(filename);
-            using (StringReader sr = new StringReader(s))
+            string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\data\\" + nameMinusJson + ".json");
+            using (StringReader sr = new StringReader(json))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 toReturn = (Player)serializer.Deserialize(sr, typeof(Player));
@@ -500,10 +500,11 @@ namespace IBbasic
             SaveGame m = new SaveGame();
             try
             {
-                string s = gv.GetSaveFileString(gv.mod.moduleName, filename);
-                if (s != "")
+                string json = gv.LoadStringFromUserFolder("\\saves\\" + gv.mod.moduleName + "\\" + filename);
+                //string s = gv.GetSaveFileString(gv.mod.moduleName, filename);
+                if (json != "")
                 {
-                    using (StringReader sr = new StringReader(s))
+                    using (StringReader sr = new StringReader(json))
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         m = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
@@ -647,7 +648,9 @@ namespace IBbasic
             saveMod.minutesSinceLastRationConsumed = gv.mod.minutesSinceLastRationConsumed;
 
             //SAVE THE FILE
-            gv.SaveSaveGame(gv.mod.moduleName, filename, saveMod);
+            string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
+            gv.SaveText("\\saves\\" + gv.mod.moduleName + "\\" + filename, json);
+            //gv.SaveSaveGame(gv.mod.moduleName, filename, saveMod);
             /*string filepath = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename;
             MakeDirectoryIfDoesntExist(filepath);
             string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
@@ -671,8 +674,9 @@ namespace IBbasic
             //  load a new module (actually already have a new module at this point from launch screen		
             //  load the saved game module
             SaveGame saveMod = null;
-            string strg = gv.GetSaveFileString(gv.mod.moduleName, filename);
-            using (StringReader sr = new StringReader(strg))
+            string json = gv.LoadStringFromUserFolder("\\saves\\" + gv.mod.moduleName + "\\" + filename);
+            //string strg = gv.GetSaveFileString(gv.mod.moduleName, filename);
+            using (StringReader sr = new StringReader(json))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 saveMod = (SaveGame)serializer.Deserialize(sr, typeof(SaveGame));
@@ -1007,7 +1011,7 @@ namespace IBbasic
                 JsonSerializer serializer = new JsonSerializer();
                 toReturn = (Module)serializer.Deserialize(sr, typeof(Module));
             }
-            s = gv.GetDataAssetFileString("data.json");
+            s = gv.LoadStringFromAssetFolder("\\data\\data.json");
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -1219,24 +1223,28 @@ namespace IBbasic
                 }
                 //save mod
                 string output = JsonConvert.SerializeObject(gv.mod, Formatting.None);
-                gv.SaveModuleAsset(gv.mod.moduleName, gv.mod.moduleName + ".mod", output);
+                gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + gv.mod.moduleName + ".mod", output);
+                //gv.SaveModuleAsset(gv.mod.moduleName, gv.mod.moduleName + ".mod", output);
                 //save areas
                 foreach (Area a in gv.mod.moduleAreasObjects)
                 {
                     output = JsonConvert.SerializeObject(a, Formatting.None);
-                    gv.SaveModuleAsset(gv.mod.moduleName, a.Filename + ".are", output);
+                    gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + a.Filename + ".are", output);
+                    //gv.SaveModuleAsset(gv.mod.moduleName, a.Filename + ".are", output);
                 }
                 //save encounters
                 foreach (Encounter enc in gv.mod.moduleEncountersList)
                 {
                     output = JsonConvert.SerializeObject(enc, Formatting.None);
-                    gv.SaveModuleAsset(gv.mod.moduleName, enc.encounterName + ".enc", output);
+                    gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + enc.encounterName + ".enc", output);
+                    //gv.SaveModuleAsset(gv.mod.moduleName, enc.encounterName + ".enc", output);
                 }
                 //save convos
                 foreach (Convo c in gv.mod.moduleConvoList)
                 {
                     output = JsonConvert.SerializeObject(c, Formatting.None);
-                    gv.SaveModuleAsset(gv.mod.moduleName, c.ConvoFileName + ".dlg", output);
+                    gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + c.ConvoFileName + ".dlg", output);
+                    //gv.SaveModuleAsset(gv.mod.moduleName, c.ConvoFileName + ".dlg", output);
                 }
                 /*
                 //fill datafile items, creatures, props
@@ -2210,7 +2218,7 @@ namespace IBbasic
         public SKBitmap LoadBitmap(string filename, Module mdl) //change this to LoadBitmapGDI
         {
             SKBitmap bm = null;
-            bm = gv.LoadBitmap(filename);
+            bm = gv.LoadBitmap(filename, mdl);
             /*
             try
             {
@@ -2292,7 +2300,7 @@ namespace IBbasic
         }
         public string loadTextToString(string filename)
         {
-            return gv.GetDataAssetFileString(filename);
+            return gv.LoadStringFromAssetFolder("\\data\\" + filename);
         }
         public void MakeDirectoryIfDoesntExist(string filenameAndFullPath)
         {

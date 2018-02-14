@@ -52,7 +52,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)IBminiMessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IBminiTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbRect.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ISaveAndLoadBitmap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ISaveAndLoad.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Item.cs" />

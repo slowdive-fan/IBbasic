@@ -72,7 +72,8 @@ namespace IBbasic
             //DEFAULTS
             try
             {
-                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
+                List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+                //List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from PlayerTokens folder last
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
@@ -133,7 +134,8 @@ namespace IBbasic
             //DEFAULTS
             try
             {
-                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
+                List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+                //List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from PlayerTokens folder last
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))

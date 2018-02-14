@@ -142,8 +142,8 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                string s = gv.GetModuleAssetFileString(this.moduleName, areaFilename + ".are");
-                using (StringReader sr = new StringReader(s))
+                string json = gv.LoadStringFromEitherFolder("\\modules\\" + gv.mod.moduleName + "\\" + areaFilename + ".are", "\\modules\\" + gv.mod.moduleName + "\\" + areaFilename + ".are");
+                using (StringReader sr = new StringReader(json))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     Area are = (Area)serializer.Deserialize(sr, typeof(Area));
@@ -175,8 +175,8 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                string s = gv.GetModuleAssetFileString(this.moduleName, EncFilename + ".enc");
-                using (StringReader sr = new StringReader(s))
+                string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\" + EncFilename + ".enc");
+                using (StringReader sr = new StringReader(json))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     Encounter enc = (Encounter)serializer.Deserialize(sr, typeof(Encounter));
@@ -208,8 +208,8 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                string s = gv.GetModuleAssetFileString(this.moduleName, ConvoFilename + ".dlg");
-                using (StringReader sr = new StringReader(s))
+                string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\" + ConvoFilename + ".dlg");
+                using (StringReader sr = new StringReader(json))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     Convo cnv = (Convo)serializer.Deserialize(sr, typeof(Convo));
@@ -296,7 +296,7 @@ namespace IBbasic
                     if (e.ConvoFileName.Equals(name)) return e;
                 }
                 //didn't find the area in the mod list so try and load it
-                string s = gv.GetModuleAssetFileString(this.moduleName, name + ".dlg");
+                string s = gv.LoadStringFromEitherFolder("\\modules\\" + moduleName + "\\" + name + ".dlg", "\\modules\\" + moduleName + "\\" + name + ".dlg");
                 using (StringReader sr = new StringReader(s))
                 {
                     JsonSerializer serializer = new JsonSerializer();

@@ -429,7 +429,8 @@ namespace IBbasic
             itlist.Add("New 3D 10x10 Area");
             itlist.Add("New 3D 20x20 Area");
 
-            List<string> areasFromModFolder = gv.GetAllAreaFilenames();
+            List<string> areasFromModFolder = gv.GetAllFilesWithExtensionFromBothFolders("\\modules\\" + gv.mod.moduleName, "\\modules\\" + gv.mod.moduleName, ".are");
+            //List<string> areasFromModFolder = gv.GetAllAreaFilenames();
 
             foreach (string a in areasFromModFolder)
             {
@@ -527,8 +528,8 @@ namespace IBbasic
 
             List<string> itlist = new List<string>();
             itlist.Add("New Conversation");
-            List<string> convosFromModFolder = gv.GetAllConvoFilenames();
-
+            List<string> convosFromModFolder = gv.GetAllFilesWithExtensionFromBothFolders("\\modules\\" + gv.mod.moduleName, "\\modules\\" + gv.mod.moduleName, ".dlg");
+            
             foreach (string cnv in convosFromModFolder)
             {
                 itlist.Add(cnv);

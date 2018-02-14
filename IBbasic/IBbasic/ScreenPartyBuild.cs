@@ -59,7 +59,8 @@ namespace IBbasic
         public void loadPlayerList()
         {
             pcList.Clear();
-            List<string> files = gv.GetCharacterFiles(gv.mod.moduleName, ".json");
+            List<string> files = gv.GetAllFilesWithExtensionFromUserFolder("\\saves\\" + gv.mod.moduleName + "\\characters", ".json");
+            //List<string> files = gv.GetCharacterFiles(gv.mod.moduleName, ".json");
             foreach (string file in files)
             {
                 try

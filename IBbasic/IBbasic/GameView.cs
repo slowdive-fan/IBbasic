@@ -138,7 +138,8 @@ namespace IBbasic
 
             //this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GameView_MouseWheel);
             mainDirectory = Directory.GetCurrentDirectory();
-            
+            CreateUserFolders();
+
             //this.MinimumSize = new Size(100, 100);
 
             #region screen size selection
@@ -418,7 +419,7 @@ namespace IBbasic
         public void loadSettings()
         {
             toggleSettings = new Settings();
-            string s = this.GetSettingsString();
+            string s = LoadStringFromEitherFolder("\\settings.json", "\\settings.json");
             if (s != "")
             {
                 using (StringReader sr = new StringReader(s))
@@ -430,8 +431,8 @@ namespace IBbasic
         }
         public void saveSettings()
         {
-            //SAVE THE FILE
-            SaveSettings(toggleSettings);
+            string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
+            SaveText("\\settings.json", json);            
         }
         private void fillCharList()
         {
@@ -1555,73 +1556,70 @@ namespace IBbasic
             return 0;
         }
 
-        public void SaveSettings(Settings tglSettings)
+        //PLATFORM SPECIFIC CALLS
+        public void CreateUserFolders()
         {
-            DependencyService.Get<ISaveAndLoad>().SaveSettings(tglSettings);
+            DependencyService.Get<ISaveAndLoad>().CreateUserFolders();
         }
-        public void SaveSaveGame(string modName, string filename, SaveGame save)
+        public void SaveText(string fullPath, string text)
         {
-            DependencyService.Get<ISaveAndLoad>().SaveSaveGame(modName, filename, save);
+            DependencyService.Get<ISaveAndLoad>().SaveText(fullPath, text);
         }
-        public void SaveCharacter(string modName, string filename, Player pc)
+        public string LoadStringFromUserFolder(string fullPath)
         {
-            DependencyService.Get<ISaveAndLoad>().SaveCharacter(modName, filename, pc);
+            return DependencyService.Get<ISaveAndLoad>().LoadStringFromUserFolder(fullPath);
         }
-        public void SaveModuleAsset(string modFolder, string assetFilenameWithExtension, string json)
+        public string LoadStringFromAssetFolder(string fullPath)
         {
-            DependencyService.Get<ISaveAndLoad>().SaveModuleAssetFile(modFolder, assetFilenameWithExtension, json);
+            return DependencyService.Get<ISaveAndLoad>().LoadStringFromAssetFolder(fullPath);
         }
-        public List<string> GetTileFiles(string modFolder, string endsWith)
+        public string LoadStringFromEitherFolder(string assetFolderpath, string userFolderpath)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetTileFiles(modFolder, endsWith);
+            return DependencyService.Get<ISaveAndLoad>().LoadStringFromEitherFolder(assetFolderpath, userFolderpath);
         }
-        public List<string> GetGraphicsFiles(string modFolder, string endsWith)
+        public List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetGraphicsFiles(modFolder, endsWith);
+            return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromUserFolder(folderpath, extension);
         }
-        public List<string> GetCharacterFiles(string modFolder, string endsWith)
+        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetCharacterFiles(modFolder, endsWith);
+            return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromAssetFolder(folderpath, extension);
+        }
+        public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromBothFolders(assetFolderpath, userFolderpath, extension);
         }
         public string GetModuleFileString(string modFilename)
         {
             return DependencyService.Get<ISaveAndLoad>().GetModuleFileString(modFilename);
         }
-        public string GetModuleAssetFileString(string modFolder, string assetFilename)
+        public SKBitmap LoadBitmap(string filename, Module mdl)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetModuleAssetFileString(modFolder, assetFilename);
-        }
-        public string GetDataAssetFileString(string assetFilename)
-        {
-            return DependencyService.Get<ISaveAndLoad>().GetDataAssetFileString(assetFilename);
-        }
-        public SKBitmap LoadBitmap(string filename)
-        {
-            return DependencyService.Get<ISaveAndLoad>().LoadBitmap(filename);
+            return DependencyService.Get<ISaveAndLoad>().LoadBitmap(filename, mdl);
         }
         public List<string> GetAllModuleFiles()
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
         }
-        public List<string> GetAllAreaFilenames()
+        public void CreateAreaMusicPlayer()
         {
-            return DependencyService.Get<ISaveAndLoad>().GetAllAreaFilenames(mod.moduleName);
+            DependencyService.Get<ISaveAndLoad>().CreateAreaMusicPlayer();
         }
-        public List<string> GetAllConvoFilenames()
+        public void LoadAreaMusicFile(string fileName)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetAllConvoFilenames(mod.moduleName);
+            DependencyService.Get<ISaveAndLoad>().LoadAreaMusicFile(fileName);
         }
-        public List<string> GetAllEncounterFilenames()
+        public void PlayAreaMusic()
         {
-            return DependencyService.Get<ISaveAndLoad>().GetAllEncounterFilenames(mod.moduleName);
+            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
         }
-        public string GetSettingsString()
+        public void StopAreaMusic()
         {
-            return DependencyService.Get<ISaveAndLoad>().GetSettingsString();
+            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
         }
-        public string GetSaveFileString(string modName, string filename)
+        public void PauseAreaMusic()
         {
-            return DependencyService.Get<ISaveAndLoad>().GetSaveFileString(modName, filename);
+            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
         }
 
 

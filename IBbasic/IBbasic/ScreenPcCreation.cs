@@ -114,7 +114,8 @@ namespace IBbasic
             playerTokenList.Clear();
             try
             {
-                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
+                List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+                //List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from module folder first
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\pctokens"))
@@ -150,7 +151,8 @@ namespace IBbasic
             playerPortraitList.Clear();
             try
             {
-                List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
+                List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+                //List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from module folder first
                 //string[] files;
                 //if (Directory.Exists(gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + "\\portraits"))
@@ -767,14 +769,9 @@ namespace IBbasic
         }
         public void SaveCharacter(Player p)
         {
-            gv.SaveCharacter(gv.mod.moduleName, pc.tag + ".json", p);
-            /*string filename = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\characters\\" + pc.tag + ".json";
-            gv.cc.MakeDirectoryIfDoesntExist(filename);
-            string json = JsonConvert.SerializeObject(pc, Newtonsoft.Json.Formatting.Indented);
-            using (StreamWriter sw = new StreamWriter(filename))
-            {
-                sw.Write(json.ToString());
-            }*/
+            string filename = "\\saves\\" + gv.mod.moduleName + "\\characters\\" + p.tag + ".json";
+            string json = JsonConvert.SerializeObject(p, Newtonsoft.Json.Formatting.Indented);
+            gv.SaveText(filename, json);            
         }
     }
 }
