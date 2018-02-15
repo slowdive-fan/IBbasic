@@ -68,9 +68,12 @@ namespace IBbasic.UWP
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(fullPath, "."));
-            using (var reader = new System.IO.StreamReader(stream))
+            if (stream != null)
             {
-                text = reader.ReadToEnd();
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
             }
             return text;
         }
@@ -288,7 +291,8 @@ namespace IBbasic.UWP
             {
                 if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
                 {
-                    list.Add(res);
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
                 }
             }
             return list;
@@ -311,7 +315,7 @@ namespace IBbasic.UWP
                 if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
-                    list.Add(Path.GetFileName(split[split.Length - 2] + "." + split[split.Length - 1]));
+                    list.Add(split[split.Length - 2]);
                 }
             }
             return list;

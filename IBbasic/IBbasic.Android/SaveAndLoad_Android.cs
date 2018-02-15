@@ -62,9 +62,12 @@ namespace IBbasic.Droid
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets" + ConvertFullPath(fullPath, "."));
-            using (var reader = new System.IO.StreamReader(stream))
+            if (stream != null)
             {
-                text = reader.ReadToEnd();
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
             }
             return text;
         }
@@ -80,14 +83,17 @@ namespace IBbasic.Droid
             }
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                System.Diagnostics.Debug.WriteLine("found resource: " + res);
-            }
+            //foreach (var res in assembly.GetManifestResourceNames())
+            //{
+            //    System.Diagnostics.Debug.WriteLine("found resource: " + res);
+            //}
             Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets" + ConvertFullPath(assetFolderpath, "."));
-            using (var reader = new System.IO.StreamReader(stream))
+            if (stream != null)
             {
-                text = reader.ReadToEnd();
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
             }
             return text;
         }
@@ -107,17 +113,6 @@ namespace IBbasic.Droid
             else
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
-                //try asset area            
-                Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + modFilename);
-                if (stream != null)
-                {
-                    using (var reader = new System.IO.StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }
-
                 //try from personal folder first
                 var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
@@ -132,6 +127,16 @@ namespace IBbasic.Droid
                     if (File.Exists(filePath))
                     {
                         return File.ReadAllText(filePath);
+                    }
+                }
+                //try asset area            
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + modFilename);
+                if (stream != null)
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
                     }
                 }
             }
@@ -282,7 +287,6 @@ namespace IBbasic.Droid
                     list.Add(f.Name);
                 }
             }
-
             return list;
         }
         public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
@@ -293,7 +297,8 @@ namespace IBbasic.Droid
             {
                 if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
                 {
-                    list.Add(res);
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
                 }
             }
             return list;
@@ -318,7 +323,8 @@ namespace IBbasic.Droid
             {
                 if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
-                    list.Add(res);
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
                 }
             }
             return list;
