@@ -37,17 +37,16 @@ namespace IBbasic.Droid
 
         public void CreateBackUpModuleFolder(string modFilename)
         {
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            string dir = storageFolder.Path + "\\module_backups";
-            //string folderName = gv.mod.moduleName;
-            string incrementFolderName = "";
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            //string androidPath = sdCard.AbsolutePath + "/IBbasic/module_backups";
+            string winPath = ConvertFullPath(sdCard.AbsolutePath + "/IBbasic/module_backups/", "\\");
             for (int i = 0; i < 999; i++) // add an incremental save option (uses directoryName plus number for folder name)
             {
-                if (!Directory.Exists(dir + "\\" + modFilename + "(" + i.ToString() + ")"))
+                Java.IO.File testFile = new Java.IO.File(winPath + modFilename + "(" + i.ToString() + ")");
+                if (!testFile.Exists())
                 {
-                    incrementFolderName = modFilename + "(" + i.ToString() + ")";
-                    DirectoryInfo diSource = new DirectoryInfo(storageFolder.Path + "\\modules\\" + modFilename);
-                    DirectoryInfo diTarget = new DirectoryInfo(storageFolder.Path + "\\module_backups\\" + modFilename + "(" + i.ToString() + ")");
+                    DirectoryInfo diSource = new DirectoryInfo(sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename);
+                    DirectoryInfo diTarget = new DirectoryInfo(sdCard.AbsolutePath + "/IBbasic/module_backups/" + modFilename + "(" + i.ToString() + ")");
 
                     Directory.CreateDirectory(diTarget.FullName);
 
@@ -58,7 +57,7 @@ namespace IBbasic.Droid
                     }
                     break;
                 }
-            }*/
+            }
         }
 
         public void SaveText(string fullPath, string text)
@@ -313,7 +312,8 @@ namespace IBbasic.Droid
             {
                 if (f.Name.EndsWith(extension))
                 {
-                    list.Add(f.Name);
+                    string[] split = f.Name.Split('.');
+                    list.Add(split[split.Length - 2]);
                 }
             }
             return list;
@@ -344,7 +344,8 @@ namespace IBbasic.Droid
             {
                 if (f.Name.EndsWith(extension))
                 {
-                    list.Add(f.Name);
+                    string[] split = f.Name.Split('.');
+                    list.Add(split[split.Length - 2]);
                 }
             }
             Assembly assembly = GetType().GetTypeInfo().Assembly;
