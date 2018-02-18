@@ -16,7 +16,7 @@ namespace IBbasic
     public interface ISaveAndLoad
     {
         void CreateUserFolders();
-
+        void CreateBackUpModuleFolder(string modFilename);
         void SaveText(string fullPath, string text);
 
         string LoadStringFromUserFolder(string fullPath);

@@ -37,6 +37,34 @@ namespace IBbasic.UWP
             Directory.CreateDirectory(dir);
             dir = storageFolder.Path + "\\saves";
             Directory.CreateDirectory(dir);
+            dir = storageFolder.Path + "\\module_backups";
+            Directory.CreateDirectory(dir);
+        }
+
+        public void CreateBackUpModuleFolder(string modFilename)
+        {
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string dir = storageFolder.Path + "\\module_backups";
+            //string folderName = gv.mod.moduleName;
+            string incrementFolderName = "";
+            for (int i = 0; i < 999; i++) // add an incremental save option (uses directoryName plus number for folder name)
+            {
+                if (!Directory.Exists(dir + "\\" + modFilename + "(" + i.ToString() + ")"))
+                {
+                    incrementFolderName = modFilename + "(" + i.ToString() + ")";
+                    DirectoryInfo diSource = new DirectoryInfo(storageFolder.Path + "\\modules\\" + modFilename);
+                    DirectoryInfo diTarget = new DirectoryInfo(storageFolder.Path + "\\module_backups\\" + modFilename + "(" + i.ToString() + ")");
+
+                    Directory.CreateDirectory(diTarget.FullName);
+
+                    // Copy each file into the new directory.
+                    foreach (FileInfo fi in diSource.GetFiles())
+                    {
+                        fi.CopyTo(Path.Combine(diTarget.FullName, fi.Name), true);
+                    }
+                    break;
+                }
+            }
         }
         public void SaveText(string fullPath, string text)
         {
@@ -49,6 +77,7 @@ namespace IBbasic.UWP
                 sw.Write(text);
             }
         }
+
         public string LoadStringFromUserFolder(string fullPath)
         {
             string text = "";
@@ -117,8 +146,8 @@ namespace IBbasic.UWP
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
                 //try from personal folder first
-                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                var filePath = storageFolder.Path + "\\modules\\" + modFolder + "\\" + modFilename;
                 if (File.Exists(filePath))
                 {
                     return File.ReadAllText(filePath);
@@ -279,7 +308,7 @@ namespace IBbasic.UWP
             string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(folderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
             foreach (string file in files)
             {
-                list.Add(Path.GetFileName(file));
+                list.Add(Path.GetFileNameWithoutExtension(file));
             }
             return list;
         }
@@ -306,7 +335,7 @@ namespace IBbasic.UWP
                 string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(userFolderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
                 foreach (string file in files)
                 {
-                    list.Add(Path.GetFileName(file));
+                    list.Add(Path.GetFileNameWithoutExtension(file));
                 }
             }
             Assembly assembly = GetType().GetTypeInfo().Assembly;

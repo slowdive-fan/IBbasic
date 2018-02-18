@@ -1561,6 +1561,10 @@ namespace IBbasic
         {
             DependencyService.Get<ISaveAndLoad>().CreateUserFolders();
         }
+        public void CreateBackUpModuleFolder(string modFilename)
+        {
+            DependencyService.Get<ISaveAndLoad>().CreateBackUpModuleFolder(modFilename);
+        }
         public void SaveText(string fullPath, string text)
         {
             DependencyService.Get<ISaveAndLoad>().SaveText(fullPath, text);

@@ -24,6 +24,32 @@ namespace IBbasic.iOS
             //Directory.CreateDirectory(dir);
         }
 
+        public void CreateBackUpModuleFolder(string modFilename)
+        {
+            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            string dir = storageFolder.Path + "\\module_backups";
+            //string folderName = gv.mod.moduleName;
+            string incrementFolderName = "";
+            for (int i = 0; i < 999; i++) // add an incremental save option (uses directoryName plus number for folder name)
+            {
+                if (!Directory.Exists(dir + "\\" + modFilename + "(" + i.ToString() + ")"))
+                {
+                    incrementFolderName = modFilename + "(" + i.ToString() + ")";
+                    DirectoryInfo diSource = new DirectoryInfo(storageFolder.Path + "\\modules\\" + modFilename);
+                    DirectoryInfo diTarget = new DirectoryInfo(storageFolder.Path + "\\module_backups\\" + modFilename + "(" + i.ToString() + ")");
+
+                    Directory.CreateDirectory(diTarget.FullName);
+
+                    // Copy each file into the new directory.
+                    foreach (FileInfo fi in diSource.GetFiles())
+                    {
+                        fi.CopyTo(Path.Combine(diTarget.FullName, fi.Name), true);
+                    }
+                    break;
+                }
+            }*/
+        }
+
         public void SaveText(string filename, string text)
         {
             /*string path = CreatePathToFile(filename);

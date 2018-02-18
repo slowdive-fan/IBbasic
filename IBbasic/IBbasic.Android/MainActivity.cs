@@ -12,6 +12,8 @@ namespace IBbasic.Droid
     [Activity(Label = "IBbasic", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public GameView gv;
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -37,6 +39,7 @@ namespace IBbasic.Droid
                 App.ScreenWidth = dim2;
                 App.ScreenHeight = dim1;
             }
+            App a = new App();
 
             LoadApplication(new App());
         }

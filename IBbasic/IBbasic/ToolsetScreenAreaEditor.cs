@@ -23,6 +23,7 @@ namespace IBbasic
         private IbbButton btn3DPreview = null;
         private IbbButton btnSettings = null;
         private IbbButton btnHelp = null;
+        public bool touchDown = false;
         
         //Place Tiles Panel
         private IbbButton btnTilesLeft = null;
@@ -2618,6 +2619,15 @@ namespace IBbasic
             btnSettings.glowOn = false;
             btnHelp.glowOn = false;
 
+            if (eventType == MouseEventType.EventType.MouseDown)
+            {
+                touchDown = true;
+            }
+            else if (eventType == MouseEventType.EventType.MouseUp)
+            {
+                touchDown = false;
+            }
+
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -2783,7 +2793,8 @@ namespace IBbasic
                     int x = (int)eX;
                     int y = (int)eY;
 
-                    
+                    if (touchDown)
+                    {
                         //figure out if tapped on a map square
                         int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
                         int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
@@ -2801,8 +2812,8 @@ namespace IBbasic
                             {
                                 gv.mod.currentArea.Layer3Filename[gridY * gv.mod.currentArea.MapSizeX + gridX] = currentTile;
                             }
-                        } 
-                    
+                        }
+                    }
 
                     if (btnTilesLeft.getImpact(x, y))
                     {
@@ -3090,7 +3101,8 @@ namespace IBbasic
                     int x = (int)eX;
                     int y = (int)eY;
 
-                    
+                    if (touchDown)
+                    {
                         //figure out if tapped on a map square
                         int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
                         int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
@@ -3113,7 +3125,7 @@ namespace IBbasic
                                 gv.mod.currentArea.LoSBlocked[gridY * gv.mod.currentArea.MapSizeX + gridX] = 1;
                             }
                         }
-                    
+                    }
 
                     if (btnHelp.getImpact(x, y))
                     {

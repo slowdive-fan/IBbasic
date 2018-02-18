@@ -384,7 +384,7 @@ namespace IBbasic
                         }
                         else if (btnSave.getImpact(x, y))
                         {
-                            incrementalSaveModule();
+                            SaveModule();
                             return true;
                         }
                         else if (btnModuleEditor.getImpact(x, y))
@@ -397,6 +397,7 @@ namespace IBbasic
                         else if (btnCreatureEditor.getImpact(x, y))
                         {
                             //changeModuleVersion();
+                            BackupModule();
                             return true;
                         }
                         else if (btnItem.getImpact(x, y))
@@ -594,10 +595,13 @@ namespace IBbasic
                 }
             }
         }
-        public void incrementalSaveModule()
+        public void SaveModule()
         {
-            //gv.cc.incrementalSave();
             gv.cc.saveFiles();
+        }
+        public void BackupModule()
+        {
+            gv.cc.createBackupFiles();
         }
     }
 }

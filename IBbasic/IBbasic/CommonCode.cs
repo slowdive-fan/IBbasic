@@ -1096,7 +1096,7 @@ namespace IBbasic
                 saveAsFiles();
                 return;
             }
-            //string file = gv.mainDirectory + "\\modules\\" + gv.mod.moduleName + ".mod";
+            //string folder = "\\modules\\" + gv.mod.moduleName;
             try
             {
                 createFiles();
@@ -1129,6 +1129,12 @@ namespace IBbasic
             saveFiles();
             */
         }
+        public void createBackupFiles()
+        {
+            gv.CreateBackUpModuleFolder(gv.mod.moduleName);            
+            gv.sf.MessageBox("Module backup was saved");
+        }
+        
         public void incrementalSave() //incremental save option
         {
             if ((gv.mod.startingArea == null) || (gv.mod.startingArea == ""))
@@ -1178,24 +1184,6 @@ namespace IBbasic
         {
             try
             {
-                //clean up the spellsAllowed and traitsAllowed
-                foreach (PlayerClass pcls in datafile.dataPlayerClassList)
-                {
-                    for (int i = pcls.spellsAllowed.Count - 1; i >= 0; i--)
-                    {
-                        if (!pcls.spellsAllowed[i].allow)
-                        {
-                            pcls.spellsAllowed.RemoveAt(i);
-                        }
-                    }
-                    for (int i = pcls.traitsAllowed.Count - 1; i >= 0; i--)
-                    {
-                        if (!pcls.traitsAllowed[i].allow)
-                        {
-                            pcls.traitsAllowed.RemoveAt(i);
-                        }
-                    }
-                }
                 //fill module items, creatures, props
                 gv.mod.moduleItemsList.Clear();
                 foreach (Item it in allItemsList)
@@ -1224,69 +1212,24 @@ namespace IBbasic
                 //save mod
                 string output = JsonConvert.SerializeObject(gv.mod, Formatting.None);
                 gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + gv.mod.moduleName + ".mod", output);
-                //gv.SaveModuleAsset(gv.mod.moduleName, gv.mod.moduleName + ".mod", output);
                 //save areas
                 foreach (Area a in gv.mod.moduleAreasObjects)
                 {
                     output = JsonConvert.SerializeObject(a, Formatting.None);
                     gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + a.Filename + ".are", output);
-                    //gv.SaveModuleAsset(gv.mod.moduleName, a.Filename + ".are", output);
                 }
                 //save encounters
                 foreach (Encounter enc in gv.mod.moduleEncountersList)
                 {
                     output = JsonConvert.SerializeObject(enc, Formatting.None);
                     gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + enc.encounterName + ".enc", output);
-                    //gv.SaveModuleAsset(gv.mod.moduleName, enc.encounterName + ".enc", output);
                 }
                 //save convos
                 foreach (Convo c in gv.mod.moduleConvoList)
                 {
                     output = JsonConvert.SerializeObject(c, Formatting.None);
                     gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + c.ConvoFileName + ".dlg", output);
-                    //gv.SaveModuleAsset(gv.mod.moduleName, c.ConvoFileName + ".dlg", output);
-                }
-                /*
-                //fill datafile items, creatures, props
-                datafile.dataItemsList.Clear();
-                foreach (Item it in allItemsList)
-                {
-                    if (!it.moduleItem)
-                    {
-                        datafile.dataItemsList.Add(it.DeepCopy());
-                    }
-                }
-                datafile.dataCreaturesList.Clear();
-                foreach (Creature it in allCreaturesList)
-                {
-                    if (!it.moduleCreature)
-                    {
-                        datafile.dataCreaturesList.Add(it.DeepCopy());
-                    }
-                }
-                datafile.dataPropsList.Clear();
-                foreach (Prop it in allPropsList)
-                {
-                    if (!it.moduleProp)
-                    {
-                        datafile.dataPropsList.Add(it.DeepCopy());
-                    }
-                }
-                */
-                /*try
-                {
-                    string directory = gv.mainDirectory + "\\override";
-                    if (!Directory.Exists(directory)) // if folder does not exist, create it and copy contents from previous folder
-                    {
-                        createDirectory(directory);
-                    }
-                    //save data file
-                    this.datafile.saveDataFile(gv.mainDirectory + "\\override\\data.json", true);
-                }
-                catch (Exception e)
-                {
-                    gv.sf.MessageBox("failed to save 'data.json' to 'override' directory: " + e.ToString());
-                }*/
+                }                
             }
             catch { gv.sf.MessageBox("failed to createFiles"); }
         }        
