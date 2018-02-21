@@ -22,7 +22,7 @@ namespace IBbasic
 	    private IbbButton btnPageIndex = null;
 	    private IbbButton btnAction = null;
         private IbbButton btnExit = null;
-        public string callingScreen = "pcCreation"; //party, pcCreation, tsAreaEditor
+        public string callingScreen = "pcCreation"; //party, pcCreation, tsAreaEditor, tsEncEditor
         public List<string> playerTokenList = new List<string>();
 
         public ScreenTokenSelector(Module m, GameView g)
@@ -44,6 +44,10 @@ namespace IBbasic
                 LoadPlayerTokenList();
             }
             else if (callingScreen.Equals("tsAreaEditor"))
+            {
+                LoadPropTokenList();
+            }
+            else if (callingScreen.Equals("tsEncEditor"))
             {
                 LoadPropTokenList();
             }
@@ -390,6 +394,11 @@ namespace IBbasic
                                 gv.tsAreaEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
                                 gv.screenType = "tsAreaEditor";
                             }                                
+                            else if (callingScreen.Equals("tsEncEditor"))
+                            {
+                                gv.tsEncEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
+                                gv.screenType = "tsEncEditor";
+                            }  
                             doCleanUp();
                         }
 					    tknSlotIndex = j;
@@ -432,6 +441,11 @@ namespace IBbasic
                         gv.tsAreaEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
                         gv.screenType = "tsAreaEditor";
                     }
+                    else if (callingScreen.Equals("tsEncEditor"))
+                    {
+                        gv.tsEncEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
+                        gv.screenType = "tsEncEditor";
+                    }
                     doCleanUp();						
 			    }
                 else if (btnExit.getImpact(x, y))
@@ -448,6 +462,10 @@ namespace IBbasic
                     else if (callingScreen.Equals("tsAreaEditor"))
                     {
                         gv.screenType = "tsAreaEditor";
+                    }
+                    else if (callingScreen.Equals("tsEncEditor"))
+                    {
+                        gv.screenType = "tsEncEditor";
                     }
                     doCleanUp();
                 }                

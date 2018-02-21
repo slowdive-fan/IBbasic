@@ -51,6 +51,23 @@ namespace IBbasic
 	    {
 		
 	    }
+        public void SetAllToGrass()
+        {
+            for (int index = 0; index < (this.MapSizeX * this.MapSizeY); index++)
+            {
+                this.Layer1Filename.Add("t_f_grass");
+                //this.Layer1Rotate.Add(0);
+                //this.Layer1Mirror.Add(0);
+                this.Layer2Filename.Add("t_a_blank");
+                //this.Layer2Rotate.Add(0);
+                //this.Layer2Mirror.Add(0);
+                this.Layer3Filename.Add("t_a_blank");
+                //this.Layer3Rotate.Add(0);
+                //this.Layer3Mirror.Add(0);
+                this.Walkable.Add(1);
+                this.LoSBlocked.Add(0);
+            }
+        }
         public Prop getPropByLocation(int x, int y)
         {
             foreach (Prop p in this.propsList)

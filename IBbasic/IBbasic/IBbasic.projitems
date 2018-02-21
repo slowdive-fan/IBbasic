@@ -112,6 +112,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)StringForDropDownList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenAreaEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenConvoEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenEncounterEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenMainMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trait.cs" />

@@ -108,6 +108,7 @@ namespace IBbasic
         //TOOLSET SCREENS
         public ToolsetScreenModule tsModule;
         public ToolsetScreenAreaEditor tsAreaEditor;
+        public ToolsetScreenEncounterEditor tsEncEditor;
         public ToolsetScreenMainMenu tsMainMenu;
         public ToolsetScreenConvoEditor tsConvoEditor;
         
@@ -312,6 +313,7 @@ namespace IBbasic
             //TOOLSET SCREENS
             tsModule = new ToolsetScreenModule(this);
             tsAreaEditor = new ToolsetScreenAreaEditor(this);
+            tsEncEditor = new ToolsetScreenEncounterEditor(this);
             tsMainMenu = new ToolsetScreenMainMenu(this);
             tsConvoEditor = new ToolsetScreenConvoEditor(this);
             
@@ -866,6 +868,10 @@ namespace IBbasic
             {
                 tsAreaEditor.redrawTsAreaEditor();
             }
+            else if (screenType.Equals("tsEncEditor"))
+            {
+                tsEncEditor.redrawTsEncEditor();
+            }
             else if (screenType.Equals("tsConvoEditor"))
             {
                 tsConvoEditor.redrawTsConvoEditor();
@@ -1165,6 +1171,10 @@ namespace IBbasic
                     else if (screenType.Equals("tsAreaEditor"))
                     {
                         tsAreaEditor.onTouchTsAreaEditor(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsEncEditor"))
+                    {
+                        tsEncEditor.onTouchTsEncEditor(eX, eY, eventType);
                     }
                     else if (screenType.Equals("tsConvoEditor"))
                     {

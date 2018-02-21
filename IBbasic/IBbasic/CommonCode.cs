@@ -2622,5 +2622,13 @@ namespace IBbasic
             }
             return null;
         }
+        public Creature getCreatureByResRef(string resref)
+        {
+            foreach (Creature crt in allCreaturesList)
+            {
+                if (crt.cr_resref.Equals(resref)) return crt;
+            }
+            return null;
+        }
     }
 }

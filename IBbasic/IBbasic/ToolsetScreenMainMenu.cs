@@ -359,6 +359,7 @@ namespace IBbasic
                         }
                         else if (btnEncounterEditor.getImpact(x, y))
                         {
+                            SelectEncToEdit();
                             //changeModuleDescription();
                             return true;
                         }
@@ -522,6 +523,51 @@ namespace IBbasic
                     gv.tsAreaEditor.mapSquareSizeScaler = 1;
                 }
             }            
+        }
+        public async void SelectEncToEdit()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("New Encounter");
+
+            List<string> encsFromModFolder = gv.GetAllFilesWithExtensionFromBothFolders("\\modules\\" + gv.mod.moduleName, "\\modules\\" + gv.mod.moduleName, ".enc");
+
+            foreach (string a in encsFromModFolder)
+            {
+                itlist.Add(a);
+            }
+
+            string selectedEnc = await gv.ListViewPage(itlist, "Encounters to Edit");
+
+            gv.touchEnabled = true;
+
+            if (selectedEnc.Equals("New Encounter"))
+            {
+                Encounter newEnc = new Encounter();
+                newEnc.encounterName = "newEncounter_" + gv.mod.getNextIdNumber();
+                newEnc.MapSizeX = 10;
+                newEnc.MapSizeY = 10;
+                newEnc.UseDayNightCycle = true;
+                newEnc.SetAllToGrass();
+                gv.mod.moduleEncountersList.Add(newEnc);
+                gv.mod.currentEncounter = newEnc;
+                gv.screenType = "tsEncEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+                gv.tsEncEditor.mapSquareSizeScaler = 1;
+            }
+            else
+            {
+                bool foundEnc = gv.mod.setCurrentEncounter(selectedEnc, gv);
+                if (!foundEnc)
+                {
+                    gv.sf.MessageBox("Encounter: " + selectedEnc + " does not exist in the module...check the spelling of the 'enc.Filename'");
+                }
+                gv.screenType = "tsEncEditor";
+                showMainMenuPanels = false;
+                tglMainMenu.toggleOn = false;
+            }
         }
         public async void SelectConvoToEdit()
         {
