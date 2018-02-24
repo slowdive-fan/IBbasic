@@ -9,7 +9,7 @@ namespace IBbasic
     public class ToolsetScreenConvoEditor
     {
         public GameView gv;
-        public Convo currentConvo = new Convo();
+        //public Convo currentConvo = new Convo();
         public ContentNode currentNode = null;
         public ContentNode parentNode = null;
         public ContentNode editNode = null;
@@ -135,11 +135,11 @@ namespace IBbasic
         }
         public void resetAllParentIds()
         {
-            ResetParentIdNum(currentConvo.subNodes[0]);
+            ResetParentIdNum(gv.mod.currentConvo.subNodes[0]);
         }
         public void refillNodeList()
         {
-            ResetNodeList(currentConvo.subNodes[0]);
+            ResetNodeList(gv.mod.currentConvo.subNodes[0]);
         }
         public void ResetTreeView()
         {
@@ -148,11 +148,11 @@ namespace IBbasic
         }
         public void expandAllNodes()
         {
-            ExpandAllNodes(currentConvo.subNodes[0]);
+            ExpandAllNodes(gv.mod.currentConvo.subNodes[0]);
         }
         public void collapseAllNodes()
         {
-            CollapseAllNodes(currentConvo.subNodes[0]);
+            CollapseAllNodes(gv.mod.currentConvo.subNodes[0]);
         }
 
         public void setControlsStart()
@@ -898,9 +898,9 @@ namespace IBbasic
 
             //Page Title
             string convoToEdit = "none";
-            if (currentConvo != null)
+            if (gv.mod.currentConvo != null)
             {
-                convoToEdit = currentConvo.ConvoFileName;
+                convoToEdit = gv.mod.currentConvo.ConvoFileName;
             }
             gv.DrawText("CONVO EDITOR: " + convoToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
@@ -1066,27 +1066,27 @@ namespace IBbasic
             int shiftForFont = (tglSettingConvoFileName.Height / 2) - (gv.fontHeight / 2);
             tglSettingConvoFileName.Draw();
             gv.DrawText("Convo Filename:", tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y, "gy");
-            gv.DrawText(currentConvo.ConvoFileName, tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            gv.DrawText(gv.mod.currentConvo.ConvoFileName, tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             tglSettingDefaultNpcName.Draw();
             gv.DrawText("NPC Name:", tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y, "gy");
-            gv.DrawText(currentConvo.DefaultNpcName, tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            gv.DrawText(gv.mod.currentConvo.DefaultNpcName, tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             tglSettingNpcPortraitBitmap.Draw();
             gv.DrawText("NPC Portrait:", tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y, "gy");
-            gv.DrawText(currentConvo.NpcPortraitBitmap, tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            gv.DrawText(gv.mod.currentConvo.NpcPortraitBitmap, tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             
-            if (currentConvo.Narration) { tglSettingNarration.toggleOn = true; }
+            if (gv.mod.currentConvo.Narration) { tglSettingNarration.toggleOn = true; }
             else { tglSettingNarration.toggleOn = false; }
             tglSettingNarration.Draw();
             gv.DrawText("Is Narration", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y, "gy");
             gv.DrawText("Type Convo:", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-            if (currentConvo.PartyChat) { tglSettingPartyChat.toggleOn = true; }
+            if (gv.mod.currentConvo.PartyChat) { tglSettingPartyChat.toggleOn = true; }
             else { tglSettingPartyChat.toggleOn = false; }
             tglSettingPartyChat.Draw();
             gv.DrawText("Is Party Chat", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y, "gy");
             gv.DrawText("Type Convo:", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-            if (currentConvo.SpeakToMainPcOnly) { tglSettingSpeakToMainPcOnly.toggleOn = true; }
+            if (gv.mod.currentConvo.SpeakToMainPcOnly) { tglSettingSpeakToMainPcOnly.toggleOn = true; }
             else { tglSettingSpeakToMainPcOnly.toggleOn = false; }
             tglSettingSpeakToMainPcOnly.Draw();
             gv.DrawText("Speak To Main", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y, "gy");
@@ -1101,7 +1101,7 @@ namespace IBbasic
 
             if (editNode == null) { return; }
 
-            if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+            if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
             {
                 int shiftForFont = (tglNodeText.Height / 2) - (gv.fontHeight / 2);
                 tglNodeText.Draw();
@@ -1594,17 +1594,17 @@ namespace IBbasic
                     else if (tglSettingNarration.getImpact(x, y))
                     {
                         tglSettingNarration.toggleOn = !tglSettingNarration.toggleOn;
-                        currentConvo.Narration = tglSettingNarration.toggleOn;
+                        gv.mod.currentConvo.Narration = tglSettingNarration.toggleOn;
                     }
                     else if (tglSettingPartyChat.getImpact(x, y))
                     {
                         tglSettingPartyChat.toggleOn = !tglSettingPartyChat.toggleOn;
-                        currentConvo.PartyChat = tglSettingPartyChat.toggleOn;
+                        gv.mod.currentConvo.PartyChat = tglSettingPartyChat.toggleOn;
                     }
                     else if (tglSettingSpeakToMainPcOnly.getImpact(x, y))
                     {
                         tglSettingSpeakToMainPcOnly.toggleOn = !tglSettingSpeakToMainPcOnly.toggleOn;
-                        currentConvo.SpeakToMainPcOnly = tglSettingSpeakToMainPcOnly.toggleOn;
+                        gv.mod.currentConvo.SpeakToMainPcOnly = tglSettingSpeakToMainPcOnly.toggleOn;
                     }
                     else if (btnHelp.getImpact(x, y))
                     {
@@ -1702,7 +1702,7 @@ namespace IBbasic
                     btnNodeRelocateCopiedNodes.glowOn = false;
                     btnHelp.glowOn = false;
 
-                    if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+                    if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
                         if (tglNodeText.getImpact(x, y))
                         {
@@ -1787,7 +1787,7 @@ namespace IBbasic
                     int x = (int)eX;
                     int y = (int)eY;
 
-                    if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+                    if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
                         if (btnCondAdd.getImpact(x, y))
                         {
@@ -1833,7 +1833,7 @@ namespace IBbasic
                     btnCondCopy.glowOn = false;
                     btnCondPaste.glowOn = false;
 
-                    if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+                    if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
                         if (tglCond1Radio.getImpact(x, y))
                         {
@@ -1928,7 +1928,7 @@ namespace IBbasic
                     int x = (int)eX;
                     int y = (int)eY;
 
-                    if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+                    if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
                         if (btnActionAdd.getImpact(x, y))
                         {
@@ -1974,7 +1974,7 @@ namespace IBbasic
                     btnActionCopy.glowOn = false;
                     btnActionPaste.glowOn = false;
 
-                    if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+                    if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
                         if (tglAction1Radio.getImpact(x, y))
                         {
@@ -2189,20 +2189,20 @@ namespace IBbasic
         public async void changeConvoFileName()
         {
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Change the Conversation Filename:", currentConvo.ConvoFileName);
-            currentConvo.ConvoFileName = myinput;
+            string myinput = await gv.StringInputBox("Change the Conversation Filename:", gv.mod.currentConvo.ConvoFileName);
+            gv.mod.currentConvo.ConvoFileName = myinput;
             gv.touchEnabled = true;
             //string title = "Change the Conversation Filename.";
-            //currentConvo.ConvoFileName = gv.DialogReturnString(title, currentConvo.ConvoFileName);
+            //gv.mod.currentConvo.ConvoFileName = gv.DialogReturnString(title, gv.mod.currentConvo.ConvoFileName);
         }
         public async void changeDefaultNpcName()
         {
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Change the default NPC name that will be shown in the log box:", currentConvo.DefaultNpcName);
-            currentConvo.DefaultNpcName = myinput;
+            string myinput = await gv.StringInputBox("Change the default NPC name that will be shown in the log box:", gv.mod.currentConvo.DefaultNpcName);
+            gv.mod.currentConvo.DefaultNpcName = myinput;
             gv.touchEnabled = true;
             //string title = "Change the default NPC name that will be shown in the log box.";
-            //currentConvo.DefaultNpcName = gv.DialogReturnString(title, currentConvo.DefaultNpcName);            
+            //gv.mod.currentConvo.DefaultNpcName = gv.DialogReturnString(title, gv.mod.currentConvo.DefaultNpcName);            
         }
         public async void changeNodeText()
         {
@@ -2384,7 +2384,7 @@ namespace IBbasic
         public void PushToUndoStack()
         {
             Convo newConvo = new Convo();
-            //newConvo = currentConvo.Clone();
+            //newConvo = gv.mod.currentConvo.Clone();
             undoConvoStack.Push(newConvo);
         }
 
@@ -2397,12 +2397,12 @@ namespace IBbasic
                     if (!editNode.isLink)
                     {
                         //PushToUndoStack();
-                        currentConvo.NextIdNum++;
+                        gv.mod.currentConvo.NextIdNum++;
                         ContentNode newNode = new ContentNode();
-                        newNode.idNum = currentConvo.NextIdNum;
+                        newNode.idNum = gv.mod.currentConvo.NextIdNum;
                         newNode.orderNum = editNode.subNodes.Count;
                         newNode.parentIdNum = editNode.idNum;
-                        if (editNode == currentConvo.subNodes[0]) //root so make child NPC
+                        if (editNode == gv.mod.currentConvo.subNodes[0]) //root so make child NPC
                         {
                             newNode.pcNode = false;
                         }
@@ -2429,7 +2429,7 @@ namespace IBbasic
             try
             {
                 //check to ignore if selected node is root
-                if (editNode == currentConvo.subNodes[0])
+                if (editNode == gv.mod.currentConvo.subNodes[0])
                 {
                     return;
                 }
@@ -2438,7 +2438,7 @@ namespace IBbasic
                 //delete any linked nodes first before deleting this node
                 //find corresponding contentNode (same IdNum) and delete it and subNodes
                 removeAllLinksToNodeAndSubnodes(editNode);
-                currentConvo.GetContentNodeById(editNode.parentIdNum).subNodes.Remove(editNode);
+                gv.mod.currentConvo.GetContentNodeById(editNode.parentIdNum).subNodes.Remove(editNode);
                 ResetTreeView();
             }
             catch { gv.sf.MessageBox("remove node failed...make sure there are no remaining links referring to this node or sub nodes of this node. A link node pointing to a deleted node will cause problems."); }
@@ -2463,7 +2463,7 @@ namespace IBbasic
         public void PasteNodes()
         {
             pasteFromClipboardNode = editNode.idNum;
-            if (currentConvo.GetContentNodeById(copyToClipboardNode).pcNode == currentConvo.GetContentNodeById(pasteFromClipboardNode).pcNode)
+            if (gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode).pcNode == gv.mod.currentConvo.GetContentNodeById(pasteFromClipboardNode).pcNode)
             {
                 gv.sf.MessageBox("You can't paste a PC node to a PC node or a NPC node to a NPC node");
             }
@@ -2478,9 +2478,9 @@ namespace IBbasic
                     {
                         //PushToUndoStack();
                         //prntForm.logText("You selected idNum = " + pasteFromClipboardNode.ToString() + " to paste from the clipboard");
-                        ContentNode copy = duplicateNode(currentConvo.GetContentNodeById(copyToClipboardNode));
+                        ContentNode copy = duplicateNode(gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode));
                         //ContentNode copy = f_convo.GetContentNodeById(copyToClipboardNode).Clone();
-                        currentConvo.GetContentNodeById(pasteFromClipboardNode).subNodes.Add(copy);
+                        gv.mod.currentConvo.GetContentNodeById(pasteFromClipboardNode).subNodes.Add(copy);
                         ResetTreeView();
                     }
                 }
@@ -2493,7 +2493,7 @@ namespace IBbasic
         public void PasteAsRelocatedNodes()
         {
             int relocateFromClipboardToThisNode = editNode.idNum;
-            if (currentConvo.GetContentNodeById(copyToClipboardNode).pcNode == currentConvo.GetContentNodeById(relocateFromClipboardToThisNode).pcNode)
+            if (gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode).pcNode == gv.mod.currentConvo.GetContentNodeById(relocateFromClipboardToThisNode).pcNode)
             {
                 gv.sf.MessageBox("You can't paste a PC node to a PC node or a NPC node to a NPC node");
             }
@@ -2502,9 +2502,9 @@ namespace IBbasic
                 try
                 {
                     //get the clipboardNode
-                    ContentNode clipboardNode = currentConvo.GetContentNodeById(copyToClipboardNode);
-                    ContentNode clipboardNodeParentNode = currentConvo.GetContentNodeById(copyToClipboardNodeParentNode);
-                    ContentNode relocateToNode = currentConvo.GetContentNodeById(relocateFromClipboardToThisNode);
+                    ContentNode clipboardNode = gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode);
+                    ContentNode clipboardNodeParentNode = gv.mod.currentConvo.GetContentNodeById(copyToClipboardNodeParentNode);
+                    ContentNode relocateToNode = gv.mod.currentConvo.GetContentNodeById(relocateFromClipboardToThisNode);
                     //add this node to the relocateToNode's subNodes list
                     //remove 
                     //int cnod = Convert.ToInt32(treeView1.SelectedNode.Name);
@@ -2541,11 +2541,11 @@ namespace IBbasic
                 {
                     //PushToUndoStack();
                     //MessageBox.Show("You selected idNum = " + pasteFromClipboardNode.ToString() + " to paste as link from the clipboard");
-                    ContentNode copy = createLinkNode(currentConvo.GetContentNodeById(copyToClipboardNode));
+                    ContentNode copy = createLinkNode(gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode));
                     copy.linkTo = copyToClipboardNode;
-                    ContentNode subcnt = currentConvo.GetContentNodeById(pasteFromClipboardNode);
+                    ContentNode subcnt = gv.mod.currentConvo.GetContentNodeById(pasteFromClipboardNode);
                     copy.orderNum = subcnt.subNodes.Count;
-                    currentConvo.GetContentNodeById(pasteFromClipboardNode).subNodes.Add(copy);
+                    gv.mod.currentConvo.GetContentNodeById(pasteFromClipboardNode).subNodes.Add(copy);
                     ResetTreeView();
                 }
             }
@@ -2555,7 +2555,7 @@ namespace IBbasic
         {
             try
             {
-                editNode = currentConvo.GetContentNodeById(editNode.linkTo);
+                editNode = gv.mod.currentConvo.GetContentNodeById(editNode.linkTo);
                 expandAllNodes();
                 ResetTreeView();
                 //int cnod = Convert.ToInt32(treeView1.SelectedNode.Name);
@@ -2573,7 +2573,7 @@ namespace IBbasic
         }
         public void MoveUp()
         {
-            if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+            if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
             {
                 //PushToUndoStack();
                 //int pnod = Convert.ToInt32(treeView1.SelectedNode.Parent.Name);
@@ -2582,14 +2582,14 @@ namespace IBbasic
                 //ContentNode chdnod = new ContentNode();
                 //parnod = f_convo.GetContentNodeById(pnod);
                 //chdnod = f_convo.GetContentNodeById(cnod);
-                ContentNode parnod = currentConvo.GetContentNodeById(editNode.parentIdNum);
-                //ContentNode chdnod = currentConvo.GetContentNodeById(Convert.ToInt32(treeView1.SelectedNode.Name));
+                ContentNode parnod = gv.mod.currentConvo.GetContentNodeById(editNode.parentIdNum);
+                //ContentNode chdnod = gv.mod.currentConvo.GetContentNodeById(Convert.ToInt32(treeView1.SelectedNode.Name));
                 if (editNode.orderNum > 0)
                 {
                     int tempNodeIndx = editNode.orderNum;
                     parnod.subNodes[tempNodeIndx - 1].orderNum++;
                     editNode.orderNum--;
-                    SortConversation(currentConvo);
+                    SortConversation(gv.mod.currentConvo);
                     ResetTreeView();
                 }
                 //TreeNode[] tn = treeView1.Nodes.Find(currentSelectedNode.Name, true);
@@ -2602,7 +2602,7 @@ namespace IBbasic
         }
         public void MoveDown()
         {
-            if ((editNode != null) && (editNode != currentConvo.subNodes[0]))
+            if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
             {
                 //PushToUndoStack();
                 //int pnod = Convert.ToInt32(treeView1.SelectedNode.Parent.Name);
@@ -2611,13 +2611,13 @@ namespace IBbasic
                 //ContentNode chdnod = new ContentNode();
                 //parnod = f_convo.GetContentNodeById(pnod);
                 //chdnod = f_convo.GetContentNodeById(cnod);
-                ContentNode parnod = currentConvo.GetContentNodeById(editNode.parentIdNum);
+                ContentNode parnod = gv.mod.currentConvo.GetContentNodeById(editNode.parentIdNum);
                 if (editNode.orderNum < parnod.subNodes.Count - 1)
                 {
                     int tempNodeIndx = editNode.orderNum;
                     parnod.subNodes[tempNodeIndx + 1].orderNum--;
                     editNode.orderNum++;
-                    SortConversation(currentConvo);
+                    SortConversation(gv.mod.currentConvo);
                     ResetTreeView();
                 }
                 //TreeNode[] tn = treeView1.Nodes.Find(currentSelectedNode.Name, true);
@@ -2742,10 +2742,10 @@ namespace IBbasic
 
         public ContentNode createLinkNode(ContentNode copiedNode)
         {
-            currentConvo.NextIdNum++;
+            gv.mod.currentConvo.NextIdNum++;
             ContentNode copy = new ContentNode();
             copy.conversationText = copiedNode.conversationText;
-            copy.idNum = currentConvo.NextIdNum;
+            copy.idNum = gv.mod.currentConvo.NextIdNum;
             return copy;
         }
         public static void SortConversation(Convo toSort)
@@ -2775,10 +2775,10 @@ namespace IBbasic
         }
         public ContentNode duplicateNode(ContentNode copiedNode)
         {
-            currentConvo.NextIdNum++;
+            gv.mod.currentConvo.NextIdNum++;
             ContentNode copy = new ContentNode();
-            copy = copiedNode.DuplicateContentNode(currentConvo.NextIdNum);
-            copy.idNum = currentConvo.NextIdNum;
+            copy = copiedNode.DuplicateContentNode(gv.mod.currentConvo.NextIdNum);
+            copy.idNum = gv.mod.currentConvo.NextIdNum;
             foreach (ContentNode node in copiedNode.subNodes)
             {
                 copy.subNodes.Add(duplicateNode(node));
@@ -2801,11 +2801,11 @@ namespace IBbasic
             //clear find list
             foundLinkedNodesIdList.Clear();
             //find all nodes that link to this node
-            findAllLinkedNodesToGivenNodeId(currentConvo.subNodes[0], node.idNum);
+            findAllLinkedNodesToGivenNodeId(gv.mod.currentConvo.subNodes[0], node.idNum);
             //delete all nodes in found list
             foreach (int id in foundLinkedNodesIdList)
             {
-                ContentNode n = getParentNodeById(currentConvo.subNodes[0], id);
+                ContentNode n = getParentNodeById(gv.mod.currentConvo.subNodes[0], id);
                 if (n != null)
                 {
                     foreach (ContentNode sn in n.subNodes)
@@ -2877,7 +2877,7 @@ namespace IBbasic
         }
         public void ResetNodeList(ContentNode node)
         {
-            ContentNode pnod = currentConvo.GetContentNodeById(node.parentIdNum);
+            ContentNode pnod = gv.mod.currentConvo.GetContentNodeById(node.parentIdNum);
             if (pnod != null)
             {
                 node.indentMultiplier = pnod.indentMultiplier + 1;
@@ -2891,7 +2891,7 @@ namespace IBbasic
         }
         public void ExpandAllNodes(ContentNode node)
         {
-            if (node != currentConvo.subNodes[0])
+            if (node != gv.mod.currentConvo.subNodes[0])
             {
                 node.IsExpanded = true;
             }
@@ -2902,7 +2902,7 @@ namespace IBbasic
         }
         public void CollapseAllNodes(ContentNode node)
         {
-            if (node != currentConvo.subNodes[0])
+            if (node != gv.mod.currentConvo.subNodes[0])
             {
                 node.IsExpanded = false;
             }

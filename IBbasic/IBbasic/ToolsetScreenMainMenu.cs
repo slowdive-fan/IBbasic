@@ -596,13 +596,13 @@ namespace IBbasic
                 contentNode.conversationText = "root";
                 newConvo.subNodes.Add(contentNode);
                 gv.mod.moduleConvoList.Add(newConvo);
-                gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName, gv);
-                gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
+                gv.mod.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName, gv);
+                gv.tsConvoEditor.currentNode = gv.mod.currentConvo.GetContentNodeById(0);
                 gv.tsConvoEditor.resetAllParentIds();
                 gv.tsConvoEditor.ResetTreeView();
-                gv.tsConvoEditor.parentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
+                gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
                 gv.cc.ResetAllVariablesUsedList();
-                if (gv.screenConvo.currentConvo != null)
+                if (gv.mod.currentConvo != null)
                 {
                     gv.screenType = "tsConvoEditor";
                     showMainMenuPanels = false;
@@ -617,13 +617,18 @@ namespace IBbasic
             {
                 try
                 {
-                    gv.tsConvoEditor.currentConvo = gv.mod.getConvoByName(selectedConvo, gv);
-                    gv.tsConvoEditor.currentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(0);
+                    bool foundCnv = gv.mod.setCurrentConvo(selectedConvo, gv);
+                    if (!foundCnv)
+                    {
+                        gv.sf.MessageBox("Convo: " + selectedConvo + " does not exist in the module...check the spelling of the filename");
+                    }
+                    //gv.mod.currentConvo = gv.mod.getConvoByName(selectedConvo, gv);
+                    gv.tsConvoEditor.currentNode = gv.mod.currentConvo.GetContentNodeById(0);
                     gv.tsConvoEditor.resetAllParentIds();
                     gv.tsConvoEditor.ResetTreeView();
-                    gv.tsConvoEditor.parentNode = gv.tsConvoEditor.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
+                    gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
                     gv.cc.ResetAllVariablesUsedList();
-                    if (gv.screenConvo.currentConvo != null)
+                    if (gv.mod.currentConvo != null)
                     {
                         gv.screenType = "tsConvoEditor";
                         showMainMenuPanels = false;

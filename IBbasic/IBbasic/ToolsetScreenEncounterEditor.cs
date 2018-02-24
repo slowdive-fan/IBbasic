@@ -51,6 +51,11 @@ namespace IBbasic
         public IbbToggle tglSettingEncounterName = null;
         public IbbToggle tglSettingGoldDrop = null;
         public IbbToggle tglSettingUseDayNightCycle = null;
+        public IbbToggle tglSettingPlacePCs = null;
+        public IbbToggle tglSettingRemoveAllPCs = null;
+        public IbbToggle tglSettingRemoveAllCrts = null;
+        public IbbToggle tglSettingAddItem = null;
+        public IbbToggle tglSettingRemoveItem = null;
 
         //Info Panel
         public Coordinate selectedSquare = new Coordinate();
@@ -190,7 +195,7 @@ namespace IBbasic
             {
                 btnCrt = new IbbButton(gv, 1.0f);
             }
-            btnCrt.Text = "3DTest";
+            btnCrt.Text = "CRTRS";
             btnCrt.Img = "btn_small";
             btnCrt.Glow = "btn_small_glow";
             btnCrt.X = 0 * gv.uiSquareSize;
@@ -395,7 +400,7 @@ namespace IBbasic
             tglSettingGoldDrop.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             tglSettingGoldDrop.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             tglSettingGoldDrop.X = panelLeftLocation + 0 * gv.uiSquareSize;
-            tglSettingGoldDrop.Y = panelTopLocation + 1 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingGoldDrop.Y = panelTopLocation + 1 * gv.uiSquareSize;
             tglSettingGoldDrop.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingGoldDrop.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -406,9 +411,64 @@ namespace IBbasic
             tglSettingUseDayNightCycle.ImgOn = "mtgl_rbtn_on";
             tglSettingUseDayNightCycle.ImgOff = "mtgl_rbtn_off";
             tglSettingUseDayNightCycle.X = panelLeftLocation;
-            tglSettingUseDayNightCycle.Y = panelTopLocation + 2 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingUseDayNightCycle.Y = panelTopLocation + 1 * gv.uiSquareSize + (gv.uiSquareSize / 2);
             tglSettingUseDayNightCycle.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingUseDayNightCycle.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingPlacePCs == null)
+            {
+                tglSettingPlacePCs = new IbbToggle(gv);
+            }
+            tglSettingPlacePCs.ImgOn = "mtgl_rbtn_on";
+            tglSettingPlacePCs.ImgOff = "mtgl_rbtn_off";
+            tglSettingPlacePCs.X = panelLeftLocation;
+            tglSettingPlacePCs.Y = panelTopLocation + 2 * gv.uiSquareSize;
+            tglSettingPlacePCs.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingPlacePCs.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingRemoveAllPCs == null)
+            {
+                tglSettingRemoveAllPCs = new IbbToggle(gv);
+            }
+            tglSettingRemoveAllPCs.ImgOn = "mtgl_edit_btn";
+            tglSettingRemoveAllPCs.ImgOff = "mtgl_edit_btn";
+            tglSettingRemoveAllPCs.X = panelLeftLocation;
+            tglSettingRemoveAllPCs.Y = panelTopLocation + 2 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingRemoveAllPCs.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingRemoveAllPCs.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingRemoveAllCrts == null)
+            {
+                tglSettingRemoveAllCrts = new IbbToggle(gv);
+            }
+            tglSettingRemoveAllCrts.ImgOn = "mtgl_edit_btn";
+            tglSettingRemoveAllCrts.ImgOff = "mtgl_edit_btn";
+            tglSettingRemoveAllCrts.X = panelLeftLocation + 1 * gv.uiSquareSize + 2 * (gv.uiSquareSize / 3);
+            tglSettingRemoveAllCrts.Y = panelTopLocation + 2 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingRemoveAllCrts.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingRemoveAllCrts.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingAddItem == null)
+            {
+                tglSettingAddItem = new IbbToggle(gv);
+            }
+            tglSettingAddItem.ImgOn = "mtgl_edit_btn";
+            tglSettingAddItem.ImgOff = "mtgl_edit_btn";
+            tglSettingAddItem.X = panelLeftLocation;
+            tglSettingAddItem.Y = panelTopLocation + 3 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingAddItem.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingAddItem.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingRemoveItem == null)
+            {
+                tglSettingRemoveItem = new IbbToggle(gv);
+            }
+            tglSettingRemoveItem.ImgOn = "mtgl_edit_btn";
+            tglSettingRemoveItem.ImgOff = "mtgl_edit_btn";
+            tglSettingRemoveItem.X = panelLeftLocation + 1 * gv.uiSquareSize + 2 * (gv.uiSquareSize / 3);
+            tglSettingRemoveItem.Y = panelTopLocation + 3 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            tglSettingRemoveItem.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingRemoveItem.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
         public void setupWalkLoSPanelControls()
         {
@@ -966,9 +1026,9 @@ namespace IBbasic
             int cnt = 0;
             foreach (Coordinate PCpoint in gv.mod.currentEncounter.encounterPcStartLocations)
             {
-                int cspx = PCpoint.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                int cspy = PCpoint.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                gv.DrawText((cnt + 1).ToString(), cspx + 5, cspy, "yl");
+                int cspx = PCpoint.X * gv.squareSize / mapSquareSizeScaler * gv.scaler + mapStartLocXinPixels;
+                int cspy = PCpoint.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler + (int)(1.5 * gv.fontHeight);
+                gv.DrawText("PC" + (cnt + 1).ToString(), cspx + 5, cspy, "yl");
                 cnt++;
             }
         }
@@ -1012,6 +1072,15 @@ namespace IBbasic
             gv.DrawText("Layer 3:", panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             gv.DrawText(gv.mod.currentEncounter.Layer3Filename[index], panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
 
+            //info on creature
+            string crtTag = "none";
+            if (gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y) != null)
+            {
+                crtTag = gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y).creatureTag;
+            }
+            gv.DrawText("Creature Tag:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(crtTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            
             //info on trigger
             string trigTag = "none";
             if (gv.mod.currentEncounter.getTriggerByLocation(selectedSquare.X, selectedSquare.Y) != null)
@@ -1458,19 +1527,50 @@ namespace IBbasic
             gv.DrawText("ENCOUNTER SETTINGS", panelLeftLocation, panelTopLocation, "gn");
 
             int shiftForFont = (tglSettingEncounterName.Height / 2) - (gv.fontHeight / 2);
+
             tglSettingEncounterName.Draw();
-            gv.DrawText("Encounter Name:", tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y, "wh");
+            gv.DrawText("Encounter Name:", tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y, "yl");
             gv.DrawText(gv.mod.currentEncounter.encounterName, tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+
             tglSettingGoldDrop.Draw();
-            gv.DrawText("Gold", tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y, "wh");
-            gv.DrawText("Drop: " + gv.mod.currentEncounter.goldDrop, tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            gv.DrawText("Gold Drop:", tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y, "yl");
+            gv.DrawText(gv.mod.currentEncounter.goldDrop.ToString(), tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (gv.mod.currentEncounter.UseDayNightCycle) { tglSettingUseDayNightCycle.toggleOn = true; }
             else { tglSettingUseDayNightCycle.toggleOn = false; }
             tglSettingUseDayNightCycle.Draw();
-            gv.DrawText("Uses Day/", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "wh");
-            gv.DrawText("Night Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "rd");
+            gv.DrawText("Uses Day/", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "yl");
+            gv.DrawText("Night Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
+            tglSettingPlacePCs.Draw();
+            gv.DrawText("Place PC Start", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y, "yl");
+            gv.DrawText("Locations Mode", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+
+            tglSettingRemoveAllPCs.Draw();
+            gv.DrawText("Remove", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y, "yl");
+            gv.DrawText("PCs", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+
+            tglSettingRemoveAllCrts.Draw();
+            gv.DrawText("Remove", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y, "yl");
+            gv.DrawText("Crturs", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+
+            gv.DrawText("Encounter Loot", tglSettingAddItem.X, tglSettingAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+
+            tglSettingAddItem.Draw();
+            gv.DrawText("Add", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y, "yl");
+            gv.DrawText("Item", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+
+            tglSettingRemoveItem.Draw();
+            gv.DrawText("Remove", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y, "yl");
+            gv.DrawText("Item", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+
+            int cnt = 0;
+            //gv.mod.currentEncounter.encounterInventoryRefsList.Add(new ItemRefs());
+            foreach (ItemRefs it in gv.mod.currentEncounter.encounterInventoryRefsList)
+            {
+                gv.DrawText(it.name, tglSettingAddItem.X, tglSettingAddItem.Y + (cnt + 2) * (gv.fontHeight + gv.fontLineSpacing), "wh");
+                cnt++;
+            }
             btnHelp.Draw();
         }
         public void drawCrtPanel()
@@ -1862,6 +1962,30 @@ namespace IBbasic
 
                     btnHelp.glowOn = false;
 
+                    if (!tapInMapViewport(x, y))
+                    {
+                        if (tglSettingPlacePCs.getImpact(x, y))
+                        {
+                            tglSettingPlacePCs.toggleOn = !tglSettingPlacePCs.toggleOn;
+                        }
+                        else
+                        {
+                            tglSettingPlacePCs.toggleOn = false;
+                        }
+                    }
+                    else
+                    {
+                        if (tglSettingPlacePCs.toggleOn)
+                        {
+                            if (gv.mod.currentEncounter.encounterPcStartLocations.Count < 6)
+                            {
+                                int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                                int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                                gv.mod.currentEncounter.encounterPcStartLocations.Add(new Coordinate(gridX, gridY));
+                            }
+                        }
+                    }
+
                     if (tglSettingEncounterName.getImpact(x, y))
                     {
                         changeEncounterName();
@@ -1874,6 +1998,26 @@ namespace IBbasic
                     {
                         tglSettingUseDayNightCycle.toggleOn = !tglSettingUseDayNightCycle.toggleOn;
                         gv.mod.currentEncounter.UseDayNightCycle = tglSettingUseDayNightCycle.toggleOn;
+                    }
+                    else if (tglSettingPlacePCs.getImpact(x, y))
+                    {
+                        //tglSettingPlacePCs.toggleOn = !tglSettingPlacePCs.toggleOn;
+                    }
+                    else if (tglSettingRemoveAllPCs.getImpact(x, y))
+                    {
+                        gv.mod.currentEncounter.encounterPcStartLocations.Clear();
+                    }
+                    else if (tglSettingRemoveAllCrts.getImpact(x, y))
+                    {
+                        gv.mod.currentEncounter.encounterCreatureRefsList.Clear();
+                    }
+                    else if (tglSettingAddItem.getImpact(x, y))
+                    {
+                        addItemToLootList();
+                    }
+                    else if (tglSettingRemoveItem.getImpact(x, y))
+                    {
+                        removeItemFromLootList();
                     }
                     else if (btnHelp.getImpact(x, y))
                     {
@@ -3024,6 +3168,49 @@ namespace IBbasic
                 selectedTrigger.Event3Parm4 = myinput;
                 gv.touchEnabled = true;
             }
+        }
+        public async void addItemToLootList()
+        {
+            List<string> items = new List<string>();
+            items.Add("none");
+            //gv.mod.currentEncounter.encounterInventoryRefsList.Clear();
+            foreach (Item it in gv.cc.allItemsList)
+            {
+                items.Add(it.name);
+            }
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select an item from the list to add to loot items:");
+            if (selected != "none")
+            {
+                ItemRefs ir = gv.mod.createItemRefsFromItem(gv.cc.getItemByName(selected));
+                gv.mod.currentEncounter.encounterInventoryRefsList.Add(ir);
+            }
+            gv.touchEnabled = true;
+        }
+        public async void removeItemFromLootList()
+        {
+            List<string> items = new List<string>();
+            items.Add("none");
+
+            foreach (ItemRefs it in gv.mod.currentEncounter.encounterInventoryRefsList)
+            {
+                items.Add(it.name);
+            }
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select an item from the loot list to remove:");
+            if (selected != "none")
+            {
+                int indx = 0;
+                foreach (string s in items)
+                {
+                    if (s.Equals(selected))
+                    {
+                        gv.mod.currentEncounter.encounterInventoryRefsList.RemoveAt(indx - 1);
+                    }
+                    indx++;
+                }
+            }
+            gv.touchEnabled = true;            
         }
     }
 }

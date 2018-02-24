@@ -70,6 +70,7 @@ namespace IBbasic
         public Area currentArea = new Area();
         [JsonIgnore]
         public Encounter currentEncounter = new Encounter();
+        public Convo currentConvo = new Convo();
         public int partyGold = 0;
         public bool showPartyToken = false;
         public string partyTokenFilename = "prp_party";
@@ -203,7 +204,7 @@ namespace IBbasic
                 {
                     if (cnv.ConvoFileName.Equals(ConvoFilename))
                     {
-                        gv.screenConvo.currentConvo = cnv;
+                        gv.mod.currentConvo = cnv;
                         return true;
                     }
                 }
@@ -216,7 +217,7 @@ namespace IBbasic
                     if (cnv != null)
                     {
                         this.moduleConvoList.Add(cnv);
-                        gv.screenConvo.currentConvo = cnv;
+                        gv.mod.currentConvo = cnv;
                         return true;
                     }
                 }

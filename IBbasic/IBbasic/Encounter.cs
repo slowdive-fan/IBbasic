@@ -90,6 +90,17 @@ namespace IBbasic
             }
             return null;
         }
+        public CreatureRefs getCreatureRefByLocation(int x, int y)
+        {
+            foreach (CreatureRefs crt in this.encounterCreatureRefsList)
+            {
+                if ((crt.creatureStartLocationX == x) && (crt.creatureStartLocationY == y))
+                {
+                    return crt;
+                }
+            }
+            return null;
+        }
         public Trigger getTriggerByLocation(int x, int y)
         {
             foreach (Trigger t in this.Triggers)

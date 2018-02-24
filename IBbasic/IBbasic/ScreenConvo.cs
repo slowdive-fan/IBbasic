@@ -14,7 +14,7 @@ namespace IBbasic
 	    public List<IbbButton> btnPartyIndex = new List<IbbButton>();
 	
 	    //Convo STUFF
-	    public Convo currentConvo = new Convo();
+	    //public Convo currentConvo = new Convo();
 	    public string currentNpcNode = "";
 	    public string currentPcNode = "";
 	    public List<string> currentPcNodeList = new List<string>();
@@ -65,7 +65,7 @@ namespace IBbasic
 		    drawNpcNode();
 		    drawPcNode();	 
 		
-		    if (currentConvo.PartyChat)
+		    if (gv.mod.currentConvo.PartyChat)
 		    {
 			    //DRAW EACH PC BUTTON
 			    int cntPCs = 0;
@@ -93,9 +93,9 @@ namespace IBbasic
             {
                 dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.3), (int)(gv.uiSquareSize * 1.3));
             }
-		    if (currentConvo.Narration)
+		    if (gv.mod.currentConvo.Narration)
             {
-                if (!currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
+                if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     dst = new IbRect((gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (gv.uiSquareSize * 2), gv.uiSquareSize / 4, gv.uiSquareSize * 4, gv.uiSquareSize * 2);
                 }
@@ -107,7 +107,7 @@ namespace IBbasic
 		    if (convoBitmap != null)
 		    {
 			    gv.DrawBitmap(convoBitmap, src, dst);
-                if ((gv.mod.useUIBackground) && (!currentConvo.Narration))
+                if ((gv.mod.useUIBackground) && (!gv.mod.currentConvo.Narration))
                 {
                     IbRect srcFrame = new IbRect(0, 0, gv.cc.ui_portrait_frame.Width, gv.cc.ui_portrait_frame.Height);
                     IbRect dstFrame = new IbRect(dst.Left - (int)(2 * gv.scaler),
@@ -126,9 +126,9 @@ namespace IBbasic
             int startY = pH * 4;
             int width = gv.screenWidth - startX - (pW * 5);
 		
-		    if (currentConvo.Narration)
+		    if (gv.mod.currentConvo.Narration)
             {
-                if (!currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
+                if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     //do narration with image setup
                     startX = (int)(gv.uiSquareSize * 0.5);
@@ -169,9 +169,9 @@ namespace IBbasic
 		    int startY = (int)(gv.uiSquareSize * 2.5) + (pH * 5);		
 		    int width = gv.screenWidth - (startX);
 
-            if (currentConvo.Narration)
+            if (gv.mod.currentConvo.Narration)
             {
-                if (!currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
+                if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     //do narration with image setup
                     startY = (int)((float)gv.screenHeight / 100.0f) * 50;
@@ -266,7 +266,7 @@ namespace IBbasic
 				    cnt++;
 			    }
 			
-			    if (currentConvo.PartyChat)
+			    if (gv.mod.currentConvo.PartyChat)
 			    {
 				    for (int j = 0; j < gv.mod.playerList.Count; j++)
 				    {
@@ -328,7 +328,7 @@ namespace IBbasic
 	    //methods
 	    public void startConvo()
         {
-            if (currentConvo.SpeakToMainPcOnly)
+            if (gv.mod.currentConvo.SpeakToMainPcOnly)
 		    {
                 int x = 0;
                 foreach (Player pc in gv.mod.playerList)
@@ -362,9 +362,9 @@ namespace IBbasic
 		    SetNodeIsActiveFalseForAll();
             parentIdNum = getParentIdNum(parentIdNum);  
                 
-            if (currentConvo.Narration)
+            if (gv.mod.currentConvo.Narration)
             {
-                if (!currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
+                if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     //do narration with image setup
                 }
@@ -383,16 +383,16 @@ namespace IBbasic
             // load image for convo
             try
             {
-                if ((currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap.Equals("")) 
-                    || (currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap == null))
+                if ((gv.mod.currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap.Equals("")) 
+                    || (gv.mod.currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap == null))
                 {
-                    if (currentConvo.NpcPortraitBitmap.Equals(""))
+                    if (gv.mod.currentConvo.NpcPortraitBitmap.Equals(""))
                     {
                         convoBitmap = gv.cc.GetFromBitmapList("npc_blob_portrait");
                     }
                     else
                     {
-                        string filename = currentConvo.NpcPortraitBitmap;
+                        string filename = gv.mod.currentConvo.NpcPortraitBitmap;
                         string filenameNoExt = filename;
                         if (filename.Contains("."))
                         {
@@ -411,7 +411,7 @@ namespace IBbasic
                 }
                 else
                 {
-                    string filename = currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap;
+                    string filename = gv.mod.currentConvo.GetContentNodeById(parentIdNum).NodePortraitBitmap;
                     string filenameNoExt = filename;
                     if (filename.Contains("."))
                     {
@@ -440,9 +440,9 @@ namespace IBbasic
         {
             foreach (ConvoSavedValues csv in gv.mod.moduleConvoSavedValuesList)
             {
-                if (csv.ConvoFileName.Equals(currentConvo.ConvoFileName))
+                if (csv.ConvoFileName.Equals(gv.mod.currentConvo.ConvoFileName))
                 {
-            	    currentConvo.GetContentNodeById(csv.NodeNotActiveIdNum).NodeIsActive = false;
+            	    gv.mod.currentConvo.GetContentNodeById(csv.NodeNotActiveIdNum).NodeIsActive = false;
                 }
             }
         }
@@ -457,7 +457,7 @@ namespace IBbasic
             // if one node is a link, then go to the linked node and check its conditional
             if (pnode.isLink)
             {
-                chkNode = currentConvo.GetContentNodeById(pnode.linkTo);
+                chkNode = gv.mod.currentConvo.GetContentNodeById(pnode.linkTo);
             }
             bool AndStatments = true;
             foreach (Condition conditional in chkNode.conditions)
@@ -505,7 +505,7 @@ namespace IBbasic
 	    private int getParentIdNum(int childIdNum) // Gets the first NPC node idNum that returns a true conditional
         {
             //first determine which NPC subNode to use by cycling through all children of parentNode until one returns true from conditionals
-            foreach (ContentNode npcNode in currentConvo.GetContentNodeById(childIdNum).subNodes)
+            foreach (ContentNode npcNode in gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes)
             {            
                 bool check = nodePassesConditional(npcNode);
                 if ((check == true) && (npcNode.NodeIsActive))
@@ -518,17 +518,17 @@ namespace IBbasic
                     return npcNode.idNum;
                 }
             }
-            if (currentConvo.GetContentNodeById(childIdNum).subNodes[0].ShowOnlyOnce)
+            if (gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes[0].ShowOnlyOnce)
             {
-        	    currentConvo.GetContentNodeById(childIdNum).subNodes[0].NodeIsActive = false;
-                saveNodeIsActiveFalseToModule(currentConvo.GetContentNodeById(childIdNum).subNodes[0]);
+        	    gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes[0].NodeIsActive = false;
+                saveNodeIsActiveFalseToModule(gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes[0]);
             }
-            return currentConvo.GetContentNodeById(childIdNum).subNodes[0].idNum;
+            return gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes[0].idNum;
         }
 	    private void saveNodeIsActiveFalseToModule(ContentNode nod)
         {
             ConvoSavedValues newCSV = new ConvoSavedValues();
-            newCSV.ConvoFileName = currentConvo.ConvoFileName;
+            newCSV.ConvoFileName = gv.mod.currentConvo.ConvoFileName;
             newCSV.NodeNotActiveIdNum = nod.idNum;
             gv.mod.moduleConvoSavedValuesList.Add(newCSV);
         }
@@ -542,26 +542,26 @@ namespace IBbasic
         
             //NPC NODE STUFF
             //if the NPC node is a link, move to the actual node
-            if (currentConvo.GetContentNodeById(prntIdNum).isLink)
+            if (gv.mod.currentConvo.GetContentNodeById(prntIdNum).isLink)
             {
-        	    parentIdNum = currentConvo.GetContentNodeById(prntIdNum).linkTo;
-        	    prntIdNum = currentConvo.GetContentNodeById(prntIdNum).linkTo;
+        	    parentIdNum = gv.mod.currentConvo.GetContentNodeById(prntIdNum).linkTo;
+        	    prntIdNum = gv.mod.currentConvo.GetContentNodeById(prntIdNum).linkTo;
             }
         
             if (doActions)
             {
-                foreach (Action action in currentConvo.GetContentNodeById(prntIdNum).actions)
+                foreach (Action action in gv.mod.currentConvo.GetContentNodeById(prntIdNum).actions)
                 {
             	    gv.cc.doScriptBasedOnFilename(action.a_script, action.a_parameter_1, action.a_parameter_2, action.a_parameter_3, action.a_parameter_4);
                 }
             }
-            currentNpcNode = replaceText(currentConvo.GetContentNodeById(prntIdNum).conversationText);
+            currentNpcNode = replaceText(gv.mod.currentConvo.GetContentNodeById(prntIdNum).conversationText);
         
             //PC NODE STUFF
             //Loop through all PC nodes and check to see if they should be visible
             int cnt = 0; 
             int trueCount = 1;
-            foreach (ContentNode pcNode in currentConvo.GetContentNodeById(prntIdNum).subNodes)
+            foreach (ContentNode pcNode in gv.mod.currentConvo.GetContentNodeById(prntIdNum).subNodes)
             {        	
         	    bool check = nodePassesConditional(pcNode);
                 if (check == true)
@@ -599,7 +599,7 @@ namespace IBbasic
                 {
                     //loop through all nodes and check to see if they should be visible
                     int cntr = 0;
-                    foreach (ContentNode pcNode in currentConvo.GetContentNodeById(prntIdNum).subNodes)
+                    foreach (ContentNode pcNode in gv.mod.currentConvo.GetContentNodeById(prntIdNum).subNodes)
                     {                	
                 	    bool check = nodePassesConditional(pcNode);
                         if (check == true)
@@ -637,16 +637,16 @@ namespace IBbasic
             {
         	    int index = nodeIndexList[btnIndex];
                 string NPCname = "";
-	            ContentNode selectedNod = currentConvo.GetContentNodeById(parentIdNum).subNodes[index];
+	            ContentNode selectedNod = gv.mod.currentConvo.GetContentNodeById(parentIdNum).subNodes[index];
 	            if ((selectedNod.NodeNpcName.Equals("")) || (selectedNod.NodeNpcName == null) || (selectedNod.NodeNpcName.Length <= 0))
 	            {
-	                NPCname = currentConvo.DefaultNpcName;
+	                NPCname = gv.mod.currentConvo.DefaultNpcName;
 	            }
 	            else
 	            {
 	                NPCname = selectedNod.NodeNpcName;
 	            }
-	            string npcNode = replaceText(currentConvo.GetContentNodeById(parentIdNum).conversationText);
+	            string npcNode = replaceText(gv.mod.currentConvo.GetContentNodeById(parentIdNum).conversationText);
 	            string pcNode = replaceText(selectedNod.conversationText);
 	            //write to log
                 gv.cc.addLogText("<yl>" + NPCname + ": </yl>" +
@@ -654,18 +654,18 @@ namespace IBbasic
                                  "<bu>" + gv.mod.playerList[gv.mod.selectedPartyLeader].name + ": </bu>" +
                                  "<gy>" + pcNode + "</gy>");
 	
-	            int childIdNum = currentConvo.GetContentNodeById(parentIdNum).subNodes[index].idNum;
+	            int childIdNum = gv.mod.currentConvo.GetContentNodeById(parentIdNum).subNodes[index].idNum;
 	            // if PC node choosen was a linked node, then return the idNum of the linked node
-	            if (currentConvo.GetContentNodeById(parentIdNum).subNodes[index].isLink)
+	            if (gv.mod.currentConvo.GetContentNodeById(parentIdNum).subNodes[index].isLink)
 	            {
-	                childIdNum = currentConvo.GetContentNodeById(currentConvo.GetContentNodeById(parentIdNum).subNodes[index].linkTo).idNum;
+	                childIdNum = gv.mod.currentConvo.GetContentNodeById(gv.mod.currentConvo.GetContentNodeById(parentIdNum).subNodes[index].linkTo).idNum;
 	            }
 	            //doAction() for current selected PC Node (all actions for node)
-	            foreach (Action action in currentConvo.GetContentNodeById(childIdNum).actions)
+	            foreach (Action action in gv.mod.currentConvo.GetContentNodeById(childIdNum).actions)
 	            {
 	        	    gv.cc.doScriptBasedOnFilename(action.a_script, action.a_parameter_1, action.a_parameter_2, action.a_parameter_3, action.a_parameter_4);
 	            }
-	            if (currentConvo.GetContentNodeById(childIdNum).subNodes.Count < 1)
+	            if (gv.mod.currentConvo.GetContentNodeById(childIdNum).subNodes.Count < 1)
 	            {
                     gv.cc.addLogText("[end convo]<br><br>"); //add a blank line to main screen log at the end of a conversation
 	                gv.mod.selectedPartyLeader = originalSelectedPartyLeader;

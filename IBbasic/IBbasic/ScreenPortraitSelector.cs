@@ -378,7 +378,7 @@ namespace IBbasic
                             {
                                     if (gv.tsConvoEditor.currentMode.Equals("settings"))
                                     {
-                                        gv.tsConvoEditor.currentConvo.NpcPortraitBitmap = playerPortraitList[GetIndex()];
+                                        gv.mod.currentConvo.NpcPortraitBitmap = playerPortraitList[GetIndex()];
                                         gv.screenType = "tsConvoEditor";
                                     }
                                     else
@@ -431,7 +431,7 @@ namespace IBbasic
                     {
                         if (gv.tsConvoEditor.currentMode.Equals("Settings"))
                         {
-                            gv.tsConvoEditor.currentConvo.NpcPortraitBitmap = playerPortraitList[GetIndex()];
+                            gv.mod.currentConvo.NpcPortraitBitmap = playerPortraitList[GetIndex()];
                             gv.screenType = "tsConvoEditor";
                         }
                         else

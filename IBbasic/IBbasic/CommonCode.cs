@@ -1937,7 +1937,7 @@ namespace IBbasic
                     return;
                 }
                 //gv.screenConvo.currentConvo = gv.mod.getConvoByName(tag);
-                if (gv.screenConvo.currentConvo != null)
+                if (gv.mod.currentConvo != null)
                 {
                     gv.screenType = "convo";
                     gv.screenConvo.startConvo();
@@ -2558,6 +2558,14 @@ namespace IBbasic
             return clr;
         }
 
+        public Item getItemByName(string name)
+        {
+            foreach (Item it in this.allItemsList)
+            {
+                if (it.name.Equals(name)) return it;
+            }
+            return null;
+        }
         public Item getItemByTag(string tag)
         {
             foreach (Item it in this.allItemsList)
