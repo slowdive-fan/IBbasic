@@ -111,12 +111,13 @@ namespace IBbasic
         public ToolsetScreenEncounterEditor tsEncEditor;
         public ToolsetScreenMainMenu tsMainMenu;
         public ToolsetScreenConvoEditor tsConvoEditor;
-        
+        public ToolsetScreenContainerEditor tsContainerEditor;
+
         //public SoundPlayer soundPlayer = new SoundPlayer();
         //public Dictionary<string, Stream> oSoundStreams = new Dictionary<string, Stream>();
         //public System.Media.SoundPlayer playerButtonEnter = new System.Media.SoundPlayer();
         //public System.Media.SoundPlayer playerButtonClick = new System.Media.SoundPlayer();
-       
+
         //TODOpublic Timer gameTimer = new Timer();
         public Stopwatch gameTimerStopwatch = new Stopwatch();
         public long previousTime = 0;
@@ -316,8 +317,9 @@ namespace IBbasic
             tsEncEditor = new ToolsetScreenEncounterEditor(this);
             tsMainMenu = new ToolsetScreenMainMenu(this);
             tsConvoEditor = new ToolsetScreenConvoEditor(this);
-            
-	    }
+            tsContainerEditor = new ToolsetScreenContainerEditor(this);
+
+        }
         public void LoadStandardImages()
         {
             //cc.btnIni = cc.LoadBitmap("btn_ini");
@@ -852,10 +854,10 @@ namespace IBbasic
         {
             canvas = c;
             //BeginDraw(); //uncomment this for DIRECT2D ADDITIONS  
-          
+
             //renderTarget2D.Clear(Color4.Black); //uncomment this for DIRECT2D ADDITIONS
 
-            if ((mod.useUIBackground) && (!screenType.Equals("tsAreaEditor")) && (!screenType.Equals("tsConvoEditor")) && (!screenType.Equals("main")) && (!screenType.Equals("combat")) && (!screenType.Equals("launcher")) && (!screenType.Equals("title")))
+            if ((mod.useUIBackground) && (!screenType.Equals("tsAreaEditor")) && (!screenType.Equals("tsConvoEditor")) && (!screenType.Equals("tsEncEditor")) && (!screenType.Equals("main")) && (!screenType.Equals("combat")) && (!screenType.Equals("launcher")) && (!screenType.Equals("title")))
             {
                 drawUIBackground();
             }
@@ -875,6 +877,10 @@ namespace IBbasic
             else if (screenType.Equals("tsConvoEditor"))
             {
                 tsConvoEditor.redrawTsConvoEditor();
+            }
+            else if (screenType.Equals("tsContainerEditor"))
+            {
+                tsContainerEditor.redrawTsContainerEditor();
             }
             //GAME SCREENS
             else if (screenType.Equals("title"))
@@ -1179,6 +1185,10 @@ namespace IBbasic
                     else if (screenType.Equals("tsConvoEditor"))
                     {
                         tsConvoEditor.onTouchTsConvoEditor(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsContainerEditor"))
+                    {
+                        tsContainerEditor.onTouchTsContainerEditor(eX, eY, eventType);
                     }
                     //GAME SCREENS
                     else if (screenType.Equals("main"))

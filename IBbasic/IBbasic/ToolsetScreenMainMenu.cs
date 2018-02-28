@@ -370,7 +370,9 @@ namespace IBbasic
                         }
                         else if (btnContainerEditor.getImpact(x, y))
                         {
-                            //changeModuleVersion();
+                            gv.screenType = "tsContainerEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
                             return true;
                         }
                         else if (btnShopEditor.getImpact(x, y))
