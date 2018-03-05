@@ -113,6 +113,7 @@ namespace IBbasic
         public ToolsetScreenConvoEditor tsConvoEditor;
         public ToolsetScreenContainerEditor tsContainerEditor;
         public ToolsetScreenShopEditor tsShopEditor;
+        public ToolsetScreenJournalEditor tsJournalEditor;
 
         //public SoundPlayer soundPlayer = new SoundPlayer();
         //public Dictionary<string, Stream> oSoundStreams = new Dictionary<string, Stream>();
@@ -320,6 +321,7 @@ namespace IBbasic
             tsConvoEditor = new ToolsetScreenConvoEditor(this);
             tsContainerEditor = new ToolsetScreenContainerEditor(this);
             tsShopEditor = new ToolsetScreenShopEditor(this);
+            tsJournalEditor = new ToolsetScreenJournalEditor(this);
 
         }
         public void LoadStandardImages()
@@ -888,6 +890,10 @@ namespace IBbasic
             {
                 tsShopEditor.redrawTsShopEditor();
             }
+            else if (screenType.Equals("tsJournalEditor"))
+            {
+                tsJournalEditor.redrawTsJournalEditor();
+            }
             //GAME SCREENS
             else if (screenType.Equals("title"))
             {
@@ -1199,6 +1205,10 @@ namespace IBbasic
                     else if (screenType.Equals("tsShopEditor"))
                     {
                         tsShopEditor.onTouchTsShopEditor(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsJournalEditor"))
+                    {
+                        tsJournalEditor.onTouchTsJournalEditor(eX, eY, eventType);
                     }
                     //GAME SCREENS
                     else if (screenType.Equals("main"))

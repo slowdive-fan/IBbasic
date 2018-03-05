@@ -384,7 +384,9 @@ namespace IBbasic
                         }
                         else if (btnJournalEditor.getImpact(x, y))
                         {
-                            //changeModuleVersion();
+                            gv.screenType = "tsJournalEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
                             return true;
                         }
                         else if (btnSave.getImpact(x, y))

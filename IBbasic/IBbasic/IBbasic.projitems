@@ -114,6 +114,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenContainerEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenConvoEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenEncounterEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenJournalEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenMainMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenModule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenShopEditor.cs" />
