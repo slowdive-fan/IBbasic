@@ -2598,6 +2598,14 @@ namespace IBbasic
             }
             return null;
         }
+        public Spell getSpellByName(string name)
+        {
+            foreach (Spell s in this.datafile.dataSpellsList)
+            {
+                if (s.name.Equals(name)) return s;
+            }
+            return null;
+        }
         public Trait getTraitByTag(string tag)
         {
             foreach (Trait t in this.datafile.dataTraitsList)

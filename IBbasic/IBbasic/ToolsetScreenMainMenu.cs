@@ -403,8 +403,9 @@ namespace IBbasic
                         }
                         else if (btnCreatureEditor.getImpact(x, y))
                         {
-                            //changeModuleVersion();
-                            BackupModule();
+                            gv.screenType = "tsCreatureEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
                             return true;
                         }
                         else if (btnItem.getImpact(x, y))
@@ -414,7 +415,7 @@ namespace IBbasic
                         }
                         else if (btnPlayer.getImpact(x, y))
                         {
-                            //changeModuleVersion();
+                            BackupModule();
                             return true;
                         }
                         else if (btnExit.getImpact(x, y))
