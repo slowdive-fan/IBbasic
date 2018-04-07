@@ -93,9 +93,9 @@ namespace IBbasic
             //initialize categoryList
             foreach (Creature crt in gv.cc.allCreaturesList)
             {
-                if (!categoryList.ContainsKey(crt.parentNodeName))
+                if (!categoryList.ContainsKey(crt.cr_parentNodeName))
                 {
-                    categoryList.Add(crt.parentNodeName, true);
+                    categoryList.Add(crt.cr_parentNodeName, true);
                 }
             }
 
@@ -105,7 +105,7 @@ namespace IBbasic
         {
             //sort creatures based on category type
             gv.cc.allCreaturesList = gv.cc.allCreaturesList.OrderBy(x => x.cr_name).ToList();
-            gv.cc.allCreaturesList = gv.cc.allCreaturesList.OrderBy(x => x.parentNodeName).ToList();
+            gv.cc.allCreaturesList = gv.cc.allCreaturesList.OrderBy(x => x.cr_parentNodeName).ToList();
         }
         public void resetIndexList()
         {
@@ -116,15 +116,15 @@ namespace IBbasic
             categoryNameAtLine.Clear();
             foreach (Creature crt in gv.cc.allCreaturesList)
             {
-                if (!crt.parentNodeName.Equals(lastCategory))
+                if (!crt.cr_parentNodeName.Equals(lastCategory))
                 {
-                    lastCategory = crt.parentNodeName;
+                    lastCategory = crt.cr_parentNodeName;
                     //new category so add -1 to index list
                     indexList.Add(-1);
-                    categoryNameAtLine.Add(lineIndx, crt.parentNodeName);
+                    categoryNameAtLine.Add(lineIndx, crt.cr_parentNodeName);
                     lineIndx++;
                 }
-                if ((categoryList.ContainsKey(crt.parentNodeName)) && (categoryList[crt.parentNodeName]))
+                if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
                 {
                     //is expanded so add cnt to indexList
                     indexList.Add(cnt);
@@ -743,13 +743,13 @@ namespace IBbasic
                 int tlX = btnAddCreature.X;
                 int tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                 //check if change in lastCategory and if so print category and then go to next line and print crt tag
-                if (!crt.parentNodeName.Equals(lastCategory))
+                if (!crt.cr_parentNodeName.Equals(lastCategory))
                 {
                     //new category
-                    lastCategory = crt.parentNodeName;
+                    lastCategory = crt.cr_parentNodeName;
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Height);
                     dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontWidth);
-                    if ((categoryList.ContainsKey(crt.parentNodeName)) && (categoryList[crt.parentNodeName]))
+                    if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
                     }
@@ -757,10 +757,10 @@ namespace IBbasic
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
                     }
-                    gv.DrawText(" " + crt.parentNodeName, tlX, tlY, "bu");
+                    gv.DrawText(" " + crt.cr_parentNodeName, tlX, tlY, "bu");
                     cnt++;
                 }
-                if ((categoryList.ContainsKey(crt.parentNodeName)) && (categoryList[crt.parentNodeName]))
+                if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
                 {
                     tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                     if (crtCnt == creatureListIndex)
@@ -845,7 +845,7 @@ namespace IBbasic
             btnCrtResRef.Draw();
             gv.DrawText("RESREF: " + gv.cc.allCreaturesList[creatureListIndex].cr_resref, btnCrtResRef.X + btnCrtResRef.Width + gv.scaler, btnCrtResRef.Y + shiftForFont, "wh");
             btnCrtParentNodeName.Draw();
-            gv.DrawText("CATEGORY: " + gv.cc.allCreaturesList[creatureListIndex].parentNodeName, btnCrtParentNodeName.X + btnCrtParentNodeName.Width + gv.scaler, btnCrtParentNodeName.Y + shiftForFont, "wh");
+            gv.DrawText("CATEGORY: " + gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName, btnCrtParentNodeName.X + btnCrtParentNodeName.Width + gv.scaler, btnCrtParentNodeName.Y + shiftForFont, "wh");
             btnCrtLevel.Draw();
             gv.DrawText("LEVEL: " + gv.cc.allCreaturesList[creatureListIndex].cr_level, btnCrtLevel.X + btnCrtLevel.Width + gv.scaler, btnCrtLevel.Y + shiftForFont, "wh");
             btnCrtHP.Draw();
@@ -1483,7 +1483,7 @@ namespace IBbasic
             if (creatureListIndex < gv.cc.allCreaturesList.Count)
             {
                 Creature newCreature = new Creature();
-                newCreature.parentNodeName = gv.cc.allCreaturesList[creatureListIndex].parentNodeName;
+                newCreature.cr_parentNodeName = gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName;
                 int nextId = gv.mod.getNextIdNumber();
                 newCreature.cr_tag = "newTag_" + nextId;
                 newCreature.cr_resref = "newResRef_" + nextId;
@@ -1514,7 +1514,7 @@ namespace IBbasic
             if (creatureListIndex < gv.cc.allCreaturesList.Count)
             {
                 Creature newCreature = gv.cc.allCreaturesList[creatureListIndex].DeepCopy();
-                newCreature.parentNodeName = gv.cc.allCreaturesList[creatureListIndex].parentNodeName;
+                newCreature.cr_parentNodeName = gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName;
                 int nextId = gv.mod.getNextIdNumber();
                 newCreature.cr_tag = "newTag_" + nextId;
                 newCreature.cr_resref = "newResRef_" + nextId;
@@ -1543,13 +1543,13 @@ namespace IBbasic
         public async void changeParentNodeName()
         {
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter a category name for organizing creatures into groups for the creatures panel on the left.", gv.cc.allCreaturesList[creatureListIndex].parentNodeName);
-            gv.cc.allCreaturesList[creatureListIndex].parentNodeName = myinput;
+            string myinput = await gv.StringInputBox("Enter a category name for organizing creatures into groups for the creatures panel on the left.", gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName);
+            gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName = myinput;
             gv.touchEnabled = true;
 
-            if (!categoryList.ContainsKey(gv.cc.allCreaturesList[creatureListIndex].parentNodeName))
+            if (!categoryList.ContainsKey(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName))
             {
-                categoryList.Add(gv.cc.allCreaturesList[creatureListIndex].parentNodeName, false);
+                categoryList.Add(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName, false);
             }
             sortCreatureList();
             resetIndexList();

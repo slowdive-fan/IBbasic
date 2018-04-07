@@ -26,7 +26,7 @@ namespace IBbasic
 	    public string cr_name = "newCreature";	
 	    public string cr_tag = "newTag";
 	    public string cr_resref = "newResRef";
-        public string parentNodeName = "newCategory";
+        public string cr_parentNodeName = "newCategory";
         public bool isExpanded = false;
         //public string cr_desc = ""; //detailed description
         public int cr_level = 1;
@@ -85,7 +85,7 @@ namespace IBbasic
 		    copy.cr_name = this.cr_name;	
 		    copy.cr_tag = this.cr_tag;
 		    copy.cr_resref = this.cr_resref;
-            copy.parentNodeName = this.parentNodeName;
+            copy.cr_parentNodeName = this.cr_parentNodeName;
             //copy.cr_desc = this.cr_desc;
             copy.cr_level = this.cr_level;
 		    copy.hp = this.hp;
