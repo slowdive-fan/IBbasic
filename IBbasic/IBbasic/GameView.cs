@@ -1228,7 +1228,7 @@ namespace IBbasic
                     }
                     else if (screenType.Equals("tsItemEditor"))
                     {
-                        tsItemEditor.onTouchTsItemEditor(eX, eY, e, eventType);
+                        tsItemEditor.onTouchTsItemEditor(eX, eY, eventType);
                     }
                     //GAME SCREENS
                     else if (screenType.Equals("main"))
