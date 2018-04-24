@@ -28,7 +28,8 @@ namespace IBbasic
         public string itemOnUseSound = "none"; //Filename of sound to play when the item is used (no extension)
         public string itemEndSound = "none"; //Filename of sound to play upon end use of item like explosion from thrown grenade (no extension)
         public string category = "Armor"; //catergory type (Armor, Ranged, Melee, General, Ring, Shield, Ammo)
-	    public bool plotItem = false;
+        public string ItemCategoryName = "newCategory";
+        public bool plotItem = false;
 	    public int value = 0; //cost in credits
 	    public int quantity = 1; //useful for stacking and ammo
 	    public int groupSizeForSellingStackableItems = 1;
@@ -42,7 +43,7 @@ namespace IBbasic
 	    public int attackRange = 1; //attack range
 	    public int AreaOfEffect = 0; //AoE radius
         public AreaOfEffectShape aoeShape = AreaOfEffectShape.Circle;
-        public string spellTag = "none";
+        //public string spellTag = "none";
         public int damageNumDice = 1; //number of dice to roll for damage
 	    public int damageDie = 2; //type of dice to roll for damage
 	    public int damageAdder = 0; //the adder like 2d4+1 where "1" is the adder
@@ -66,10 +67,10 @@ namespace IBbasic
         //public string onScoringHit = "none";
         //public string onScoringHitParms = "";
         //public string onUseItem = "none";
-        public string onWhileEquipped = "none";
-        public string onUseItemIBScript = "none";
-        public string onUseItemIBScriptParms = "";
-        public bool destroyItemAfterOnUseItemIBScript = false;
+        //public string onWhileEquipped = "none";
+        //public string onUseItemIBScript = "none";
+        //public string onUseItemIBScriptParms = "";
+        //public bool destroyItemAfterOnUseItemIBScript = false;
         public string onScoringHitCastSpellTag = "none";
         public string onUseItemCastSpellTag = "none";
         public bool destroyItemAfterOnUseItemCastSpell = false;
@@ -111,7 +112,8 @@ namespace IBbasic
 		    copy.spriteEndingFilename = this.spriteEndingFilename;
 		    copy.itemOnUseSound = this.itemOnUseSound;
 		    copy.category = this.category;
-		    copy.plotItem = this.plotItem;
+            copy.ItemCategoryName = this.ItemCategoryName;
+            copy.plotItem = this.plotItem;
 		    copy.value = this.value;
 		    copy.quantity = this.quantity;
 		    copy.groupSizeForSellingStackableItems = this.groupSizeForSellingStackableItems;
@@ -125,7 +127,7 @@ namespace IBbasic
 		    copy.attackRange = this.attackRange;
 		    copy.AreaOfEffect = this.AreaOfEffect;
             copy.aoeShape = this.aoeShape;
-            copy.spellTag = this.spellTag;
+            //copy.spellTag = this.spellTag;
             copy.damageNumDice = this.damageNumDice;
 		    copy.damageDie = this.damageDie;
 		    copy.damageAdder = this.damageAdder;
@@ -149,10 +151,10 @@ namespace IBbasic
 		    //copy.onScoringHit = this.onScoringHit;
 		    //copy.onScoringHitParms = this.onScoringHitParms;
 		    //copy.onUseItem = this.onUseItem;
-		    copy.onWhileEquipped = this.onWhileEquipped;
-		    copy.onUseItemIBScript = this.onUseItemIBScript;
-            copy.onUseItemIBScriptParms = this.onUseItemIBScriptParms;
-            copy.destroyItemAfterOnUseItemIBScript = this.destroyItemAfterOnUseItemIBScript;
+		    //copy.onWhileEquipped = this.onWhileEquipped;
+		    //copy.onUseItemIBScript = this.onUseItemIBScript;
+            //copy.onUseItemIBScriptParms = this.onUseItemIBScriptParms;
+            //copy.destroyItemAfterOnUseItemIBScript = this.destroyItemAfterOnUseItemIBScript;
             copy.onScoringHitCastSpellTag = this.onScoringHitCastSpellTag;
             copy.onUseItemCastSpellTag = this.onUseItemCastSpellTag;
             copy.destroyItemAfterOnUseItemCastSpell = this.destroyItemAfterOnUseItemCastSpell;

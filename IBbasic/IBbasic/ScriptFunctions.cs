@@ -4900,7 +4900,7 @@ namespace IBbasic
         {
             try
             {
-                if (!gv.cc.getItemByResRefForInfo(pc.BodyRefs.resref).onWhileEquipped.Equals("none"))
+                /*if (!gv.cc.getItemByResRefForInfo(pc.BodyRefs.resref).onWhileEquipped.Equals("none"))
                 {
                     gv.cc.doScriptBasedOnFilename(gv.cc.getItemByResRefForInfo(pc.BodyRefs.resref).onWhileEquipped, "", "", "", "");
                 }
@@ -4935,7 +4935,7 @@ namespace IBbasic
                 if (!gv.cc.getItemByResRefForInfo(pc.AmmoRefs.resref).onWhileEquipped.Equals("none"))
                 {
                     gv.cc.doScriptBasedOnFilename(gv.cc.getItemByResRefForInfo(pc.AmmoRefs.resref).onWhileEquipped, "", "", "", "");
-                }
+                }*/
             }
             catch (Exception ex)
             {

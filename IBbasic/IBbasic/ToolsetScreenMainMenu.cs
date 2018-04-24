@@ -410,7 +410,9 @@ namespace IBbasic
                         }
                         else if (btnItem.getImpact(x, y))
                         {
-                            //changeModuleVersion();
+                            gv.screenType = "tsItemEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
                             return true;
                         }
                         else if (btnPlayer.getImpact(x, y))

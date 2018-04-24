@@ -475,7 +475,7 @@ namespace IBbasic
 	    {            
             ItemRefs itRef = GetCurrentlySelectedItemRefs();
 	        Item it = gv.cc.getItemByResRefForInfo(itRef.resref);
-            if ((selectedIndex == 0) && ( (!it.onUseItemIBScript.Equals("none")) || (!it.onUseItemCastSpellTag.Equals("none")) ) )
+            if ((selectedIndex == 0) && (!it.onUseItemCastSpellTag.Equals("none")))
             {
                 doSelectPcUseItemSetup();
 	            	
@@ -555,14 +555,14 @@ namespace IBbasic
                             gv.screenType = "combat";
                             gv.screenCombat.endPcTurn(false);
                         }*/
-                        if (!it.onUseItemIBScript.Equals("none"))
+                        /*if (!it.onUseItemIBScript.Equals("none"))
                         {
                             //doItemInventoryIBScript(gv.screenCombat.currentPlayerIndex);
                             gv.screenCombat.currentCombatMode = "move";
                             gv.screenType = "combat";
                             gv.screenCombat.endPcTurn(false);
-                        }
-                        else if (!it.onUseItemCastSpellTag.Equals("none"))
+                        }*/
+                        if (!it.onUseItemCastSpellTag.Equals("none"))
                         {
                             doItemInventoryCastSpellCombat(gv.screenCombat.currentPlayerIndex);
                             gv.screenCombat.currentCombatMode = "cast";
@@ -577,11 +577,11 @@ namespace IBbasic
                             Player pc = gv.mod.playerList[selectedIndex - 1];
                             doItemInventoryScriptBasedOnFilename(pc);
                         }*/
-                        if (!it.onUseItemIBScript.Equals("none"))
+                        /*if (!it.onUseItemIBScript.Equals("none"))
                         {
                             //doItemInventoryIBScript(selectedIndex - 1);
-                        }
-                        else if (!it.onUseItemCastSpellTag.Equals("none"))
+                        }*/
+                        if (!it.onUseItemCastSpellTag.Equals("none"))
                         {
                             doItemInventoryCastSpell(selectedIndex - 1);
                         }
