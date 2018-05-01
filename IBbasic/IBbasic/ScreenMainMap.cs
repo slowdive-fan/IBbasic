@@ -974,7 +974,8 @@ namespace IBbasic
                             device.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), dst, src);
                         }
                     }
-                    #endregion                    
+                    #endregion      
+                    minimap = surface.Copy();
                 }
             }
         }        
