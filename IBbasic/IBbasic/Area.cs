@@ -84,10 +84,10 @@ namespace IBbasic
                 this.Layer1Filename.Add("bd_dd1");
                 //this.Layer1Rotate.Add(0);
                 //this.Layer1Mirror.Add(0);
-                this.Layer2Filename.Add("w_a_blank");
+                this.Layer2Filename.Add("w_00_blank");
                 //this.Layer2Rotate.Add(0);
                 //this.Layer2Mirror.Add(0);
-                this.Layer3Filename.Add("o_a_blank");
+                this.Layer3Filename.Add("o_00_blank");
                 //this.Layer3Rotate.Add(0);
                 //this.Layer3Mirror.Add(0);
                 this.Walkable.Add(1);

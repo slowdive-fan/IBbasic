@@ -142,6 +142,15 @@ namespace IBbasic.UWP
                     return reader.ReadToEnd();
                 }
             }
+            else if (modFilename.Equals("NewModule.mod"))
+            {
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.NewModule.mod");
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
             else
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
@@ -356,7 +365,7 @@ namespace IBbasic.UWP
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if (res.EndsWith(".mod"))
+                if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
                 {
                     list.Add(res);
                 }

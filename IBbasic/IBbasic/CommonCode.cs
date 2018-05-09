@@ -1465,7 +1465,7 @@ namespace IBbasic
             //do Conversation and/or Encounter if on Prop (check before props move)
             gv.triggerPropIndex = 0;
             gv.triggerIndex = 0;
-            //doPropTriggers();
+            doTrigger();
                         
             //do Conversation and/or Encounter if on Prop (check after props move)
             if (!blockSecondPropTriggersCall)
