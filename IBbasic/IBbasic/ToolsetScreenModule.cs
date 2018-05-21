@@ -10,6 +10,7 @@ namespace IBbasic
     {
         public GameView gv;
         private IbbToggle btnModuleName = null;
+        private IbbToggle btnModuleLabelName = null;
         private IbbToggle btnModuleDescription = null;
         private IbbToggle btnModuleCredits = null;
         private IbbToggle btnModuleVersion = null;
@@ -34,7 +35,7 @@ namespace IBbasic
         }
 
         public void setControlsStart()
-        {            
+        {
             if (btnModuleName == null)
             {
                 btnModuleName = new IbbToggle(gv);
@@ -46,6 +47,17 @@ namespace IBbasic
             btnModuleName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
+            if (btnModuleLabelName == null)
+            {
+                btnModuleLabelName = new IbbToggle(gv);
+            }
+            btnModuleLabelName.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
+            btnModuleLabelName.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
+            btnModuleLabelName.X = 0 * gv.uiSquareSize;
+            btnModuleLabelName.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnModuleLabelName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnModuleLabelName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
             if (btnModuleDescription == null)
             {
                 btnModuleDescription = new IbbToggle(gv);
@@ -53,7 +65,7 @@ namespace IBbasic
             btnModuleDescription.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnModuleDescription.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnModuleDescription.X = 0 * gv.uiSquareSize;
-            btnModuleDescription.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnModuleDescription.Y = 1 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
             btnModuleDescription.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleDescription.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -64,10 +76,10 @@ namespace IBbasic
             btnModuleCredits.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
             btnModuleCredits.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnModuleCredits.X = 0 * gv.uiSquareSize;
-            btnModuleCredits.Y = 2 * gv.uiSquareSize + gv.scaler;
+            btnModuleCredits.Y = 2 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
             btnModuleCredits.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleCredits.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
-            
+
             if (btnModuleVersion == null)
             {
                 btnModuleVersion = new IbbToggle(gv);
@@ -75,7 +87,7 @@ namespace IBbasic
             btnModuleVersion.ImgOn = "mtgl_edit_btn";
             btnModuleVersion.ImgOff = "mtgl_edit_btn";
             btnModuleVersion.X = 0 * gv.uiSquareSize;
-            btnModuleVersion.Y = 3 * gv.uiSquareSize + gv.scaler;
+            btnModuleVersion.Y = 3 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
             btnModuleVersion.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleVersion.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -86,7 +98,7 @@ namespace IBbasic
             btnStartingArea.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingArea.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingArea.X = 0 * gv.uiSquareSize;
-            btnStartingArea.Y = 3 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnStartingArea.Y = 4 * gv.uiSquareSize + gv.scaler;
             btnStartingArea.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingArea.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -97,7 +109,7 @@ namespace IBbasic
             btnStartingLocX.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingLocX.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingLocX.X = 0 * gv.uiSquareSize;
-            btnStartingLocX.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnStartingLocX.Y = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
             btnStartingLocX.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocX.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -108,7 +120,7 @@ namespace IBbasic
             btnStartingLocY.ImgOn = "mtgl_edit_btn";
             btnStartingLocY.ImgOff = "mtgl_edit_btn";
             btnStartingLocY.X = 0 * gv.uiSquareSize;
-            btnStartingLocY.Y = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnStartingLocY.Y = 5 * gv.uiSquareSize + gv.scaler;
             btnStartingLocY.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocY.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -119,10 +131,10 @@ namespace IBbasic
             btnStartingGold.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingGold.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingGold.X = 0 * gv.uiSquareSize;
-            btnStartingGold.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnStartingGold.Y = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
             btnStartingGold.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingGold.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
-                        
+
             if (btnHelp == null)
             {
                 btnHelp = new IbbButton(gv, 0.8f);
@@ -147,6 +159,9 @@ namespace IBbasic
             //btnModuleName.Text = gv.mod.moduleName;
             btnModuleName.Draw();
             gv.DrawText(" Module Name: " + gv.mod.moduleName, btnModuleName.X + btnModuleName.Width + gv.scaler, btnModuleName.Y + shiftForFont, "wh");
+
+            btnModuleLabelName.Draw();
+            gv.DrawText(" Module Label Name: " + gv.mod.moduleLabelName, btnModuleLabelName.X + btnModuleLabelName.Width + gv.scaler, btnModuleLabelName.Y + shiftForFont, "wh");
 
             btnModuleDescription.Draw();
             //Description
@@ -252,6 +267,10 @@ namespace IBbasic
                     {
                         changeModuleName();
                     }
+                    else if (btnModuleLabelName.getImpact(x, y))
+                    {
+                        changeModuleLabelName();
+                    }
                     else if (btnModuleDescription.getImpact(x,y))
                     {
                         changeModuleDescription();
@@ -311,6 +330,29 @@ namespace IBbasic
                 }
             }
             */
+        }
+        public async void changeModuleLabelName()
+        {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Choose a Name for this Module to display in game:", gv.mod.moduleLabelName);
+            gv.mod.moduleLabelName = myinput;
+            gv.touchEnabled = true;
+            /*using (TextInputDialog itSel = new TextInputDialog(gv, "Choose a Name for this Module to display in game.", gv.mod.moduleLabelName))
+            {
+                var ret = itSel.ShowDialog();
+
+                if (ret == DialogResult.OK)
+                {
+                    if (itSel.textInput.Length > 0)
+                    {
+                        gv.mod.moduleLabelName = itSel.textInput;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Entering a blank name is not allowed");
+                    }
+                }
+            }*/
         }
         public async void changeModuleDescription()
         {
