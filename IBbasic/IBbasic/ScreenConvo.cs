@@ -86,12 +86,12 @@ namespace IBbasic
             int pH = (int)((float)gv.screenHeight / 100.0f);
 		    int sX = gv.uiSquareSize * 0 + gv.uiSquareSize / 4;
 		    int sY = pH * 4;
-            IbRect src = new IbRect(0, 0, convoBitmap.Width, convoBitmap.Height);
-            IbRect dst = new IbRect(sX, sY, (int)(gv.ibpwidth * 1.3 * gv.scaler), (int)(gv.ibpheight * 1.3 * gv.scaler));
+            IbRect src = new IbRect(0, 0, convoBitmap.Width, convoBitmap.Width);
+            IbRect dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.8), (int)(gv.uiSquareSize * 1.8));
 
             if (convoBitmap.Width == convoBitmap.Height)
             {
-                dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.3), (int)(gv.uiSquareSize * 1.3));
+                dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.8), (int)(gv.uiSquareSize * 1.8));
             }
 		    if (gv.mod.currentConvo.Narration)
             {

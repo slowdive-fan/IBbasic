@@ -14,7 +14,7 @@ namespace IBbasic
         private IbbHtmlTextBox attackAndDamageInfo;
 
         public List<IbbButton> btnPartyIndex = new List<IbbButton>();
-        private IbbPortrait btnPortrait = null;
+        //private IbbPortrait btnPortrait = null;
         private IbbButton btnToken = null;
         private IbbButton btnHead = null;
         private IbbButton btnNeck = null;
@@ -55,27 +55,15 @@ namespace IBbasic
             int pW = (int)((float)gv.screenWidth / 100.0f);
             int pH = (int)((float)gv.screenHeight / 100.0f);
             int padW = gv.uiSquareSize / 6;
-
-            if (btnPortrait == null)
-            {
-                btnPortrait = new IbbPortrait(gv, 1.0f);
-            }
-                btnPortrait.ImgBG = "item_slot";
-                btnPortrait.Glow = "btn_small_glow";
-                btnPortrait.X = 0 * gv.uiSquareSize - (pW * 0);
-                btnPortrait.Y = 1 * gv.uiSquareSize + pH * 2;
-                btnPortrait.Height = (int)(gv.ibpheight * gv.scaler);
-                btnPortrait.Width = (int)(gv.ibpwidth * gv.scaler);
-
+                        
             if (btnToken == null)
             {
                 btnToken = new IbbButton(gv, 1.0f);
             }
                 btnToken.Img = "item_slot";
-                //btnToken.Img2 = gv.cc.LoadBitmap(pc.tokenFilename);
                 btnToken.Glow = "btn_small_glow";
                 btnToken.X = 0 * gv.uiSquareSize - (pW * 0);
-                btnToken.Y = 3 * gv.uiSquareSize + pH * 2;
+                btnToken.Y = 1 * gv.uiSquareSize + pH * 2 + (gv.uiSquareSize / 2);
                 btnToken.Height = (int)(gv.ibbheight * gv.scaler);
                 btnToken.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -162,7 +150,7 @@ namespace IBbasic
                 btnReturn.Text = "RETURN";
                 btnReturn.Img = "btn_large"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
                 btnReturn.Glow = "btn_large_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
-                btnReturn.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)(gv.ibbwidthL * gv.screenDensity / 2.0f);
+                btnReturn.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)((gv.ibbwidthL / 2) * gv.scaler);
                 btnReturn.Y = 6 * gv.uiSquareSize - pH * 2;
                 btnReturn.Height = (int)(gv.ibbheight * gv.scaler);
                 btnReturn.Width = (int)(gv.ibbwidthL * gv.scaler);
@@ -281,6 +269,7 @@ namespace IBbasic
                 btnAmmo.Height = (int)(gv.ibbheight * gv.scaler);
                 btnAmmo.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            btnPartyIndex.Clear();
             for (int x = 0; x < 6; x++)
             {
                 IbbButton btnNew = new IbbButton(gv, 1.0f);
@@ -293,6 +282,7 @@ namespace IBbasic
 
                 btnPartyIndex.Add(btnNew);
             }
+            resetPartyScreen();
         }
 
         public void resetPartyScreen()
@@ -312,12 +302,12 @@ namespace IBbasic
         public void resetTokenAndPortrait()
         {
             btnToken.Img2 = gv.mod.playerList[gv.cc.partyScreenPcIndex].tokenFilename;
-            btnPortrait.Img = gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename;
+            //btnPortrait.Img = gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename;
         }
 
         public void redrawParty()
         {
-            //setControlsStart();
+            setControlsStart();
             if (gv.cc.partyScreenPcIndex >= gv.mod.playerList.Count)
             {
                 gv.cc.partyScreenPcIndex = 0;
@@ -350,7 +340,7 @@ namespace IBbasic
                 cntPCs++;
             }
             //DRAW TOKEN AND PORTRAIT
-            btnPortrait.Draw();
+            //btnPortrait.Draw();
             btnToken.Draw();
 
             //DRAW LEFT STATS
@@ -763,16 +753,7 @@ namespace IBbasic
 
                     Player pc = gv.mod.playerList[gv.cc.partyScreenPcIndex];
 
-                    if (btnPortrait.getImpact(x, y))
-                    {
-                        if (!inCombat)
-                        {
-                            //pass items to selector
-                            gv.screenType = "portraitSelector";
-                            gv.screenPortraitSelector.resetPortraitSelector("party", pc);
-                        }
-                    }
-                    else if (btnToken.getImpact(x, y))
+                    if (btnToken.getImpact(x, y))
                     {
                         if (!inCombat)
                         {
@@ -1009,12 +990,7 @@ namespace IBbasic
         {
             //p.token = gv.cc.LoadBitmap(p.tokenFilename);
             btnToken.Img2 = p.tokenFilename;
-        }
-        public void portraitLoad(Player p)
-        {
-            //p.portrait = gv.cc.LoadBitmap(p.portraitFilename);
-            btnPortrait.Img = p.portraitFilename;
-        }
+        }        
         public String isUseableBy(Item it)
         {
             string strg = "";

@@ -38,7 +38,7 @@ namespace IBbasic
         public int ibbMiniTglWidth = 16;
         public int ibbMiniTglHeight = 16;
         public int ibpwidth = 30;
-        public int ibpheight = 46;
+        public int ibpheight = 30;
         public int playerOffset = 5;
         public int playerOffsetX = 5;
         public int playerOffsetY = 5;

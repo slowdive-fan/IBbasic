@@ -61,18 +61,18 @@ namespace IBbasic
                 int pW = (int)((float)gv.screenHeight / 200.0f);
                 float fSize = (float)(gv.squareSize / 4) * scaler;
 
-                IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList(ImgBG).Width, gv.cc.GetFromBitmapList(ImgBG).Height);
+                IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList(ImgBG).Width, gv.cc.GetFromBitmapList(ImgBG).Width);
                 IbRect src2 = new IbRect(0, 0, 0, 0);
                 IbRect src3 = new IbRect(0, 0, 0, 0);
                 IbRect dstLU = new IbRect(0, 0, 0, 0);
 
                 if (this.Img != null)
                 {
-                    src2 = new IbRect(0, 0, gv.cc.GetFromBitmapList(Img).Width, gv.cc.GetFromBitmapList(Img).Height);
+                    src2 = new IbRect(0, 0, gv.cc.GetFromBitmapList(Img).Width, gv.cc.GetFromBitmapList(Img).Width);
                 }
                 if (this.ImgLU != null)
                 {
-                    src3 = new IbRect(0, 0, gv.cc.GetFromBitmapList(ImgLU).Width, gv.cc.GetFromBitmapList(ImgLU).Height);
+                    src3 = new IbRect(0, 0, gv.cc.GetFromBitmapList(ImgLU).Width, gv.cc.GetFromBitmapList(ImgLU).Width);
                 }
                 IbRect dstBG = new IbRect(this.X - (int)(1 * gv.screenDensity),
                                             this.Y - (int)(1 * gv.screenDensity),
@@ -81,20 +81,21 @@ namespace IBbasic
                 IbRect dst = new IbRect(this.X, this.Y, (int)((float)this.Width), (int)((float)this.Height));
                 if (this.ImgLU != null)
                 {
-                    dstLU = new IbRect(this.X, this.Y, gv.cc.GetFromBitmapList(ImgLU).Width, gv.cc.GetFromBitmapList(ImgLU).Height);
+                    dstLU = new IbRect(this.X, this.Y, gv.cc.GetFromBitmapList(ImgLU).Width, gv.cc.GetFromBitmapList(ImgLU).Width);
                 }
-                IbRect srcGlow = new IbRect(0, 0, gv.cc.GetFromBitmapList(Glow).Width, gv.cc.GetFromBitmapList(Glow).Height);
+                IbRect srcGlow = new IbRect(0, 0, gv.cc.GetFromBitmapList(Glow).Width, gv.cc.GetFromBitmapList(Glow).Width);
                 IbRect dstGlow = new IbRect(this.X - (int)(2 * gv.screenDensity),
                                             this.Y - (int)(2 * gv.screenDensity),
                                             (int)((float)this.Width) + (int)(4 * gv.screenDensity),
                                             (int)((float)this.Height) + (int)(4 * gv.screenDensity));
 
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgBG), src, dstBG);
-
+                
                 if ((this.glowOn) && (this.Glow != null))
                 {
                     gv.DrawBitmap(gv.cc.GetFromBitmapList(Glow), srcGlow, dstGlow);
                 }
+
+                gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgBG), src, dstBG);
 
                 if (this.Img != null)
                 {
@@ -109,7 +110,7 @@ namespace IBbasic
                     }
                 }
 
-                if (gv.mod.useUIBackground)
+                /*if (gv.mod.useUIBackground)
                 {
                     IbRect srcFrame = new IbRect(0, 0, gv.cc.ui_portrait_frame.Width, gv.cc.ui_portrait_frame.Height);
                     IbRect dstFrame = new IbRect(this.X - (int)(1 * gv.screenDensity),
@@ -117,7 +118,7 @@ namespace IBbasic
                                             (int)((float)this.Width) + (int)(2 * gv.screenDensity),
                                             (int)((float)this.Height) + (int)(2 * gv.screenDensity));
                     gv.DrawBitmap(gv.cc.ui_portrait_frame, srcFrame, dstFrame);
-                }
+                }*/
 
                 //DRAW HP/HPmax
                 int ulX = pW * 0;

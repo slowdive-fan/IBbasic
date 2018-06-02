@@ -11,7 +11,7 @@ namespace IBbasic
     public class Player 
     {
 	    public string tokenFilename = "blank.png";
-        public string portraitFilename = "F0404_L";
+        //public string portraitFilename = "F0404_L";
         [JsonIgnore]
 	    public bool combatFacingLeft = true;
         [JsonIgnore]
@@ -97,7 +97,7 @@ namespace IBbasic
 	    {
 		      Player copy = new Player();
 		      copy.tokenFilename = this.tokenFilename;
-              copy.portraitFilename = this.portraitFilename;
+              //copy.portraitFilename = this.portraitFilename;
 		      copy.combatLocX = this.combatLocX;
 		      copy.combatLocY = this.combatLocY;
               copy.moveDistance = this.moveDistance;

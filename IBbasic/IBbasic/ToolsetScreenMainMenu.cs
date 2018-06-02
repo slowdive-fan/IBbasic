@@ -605,21 +605,35 @@ namespace IBbasic
                 contentNode.conversationText = "root";
                 newConvo.subNodes.Add(contentNode);
                 gv.mod.moduleConvoList.Add(newConvo);
-                gv.mod.currentConvo = gv.mod.getConvoByName(newConvo.ConvoFileName, gv);
-                gv.tsConvoEditor.currentNode = gv.mod.currentConvo.GetContentNodeById(0);
-                gv.tsConvoEditor.resetAllParentIds();
-                gv.tsConvoEditor.ResetTreeView();
-                gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
-                gv.cc.ResetAllVariablesUsedList();
-                if (gv.mod.currentConvo != null)
+
+                string tag = newConvo.ConvoFileName;
+                try
                 {
-                    gv.screenType = "tsConvoEditor";
-                    showMainMenuPanels = false;
-                    tglMainMenu.toggleOn = false;
+                    bool foundCnv = gv.mod.setCurrentConvo(tag, gv);
+                    if (!foundCnv)
+                    {
+                        gv.sf.MessageBox("Convo: " + tag + " does not exist in the module...check the spelling of the filename");
+                    }
+                    gv.tsConvoEditor.currentNode = gv.mod.currentConvo.GetContentNodeById(0);
+                    gv.tsConvoEditor.resetAllParentIds();
+                    gv.tsConvoEditor.ResetTreeView();
+                    gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
+                    gv.cc.ResetAllVariablesUsedList();
+                    if (gv.mod.currentConvo != null)
+                    {
+                        gv.screenType = "tsConvoEditor";
+                        showMainMenuPanels = false;
+                        tglMainMenu.toggleOn = false;
+                    }
+                    else
+                    {
+                        gv.sf.MessageBox("failed to find conversation in list with tag: " + tag);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    gv.sf.MessageBox("failed to find conversation in list with tag: " + selectedConvo);
+                    gv.sf.MessageBox("failed to open conversation with tag: " + tag);
+                    //gv.errorLog(ex.ToString());
                 }
             }
             else

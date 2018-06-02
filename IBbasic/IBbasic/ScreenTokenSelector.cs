@@ -22,7 +22,7 @@ namespace IBbasic
 	    private IbbButton btnPageIndex = null;
 	    private IbbButton btnAction = null;
         private IbbButton btnExit = null;
-        public string callingScreen = "pcCreation"; //party, pcCreation, tsAreaEditor, tsEncEditor
+        public string callingScreen = "pcCreation"; //party, pcCreation, tsAreaEditor, tsEncEditor, tsConvoEditor
         public List<string> playerTokenList = new List<string>();
 
         public ScreenTokenSelector(Module m, GameView g)
@@ -48,6 +48,10 @@ namespace IBbasic
                 LoadPropTokenList();
             }
             else if (callingScreen.Equals("tsEncEditor"))
+            {
+                LoadPropTokenList();
+            }
+            else if (callingScreen.Equals("tsConvoEditor"))
             {
                 LoadPropTokenList();
             }
@@ -398,7 +402,12 @@ namespace IBbasic
                             {
                                 gv.tsEncEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
                                 gv.screenType = "tsEncEditor";
-                            }  
+                            }
+                            else if (callingScreen.Equals("tsConvoEditor"))
+                            {
+                                gv.mod.currentConvo.NpcPortraitBitmap = playerTokenList[GetIndex()];
+                                gv.screenType = "tsConvoEditor";
+                            }
                             doCleanUp();
                         }
 					    tknSlotIndex = j;
@@ -446,6 +455,11 @@ namespace IBbasic
                         gv.tsEncEditor.selectedTrigger.ImageFileName = playerTokenList[GetIndex()];
                         gv.screenType = "tsEncEditor";
                     }
+                    else if (callingScreen.Equals("tsConvoEditor"))
+                    {
+                        gv.mod.currentConvo.NpcPortraitBitmap = playerTokenList[GetIndex()];
+                        gv.screenType = "tsConvoEditor";
+                    }
                     doCleanUp();						
 			    }
                 else if (btnExit.getImpact(x, y))
@@ -466,6 +480,10 @@ namespace IBbasic
                     else if (callingScreen.Equals("tsEncEditor"))
                     {
                         gv.screenType = "tsEncEditor";
+                    }
+                    else if (callingScreen.Equals("tsConvoEditor"))
+                    {
+                        gv.screenType = "tsConvoEditor";
                     }
                     doCleanUp();
                 }                

@@ -1714,8 +1714,8 @@ namespace IBbasic
                         }
                         else if (tglNodeNpcPortraitBitmap.getImpact(x, y))
                         {
-                            gv.screenType = "portraitSelector";
-                            gv.screenPortraitSelector.resetPortraitSelector("tsConvoEditor", null);
+                            gv.screenType = "tokenSelector";
+                            gv.screenTokenSelector.resetTokenSelector("tsConvoEditor", null);
                         }
                         else if (tglShowOnlyOnce.getImpact(x, y))
                         {

@@ -48,6 +48,7 @@ namespace IBbasic
         public IbbToggle tglSettingIs3dArea = null;
         public IbbToggle tglSettingRestingAllowed = null;
         public IbbToggle tglSettingUseMiniMapFogOfWar = null;
+        public IbbToggle tglSettingUseDayNightCycle = null;
 
         //Info Panel
         public Coordinate selectedSquare = new Coordinate();
@@ -439,6 +440,17 @@ namespace IBbasic
             tglSettingUseMiniMapFogOfWar.Y = panelTopLocation + 3 * gv.uiSquareSize + (gv.uiSquareSize / 2);
             tglSettingUseMiniMapFogOfWar.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingUseMiniMapFogOfWar.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglSettingUseDayNightCycle == null)
+            {
+                tglSettingUseDayNightCycle = new IbbToggle(gv);
+            }
+            tglSettingUseDayNightCycle.ImgOn = "mtgl_rbtn_on";
+            tglSettingUseDayNightCycle.ImgOff = "mtgl_rbtn_off";
+            tglSettingUseDayNightCycle.X = panelLeftLocation;
+            tglSettingUseDayNightCycle.Y = panelTopLocation + 4 * gv.uiSquareSize;
+            tglSettingUseDayNightCycle.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglSettingUseDayNightCycle.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
         public void setupWalkLoSPanelControls()
         {
@@ -906,13 +918,75 @@ namespace IBbasic
         {
             map3DViewStartLocXinPixels = 2 * gv.squareSize - 10;
             int scaler = gv.scaler * 2;
-            
+
             //draw backdrop
+            int frameX = GetFrameX();
+            int frameY = GetFrameY();
+            //draw near band or current square (0,0) to (88,88)
             string backdrop = gv.mod.currentArea.Layer1Filename[PlayerLocationY * gv.mod.currentArea.MapSizeX + PlayerLocationX];
-            IbRect src = new IbRect(0, 0, 87, 87);
+            IbRect src = new IbRect(0, 0, 88, 88);
+            if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+            {
+                if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                {
+                    //has direction only
+                    src = new IbRect(0 + frameX * 88, 0 + frameY * 88, 88, 88);
+                }
+                else
+                {
+                    //has direction and day/night
+                    src = new IbRect(0 + frameX * 88, 0, 88, 88);
+                }
+            }
             IbRect dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 88 * scaler, 88 * scaler);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
-            
+
+            if (IsSquareOnMap(0, 1))
+            {
+                //draw middle band or one square in front (0,16) to (88,72)
+                int indexBD = GetSquareIndex(0, 1);
+                backdrop = gv.mod.currentArea.Layer1Filename[indexBD];
+                src = new IbRect(0, 16, 88, 56);
+                if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+                {
+                    if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                    {
+                        //has direction only
+                        src = new IbRect(0 + frameX * 88, 16 + frameY * 88, 88, 56);
+                    }
+                    else
+                    {
+                        //has direction and day/night
+                        src = new IbRect(0 + frameX * 88, 16, 88, 56);
+                    }
+                }
+                dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler) + 16 * scaler, 88 * scaler, 56 * scaler);
+                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            }
+
+            if (IsSquareOnMap(0, 2))
+            {
+                //draw far band or two squares in front (0,32) to (88,56)
+                int indexBD = GetSquareIndex(0, 2);
+                backdrop = gv.mod.currentArea.Layer1Filename[indexBD];
+                src = new IbRect(0, 32, 88, 24);
+                if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+                {
+                    if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                    {
+                        //has direction only
+                        src = new IbRect(0 + frameX * 88, 32 + frameY * 88, 88, 24);
+                    }
+                    else
+                    {
+                        //has direction and day/night
+                        src = new IbRect(0 + frameX * 88, 32, 88, 24);
+                    }
+                }
+                dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler) + 32 * scaler, 88 * scaler, 24 * scaler);
+                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            }
+
             //draw far row
             for (int col = -2; col <= 2; col++)
             {
@@ -1457,6 +1531,71 @@ namespace IBbasic
                     catch { }
                 }                
             }
+        }
+        public int GetFrameX()
+        {
+            if (PlayerFacingDirection == 0) //NORTH
+            {
+                return 0;
+            }
+            else if (PlayerFacingDirection == 1) //EAST
+            {
+                return 1;
+            }
+            else if (PlayerFacingDirection == 2) //SOUTH
+            {
+                return 2;
+            }
+            else if (PlayerFacingDirection == 3) //WEST
+            {
+                return 3;
+            }
+            return 0;
+        }
+        public int GetFrameY()
+        {
+            if (!gv.mod.currentArea.UseDayNightCycle)
+            {
+                return 0;
+            }
+            int dawn = 5 * 60;
+            int sunrise = 6 * 60;
+            int day = 7 * 60;
+            int sunset = 17 * 60;
+            int dusk = 18 * 60;
+            int night = 20 * 60;
+            int time = gv.mod.WorldTime % 1440;
+            if ((time >= dawn) && (time < sunrise))
+            {
+                //dawn
+                return 3;
+            }
+            else if ((time >= sunrise) && (time < day))
+            {
+                //sunrise
+                return 3;
+            }
+            else if ((time >= day) && (time < sunset))
+            {
+                //no tint for day
+                return 0;
+            }
+            else if ((time >= sunset) && (time < dusk))
+            {
+                //sunset
+                return 1;
+            }
+            else if ((time >= dusk) && (time < night))
+            {
+                //dusk
+                return 1;
+            }
+            else if ((time >= night) || (time < dawn))
+            {
+                //night
+                return 2;
+            }
+            return 0;
         }
         public string GetTriggerImageAtSquare(int col, int row)
         {
@@ -2596,6 +2735,13 @@ namespace IBbasic
             tglSettingUseMiniMapFogOfWar.Draw();
             gv.DrawText("Use Mini Map", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y, "wh");
             gv.DrawText("Fog-of-War", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+
+            if (gv.mod.currentArea.UseDayNightCycle) { tglSettingUseDayNightCycle.toggleOn = true; }
+            else { tglSettingUseDayNightCycle.toggleOn = false; }
+            tglSettingUseDayNightCycle.Draw();
+            gv.DrawText("Use Day/Night", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "wh");
+            gv.DrawText("Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+
             btnHelp.Draw();
         }
         public void draw3DPreviewPanel()
@@ -2895,7 +3041,7 @@ namespace IBbasic
                         {
                             if (rbtnEditLayer1.toggleOn)
                             {
-                                if (tilesPageIndex < (backdrops.Count / tileSlotsPerPage) - 1)
+                                if (tilesPageIndex <= (backdrops.Count / tileSlotsPerPage) - 1)
                                 {
                                     tilesPageIndex++;
                                     btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
@@ -2903,7 +3049,7 @@ namespace IBbasic
                             }
                             else if (rbtnEditLayer2.toggleOn)
                             {
-                                if (tilesPageIndex < (wallsets.Count / tileSlotsPerPage) - 1)
+                                if (tilesPageIndex <= (wallsets.Count / tileSlotsPerPage) - 1)
                                 {
                                     tilesPageIndex++;
                                     btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
@@ -2911,7 +3057,7 @@ namespace IBbasic
                             }
                             else if (rbtnEditLayer3.toggleOn)
                             {
-                                if (tilesPageIndex < (overlays.Count / tileSlotsPerPage) - 1)
+                                if (tilesPageIndex <= (overlays.Count / tileSlotsPerPage) - 1)
                                 {
                                     tilesPageIndex++;
                                     btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
@@ -3037,6 +3183,11 @@ namespace IBbasic
                     {
                         tglSettingUseMiniMapFogOfWar.toggleOn = !tglSettingUseMiniMapFogOfWar.toggleOn;
                         gv.mod.currentArea.UseMiniMapFogOfWar = tglSettingUseMiniMapFogOfWar.toggleOn;
+                    }
+                    else if (tglSettingUseDayNightCycle.getImpact(x, y))
+                    {
+                        tglSettingUseDayNightCycle.toggleOn = !tglSettingUseDayNightCycle.toggleOn;
+                        gv.mod.currentArea.UseDayNightCycle = tglSettingUseDayNightCycle.toggleOn;
                     }
                     else if (btnHelp.getImpact(x, y))
                     {

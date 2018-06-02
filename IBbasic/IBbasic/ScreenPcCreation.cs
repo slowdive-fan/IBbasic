@@ -17,7 +17,7 @@ namespace IBbasic
         private IbbButton btnRace = null;
         private IbbButton btnClass = null;
         private IbbButton btnGender = null;
-        private IbbPortrait btnPortrait = null;
+        //private IbbPortrait btnPortrait = null;
         private IbbButton btnToken = null;
 
         private IbbButton btnRollStats = null;
@@ -191,17 +191,6 @@ namespace IBbasic
             int padW = gv.uiSquareSize / 6;
             int center = (gv.uiSquareSize * gv.uiSquaresInWidth / 2);
 
-            if (btnPortrait == null)
-            {
-                btnPortrait = new IbbPortrait(gv, 1.0f);
-            }
-                btnPortrait.ImgBG = "item_slot";
-                btnPortrait.Glow = "btn_small_glow";
-                btnPortrait.X = 5 * gv.uiSquareSize - gv.uiSquareSize / 2;
-                btnPortrait.Y = 0 * gv.uiSquareSize + gv.uiSquareSize / 2;
-                btnPortrait.Height = (int)(gv.ibpheight * gv.scaler);
-                btnPortrait.Width = (int)(gv.ibpwidth * gv.scaler);
-
             if (btnToken == null)
             {
                 btnToken = new IbbButton(gv, 1.0f);
@@ -210,7 +199,7 @@ namespace IBbasic
                 btnToken.Img2 = pc.tokenFilename;
                 btnToken.Glow = "btn_small_glow";
                 btnToken.X = 5 * gv.uiSquareSize - gv.uiSquareSize / 2;
-                btnToken.Y = 2 * gv.uiSquareSize + gv.uiSquareSize / 2;
+                btnToken.Y = 0 * gv.uiSquareSize + gv.uiSquareSize / 2;
                 btnToken.Height = (int)(gv.ibbheight * gv.scaler);
                 btnToken.Width = (int)(gv.ibbwidthR * gv.scaler);
             
@@ -385,8 +374,8 @@ namespace IBbasic
             description.onDrawTextBox();
             //gv.DrawText(textToSpan, rect, 1.0f, Color.White);
 
-            btnPortrait.Img = pc.portraitFilename;
-            btnPortrait.Draw();
+            //btnPortrait.Img = pc.portraitFilename;
+            //btnPortrait.Draw();
             btnToken.Draw();
             btnName.Text = pc.name;
             btnName.Draw();
@@ -555,12 +544,6 @@ namespace IBbasic
                         pc.hp = pc.hpMax;
                         pc.sp = pc.spMax;
                     }
-                    else if (btnPortrait.getImpact(x, y))
-                    {
-                        //pass items to selector
-                        gv.screenType = "portraitSelector";
-                        gv.screenPortraitSelector.resetPortraitSelector("pcCreation", pc);
-                    }
                     else if (btnToken.getImpact(x, y))
                     {
                         gv.screenType = "tokenSelector";
@@ -647,11 +630,6 @@ namespace IBbasic
         {
             //p.token = gv.cc.LoadBitmap(p.tokenFilename);
             btnToken.Img2 = p.tokenFilename;
-        }
-        public void portraitLoad(Player p)
-        {
-            //p.portrait = gv.cc.LoadBitmap(p.portraitFilename);
-            btnPortrait.Img = p.portraitFilename;
         }
         public void changePcName()
         {

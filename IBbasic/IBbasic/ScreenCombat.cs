@@ -4208,7 +4208,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[0];
                 btnPort0.show = true;
-                btnPort0.Img = ppc.portraitFilename;
+                btnPort0.Img = ppc.tokenFilename;
                 btnPort0.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort0.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4224,7 +4224,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[1];
                 btnPort1.show = true;                
-                btnPort1.Img = ppc.portraitFilename;
+                btnPort1.Img = ppc.tokenFilename;
                 btnPort1.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort1.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4240,7 +4240,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[2];
                 btnPort2.show = true;
-                btnPort2.Img = ppc.portraitFilename;
+                btnPort2.Img = ppc.tokenFilename;
                 btnPort2.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort2.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4256,7 +4256,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[3];
                 btnPort3.show = true;
-                btnPort3.Img = ppc.portraitFilename;
+                btnPort3.Img = ppc.tokenFilename;
                 btnPort3.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort3.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4272,7 +4272,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[4];
                 btnPort4.show = true;
-                btnPort4.Img = ppc.portraitFilename;
+                btnPort4.Img = ppc.tokenFilename;
                 btnPort4.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort4.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4288,7 +4288,7 @@ namespace IBbasic
             {
                 Player ppc = gv.mod.playerList[5];
                 btnPort5.show = true;
-                btnPort5.Img = ppc.portraitFilename;
+                btnPort5.Img = ppc.tokenFilename;
                 btnPort5.TextHP = ppc.hp + "/" + ppc.hpMax;
                 btnPort5.TextSP = ppc.sp + "/" + ppc.spMax;
                 if (ppc.moveOrder == currentMoveOrderIndex - 1)
@@ -4360,9 +4360,10 @@ namespace IBbasic
                         int brX = (int)((int)(gv.squareSize * gv.scaler));
                         int brY = (int)((int)(gv.squareSize * gv.scaler));
                         IbRect dstLyr = new IbRect(tlX, tlY, brX, brY);
-                        bool mirror = false;
-                        if (gv.mod.currentEncounter.Layer1Mirror[index] == 1) { mirror = true; }
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer1Rotate[index], mirror);
+                        //bool mirror = false;
+                        //if (gv.mod.currentEncounter.Layer1Mirror[index] == 1) { mirror = true; }
+                        //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer1Rotate[index], mirror);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                     }
                 }
             }
@@ -4393,9 +4394,10 @@ namespace IBbasic
                         int brX = (int)((int)(gv.squareSize * gv.scaler));
                         int brY = (int)((int)(gv.squareSize * gv.scaler));
                         IbRect dstLyr = new IbRect(tlX, tlY, brX, brY);
-                        bool mirror = false;
-                        if (gv.mod.currentEncounter.Layer2Mirror[index] == 1) { mirror = true; }
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer2Rotate[index], mirror);
+                        //bool mirror = false;
+                        //if (gv.mod.currentEncounter.Layer2Mirror[index] == 1) { mirror = true; }
+                        //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer2Rotate[index], mirror);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                     }
                 }
             }
@@ -4428,9 +4430,10 @@ namespace IBbasic
                             int brX = (int)((int)(gv.squareSize * gv.scaler));
                             int brY = (int)((int)(gv.squareSize * gv.scaler));
                             IbRect dstLyr = new IbRect(tlX, tlY, brX, brY);
-                            bool mirror = false;
-                            if (gv.mod.currentEncounter.Layer3Mirror[index] == 1) { mirror = true; }
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer3Rotate[index], mirror);
+                            //bool mirror = false;
+                            //if (gv.mod.currentEncounter.Layer3Mirror[index] == 1) { mirror = true; }
+                            //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer3Rotate[index], mirror);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                         }
                     }
                 }

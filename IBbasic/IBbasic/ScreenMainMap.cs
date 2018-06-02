@@ -625,9 +625,9 @@ namespace IBbasic
             {
                 btnPort0 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort0.ImgBG = "item_slot";
+            btnPort0.ImgBG = "btn_small";
             //btnPort0.Img = "ptr_adela";
-            btnPort0.Glow = "btn_ptr_glow";
+            btnPort0.Glow = "btn_small_glow";
             btnPort0.X = portraitPanelLocX + 0 * gv.uiSquareSize;
             btnPort0.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort0.Height = (int)(gv.ibpheight * gv.scaler);
@@ -637,9 +637,9 @@ namespace IBbasic
             {
                 btnPort1 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort1.ImgBG = "item_slot";
+            btnPort1.ImgBG = "btn_small";
             //btnPort1.Img = "ptr_adela";
-            btnPort1.Glow = "btn_ptr_glow";
+            btnPort1.Glow = "btn_small_glow";
             btnPort1.X = portraitPanelLocX + 1 * gv.uiSquareSize;
             btnPort1.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort1.Height = (int)(gv.ibpheight * gv.scaler);
@@ -649,9 +649,9 @@ namespace IBbasic
             {
                 btnPort2 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort2.ImgBG = "item_slot";
-            btnPort2.Img = "ptr_adela";
-            btnPort2.Glow = "btn_ptr_glow";
+            btnPort2.ImgBG = "btn_small";
+            //btnPort2.Img = "ptr_adela";
+            btnPort2.Glow = "btn_small_glow";
             btnPort2.X = portraitPanelLocX + 2 * gv.uiSquareSize;
             btnPort2.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort2.Height = (int)(gv.ibpheight * gv.scaler);
@@ -661,9 +661,9 @@ namespace IBbasic
             {
                 btnPort3 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort3.ImgBG = "item_slot";
-            btnPort3.Img = "ptr_adela";
-            btnPort3.Glow = "btn_ptr_glow";
+            btnPort3.ImgBG = "btn_small";
+            //btnPort3.Img = "ptr_adela";
+            btnPort3.Glow = "btn_small_glow";
             btnPort3.X = portraitPanelLocX + 3 * gv.uiSquareSize;
             btnPort3.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort3.Height = (int)(gv.ibpheight * gv.scaler);
@@ -673,9 +673,9 @@ namespace IBbasic
             {
                 btnPort4 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort4.ImgBG = "item_slot";
-            btnPort4.Img = "ptr_adela";
-            btnPort4.Glow = "btn_ptr_glow";
+            btnPort4.ImgBG = "btn_small";
+            //btnPort4.Img = "ptr_adela";
+            btnPort4.Glow = "btn_small_glow";
             btnPort4.X = portraitPanelLocX + 4 * gv.uiSquareSize;
             btnPort4.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort4.Height = (int)(gv.ibpheight * gv.scaler);
@@ -685,127 +685,15 @@ namespace IBbasic
             {
                 btnPort5 = new IbbPortrait(gv, 0.8f);
             }
-            btnPort5.ImgBG = "item_slot";
-            btnPort5.Img = "ptr_adela";
-            btnPort5.Glow = "btn_ptr_glow";
+            btnPort5.ImgBG = "btn_small";
+            //btnPort5.Img = "ptr_adela";
+            btnPort5.Glow = "btn_small_glow";
             btnPort5.X = portraitPanelLocX + 5 * gv.uiSquareSize;
             btnPort5.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
             btnPort5.Height = (int)(gv.ibpheight * gv.scaler);
             btnPort5.Width = (int)(gv.ibpwidth * gv.scaler);
 
-            /*
-            //create buttons panel
-            IB2Panel newPanel = new IB2Panel(gv);
-            newPanel.tag = "PortraitPanel";
-            newPanel.backgroundImageFilename = "none";
-            newPanel.shownLocX = 51;
-            newPanel.shownLocY = 0 - gv.oYshift / gv.scaler + (gv.pS * gv.scaler);
-            newPanel.hiddenLocX = 51;
-            newPanel.hiddenLocY = -68 - gv.oYshift / gv.scaler + (gv.pS * gv.scaler);
-            newPanel.hidingXIncrement = 0;
-            newPanel.hidingYIncrement = -3;
-            newPanel.Width = 204;
-            newPanel.Height = 52;
-            showPortraitPanel = gv.toggleSettings.showTogglePanel;
-            if (gv.toggleSettings.showTogglePanel)
-            {
-                newPanel.currentLocX = 51;
-                newPanel.currentLocY = 0 - gv.oYshift / gv.scaler + (gv.pS * gv.scaler);
-                newPanel.showing = true;
-            }
-            else
-            {
-                newPanel.currentLocX = 51;
-                newPanel.currentLocY = -68 - gv.oYshift / gv.scaler + (gv.pS * gv.scaler);
-                newPanel.hiding = true;
-            }
-
-            //portrait
-            IB2Portrait newPort = new IB2Portrait(gv);
-            newPort.tag = "port0";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 0;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            //portrait
-            newPort = new IB2Portrait(gv);
-            newPort.tag = "port1";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 34;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            //portrait
-            newPort = new IB2Portrait(gv);
-            newPort.tag = "port2";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 68;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            //portrait
-            newPort = new IB2Portrait(gv);
-            newPort.tag = "port3";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 102;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            //portrait
-            newPort = new IB2Portrait(gv);
-            newPort.tag = "port4";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 136;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            //portrait
-            newPort = new IB2Portrait(gv);
-            newPort.tag = "port5";
-            newPort.ImgBGFilename = "item_slot";
-            newPort.ImgFilename = "ptr_adela";
-            newPort.ImgLUFilename = "btnLevelUpPlus";
-            newPort.GlowFilename = "btn_ptr_glow";
-            newPort.X = 170;
-            newPort.Y = 0;
-            newPort.Width = 30;
-            newPort.Height = 46;
-            newPort.scaler = 0.8f;
-            newPanel.portraitList.Add(newPort);
-
-            mainUiLayout.panelList.Add(newPanel);
-            */
+            
         }
         public void createArrowsPanel()
         {
@@ -981,6 +869,8 @@ namespace IBbasic
         }        
         public void redrawMain()
         {
+            hideTriggerImageIfNotEnabled();
+
             if (gv.mod.currentArea.Layer1Filename.Count == 0)
             {
                 return;
@@ -1035,11 +925,73 @@ namespace IBbasic
             int scaler = gv.scaler * 2;
 
             //draw backdrop
+            int frameX = GetFrameX();
+            int frameY = GetFrameY();
+            //draw near band or current square (0,0) to (88,88)
             string backdrop = gv.mod.currentArea.Layer1Filename[gv.mod.PlayerLocationY * gv.mod.currentArea.MapSizeX + gv.mod.PlayerLocationX];
-            IbRect src = new IbRect(0, 0, 87, 87);
+            IbRect src = new IbRect(0, 0, 88, 88);
+            if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+            {
+                if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                {
+                    //has direction only
+                    src = new IbRect(0 + frameX * 88, 0 + frameY * 88, 88, 88);
+                }
+                else
+                {
+                    //has direction and day/night
+                    src = new IbRect(0 + frameX * 88, 0, 88, 88);
+                }
+            }
             IbRect dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler), 88 * scaler, 88 * scaler);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
 
+            if (IsSquareOnMap(0, 1))
+            {
+                //draw middle band or one square in front (0,16) to (88,72)
+                int indexBD = GetSquareIndex(0, 1);
+                backdrop = gv.mod.currentArea.Layer1Filename[indexBD];
+                src = new IbRect(0, 16, 88, 56);
+                if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+                {
+                    if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                    {
+                        //has direction only
+                        src = new IbRect(0 + frameX * 88, 16 + frameY * 88, 88, 56);
+                    }
+                    else
+                    {
+                        //has direction and day/night
+                        src = new IbRect(0 + frameX * 88, 16, 88, 56);
+                    }
+                }
+                dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler) + 16 * scaler, 88 * scaler, 56 * scaler);
+                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            }
+
+            if (IsSquareOnMap(0, 2))
+            {
+                //draw far band or two squares in front (0,32) to (88,56)
+                int indexBD = GetSquareIndex(0, 2);
+                backdrop = gv.mod.currentArea.Layer1Filename[indexBD];
+                src = new IbRect(0, 32, 88, 24);
+                if (gv.cc.GetFromTileBitmapList(backdrop).Width == 352)
+                {
+                    if (gv.cc.GetFromTileBitmapList(backdrop).Height == 352)
+                    {
+                        //has direction only
+                        src = new IbRect(0 + frameX * 88, 32 + frameY * 88, 88, 24);
+                    }
+                    else
+                    {
+                        //has direction and day/night
+                        src = new IbRect(0 + frameX * 88, 32, 88, 24);
+                    }
+                }
+                dst = new IbRect(map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler), (1 * gv.squareSize * gv.scaler) + 32 * scaler, 88 * scaler, 24 * scaler);
+                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            }
+                        
             //draw far row
             for (int col = -2; col <= 2; col++)
             {
@@ -1585,6 +1537,71 @@ namespace IBbasic
                 }
             }
         }
+        public int GetFrameX()
+        {
+            if (gv.mod.PlayerFacingDirection == 0) //NORTH
+            {
+                return 0;
+            }
+            else if (gv.mod.PlayerFacingDirection == 1) //EAST
+            {
+                return 1;
+            }
+            else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+            {
+                return 2;
+            }
+            else if (gv.mod.PlayerFacingDirection == 3) //WEST
+            {
+                return 3;
+            }
+            return 0;
+        }
+        public int GetFrameY()
+        {
+            if (!gv.mod.currentArea.UseDayNightCycle)
+            {
+                return 0;
+            }
+            int dawn = 5 * 60;
+            int sunrise = 6 * 60;
+            int day = 7 * 60;
+            int sunset = 17 * 60;
+            int dusk = 18 * 60;
+            int night = 20 * 60;
+            int time = gv.mod.WorldTime % 1440;
+            if ((time >= dawn) && (time < sunrise))
+            {
+                //dawn
+                return 3;
+            }
+            else if ((time >= sunrise) && (time < day))
+            {
+                //sunrise
+                return 3;
+            }
+            else if ((time >= day) && (time < sunset))
+            {
+                //no tint for day
+                return 0;
+            }
+            else if ((time >= sunset) && (time < dusk))
+            {
+                //sunset
+                return 1;
+            }
+            else if ((time >= dusk) && (time < night))
+            {
+                //dusk
+                return 1;
+            }
+            else if ((time >= night) || (time < dawn))
+            {
+                //night
+                return 2;
+            }
+            return 0;
+        }
         public string GetTriggerImageAtSquare(int col, int row)
         {
             string filename = "none";
@@ -1620,11 +1637,40 @@ namespace IBbasic
                     }
                     if ((p.X == x) && (p.Y == y))
                     {
-                        return t.ImageFileName;
+                        if (t.isShown)
+                        {
+                            return t.ImageFileName;
+                        }
                     }
                 }
             }
             return filename;
+        }
+        public void hideTriggerImageIfNotEnabled()
+        {
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                if ((t.DoOnceOnly) && (t.Enabled))
+                {
+                    continue;
+                }
+                else if ((t.DoOnceOnlyEvent1) && (t.EnabledEvent1))
+                {
+                    continue;
+                }
+                else if ((t.DoOnceOnlyEvent2) && (t.EnabledEvent2))
+                {
+                    continue;
+                }
+                else if ((t.DoOnceOnlyEvent3) && (t.EnabledEvent3))
+                {
+                    continue;
+                }
+                else
+                {
+                    t.isShown = false;
+                }
+            }
         }
         public int GetSquareIndex(int col, int row)
         {
@@ -2816,7 +2862,7 @@ namespace IBbasic
                 {
                     btnPort0.levelUpOn = false;
                 }
-                btnPort0.Img = pc.portraitFilename;
+                btnPort0.Img = pc.tokenFilename;
                 btnPort0.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort0.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 0)
@@ -2840,7 +2886,7 @@ namespace IBbasic
                 {
                     btnPort1.levelUpOn = false;
                 }
-                btnPort1.Img = pc.portraitFilename;
+                btnPort1.Img = pc.tokenFilename;
                 btnPort1.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort1.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 1)
@@ -2864,7 +2910,7 @@ namespace IBbasic
                 {
                     btnPort2.levelUpOn = false;
                 }
-                btnPort2.Img = pc.portraitFilename;
+                btnPort2.Img = pc.tokenFilename;
                 btnPort2.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort2.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 2)
@@ -2888,7 +2934,7 @@ namespace IBbasic
                 {
                     btnPort3.levelUpOn = false;
                 }
-                btnPort3.Img = pc.portraitFilename;
+                btnPort3.Img = pc.tokenFilename;
                 btnPort3.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort3.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 3)
@@ -2912,7 +2958,7 @@ namespace IBbasic
                 {
                     btnPort4.levelUpOn = false;
                 }
-                btnPort4.Img = pc.portraitFilename;
+                btnPort4.Img = pc.tokenFilename;
                 btnPort4.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort4.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 4)
@@ -2936,7 +2982,7 @@ namespace IBbasic
                 {
                     btnPort5.levelUpOn = false;
                 }
-                btnPort5.Img = pc.portraitFilename;
+                btnPort5.Img = pc.tokenFilename;
                 btnPort5.TextHP = pc.hp + "/" + pc.hpMax;
                 btnPort5.TextSP = pc.sp + "/" + pc.spMax;
                 if (gv.mod.selectedPartyLeader == 5)

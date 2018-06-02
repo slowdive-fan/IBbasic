@@ -363,16 +363,16 @@ namespace IBbasic
                             //return to calling screen
                             if (callingScreen.Equals("party"))
                             {
-                                gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename = playerPortraitList[GetIndex()];
+                                //gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename = playerPortraitList[GetIndex()];
                                 gv.screenType = "party";
-                                gv.screenParty.portraitLoad(gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex]);
+                                //gv.screenParty.portraitLoad(gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex]);
                             }
                             else if (callingScreen.Equals("pcCreation"))
                             {
                                 //set PC portrait filename to the currently selected image
-                                gv.screenPcCreation.pc.portraitFilename = playerPortraitList[GetIndex()];                            
+                                //gv.screenPcCreation.pc.portraitFilename = playerPortraitList[GetIndex()];                            
                                 gv.screenType = "pcCreation";
-                                gv.screenPcCreation.portraitLoad(gv.screenPcCreation.pc);
+                                //gv.screenPcCreation.portraitLoad(gv.screenPcCreation.pc);
                             }
                             else if (callingScreen.Equals("tsConvoEditor"))
                             {
@@ -416,16 +416,16 @@ namespace IBbasic
 				    //return to calling screen
                     if (callingScreen.Equals("party"))
                     {
-                        gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename = playerPortraitList[GetIndex()];
+                        //gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename = playerPortraitList[GetIndex()];
                         gv.screenType = "party";
-                        gv.screenParty.portraitLoad(gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex]);
+                        //gv.screenParty.portraitLoad(gv.screenParty.gv.mod.playerList[gv.cc.partyScreenPcIndex]);
                     }
                     else if (callingScreen.Equals("pcCreation"))
                     {
                         //set PC portrait filename to the currently selected image
-                        gv.screenPcCreation.pc.portraitFilename = playerPortraitList[GetIndex()];
+                        //gv.screenPcCreation.pc.portraitFilename = playerPortraitList[GetIndex()];
                         gv.screenType = "pcCreation";
-                        gv.screenPcCreation.portraitLoad(gv.screenPcCreation.pc);
+                        //gv.screenPcCreation.portraitLoad(gv.screenPcCreation.pc);
                     }
                     else if (callingScreen.Equals("tsConvoEditor"))
                     {
