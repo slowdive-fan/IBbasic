@@ -73,9 +73,23 @@ namespace IBbasic.iOS
         public string LoadStringFromAssetFolder(string fullPath)
         {
             string text = "";
+            //string filename = Path.GetFileName("C:" + fullPath);
+            int pos = fullPath.LastIndexOf("\\") + 1;
+            string filename = fullPath.Substring(pos, fullPath.Length - pos);
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBasic.iOS.Assets." + ConvertFullPath(fullPath, "."));
+            /*foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".json"))
+                {
+                    int x3 = 0;
+                }
+            }*/
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(fullPath, "."));
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+            }
             using (var reader = new System.IO.StreamReader(stream))
             {
                 text = reader.ReadToEnd();
@@ -85,6 +99,8 @@ namespace IBbasic.iOS
         public string LoadStringFromEitherFolder(string assetFolderpath, string userFolderpath)
         {
             string text = "";
+            int pos = userFolderpath.LastIndexOf("\\") + 1;
+            string filename = userFolderpath.Substring(pos, userFolderpath.Length - pos);
             //check in module folder first
             /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             string convertedFullPath = storageFolder.Path + ConvertFullPath(userFolderpath, "\\");
@@ -95,10 +111,17 @@ namespace IBbasic.iOS
             }*/
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets." + ConvertFullPath(assetFolderpath, "."));
-            using (var reader = new System.IO.StreamReader(stream))
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."));
+            if (stream == null)
             {
-                text = reader.ReadToEnd();
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+            }
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
             }
             return text;
         }
@@ -217,6 +240,10 @@ namespace IBbasic.iOS
             {
                 stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics.ui_missingtexture.png");
             }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS.ui_missingtexture.png");
+            }
             SKManagedStream skStream = new SKManagedStream(stream);
 
             //Stream fileStream = File.OpenRead("btn_small_on.png");
@@ -239,13 +266,53 @@ namespace IBbasic.iOS
         public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
         {
             List<string> list = new List<string>();
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
 
+            int pos = folderpath.LastIndexOf("\\") + 1;
+            string filename = folderpath.Substring(pos, folderpath.Length - pos);
+
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(filename)) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
             return list;
         }
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
             List<string> list = new List<string>();
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
 
+            int pos = assetFolderpath.LastIndexOf("\\") + 1;
+            string filename = assetFolderpath.Substring(pos, assetFolderpath.Length - pos);
+
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(filename)) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
             return list;
         }
         public List<string> GetAllModuleFiles()

@@ -379,7 +379,7 @@ namespace IBbasic
 		    bool foundArea = mod.setCurrentArea(mod.startingArea, this);
             if (!foundArea)
             {
-                sf.MessageBox("Area: " + mod.startingArea + " does not exist in the module...check the spelling or make sure your are pointing to the correct starting area that you intended");
+                //sf.MessageBox("Area: " + mod.startingArea + " does not exist in the module...check the spelling or make sure your are pointing to the correct starting area that you intended");
             }
 		    mod.PlayerLocationX = mod.startingPlayerPositionX;
 		    mod.PlayerLocationY = mod.startingPlayerPositionY;

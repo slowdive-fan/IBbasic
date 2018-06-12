@@ -96,6 +96,13 @@ namespace IBbasic.UWP
             string text = "";
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if (res.EndsWith(".json"))
+                {
+                    int x3 = 0;
+                }
+            }
             Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(fullPath, "."));
             if (stream != null)
             {
