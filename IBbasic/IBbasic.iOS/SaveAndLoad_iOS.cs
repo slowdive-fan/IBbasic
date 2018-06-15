@@ -17,26 +17,35 @@ namespace IBbasic.iOS
     {
         public void CreateUserFolders()
         {
-            //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            //string dir = storageFolder.Path + "\\modules";
-            //Directory.CreateDirectory(dir);
-            //dir = storageFolder.Path + "\\saves";
-            //Directory.CreateDirectory(dir);
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var directoryname = Path.Combine(documents, "modules");
+            Directory.CreateDirectory(directoryname);
+            directoryname = Path.Combine(documents, "saves");
+            Directory.CreateDirectory(directoryname);
+            directoryname = Path.Combine(documents, "module_backups");
+            Directory.CreateDirectory(directoryname);
+
+            /*            
+            documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var library = Path.Combine(documents, "saves");
+            directoryname = Path.Combine(library, "characters");
+            Directory.CreateDirectory(directoryname);
+            */
         }
 
         public void CreateBackUpModuleFolder(string modFilename)
         {
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            string dir = storageFolder.Path + "\\module_backups";
-            //string folderName = gv.mod.moduleName;
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var directoryname = Path.Combine(documents, "module_backups");
+
             string incrementFolderName = "";
             for (int i = 0; i < 999; i++) // add an incremental save option (uses directoryName plus number for folder name)
             {
-                if (!Directory.Exists(dir + "\\" + modFilename + "(" + i.ToString() + ")"))
+                if (!Directory.Exists(directoryname + "/" + modFilename + "(" + i.ToString() + ")"))
                 {
                     incrementFolderName = modFilename + "(" + i.ToString() + ")";
-                    DirectoryInfo diSource = new DirectoryInfo(storageFolder.Path + "\\modules\\" + modFilename);
-                    DirectoryInfo diTarget = new DirectoryInfo(storageFolder.Path + "\\module_backups\\" + modFilename + "(" + i.ToString() + ")");
+                    DirectoryInfo diSource = new DirectoryInfo(documents + "/modules/" + modFilename);
+                    DirectoryInfo diTarget = new DirectoryInfo(documents + "/module_backups/" + modFilename + "(" + i.ToString() + ")");
 
                     Directory.CreateDirectory(diTarget.FullName);
 
@@ -47,27 +56,32 @@ namespace IBbasic.iOS
                     }
                     break;
                 }
-            }*/
+            }
         }
 
-        public void SaveText(string filename, string text)
+        public void SaveText(string fullPath, string text)
         {
-            /*string path = CreatePathToFile(filename);
-            using (StreamWriter sw = File.CreateText(path))
-                await sw.WriteAsync(text);*/
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string convertedFullPath = documents + ConvertFullPath(fullPath, "/");
+            string dir = Path.GetDirectoryName(convertedFullPath);
+            Directory.CreateDirectory(dir);
+            using (StreamWriter sw = File.CreateText(convertedFullPath))
+            {
+                sw.Write(text);
+            }
         }
 
         public string LoadStringFromUserFolder(string fullPath)
         {
             string text = "";
             //check in module folder first
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string convertedFullPath = documents + ConvertFullPath(fullPath, "/");
             if (File.Exists(convertedFullPath))
             {
                 text = File.ReadAllText(convertedFullPath);
                 return text;
-            }*/
+            }
             return text;
         }
         public string LoadStringFromAssetFolder(string fullPath)
@@ -78,13 +92,10 @@ namespace IBbasic.iOS
             string filename = fullPath.Substring(pos, fullPath.Length - pos);
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            /*foreach (var res in assembly.GetManifestResourceNames())
+            foreach (var res in assembly.GetManifestResourceNames())
             {
-                if (res.EndsWith(".json"))
-                {
-                    int x3 = 0;
-                }
-            }*/
+                 //System.Diagnostics.Debug.WriteLine(res);
+            }
             Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(fullPath, "."));
             if (stream == null)
             {
@@ -102,13 +113,13 @@ namespace IBbasic.iOS
             int pos = userFolderpath.LastIndexOf("\\") + 1;
             string filename = userFolderpath.Substring(pos, userFolderpath.Length - pos);
             //check in module folder first
-            /*StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            string convertedFullPath = storageFolder.Path + ConvertFullPath(userFolderpath, "\\");
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string convertedFullPath = documents + ConvertFullPath(userFolderpath, "/");
             if (File.Exists(convertedFullPath))
             {
                 text = File.ReadAllText(convertedFullPath);
                 return text;
-            }*/
+            }
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."));
@@ -157,7 +168,15 @@ namespace IBbasic.iOS
             else
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
-                //try asset area            
+                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string convertedFullPath = documents + "/modules/" + modFolder + "/" + modFilename;
+                if (File.Exists(convertedFullPath))
+                {
+                    string text = File.ReadAllText(convertedFullPath);
+                    return text;
+                }
+                               
+                //try asset module            
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
                 Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS." + modFilename);
                 if (stream != null)
@@ -166,23 +185,6 @@ namespace IBbasic.iOS
                     {
                         return reader.ReadToEnd();
                     }
-                }
-
-                //try from personal folder first
-                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                var filePath = documentsPath + "/modules/" + modFolder + "/" + modFilename;
-                if (File.Exists(filePath))
-                {
-                    return File.ReadAllText(filePath);
-                }
-                else //try from external folder
-                {
-                    /*Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                    filePath = sdCard.AbsolutePath + "/IBx/modules/" + modFolder + "/" + modFilename;
-                    if (File.Exists(filePath))
-                    {
-                        return File.ReadAllText(filePath);
-                    }*/
                 }
             }
             return "";
@@ -267,7 +269,7 @@ namespace IBbasic.iOS
         {
             List<string> list = new List<string>();
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-
+            
             int pos = folderpath.LastIndexOf("\\") + 1;
             string filename = folderpath.Substring(pos, folderpath.Length - pos);
 
@@ -292,7 +294,26 @@ namespace IBbasic.iOS
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
             List<string> list = new List<string>();
+
+            //FROM USER FOLDER
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (Directory.Exists(documents + ConvertFullPath(userFolderpath, "/")))
+            {
+                string[] files = Directory.GetFiles(documents + ConvertFullPath(userFolderpath, "/"), "*" + extension, SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    list.Add(Path.GetFileNameWithoutExtension(file));
+                }
+            }
+
+            //FROM ASSETS
             Assembly assembly = GetType().GetTypeInfo().Assembly;
+            
+            /* DEBUGGING RESOURCE PATH
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                int x3 = 0;
+            }*/
 
             int pos = assetFolderpath.LastIndexOf("\\") + 1;
             string filename = assetFolderpath.Substring(pos, assetFolderpath.Length - pos);
@@ -307,7 +328,7 @@ namespace IBbasic.iOS
             }
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains(filename)) && (res.EndsWith(extension)))
+                if (res.EndsWith(extension))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
@@ -330,57 +351,16 @@ namespace IBbasic.iOS
             }
 
             //search in personal folder
-            /*var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            Java.IO.File directory = new Java.IO.File(documentsPath + "/modules");
-            directory.Mkdirs();
-            foreach (Java.IO.File d in directory.ListFiles())
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string[] files = Directory.GetFiles(documents + "/modules", "*.mod", SearchOption.AllDirectories);
+            foreach (string file in files)
             {
-                if (d.IsDirectory)
+                if (Path.GetFileName(file) != "NewModule.mod")
                 {
-                    Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
-                    foreach (Java.IO.File f in modDirectory.ListFiles())
-                    {
-                        try
-                        {
-                            if (f.Name.EndsWith(".mod"))
-                            {
-                                list.Add(f.Name);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-                    }
+                    list.Add(Path.GetFileName(file));
                 }
-            }*/
+            }
 
-            //search in external folder
-            /*Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBx/modules");
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File d in directory.ListFiles())
-            {
-                if (d.IsDirectory)
-                {
-                    Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
-                    foreach (Java.IO.File f in modDirectory.ListFiles())
-                    {
-                        try
-                        {
-                            if (f.Name.EndsWith(".mod"))
-                            {
-                                list.Add(f.Name);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-                    }
-                }
-            }*/
             return list;
         }
 

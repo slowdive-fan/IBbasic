@@ -66,6 +66,7 @@ namespace IBbasic.UWP
                 }
             }
         }
+
         public void SaveText(string fullPath, string text)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;

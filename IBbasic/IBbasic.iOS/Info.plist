@@ -21,8 +21,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true />
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true />
 	<key>MinimumOSVersion</key>
-	<string>9.3</string>
+	<string>10.3</string>
 	<key>CFBundleDisplayName</key>
 	<string>IBbasic</string>
 	<key>CFBundleIdentifier</key>
@@ -53,5 +57,12 @@
 	<string>IBbasic</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Document Type 1</string>
+		</dict>
+	</array>
 </dict>
 </plist>
