@@ -117,7 +117,7 @@ namespace IBbasic
                 foreach (KeyValuePair<string, SkiaSharp.SKBitmap> entry in gv.cc.moduleBitmapList)
                 {
                     // do something with entry.Value or entry.Key
-                    if ((entry.Key.StartsWith("ptr_")) || (entry.Key.StartsWith("pptr_")) || (entry.Key.StartsWith("nar_")))
+                    if ((entry.Key.StartsWith("ptr_")) || (entry.Key.StartsWith("pptr_")) || (entry.Key.StartsWith("tkn_")))
                     {
                         if (!playerPortraitList.Contains(entry.Key))
                         {
@@ -146,7 +146,7 @@ namespace IBbasic
                         try
                         {
                             string filename = Path.GetFileName(file);
-                            if ((filename.StartsWith("ptr_")) || (filename.StartsWith("pptr_")) || (filename.StartsWith("nar_")))
+                            if ((filename.StartsWith("ptr_")) || (filename.StartsWith("pptr_")) || (filename.StartsWith("tkn_")))
                             {
                                 string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
                                 if (!playerPortraitList.Contains(fileNameWithOutExt))
@@ -376,7 +376,7 @@ namespace IBbasic
                             }
                             else if (callingScreen.Equals("tsConvoEditor"))
                             {
-                                    if (gv.tsConvoEditor.currentMode.Equals("settings"))
+                                    if (gv.tsConvoEditor.currentMode.Equals("Settings"))
                                     {
                                         gv.mod.currentConvo.NpcPortraitBitmap = playerPortraitList[GetIndex()];
                                         gv.screenType = "tsConvoEditor";
