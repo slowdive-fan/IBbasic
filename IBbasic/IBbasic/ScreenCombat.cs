@@ -172,7 +172,7 @@ namespace IBbasic
         }
         public void createButtonsPanel()
         {
-            buttonPanelLocX = 0 - gv.oXshift + (gv.pS * gv.scaler);
+            buttonPanelLocX = 0;
             buttonPanelLocY = 0;
                         
             if (btnSwitchWeapon == null)
@@ -471,11 +471,11 @@ namespace IBbasic
             togglePanelLocX = (1 * gv.uiSquareSize);
             if (showTogglePanel)
             {
-                togglePanelLocY = (6 * gv.uiSquareSize) + gv.oYshift;
+                togglePanelLocY = (6 * gv.uiSquareSize);
             }
             else
             {
-                togglePanelLocY = (8 * gv.uiSquareSize) + gv.oYshift;
+                togglePanelLocY = (9 * gv.uiSquareSize);
             }
 
             if (tglPortraits == null)
@@ -762,7 +762,7 @@ namespace IBbasic
             portraitPanelLocX = (1 * gv.uiSquareSize) + (gv.uiSquareSize / 2);
             if (showPortraitPanel)
             {
-                portraitPanelLocY = (0 * gv.uiSquareSize) - gv.oYshift + (2 * gv.scaler);
+                portraitPanelLocY = 0;
             }
             else
             {
@@ -778,8 +778,8 @@ namespace IBbasic
             btnPort0.Glow = "btn_ptr_glow";
             btnPort0.X = portraitPanelLocX + 0 * gv.uiSquareSize;
             btnPort0.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort0.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort0.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort0.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort0.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPort1 == null)
             {
@@ -790,8 +790,8 @@ namespace IBbasic
             btnPort1.Glow = "btn_ptr_glow";
             btnPort1.X = portraitPanelLocX + 1 * gv.uiSquareSize;
             btnPort1.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort1.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort1.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort1.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort1.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPort2 == null)
             {
@@ -802,8 +802,8 @@ namespace IBbasic
             btnPort2.Glow = "btn_ptr_glow";
             btnPort2.X = portraitPanelLocX + 2 * gv.uiSquareSize;
             btnPort2.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort2.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort2.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort2.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort2.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPort3 == null)
             {
@@ -814,8 +814,8 @@ namespace IBbasic
             btnPort3.Glow = "btn_ptr_glow";
             btnPort3.X = portraitPanelLocX + 3 * gv.uiSquareSize;
             btnPort3.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort3.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort3.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort3.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort3.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPort4 == null)
             {
@@ -826,8 +826,8 @@ namespace IBbasic
             btnPort4.Glow = "btn_ptr_glow";
             btnPort4.X = portraitPanelLocX + 4 * gv.uiSquareSize;
             btnPort4.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort4.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort4.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort4.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort4.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPort5 == null)
             {
@@ -838,8 +838,8 @@ namespace IBbasic
             btnPort5.Glow = "btn_ptr_glow";
             btnPort5.X = portraitPanelLocX + 5 * gv.uiSquareSize;
             btnPort5.Y = portraitPanelLocY + 0 * gv.uiSquareSize;
-            btnPort5.Height = (int)(gv.ibpheight * gv.scaler);
-            btnPort5.Width = (int)(gv.ibpwidth * gv.scaler);
+            btnPort5.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPort5.Width = (int)(gv.ibbwidthR * gv.scaler);
             /*
             //create buttons panel
             IB2Panel newPanel = new IB2Panel(gv);
@@ -956,7 +956,7 @@ namespace IBbasic
         }
         public void createArrowsPanel()
         {
-            arrowPanelLocX = (8 * gv.uiSquareSize) + gv.oXshift;
+            arrowPanelLocX = (8 * gv.uiSquareSize) + (6 * gv.scaler);
             arrowPanelLocY = (4 * gv.uiSquareSize);
 
             if (btnArrowUpLeft == null)
@@ -4105,7 +4105,7 @@ namespace IBbasic
             int width = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Width;
             int height = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Height;
             IbRect src = new IbRect(0, 0, width, height);
-            IbRect dst = new IbRect(8 * gv.uiSquareSize + (gv.oXshift / gv.scaler) * gv.scaler, 0, width * gv.scaler, height * gv.scaler);
+            IbRect dst = new IbRect(gv.log.tbXloc - (2 * gv.scaler), gv.log.tbYloc, width * gv.scaler, height * gv.scaler);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
 
             

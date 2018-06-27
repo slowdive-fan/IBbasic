@@ -689,11 +689,6 @@ namespace IBbasic
                         int parm2 = Convert.ToInt32(p2);
                         gv.mod.returnCheck = CheckForItem(p1, parm2);
                     }
-                    /*else if (filename.Equals("gcCheckPartyDistance.cs"))
-                    {
-                        int parm2 = Convert.ToInt32(p2);
-                        gv.mod.returnCheck = CheckPartyDistance(p1, parm2);
-                    }*/
                     else if (filename.Equals("gcCheckPropIsShownByTag.cs"))
                     {
                         /*Prop prp = gv.mod.currentArea.getPropByTag(prm1);
@@ -766,11 +761,6 @@ namespace IBbasic
                         String val = gv.mod.currentEncounter.encounterCreatureList.Count + "";
                         SetGlobalInt(prm1, val);
                     }
-                    /*else if (filename.Equals("ogGetPropListSize.cs"))
-                    {
-                        String val = gv.mod.currentArea.Props.Count + "";
-                        SetGlobalInt(prm1, val);
-                    }*/
                     else if (filename.Equals("ogGetCurrentPlayerIndexUsingItem.cs"))
                     {
                         //String val = gv.cc.currentPlayerIndexUsingItem + "";
@@ -959,67 +949,7 @@ namespace IBbasic
                             crt.combatLocY = Convert.ToInt32(p4);
                         }
                     }
-                    /*else if (filename.Equals("osSetPropLocation.cs"))
-                    {
-                        Prop prp = GetProp(prm1, p2);
-                        if (prp == null)
-                        {
-                            return;
-                        }
-                        if (prp != null)
-                        {
-                            prp.LocationX = Convert.ToInt32(p3);
-                            prp.LocationY = Convert.ToInt32(p4);
-                        }
-                    }*/
-
-                    /*else if (filename.Equals("osSetPropLocationAnyArea.cs"))
-                    {
-                        Prop prp = GetPropByUniqueTag(p1);
-                        int added = 0;
-                        if (prp == null)
-                        {
-                            return;
-                        }
-                        if (prp != null)
-                        {
-
-                            Prop prp2 = prp.DeepCopy();
-                            //prp2.lastLocationX = prp.LocationX;
-                            //prp2.lastLocationY = prp.LocationY;
-                            prp2.LocationX = Convert.ToInt32(p3);
-                            prp2.LocationY = Convert.ToInt32(p4);
-                            //gv.cc.DisposeOfBitmap(ref prp2.token);
-                            //prp2.token = gv.cc.LoadBitmap(prp.ImageFileName);
-                           
-                            for (int i2 = 0; i2 < gv.mod.moduleAreasObjects.Count; i2++)
-                            {
-                                if (gv.mod.moduleAreasObjects[i2].Filename == p2)
-                                {
-                                    added = 1;
-                                    gv.mod.moduleAreasObjects[i2].Props.Add(prp2);   
-                                    break;
-                                }
-                            }
-                              
-                            if (added == 1)
-                            {
-                                for (int j2 = gv.mod.moduleAreasObjects.Count -1; j2 > -1; j2--)
-                                {
-                                    for (int k2 = gv.mod.moduleAreasObjects[j2].Props.Count -1; k2 > -1; k2--)
-                                    {
-                                        //prevent removing the prop from the area it was just addded to
-                                        if (gv.mod.moduleAreasObjects[j2].Props[k2].PropTag.Equals(p1) && (gv.mod.moduleAreasObjects[j2].Filename != p2))
-                                        {
-                                            gv.mod.moduleAreasObjects[j2].Props.RemoveAt(k2);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }*/
-
+                    
                     else if (filename.Equals("osAddCreatureToCurrentEncounter.cs"))
                     {
                         AddCreatureToCurrentEncounter(p1, p2, p3);
@@ -1035,14 +965,6 @@ namespace IBbasic
                             t.TriggerSquaresList.Add(newCoor);
                         }
                     }
-                    /*else if (filename.Equals("osSetPropIsShownByTag.cs"))
-                    {
-                        SetPropIsShown(prm1, prm2);
-                    }*/
-                    /*else if (filename.Equals("osSetProp.cs"))
-                    {
-                        SetProp(p1, p2, prm3, prm4);
-                    }*/
                     else if (filename.Equals("osSetWorldTime.cs"))
                     {
                         SetWorldTime(prm1, p2, prm3);

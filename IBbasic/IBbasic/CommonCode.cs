@@ -113,7 +113,189 @@ namespace IBbasic
         //LOAD SCRIPTS
         public void LoadAllScripts()
         {
+            //CONDITIONAL SCRIPTS
             ScriptObject newScript = new ScriptObject();
+            newScript.name = "gcCheckGlobalInt";
+            newScript.description = "Check to see if a global Int has a value";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) global variable name";
+            newScript.parmType2 = "basic_chk_oper";
+            newScript.parmDescription2 = "(string) compare operator ( = , < , > , ! )";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckGlobalString";
+            newScript.description = "Check to see if a global String has a value";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) global variable name";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckLocalInt";
+            newScript.description = "Check to see if a local Int has a value";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of object that the local belongs to. Can use 'thisarea' or 'thisprop' to get the current area tag or use the tag of the Prop that the party is currently standing on top of.";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) local variable name";
+            newScript.parmType3 = "basic_chk_oper";
+            newScript.parmDescription3 = "(string) compare operator ( = , < , > , ! )";
+            newScript.parmType4 = "small_int";
+            newScript.parmDescription4 = "(int) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckLocalString";
+            newScript.description = "Check to see if a local string has a value";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of object that the local belongs to. Can use 'thisarea' or 'thisprop' to get the current area tag or use the tag of the Prop that the party is currently standing on top of.";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) local variable name";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckJournalEntryByTag";
+            newScript.description = "Checks to see if an entry to the player's journal is at a specific EntryId point";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) module's categoryTag that the entry belongs to";
+            newScript.parmType2 = "basic_chk_oper";
+            newScript.parmDescription2 = "(string) compare operator ( = or > or < or ! )";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) EntryId of the journal entry";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckForGold";
+            newScript.description = "Checks to see if the party has a given amount of gold or more";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) check to see if party has this amount of gold or more";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckAttribute";
+            newScript.description = "Checks to see if PC has a certain value in an attribute.";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) attribute to check (use all lower case of one of the following three letters: str, dex, con, int, wis, cha)";
+            newScript.parmType3 = "basic_chk_oper";
+            newScript.parmDescription3 = "(string) compare type ( = , < , > , ! )";
+            newScript.parmType4 = "small_int";
+            newScript.parmDescription4 = "(int) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckIsRace";
+            newScript.description = "Checks to see if PC is of a certain race.";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) tag of the Race to check for";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckHasTrait";
+            newScript.description = "Checks to see if PC has a trait.";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) trait tag to check (bluff, bluff2, cleave, criticalstrike, diplomacy, diplomacy2, disarmdevice, disarmdevice2, evasion, intimidate,"
+                                       + " intimidate2, pickpocket, pickpocket2, pointblankshot, sneakattack, spot, spot2, stealth, stealth2, twoAttack)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcPassSkillCheck";
+            newScript.description = "Checks to see if PC passes a skill check (Example Calculation: check if (1d20 + intelligence modifier + disarm device trait skill modifier) > DC).";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) trait tag to check for passing skill check (Standard Trait tags that are skill type traits - note: the engine will use the"
+                + " highest trait skill the PC has so you do not need to enter tags such as bluff2 or bluff3, just enter bluff. SKILL TAGS: bluff, diplomacy, disarmdevice, intimidate, pickpocket, spot, stealth)";
+            newScript.parmType3 = "variable";
+            newScript.parmDescription3 = "(int) difficulty class (DC) the value to check against (can be a variable, rand(minInt-maxInt), or just type in an integer).";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckIsClassLevel";
+            newScript.description = "Checks to see if PC has a certain level of a class (Example: to check if the current party leader PC is a ranger (-1, ranger, 1) to check if the main PC is a level 4 or greater wizard (0, wizard, 4).";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) tag of the Class to check for level";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) class level, returns true if this level or greater";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckIsLevel";
+            newScript.description = "Checks to see if PC has a certain level of any class.";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) class level, returns true if this level or greater";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckIsMale";
+            newScript.description = "Checks to see if PC is male.";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) index of the PC to check for attribute (1st PC is index = 0), leave blank or enter -1 to use the currently selected party leader";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckPcInPartyByName";
+            newScript.description = "Checks to see if a PC's name (in the party) matches a given name.";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) Name to check against each PC in the party for a match";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckSelectedPcName";
+            newScript.description = "Checks to see if the currently selected PC's name matches a given name.";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) Name to check against the currently selected PC (either selected party leader or selected PC in 'party chat style' conversations).";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcCheckForItem";
+            newScript.description = "Checks to see if an item(s) is/are in the party/PC inventory";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) item resref";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) quantity";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gcRand1of";
+            newScript.description = "Rolls a random number between 1 and the input parameter. If roll = 1, return true. (Example: if parm1 = 5, then a number between 1 and 5 will be rolled. If the result is 1, return true, else return false.)";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) max number of roll";
+            scriptList.Add(newScript);
+
+            //SET SCRIPTS
+            newScript = null;
+            newScript = new ScriptObject();
             newScript.name = "gaSetGlobalInt";
             newScript.description = "Set a global Int (create a new one if currently doesn't exist)";
             newScript.parmType1 = "variable";
@@ -124,14 +306,352 @@ namespace IBbasic
 
             newScript = null;
             newScript = new ScriptObject();
-            newScript.name = "gcCheckGlobalInt";
-            newScript.description = "Check to see if a global Int has a value";
+            newScript.name = "gaSetGlobalString";
+            newScript.description = "Set a global string (create a new one if currently doesn't exist)";
             newScript.parmType1 = "variable";
-            newScript.parmDescription1 = "(string) global variable name";
-            newScript.parmType2 = "basic_chk_oper";
-            newScript.parmDescription2 = "(string) compare type ( = , < , > , ! )";
+            newScript.parmDescription1 = "(string) global variable name (key)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(string) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaSetLocalInt";
+            newScript.description = "Set a local Int (create a new one if currently doesn't exist)... Can use thisarea or thisprop to get the current area tag or use the tag of the Prop that the party is currently standing on top of.";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of the object that the local belongs to (or use thisprop or thisarea)";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) local variable name";
             newScript.parmType3 = "small_int";
-            newScript.parmDescription3 = "(int) value";
+            newScript.parmDescription3 = "(int) value or (string) increment '++' or (string) decrement '--'";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaSetLocalString";
+            newScript.description = "Set a local string (create a new one if currently doesn't exist)... Can use thisarea or thisprop to get the current area tag or use the tag of the Prop that the party is currently standing on top of.";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of the object that the local belongs to (or use thisprop or thisarea)";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) local variable name";
+            newScript.parmType3 = "variable";
+            newScript.parmDescription3 = "(string) value";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaGiveItem";
+            newScript.description = "Gives an item(s) to the party";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) item resref";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) quantity";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaGiveXP";
+            newScript.description = "Gives Experience Points to the party (ex. if parm1 = 1000 and the party size is 4, each PC will get 250 XP)";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) amount of XP to the party (will be divided evenly amoung party members).";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaGiveGold";
+            newScript.description = "Gives gold to the party";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) amount of gold to give to the party";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaTakeGold";
+            newScript.description = "Takes gold from the party";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) amount of gold to take from the party";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaTakeItem";
+            newScript.description = "Takes an item(s) from the party";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) item resref";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) quantity";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaForceRest";
+            newScript.description = "Party rests and regains all HP and SP";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaForceRestAndRaiseDead";
+            newScript.description = "Party rests and regains all HP and SP, and all dead are raised";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaMovePartyToLastLocation";
+            newScript.description = "moves the party back to the square before this square";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaPartyDamage";
+            newScript.description = "Apply damage to each PC in party...a check will be made to see if any PCs drop below 0 hp and change their status to dead (unconscious). for example, to apply damage between 10 and 15 type 'rand(10-15)' without the quotes.";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(int) damage to apply (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaTransitionPartyToMapLocation";
+            newScript.description = "Jump the party to any adventure map and location (make sure the location is valid)";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) area name (as seen in area list)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) X coordinate";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) Y coordinate";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaAddPartyMember";
+            newScript.description = "Adds a pre-made character to the party";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) PC file name (ex. Drin.json)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaRemovePartyMember";
+            newScript.description = "Removes a character (PC) from the party";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the tag of the PC (leave blank to use index instead)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaMovePartyMemberToRoster";
+            newScript.description = "Moves a character (PC) from the PartyList to the Party Roster";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the tag of the PC (leave blank to use index instead)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaMoveRosterMemberToParty";
+            newScript.description = "Moves a character (PC) from the Party Roster to the PartyList (WARNING: If the PartyRosterList is empty or the PartyList is already at its maximum size (module setting MaxPartySize), the script will abort)";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the tag of the PC (leave blank to use index instead)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) index of the PC in the PartyRosterList (0 is first PC in list, leave blank to use name/tag instead)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaEnableDisableTrigger";
+            newScript.description = "Enables or Disables a Trigger";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the tag of the trigger";
+            newScript.parmType2 = "bool";
+            newScript.parmDescription2 = "(bool) true = enable, false = disable";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaEnableDisableTriggerAtCurrentLocation";
+            newScript.description = "Enables or Disables a Trigger at the current location";
+            newScript.parmType1 = "bool";
+            newScript.parmDescription1 = "(bool) true = enable, false = disable";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaEnableDisableTriggerEvent";
+            newScript.description = "Enables or disables a Trigger Event";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the tag of the trigger";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) event number to enable/disable";
+            newScript.parmType3 = "bool";
+            newScript.parmDescription3 = "(bool) true = enable, false = disable";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaEnableDisableTriggerEventAtCurrentLocation";
+            newScript.description = "Enables or Disables a Trigger Event at the current location";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) event number to enable/disable";
+            newScript.parmType2 = "bool";
+            newScript.parmDescription2 = "(bool) true = enable, false = disable";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaTogglePartyToken";
+            newScript.description = "Switches the player token to the party token or the normal selected party leader token (or group)";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the filename (no extension) of the party token or leave blank ('') or 'none' if you wish to use the existing party token";
+            newScript.parmType2 = "bool";
+            newScript.parmDescription2 = "(bool) false = turn off party token, true = turn on party token";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaAddJournalEntryByTag";
+            newScript.description = "Adds an entry to the player's journal";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) module's categoryTag that the entry belongs to";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) entryTag of the journal entry";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaEndGame";
+            newScript.description = "Ends that game and returns the player back to the title screen";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaPlaySound";
+            newScript.description = "Plays a sound (Sound files in default: bow, buffer, fireballend, fireballstart, punch, punchbig, sword)";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the filename (no extension) of the sound file (sound files need to be in the 'sounds' folder)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaKillAllCreatures";
+            newScript.description = "Will kill all the creatures in the current encounter (does the same as the 'kill' button).";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaOpenShopByTag";
+            newScript.description = "opens a previously created shop";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) shop's tag";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaModifiyShopBuyBackPercentage";
+            newScript.description = "Modify  a shop's buy back percentage";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) shop's tag";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(operator) + or -";
+            newScript.parmType3 = "variable";
+            newScript.parmDescription3 = "(int) value to modify by";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaModifiyShopSellPercentage";
+            newScript.description = "Modify  a shop's sell percentage";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) shop's tag";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(operator) + or -";
+            newScript.parmType3 = "variable";
+            newScript.parmDescription3 = "(int) value to modify by";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaWriteTextToLog";
+            newScript.description = "Writes some text to the main screen's log";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) text to be written to the log (can be a variable, rand(minInt-maxInt), or just text)";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) color for the text (colors available: red, lime, yellow, teal, blue, fuchsia, white)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaShowFloatyTextOnMainMap";
+            newScript.description = "Display some text on the main map at a defined square";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) text to display (can be a variable) (floaty text is auto word wrapped)";
+            newScript.parmType2 = "variable";
+            newScript.parmDescription2 = "(string) color of text (can be a variable) (white, red, yellow, green, blue)";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) square X location (can be a variable, rand(minInt-maxInt), or just type in an integer)";
+            newScript.parmType4 = "small_int";
+            newScript.parmDescription4 = "(int) square Y location (can be a variable, rand(minInt-maxInt), or just type in an integer)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaDoConversationByName";
+            newScript.description = "Launches a conversation based on a filename (filename must NOT include the extension '.dlg') WARNING WARNING: This script will only work properly on the last node of a conversation (END DIALOG node).";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) filename of the conversation to launch";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaDoEncounterByTag";
+            newScript.description = "Launches an encounter based on a tag ...WARNING WARNING: This script will only work properly on the last node of a conversation (END DIALOG node).";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of the encounter to launch";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaToggleAreaSquareLoSBlocking";
+            newScript.description = "Set the selected square's LoSBlocking to true or false";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) square's grid X location";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) square's grid Y location";
+            newScript.parmType3 = "bool";
+            newScript.parmDescription3 = "(bool) true = turn on LoSBlocking, false = turn off LoSBlocking";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaToggleAreaSquareWalkable";
+            newScript.description = "Set the selected square's collision to true or false";
+            newScript.parmType1 = "small_int";
+            newScript.parmDescription1 = "(int) square's grid X location";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) square's grid Y location";
+            newScript.parmType3 = "bool";
+            newScript.parmDescription3 = "(bool) false = make collidable (non-walkable), true = make walkable";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaPropOrTriggerCastSpellOnThisSquare";
+            newScript.description = "Cast a spell on the current square";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) tag of spell";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaAddCreatureToCurrentEncounter";
+            newScript.description = "Adds a creature to the current encounter";
+            newScript.parmType1 = "variable";
+            newScript.parmDescription1 = "(string) the resref of the added creature (use one from a blueprint in the toolset's creature blueprints section)";
+            newScript.parmType2 = "small_int";
+            newScript.parmDescription2 = "(int) x location of the added creature on the combat map (will be automatically adjusted to nearest location if the spot is already occupied or non-walkable)";
+            newScript.parmType3 = "small_int";
+            newScript.parmDescription3 = "(int) y location of the added creature on the combat map (will be automatically adjusted to nearest location if the spot is already occupied or non-walkable)";
             scriptList.Add(newScript);
         }
         public void ResetAllVariablesUsedList()

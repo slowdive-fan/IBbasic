@@ -1576,11 +1576,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\walk_pass.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\3dArea1.are" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\containerTrapDC15.dlg" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\new3DareaSmall.are" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)ListViewPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

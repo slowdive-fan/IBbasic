@@ -2486,28 +2486,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseMove:
                     int x = (int)eX;
                     int y = (int)eY;
-
-                    if (touchDown)
-                    {
-                        //figure out if tapped on a map square
-                        int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                        int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                        if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
-                        {
-                            if (currentCrt != null)
-                            {
-                                //TODO check if square is currently occupied by creature or PC
-                                //place currently selected creature
-                                CreatureRefs crtRef = new CreatureRefs();
-                                crtRef.creatureResRef = currentCrt.cr_resref;
-                                crtRef.creatureTag = currentCrt.cr_tag + "_" + gv.mod.getNextIdNumber();
-                                crtRef.creatureStartLocationX = gridX;
-                                crtRef.creatureStartLocationY = gridY;
-                                gv.mod.currentEncounter.encounterCreatureRefsList.Add(crtRef);
-                            }
-                        }
-                    }
-
+                                        
                     if (btnCrtLeft.getImpact(x, y))
                     {
                         btnCrtLeft.glowOn = true;
@@ -2526,6 +2505,27 @@ namespace IBbasic
 
                     btnCrtLeft.glowOn = false;
                     btnCrtRight.glowOn = false;
+
+                    //if (touchDown)
+                    //{
+                        //figure out if tapped on a map square
+                        int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                        int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                        if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
+                        {
+                            if (currentCrt != null)
+                            {
+                                //TODO check if square is currently occupied by creature or PC
+                                //place currently selected creature
+                                CreatureRefs crtRef = new CreatureRefs();
+                                crtRef.creatureResRef = currentCrt.cr_resref;
+                                crtRef.creatureTag = currentCrt.cr_tag + "_" + gv.mod.getNextIdNumber();
+                                crtRef.creatureStartLocationX = gridX;
+                                crtRef.creatureStartLocationY = gridY;
+                                gv.mod.currentEncounter.encounterCreatureRefsList.Add(crtRef);
+                            }
+                        }
+                    //}
 
                     //figure out if tapped on a creature in palette
                     if ((x > (panelLeftLocation)) && (x < (panelLeftLocation) + (4 * gv.squareSize * gv.scaler)))

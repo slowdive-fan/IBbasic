@@ -2252,8 +2252,13 @@ namespace IBbasic
         public async void changeActionParm1()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType1.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the first parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_1);
+            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
             editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput;
             gv.touchEnabled = true;
 
@@ -2286,8 +2291,13 @@ namespace IBbasic
         public async void changeActionParm2()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType2.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the second parameter for this script:" + Environment.NewLine + script.parmDescription2;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the second parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_2);
+            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
             editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the second parameter for this script.";
@@ -2296,8 +2306,13 @@ namespace IBbasic
         public async void changeActionParm3()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType3.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the third parameter for this script:" + Environment.NewLine + script.parmDescription3;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the third parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_3);
+            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
             editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the third parameter for this script.";
@@ -2306,8 +2321,13 @@ namespace IBbasic
         public async void changeActionParm4()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType4.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the fourth parameter for this script:" + Environment.NewLine + script.parmDescription4;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the fourth parameter for this script:", editNode.actions[getIndexOfActionSelected()].a_parameter_4);
+            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
             editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the fourth parameter for this script.";
@@ -2343,8 +2363,13 @@ namespace IBbasic
         public async void changeCondParm1()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType1.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the first parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
+            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
             editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the first parameter for this script.";
@@ -2353,8 +2378,13 @@ namespace IBbasic
         public async void changeCondParm2()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType2.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the second parameter for this script:" + Environment.NewLine + script.parmDescription2;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the second parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
+            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
             editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the second parameter for this script.";
@@ -2363,8 +2393,13 @@ namespace IBbasic
         public async void changeCondParm3()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType3.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the third parameter for this script:" + Environment.NewLine + script.parmDescription3;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the third parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
+            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
             editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the third parameter for this script.";
@@ -2373,8 +2408,13 @@ namespace IBbasic
         public async void changeCondParm4()
         {
             if (editNode == null) { return; }
+            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+            if (script.name.Equals("none")) { return; }
+            if (script.parmType4.Equals("")) { return; }
+            string title = script.description + Environment.NewLine + "Enter the fourth parameter for this script:" + Environment.NewLine + script.parmDescription4;
+
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Enter the fourth parameter for this script:", editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
+            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
             editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput;
             gv.touchEnabled = true;
             //string title = "Enter the fourth parameter for this script.";

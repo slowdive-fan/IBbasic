@@ -183,25 +183,25 @@ namespace IBbasic
 
             screenWidth = App.ScreenWidth;
             screenHeight = App.ScreenHeight;
-            
+
             if (screenWidth > screenHeight)
             {
-                scaler = screenHeight / defaultScreenDesignHeight;
+                scaler = screenWidth / defaultScreenDesignWidth;
             }
             else
             {
-                scaler = screenWidth / defaultScreenDesignHeight;
+                scaler = screenHeight / defaultScreenDesignHeight;
             }
 
             float sqrW = (float)screenWidth / (float)(uiSquaresInWidth);
             float sqrH = (float)screenHeight / (float)(uiSquaresInHeight);
             if (sqrW > sqrH)
             {
-                squareSize = (int)(sqrH);
+                scaler = screenHeight / defaultScreenDesignHeight;
             }
             else
             {
-                squareSize = (int)(sqrW);
+                scaler = screenWidth / defaultScreenDesignWidth;
             }
                         
             if ((squareSize >= 96) && (squareSize < 102))
@@ -239,7 +239,7 @@ namespace IBbasic
             //TODO animationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
 
             log = new IB2HtmlLogBox(this);
-            log.tbXloc = (8 * uiSquareSize) + oXshift / 2 + (8 * scaler);
+            log.tbXloc = (8 * uiSquareSize) + (8 * scaler);
             log.tbYloc = 2;
             log.tbWidth = 3 * uiSquareSize; //add one char because the word wrap calculates word length plus one space at end
             log.tbHeight = 4 * uiSquareSize;

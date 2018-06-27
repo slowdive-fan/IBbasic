@@ -22,9 +22,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
-	<true />
+	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true />
+	<true/>
 	<key>MinimumOSVersion</key>
 	<string>10.3</string>
 	<key>CFBundleDisplayName</key>
@@ -64,5 +64,9 @@
 			<string>Document Type 1</string>
 		</dict>
 	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Media.xcassets/LaunchImages.launchimage</string>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Media.xcassets/AppIcons.appiconset</string>
 </dict>
 </plist>

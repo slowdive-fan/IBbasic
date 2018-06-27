@@ -21,7 +21,7 @@ namespace IBbasic
             InitializeComponent();
             tcs = returnString;
             Items = list;
-			
+            MyListView.Header = headerText;
 			MyListView.ItemsSource = Items;
         }
 
