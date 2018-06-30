@@ -74,6 +74,7 @@ namespace IBbasic
         public IbbToggle tglImageFilename = null;
         public IbbToggle tglImageFacingLeft = null;
         public IbbToggle tglIsShown = null;
+        public IbbToggle tglHideAfterEnc = null;
         public IbbToggle tglNumberOfScriptCallsRemaining = null;
         public IbbToggle tglCanBeTriggeredByPc = null;
         public IbbToggle tglCanBeTriggeredByCreature = null;
@@ -614,8 +615,8 @@ namespace IBbasic
             }
             tglTriggerDoOnce.ImgOn = "mtgl_rbtn_on";
             tglTriggerDoOnce.ImgOff = "mtgl_rbtn_off";
-            tglTriggerDoOnce.X = panelLeftLocation;
-            tglTriggerDoOnce.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
+            tglTriggerDoOnce.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
+            tglTriggerDoOnce.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
             tglTriggerDoOnce.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglTriggerDoOnce.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -626,7 +627,7 @@ namespace IBbasic
             tglImageFilename.ImgOn = "mtgl_edit_btn";
             tglImageFilename.ImgOff = "mtgl_edit_btn";
             tglImageFilename.X = panelLeftLocation;
-            tglImageFilename.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
+            tglImageFilename.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
             tglImageFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglImageFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -651,6 +652,17 @@ namespace IBbasic
             tglIsShown.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
             tglIsShown.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglIsShown.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (tglHideAfterEnc == null)
+            {
+                tglHideAfterEnc = new IbbToggle(gv);
+            }
+            tglHideAfterEnc.ImgOn = "mtgl_rbtn_on";
+            tglHideAfterEnc.ImgOff = "mtgl_rbtn_off";
+            tglHideAfterEnc.X = panelLeftLocation;
+            tglHideAfterEnc.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
+            tglHideAfterEnc.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglHideAfterEnc.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
             if (tglNumberOfScriptCallsRemaining == null)
             {
@@ -2433,8 +2445,8 @@ namespace IBbasic
                     if (selectedTrigger.Enabled) { tglTriggerEnabled.toggleOn = true; }
                     else { tglTriggerEnabled.toggleOn = false; }
                     tglTriggerEnabled.Draw();
-                    gv.DrawText("Trigger", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
-                    gv.DrawText("Enabled", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    gv.DrawText("Triggr", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
+                    gv.DrawText("Enabld", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnly) { tglTriggerDoOnce.toggleOn = true; }
                     else { tglTriggerDoOnce.toggleOn = false; }
@@ -2458,6 +2470,12 @@ namespace IBbasic
                     gv.DrawText("Is", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y, "gy");
                     gv.DrawText("Shown", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
+                    if (selectedTrigger.HideImageAfterEnc) { tglHideAfterEnc.toggleOn = true; }
+                    else { tglHideAfterEnc.toggleOn = false; }
+                    tglHideAfterEnc.Draw();
+                    gv.DrawText("Hide Image", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y, "gy");
+                    gv.DrawText("After Encounter", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    
                     gv.DrawText("COMBAT ONLY:", tglNumberOfScriptCallsRemaining.X, tglNumberOfScriptCallsRemaining.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
 
                     tglNumberOfScriptCallsRemaining.Draw();
@@ -3545,6 +3563,14 @@ namespace IBbasic
                                 {
                                     tglIsShown.toggleOn = !tglIsShown.toggleOn;
                                     selectedTrigger.isShown = tglIsShown.toggleOn;
+                                }
+                            }
+                            else if (tglHideAfterEnc.getImpact(x, y))
+                            {
+                                if (selectedTrigger != null)
+                                {
+                                    tglHideAfterEnc.toggleOn = !tglHideAfterEnc.toggleOn;
+                                    selectedTrigger.HideImageAfterEnc = tglHideAfterEnc.toggleOn;
                                 }
                             }
                             else if (tglCanBeTriggeredByPc.getImpact(x, y))

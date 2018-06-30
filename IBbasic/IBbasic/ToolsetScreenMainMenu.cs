@@ -422,7 +422,7 @@ namespace IBbasic
                         }
                         else if (btnExit.getImpact(x, y))
                         {
-                            //changeModuleVersion();
+                            gv.cc.doVerifyReturnToMainSetup();
                             return true;
                         }
                     }

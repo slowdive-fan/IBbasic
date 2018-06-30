@@ -125,9 +125,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\test3d\test3d.mod" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_minimap_frame.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\black_tile.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\blank.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\fx_acid1x1end.png" />
@@ -1589,5 +1587,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\NewModule.mod" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\modules\" />
   </ItemGroup>
 </Project>

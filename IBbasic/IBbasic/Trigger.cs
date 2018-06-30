@@ -21,6 +21,7 @@ namespace IBbasic
         public string ImageFileName = "blank";
         public bool ImageFacingLeft = true;
         public bool isShown = true;
+        public bool HideImageAfterEnc = true;
         //public string MouseOverText = "none";
         //public bool HasCollision = false;
         //public bool isTrap = false;

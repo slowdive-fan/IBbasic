@@ -28,7 +28,7 @@ namespace IBbasic
 
         public void MessageBox(string message)
         {
-            //MessageBoxHtml(message);
+            MessageBoxHtml(message);
         }
 
         public void ShowFullDescription(Item it)

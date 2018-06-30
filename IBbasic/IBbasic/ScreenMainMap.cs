@@ -31,6 +31,8 @@ namespace IBbasic
         private bool finishedMove = true;
         public SKBitmap minimap = null;
         public List<Sprite> spriteList = new List<Sprite>();
+        public IbRect src = null;
+        public IbRect dst = null;
 
         //UI PANELS
         public int buttonPanelLocX = 0;
@@ -869,20 +871,21 @@ namespace IBbasic
         }        
         public void redrawMain()
         {
-            hideTriggerImageIfNotEnabled();
+            //hideTriggerImageIfNotEnabled();
 
             if (gv.mod.currentArea.Layer1Filename.Count == 0)
             {
                 return;
             }
 
+            setExplored();
+
             if (gv.mod.currentArea.Is3dArea)
             {
                 draw3dView();
             }
             else
-            {
-                setExplored();
+            {                
                 if (!gv.mod.currentArea.areaDark)
                 {
                     drawWorldMap();
@@ -2245,55 +2248,197 @@ namespace IBbasic
         {
             if (showMiniMap)
             {
-                int pW = (int)((float)gv.screenWidth / 100.0f);
-                int pH = (int)((float)gv.screenHeight / 100.0f);
-                int shift = pW;
-                
-                //minimap should be 4 squares wide
-                int minimapSquareSizeInPixels = 4 * gv.squareSize * gv.scaler / gv.mod.currentArea.MapSizeX;
-                int drawW = minimapSquareSizeInPixels * gv.mod.currentArea.MapSizeX;
-                int drawH = minimapSquareSizeInPixels * gv.mod.currentArea.MapSizeY;
+                int shiftY = (5 * gv.scaler);
+                int shiftX = (8 * gv.uiSquareSize) - (12 * gv.scaler);
+                int mapSquareSizeScaler = 1;
+                if (gv.mod.currentArea.MapSizeX > 10) { mapSquareSizeScaler = 2; }
 
-                //draw background border
-                IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_portrait_frame").Width, gv.cc.GetFromBitmapList("ui_portrait_frame").Height);
-                //IbRect dst = new IbRect(gv.squareSize, pH, drawW, drawH);
-                IbRect dst = new IbRect(gv.squareSize * gv.scaler - (int)(10 * gv.scaler),
-                                            pH - (int)(10 * gv.scaler),
-                                            drawW + (int)(20 * gv.scaler),
-                                            drawH + (int)(20 * gv.scaler));
-                gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_portrait_frame"), src, dst);
-
-                //draw minimap
-                if (minimap == null) { resetMiniMapBitmap(); }
-                src = new IbRect(0, 0, minimap.Width, minimap.Height);
-                dst = new IbRect(gv.squareSize * gv.scaler, pH, drawW, drawH);
-                gv.DrawBitmap(minimap, src, dst);
-
-                //draw Fog of War
-                if (gv.mod.currentArea.UseMiniMapFogOfWar)
+                //Draw Layers
+                #region Draw Layer 1                
+                for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
                 {
-                    for (int x = 0; x < this.gv.mod.currentArea.MapSizeX; x++)
+                    for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
-                        for (int y = 0; y < this.gv.mod.currentArea.MapSizeY; y++)
+                        string tile = gv.mod.currentArea.Layer1Filename[y * gv.mod.currentArea.MapSizeX + x];
+                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+
+                        try
                         {
-                            int xx = x * minimapSquareSizeInPixels;
-                            int yy = y * minimapSquareSizeInPixels;
-                            src = new IbRect(0, 0, gv.cc.black_tile.Width, gv.cc.black_tile.Height);
-                            dst = new IbRect(gv.squareSize * gv.scaler + xx, pH + yy, minimapSquareSizeInPixels, minimapSquareSizeInPixels);
-                            if (gv.mod.currentArea.Visible[y * gv.mod.currentArea.MapSizeX + x] == 0)
+                            src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                            dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        }
+                        catch { }
+                    }
+                }
+                #endregion
+                #region Draw Layer 2                
+                for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                {
+                    for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                    {
+                        string tile = gv.mod.currentArea.Layer2Filename[y * gv.mod.currentArea.MapSizeX + x];
+                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+
+                        try
+                        {
+                            src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                            if (gv.mod.currentArea.Is3dArea)
                             {
-                                gv.DrawBitmap(gv.cc.black_tile, src, dst);
+                                src = new IbRect(32, 16, 56, 56);
+                            }
+                            dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        }
+                        catch { }
+                    }
+                }
+                #endregion
+                #region Draw Layer 3               
+                for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                {
+                    for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                    {
+                        string tile = gv.mod.currentArea.Layer3Filename[y * gv.mod.currentArea.MapSizeX + x];
+                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+                        int brX = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+                        int brY = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+
+                        try
+                        {
+                            src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                            if (gv.mod.currentArea.Is3dArea)
+                            {
+                                src = new IbRect(32, 16, 56, 56);
+                            }
+                            dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        }
+                        catch { }
+                    }
+                }
+                #endregion
+
+                //Draw grid
+                if (tglGrid.toggleOn)
+                {
+                    for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                    {
+                        for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                        {
+                            int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            src = new IbRect(0, 0, gv.cc.walkBlocked.Width, gv.cc.walkBlocked.Height);
+                            dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                            if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
+                            {
+                                gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                            }
+                            if (gv.mod.currentArea.Walkable[y * gv.mod.currentArea.MapSizeX + x] == 0)
+                            {
+                                gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                            }
+                            else
+                            {
+                                gv.DrawBitmap(gv.cc.walkPass, src, dst);
                             }
                         }
                     }
                 }
-                                
-	            //draw a location marker square RED
-                int x2 = gv.mod.PlayerLocationX * minimapSquareSizeInPixels + gv.squareSize * gv.scaler;
-                int y2 = gv.mod.PlayerLocationY * minimapSquareSizeInPixels;
-                src = new IbRect(0, 0, gv.cc.map_marker.Width, gv.cc.map_marker.Height);
-                dst = new IbRect(x2, y2 + pH, minimapSquareSizeInPixels, minimapSquareSizeInPixels);
-                gv.DrawBitmap(gv.cc.map_marker, src, dst);	            
+
+                //draw Fog of War
+                if (gv.mod.currentArea.UseMiniMapFogOfWar)
+                {
+                    for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                    {
+                        for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                        {
+                            int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+
+                            try
+                            {
+                                src = new IbRect(0, 0, gv.cc.black_tile.Width, gv.cc.black_tile.Height);
+                                dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                                if (gv.mod.currentArea.Visible[y * gv.mod.currentArea.MapSizeX + x] == 0)
+                                {
+                                    gv.DrawBitmap(gv.cc.black_tile, src, dst);
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                }
+
+                //Draw Location Marker
+                int tlX2 = gv.mod.PlayerLocationX * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                int tlY2 = gv.mod.PlayerLocationY * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                int brX2 = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                int brY2 = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                if (gv.mod.PlayerFacingDirection == 0) //NORTH
+                {
+                    try
+                    {
+                        string tile = "minimap_location_n";
+                        src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                        dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    }
+                    catch { }
+                }
+                else if (gv.mod.PlayerFacingDirection == 1) //EAST
+                {
+                    try
+                    {
+                        string tile = "minimap_location_e";
+                        src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                        dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    }
+                    catch { }
+                }
+                else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+                {
+                    try
+                    {
+                        string tile = "minimap_location_s";
+                        src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                        dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    }
+                    catch { }
+                }
+                else //WEST
+                {
+                    try
+                    {
+                        string tile = "minimap_location_w";
+                        src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                        dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    }
+                    catch { }
+                }
+
+                //draw background border
+                src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_minimap_frame").Width, gv.cc.GetFromBitmapList("ui_minimap_frame").Height);
+                int tlX1 = 0;
+                int tlY1 = 0;
+                int brX1 = (gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeX;
+                int brY1 = (gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeX;
+                dst = new IbRect(tlX1 + shiftX, tlY1 + shiftY, brX1, brY1);
+                gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_minimap_frame"), src, dst);
             }
         }
         public void drawPlayer()
@@ -2820,7 +2965,10 @@ namespace IBbasic
                         
             createArrowsPanel();
             btnArrowUp.Draw();
-            btnArrowDown.Draw();
+            if (!gv.mod.currentArea.Is3dArea)
+            {
+                btnArrowDown.Draw();
+            }
             btnArrowLeft.Draw();
             btnArrowRight.Draw();
             btnArrowWait.Draw();

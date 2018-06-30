@@ -709,6 +709,7 @@ namespace IBbasic
         //LOAD FILES
         public void LoadTestParty()
         {
+            gv.mod.playerList.Clear();
             if ((gv.mod.defaultPlayerFilename.Equals("")) || (gv.mod.defaultPlayerFilename.Equals("none")))
             {
                 if (gv.mod.defaultPlayerFilenameList.Count > 0)
@@ -879,28 +880,14 @@ namespace IBbasic
         {
             if (selectedIndex == 0)
             {
-                //go to launcher screen
+                //go to splash screen
                 if (gv.fixedModule.Equals("")) //this is the IceBlink Engine app
                 {
-                    if (gv.screenLauncher == null)
+                    if (gv.screenSplash == null)
                     {
-                        gv.screenLauncher = new ScreenLauncher(gv.mod, gv);
+                        gv.screenSplash = new ScreenSplash(gv.mod, gv);
                     }
-                    if (gv.screenPartyBuild == null)
-                    {
-                        gv.screenPartyBuild = new ScreenPartyBuild(gv.mod, gv);
-                    }
-                    if (gv.screenPcCreation == null)
-                    {
-                        gv.screenPcCreation = new ScreenPcCreation(gv.mod, gv);
-                    }
-                    if (gv.screenTitle == null)
-                    {
-                        gv.screenTitle = new ScreenTitle(gv.mod, gv);
-                    }
-                    //TODO make sure this works
-                    gv.screenLauncher.loadModuleInfoFiles();
-                    gv.screenType = "launcher";
+                    gv.screenType = "splash";
                 }
                 else //this is a fixed module
                 {
@@ -1287,8 +1274,11 @@ namespace IBbasic
                 {
                     //if the encounter was completed in the saveMod then clear all creatures in the newMod
                     Encounter e = gv.mod.getEncounter(enc.encounterName);
-                    e.encounterCreatureList.Clear();
-                    e.encounterCreatureRefsList.Clear();
+                    if (e != null)
+                    {
+                        e.encounterCreatureList.Clear();
+                        e.encounterCreatureRefsList.Clear();
+                    }
                 }
             }
             //U  "moduleGlobalInts": [], (use all save)
@@ -1629,6 +1619,7 @@ namespace IBbasic
         }
         public void saveAsFiles()
         {
+            gv.sf.MessageBox("ERROR: You can't use NewModule as the module name or you have a blank module name...please go to module settings and change the module name before saving your module.");
             /*
             using (TextInputDialog itSel = new TextInputDialog(gv, "Enter the new file save name for this Module.", gv.mod.moduleName))
             {

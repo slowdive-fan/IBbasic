@@ -3800,6 +3800,15 @@ namespace IBbasic
                 }
                 //btnSelect.Text = "SELECT";
                 gv.screenType = "main";
+                //hide image of trigger if setting says to do so
+                Trigger trg = gv.mod.currentArea.getTriggerByLocation(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY);
+                if (trg != null)
+                {
+                    if (trg.HideImageAfterEnc)
+                    {
+                        trg.isShown = false;
+                    }
+                }
                 //do END ENCOUNTER IBScript
                 //gv.cc.doIBScriptBasedOnFilename(gv.mod.currentEncounter.OnEndCombatIBScript, gv.mod.currentEncounter.OnEndCombatIBScriptParms);
                 if (gv.cc.calledEncounterFromProp)
