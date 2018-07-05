@@ -1629,6 +1629,14 @@ namespace IBbasic
         {
             DependencyService.Get<ISaveAndLoad>().SaveText(fullPath, text);
         }
+        public void ZipModule(string modFilename)
+        {
+            DependencyService.Get<ISaveAndLoad>().ZipModule(modFilename);
+        }
+        public void UnZipModule(string modFilename)
+        {
+            DependencyService.Get<ISaveAndLoad>().UnZipModule(modFilename);
+        }
         public string LoadStringFromUserFolder(string fullPath)
         {
             return DependencyService.Get<ISaveAndLoad>().LoadStringFromUserFolder(fullPath);

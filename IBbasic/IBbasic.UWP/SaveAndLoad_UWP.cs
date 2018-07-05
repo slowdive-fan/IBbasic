@@ -67,6 +67,16 @@ namespace IBbasic.UWP
             }
         }
 
+        public void ZipModule(string modFilename)
+        {
+            
+        }
+
+        public void UnZipModule(string modFilename)
+        {
+
+        }
+
         public void SaveText(string fullPath, string text)
         {
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;

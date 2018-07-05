@@ -18,6 +18,8 @@ namespace IBbasic
         void CreateUserFolders();
         void CreateBackUpModuleFolder(string modFilename);
         void SaveText(string fullPath, string text);
+        void ZipModule(string modFilename);
+        void UnZipModule(string modFilename);
 
         string LoadStringFromUserFolder(string fullPath);
         string LoadStringFromAssetFolder(string fullPath);

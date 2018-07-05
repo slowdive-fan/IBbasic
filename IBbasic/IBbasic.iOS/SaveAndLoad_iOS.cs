@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
+using System.IO.Compression;
 
 [assembly: Dependency(typeof(SaveAndLoad_iOS))]
 namespace IBbasic.iOS
@@ -56,6 +57,42 @@ namespace IBbasic.iOS
                     }
                     break;
                 }
+            }
+        }
+
+        public void ZipModule(string modFilename)
+        {
+            try
+            {
+                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var directoryname = Path.Combine(documents, "modules");
+                var path = Path.Combine(directoryname, modFilename);
+                ZipFile.CreateFromDirectory(path, path + ".zip");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void UnZipModule(string modFilename)
+        {
+            try
+            {
+                //if module folder already exists then copy to back-up folder and delete
+                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var directoryname = Path.Combine(documents, "modules");
+                var path = Path.Combine(directoryname, modFilename);
+                if (Directory.Exists(path))
+                {
+                    CreateBackUpModuleFolder(modFilename);
+                    Directory.Delete(path, true);
+                }
+                ZipFile.ExtractToDirectory(path + ".zip", path);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -159,7 +196,7 @@ namespace IBbasic.iOS
             else if (modFilename.Equals("NewModule.mod"))
             {
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.NewModule.mod");
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.NewModule.mod");
                 using (var reader = new System.IO.StreamReader(stream))
                 {
                     return reader.ReadToEnd();
@@ -192,6 +229,28 @@ namespace IBbasic.iOS
 
         public SKBitmap LoadBitmap(string filename, Module mdl)
         {
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var modulesDir = Path.Combine(documents, "modules");
+            var modFolder = Path.Combine(modulesDir, mdl.moduleName);
+            var modGraphicsFolder = Path.Combine(modFolder, "graphics");
+            var filePath = Path.Combine(modGraphicsFolder, filename);
+
+            if (File.Exists(filePath))
+            {
+                SKBitmap bm = SKBitmap.Decode(filePath);
+                if (bm != null)
+                {
+                    return bm;
+                }
+            }
+            else if (File.Exists(filePath + ".png"))
+            {
+                SKBitmap bm = SKBitmap.Decode(filePath + ".png");
+                if (bm != null)
+                {
+                    return bm;
+                }
+            }
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
             if (stream == null)
@@ -208,7 +267,7 @@ namespace IBbasic.iOS
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBx.iOS.Assets.graphics." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics." + filename + ".png");
             }
             if (stream == null)
             {
@@ -270,8 +329,8 @@ namespace IBbasic.iOS
             List<string> list = new List<string>();
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             
-            int pos = folderpath.LastIndexOf("\\") + 1;
-            string filename = folderpath.Substring(pos, folderpath.Length - pos);
+            //int pos = folderpath.LastIndexOf("\\") + 1;
+            //string filename = folderpath.Substring(pos, folderpath.Length - pos);
 
             foreach (var res in assembly.GetManifestResourceNames())
             {
@@ -281,14 +340,14 @@ namespace IBbasic.iOS
                     list.Add(split[split.Length - 2]);
                 }
             }
-            foreach (var res in assembly.GetManifestResourceNames())
+            /*foreach (var res in assembly.GetManifestResourceNames())
             {
                 if ((res.Contains(filename)) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
                 }
-            }
+            }*/
             return list;
         }
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
@@ -309,14 +368,14 @@ namespace IBbasic.iOS
             //FROM ASSETS
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             
-            /* DEBUGGING RESOURCE PATH
-            foreach (var res in assembly.GetManifestResourceNames())
-            {
-                int x3 = 0;
-            }*/
+            //DEBUGGING RESOURCE PATH
+            //foreach (var res in assembly.GetManifestResourceNames())
+            //{
+            //    int x3 = 0;
+            //}
 
-            int pos = assetFolderpath.LastIndexOf("\\") + 1;
-            string filename = assetFolderpath.Substring(pos, assetFolderpath.Length - pos);
+            //int pos = assetFolderpath.LastIndexOf("\\") + 1;
+            //string filename = assetFolderpath.Substring(pos, assetFolderpath.Length - pos);
 
             foreach (var res in assembly.GetManifestResourceNames())
             {
@@ -326,14 +385,14 @@ namespace IBbasic.iOS
                     list.Add(split[split.Length - 2]);
                 }
             }
-            foreach (var res in assembly.GetManifestResourceNames())
+            /*foreach (var res in assembly.GetManifestResourceNames())
             {
                 if (res.EndsWith(extension))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
                 }
-            }
+            }*/
             return list;
         }
         public List<string> GetAllModuleFiles()

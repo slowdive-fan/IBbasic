@@ -86,8 +86,8 @@ namespace IBbasic
             int pH = (int)((float)gv.screenHeight / 100.0f);
 		    int sX = gv.uiSquareSize * 0 + gv.uiSquareSize / 4;
 		    int sY = pH * 4;
-            IbRect src = new IbRect(0, 0, convoBitmap.Width, convoBitmap.Width);
-            IbRect dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.8), (int)(gv.uiSquareSize * 1.8));
+            IbRect src = new IbRect(0, 0, convoBitmap.Width, convoBitmap.Height);
+            IbRect dst = new IbRect(sX, sY, (int)(gv.uiSquareSize * 1.8), (int)(gv.uiSquareSize * 2.8));
 
             if (convoBitmap.Width == convoBitmap.Height)
             {
@@ -124,16 +124,16 @@ namespace IBbasic
             int pH = (int)((float)gv.screenHeight / 100.0f);
             int startX = gv.uiSquareSize * 2 + (pW * 3);
             int startY = pH * 4;
-            int width = gv.screenWidth - startX - (pW * 5);
-		
-		    if (gv.mod.currentConvo.Narration)
+            int width = gv.uiSquareSize * gv.uiSquaresInWidth - startX;
+
+            if (gv.mod.currentConvo.Narration)
             {
                 if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     //do narration with image setup
                     startX = (int)(gv.uiSquareSize * 0.5);
                     startY = (int)(gv.uiSquareSize * 2.5);
-                    width = gv.screenWidth - (startX);
+                    width = gv.uiSquareSize * gv.uiSquaresInWidth - (startX);
                 }
                 else //Narration without image
                 {
@@ -166,15 +166,15 @@ namespace IBbasic
 		    int pad = (int)((float)gv.screenHeight / 100.0f);
 		    int startX = gv.uiSquareSize * 0 + gv.uiSquareSize / 4;
             int sY = (int)((float)gv.screenHeight / 100.0f) * 4;
-		    int startY = (int)(gv.uiSquareSize * 2.5) + (pH * 5);		
-		    int width = gv.screenWidth - (startX);
+            int startY = (int)(gv.uiSquareSize * 3) + (pH * 5);
+            int width = gv.uiSquareSize * gv.uiSquaresInWidth - (startX);
 
             if (gv.mod.currentConvo.Narration)
             {
                 if (!gv.mod.currentConvo.NpcPortraitBitmap.Equals("")) //Narration with image
                 {
                     //do narration with image setup
-                    startY = (int)((float)gv.screenHeight / 100.0f) * 50;
+                    startY = (int)(gv.uiSquareSize * 3) + (pH * 5);
                 }
                 else //Narration without image
                 {

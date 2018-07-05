@@ -4,6 +4,7 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -57,6 +58,36 @@ namespace IBbasic.Droid
                     }
                     break;
                 }
+            }
+        }
+
+        public void ZipModule(string modFilename)
+        {
+            try
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename;
+                string path = ConvertFullPath(convertedFullPath, "\\");
+                ZipFile.CreateFromDirectory(path, path + ".zip");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void UnZipModule(string modFilename)
+        {
+            try
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename;
+                string path = ConvertFullPath(convertedFullPath, "\\");
+                ZipFile.ExtractToDirectory(path + ".zip", path);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -195,20 +226,8 @@ namespace IBbasic.Droid
                 //string storageFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
                 Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                string storageFolder = sdCard.AbsolutePath + "/IBx";
-                if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/tiles/" + filename);
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png"))
+                string storageFolder = sdCard.AbsolutePath + "/IBbasic";
+                if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png"))
                 {
                     bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png");
                 }
@@ -223,43 +242,7 @@ namespace IBbasic.Droid
                 else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename))
                 {
                     bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename);
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/ui/" + filename);
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/pctokens/" + filename);
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/portraits/" + filename);
-                }
+                }                
                 //STOP here if already found bitmap
                 if (bm != null)
                 {

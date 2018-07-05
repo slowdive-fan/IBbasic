@@ -75,6 +75,7 @@ namespace IBbasic
 	    public Creature DeepCopy()
 	    {
 		    Creature copy = new Creature();
+            copy.moduleCreature = this.moduleCreature;
             copy.cr_tokenFilename = this.cr_tokenFilename;
 		    copy.combatFacingLeft = this.combatFacingLeft;
             copy.combatFacing = this.combatFacing;

@@ -301,7 +301,10 @@ namespace IBbasic
         }
         public void resetTokenAndPortrait()
         {
-            btnToken.Img2 = gv.mod.playerList[gv.cc.partyScreenPcIndex].tokenFilename;
+            if (gv.mod.playerList.Count > 0)
+            {
+                btnToken.Img2 = gv.mod.playerList[gv.cc.partyScreenPcIndex].tokenFilename;
+            }
             //btnPortrait.Img = gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename;
         }
 

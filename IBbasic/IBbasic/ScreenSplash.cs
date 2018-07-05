@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace IBbasic
         //private IbbButton btnZip = null;
         private IbbButton btnPlay = null;
         private IbbButton btnCreate = null;
+        private IbbButton btnZip = null;
+        private IbbButton btnUnZip = null;
         private SKBitmap titleBitmap;
         //private List<string> moduleFolderList = new List<string>();
         //private List<string> moduleZipList = new List<string>();
@@ -43,7 +46,7 @@ namespace IBbasic
                 btnPlay.Img = "btn_large";
                 btnPlay.Glow = "btn_large_glow";
                 btnPlay.X = wideX;
-                btnPlay.Y = 2 * gv.uiSquareSize + pH * 4;
+                btnPlay.Y = 1 * gv.uiSquareSize + pH * 2;
                 btnPlay.Height = (int)(gv.ibbheight * gv.scaler);
                 btnPlay.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -54,9 +57,31 @@ namespace IBbasic
                 btnCreate.Img = "btn_large";
                 btnCreate.Glow = "btn_large_glow";
                 btnCreate.X = wideX;
-                btnCreate.Y = 3 * gv.uiSquareSize + pH * 6;
+                btnCreate.Y = 2 * gv.uiSquareSize + pH * 4;
                 btnCreate.Height = (int)(gv.ibbheight * gv.scaler);
                 btnCreate.Width = (int)(gv.ibbwidthL * gv.scaler);
+            }
+            if (btnZip == null)
+            {
+                btnZip = new IbbButton(gv, 1.0f);
+                btnZip.Text = "ZIP A MODULE";
+                btnZip.Img = "btn_large";
+                btnZip.Glow = "btn_large_glow";
+                btnZip.X = wideX;
+                btnZip.Y = 3 * gv.uiSquareSize + pH * 6;
+                btnZip.Height = (int)(gv.ibbheight * gv.scaler);
+                btnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
+            }
+            if (btnUnZip == null)
+            {
+                btnUnZip = new IbbButton(gv, 1.0f);
+                btnUnZip.Text = "UNZIP A MODULE";
+                btnUnZip.Img = "btn_large";
+                btnUnZip.Glow = "btn_large_glow";
+                btnUnZip.X = wideX;
+                btnUnZip.Y = 4 * gv.uiSquareSize + pH * 8;
+                btnUnZip.Height = (int)(gv.ibbheight * gv.scaler);
+                btnUnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
         }
 
@@ -72,6 +97,8 @@ namespace IBbasic
 
             btnPlay.Draw();
             btnCreate.Draw();
+            btnZip.Draw();
+            btnUnZip.Draw();
 
             //Draw IceBlink2RPG Engine Version Number
             int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (2 * gv.fontWidth);
@@ -90,6 +117,8 @@ namespace IBbasic
         {
             btnPlay.glowOn = false;
             btnCreate.glowOn = false;
+            btnZip.glowOn = false;
+            btnUnZip.glowOn = false;
 
             //int eventAction = event.getAction();
             switch (eventType)
@@ -100,6 +129,8 @@ namespace IBbasic
 
                     btnPlay.glowOn = false;
                     btnCreate.glowOn = false;
+                    btnZip.glowOn = false;
+                    btnUnZip.glowOn = false;
 
                     if (btnPlay.getImpact(x, y))
                     {
@@ -118,9 +149,15 @@ namespace IBbasic
                     }
                     else if (btnCreate.getImpact(x, y))
                     {
-                        //GetNumInput();
-                        //GetStringInput();
                         SelectModuleToEdit();
+                    }
+                    else if (btnZip.getImpact(x, y))
+                    {
+                        SelectModuleToZip();
+                    }
+                    else if (btnUnZip.getImpact(x, y))
+                    {
+                        SelectModuleToUnZip();
                     }
                     break;
 
@@ -136,6 +173,14 @@ namespace IBbasic
                     else if (btnCreate.getImpact(x, y))
                     {
                         btnCreate.glowOn = true;
+                    }
+                    else if (btnZip.getImpact(x, y))
+                    {
+                        btnZip.glowOn = true;
+                    }
+                    else if (btnUnZip.getImpact(x, y))
+                    {
+                        btnUnZip.glowOn = true;
                     }
                     break;
             }
@@ -187,6 +232,58 @@ namespace IBbasic
             
             gv.touchEnabled = true;
         }
+        public async void SelectModuleToZip()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("None");
+
+            var list2 = loadModuleNamesToList();
+            foreach (string s in list2)
+            {
+                itlist.Add(s);
+            }
+
+            string selectedModule = await gv.ListViewPage(itlist, "Module to Zip");
+
+            if (selectedModule.Equals("None"))
+            {
+                //do nothing
+            }
+            else
+            {
+                gv.ZipModule(selectedModule);
+            }
+
+            gv.touchEnabled = true;           
+        }
+        public async void SelectModuleToUnZip()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("None");
+
+            var list2 = loadZipFilesToList();
+            foreach (string s in list2)
+            {
+                itlist.Add(s);
+            }
+
+            string selectedModule = await gv.ListViewPage(itlist, "Module to UnZip");
+
+            if (selectedModule.Equals("None"))
+            {
+                //do nothing
+            }
+            else
+            {
+                gv.UnZipModule(selectedModule);
+            }
+
+            gv.touchEnabled = true;
+        }
 
         public List<string> loadModuleNamesToList()
         {
@@ -206,6 +303,13 @@ namespace IBbasic
                 }
             }
 
+            return retList;
+        }
+
+        public List<string> loadZipFilesToList()
+        {
+            List<string> retList = new List<string>();
+            retList = gv.GetAllFilesWithExtensionFromBothFolders("\\modules", "\\modules", ".zip");            
             return retList;
         }
     }

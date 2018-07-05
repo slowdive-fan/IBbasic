@@ -1721,7 +1721,7 @@ namespace IBbasic
                     }
                 }
                 //save mod
-                string output = JsonConvert.SerializeObject(gv.mod, Formatting.None);
+                string output = JsonConvert.SerializeObject(gv.mod, Formatting.Indented);
                 gv.SaveText("\\modules\\" + gv.mod.moduleName + "\\" + gv.mod.moduleName + ".mod", output);
                 //save areas
                 foreach (Area a in gv.mod.moduleAreasObjects)

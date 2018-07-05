@@ -101,6 +101,7 @@ namespace IBbasic
 	    {
 		    Item copy = new Item();
 		    copy.name = this.name;
+            copy.moduleItem = this.moduleItem;
             copy.ArmorWeightType = this.ArmorWeightType;
 		    copy.itemImage = this.itemImage;
 		    copy.tag = this.tag;
