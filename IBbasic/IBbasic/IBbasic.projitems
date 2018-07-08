@@ -125,6 +125,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_hole01.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_w_brcav0b.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_minimap_frame.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\black_tile.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\graphics\blank.png" />
@@ -1336,7 +1338,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_ice_0.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_ice_1.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_portal1.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_wxcove0.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_wxcove1.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_w_adbrk0.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_w_adbrk1.png" />

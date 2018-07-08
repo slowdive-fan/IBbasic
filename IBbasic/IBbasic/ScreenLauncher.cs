@@ -145,7 +145,7 @@ namespace IBbasic
                     if (modinfo != null)
                     {
                         moduleInfoList.Add(modinfo);
-                        titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName));
+                        titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName, modinfo));
                     }                    
                 }                                
             }

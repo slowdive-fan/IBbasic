@@ -301,7 +301,7 @@ namespace IBbasic
         }
         public void resetTokenAndPortrait()
         {
-            if (gv.mod.playerList.Count > 0)
+            if ((gv.mod.playerList.Count > 0) && (gv.mod.playerList.Count > gv.cc.partyScreenPcIndex))
             {
                 btnToken.Img2 = gv.mod.playerList[gv.cc.partyScreenPcIndex].tokenFilename;
             }
@@ -323,7 +323,7 @@ namespace IBbasic
             int locY = 0;
             int locX = 1 * gv.uiSquareSize + (padH * 3);
             int tabX0 = 2 * gv.uiSquareSize + (padH * 3);
-            int tabX = 4 * gv.uiSquareSize;
+            int tabX = 5 * gv.uiSquareSize - (padH * 3);
             int tabX2 = 8 * gv.uiSquareSize + (padH * 5);
             //int textH = (int)gv.cc.MeasureString("GetHeight", gv.drawFontReg, gv.Width).Height;
             //int textH = gv.drawFontRegHeight;
@@ -627,15 +627,15 @@ namespace IBbasic
             //4. Draw TextBox with info from abvoe about attack and damage
             //Description
             string textToSpan2 = "";
-            textToSpan2 = "<u>Current Att & Damg</u>" + "<BR>";
-            textToSpan2 += "Num of attacks: " + numAtt + "<BR>";
+            textToSpan2 = "<gy>Attack & Damage</gy>" + "<BR>";
+            textToSpan2 += "Num of att: " + numAtt + "<BR>";
             textToSpan2 += "Att bonus: " + attackMod + "<BR>";
             textToSpan2 += "Damg: " + numberOfDiceRolled + "d" + typeOfDieRolled + "+" + damModifier + "<BR>";
-            textToSpan2 += "Damg type: " + damageType + "<BR>";
+            textToSpan2 += "Type: " + damageType + "<BR>";
 
             //locY = leftStartY;
 
-            xLoc = (7 * gv.uiSquareSize) + gv.uiSquareSize / 2;
+            xLoc = (8 * gv.uiSquareSize) + gv.uiSquareSize / 2;
             yLoc = leftStartY;
             width = 7 * gv.uiSquareSize;
             height = 6 * gv.uiSquareSize;

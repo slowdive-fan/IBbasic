@@ -734,7 +734,7 @@ namespace IBbasic
             string nameMinusJson = filename.Replace(".json", "");
             foreach (Player p in gv.mod.companionPlayerList)
             {
-                if (p.name.Equals(nameMinusJson))
+                if ((p.name.Equals(nameMinusJson)) || (p.tag.Equals(nameMinusJson)))
                 {
                     return p.DeepCopy();
                 }
@@ -1526,7 +1526,51 @@ namespace IBbasic
             {
                 JsonSerializer serializer = new JsonSerializer();
                 this.datafile = (Data)serializer.Deserialize(sr, typeof(Data));
-            }            
+            }
+            //APPEND MODULE DATA FILE (CLASSS, RACES, SPELLS, TRAITS, EFFECTS)
+            s = gv.LoadStringFromUserFolder("\\modules\\" + toReturn.moduleName + "\\data.json");
+            if (!s.Equals(""))
+            {
+                Data appendData = new Data();
+                using (StringReader sr = new StringReader(s))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    appendData = (Data)serializer.Deserialize(sr, typeof(Data));
+                }
+                foreach (PlayerClass pc in appendData.dataPlayerClassList)
+                {
+                    this.datafile.dataPlayerClassList.Add(pc.DeepCopy());
+                    foreach (string s1 in pc.itemsAllowed)
+                    {
+                        foreach (Item it in datafile.dataItemsList)
+                        {
+                            if (it.resref.Equals(s1))
+                            {
+                                if (!it.classesAllowed.Contains(pc.tag))
+                                {
+                                    it.classesAllowed.Add(pc.tag);
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach (Race pc in appendData.dataRacesList)
+                {
+                    this.datafile.dataRacesList.Add(pc.DeepCopy());
+                }
+                foreach (Effect pc in appendData.dataEffectsList)
+                {
+                    this.datafile.dataEffectsList.Add(pc.DeepCopy());
+                }
+                foreach (Spell pc in appendData.dataSpellsList)
+                {
+                    this.datafile.dataSpellsList.Add(pc.DeepCopy());
+                }
+                foreach (Trait pc in appendData.dataTraitsList)
+                {
+                    this.datafile.dataTraitsList.Add(pc.DeepCopy());
+                }
+            }
             //ITEMS
             allItemsList.Clear();
             foreach (Item it in datafile.dataItemsList)
@@ -2781,6 +2825,27 @@ namespace IBbasic
             else
             {
                 commonBitmapList.Add(fileNameWithOutExt, LoadBitmap(fileNameWithOutExt));
+                return commonBitmapList[fileNameWithOutExt];
+            }
+        }
+        public SKBitmap GetFromBitmapList(string fileNameWithOutExt, Module mdl)
+        {
+            //check to see if in list already and return bitmap it if found
+            if ((commonBitmapList.ContainsKey(fileNameWithOutExt)) || (moduleBitmapList.ContainsKey(fileNameWithOutExt)))
+            {
+                if (commonBitmapList.ContainsKey(fileNameWithOutExt))
+                {
+                    return commonBitmapList[fileNameWithOutExt];
+                }
+                else
+                {
+                    return moduleBitmapList[fileNameWithOutExt];
+                }
+            }
+            //try loading and adding to list and return bitmap
+            else
+            {
+                commonBitmapList.Add(fileNameWithOutExt, LoadBitmap(fileNameWithOutExt, mdl));
                 return commonBitmapList[fileNameWithOutExt];
             }
         }

@@ -711,8 +711,10 @@ namespace IBbasic
             using (SKPaint skp = new SKPaint())
             {
                 SKRect SKRectangle = new SKRect();
-                rect.Left = rect.Left + oXshift;
-                rect.Top = rect.Top + oYshift;
+                SKRectangle.Left = rect.Left + oXshift;
+                SKRectangle.Top = rect.Top + oYshift;
+                SKRectangle.Bottom = SKRectangle.Top + rect.Height;
+                SKRectangle.Right = SKRectangle.Left + rect.Width;
 
                 skp.IsAntialias = true;
                 skp.Style = SKPaintStyle.Stroke;

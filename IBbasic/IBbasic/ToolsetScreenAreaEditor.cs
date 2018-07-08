@@ -2126,6 +2126,7 @@ namespace IBbasic
         public void drawInfoPanel()
         {
             int index = selectedSquare.Y * gv.mod.currentArea.MapSizeX + selectedSquare.X;
+            if (index > gv.mod.currentArea.Layer2Filename.Count) { index = 0; }
 
             gv.DrawText("INFO OF TILE", panelLeftLocation, panelTopLocation + (1 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
             gv.DrawText("Tile: (" + selectedSquare.X + "," + selectedSquare.Y + ")", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
@@ -3189,8 +3190,8 @@ namespace IBbasic
                     }
                     else if (tglSettingIs3dArea.getImpact(x, y))
                     {
-                        //tglSettingIs3dArea.toggleOn = !tglSettingIs3dArea.toggleOn;
-                        //gv.mod.currentArea.Is3dArea = tglSettingIs3dArea.toggleOn;
+                        tglSettingIs3dArea.toggleOn = !tglSettingIs3dArea.toggleOn;
+                        gv.mod.currentArea.Is3dArea = tglSettingIs3dArea.toggleOn;
                     }
                     else if (tglSettingRestingAllowed.getImpact(x, y))
                     {

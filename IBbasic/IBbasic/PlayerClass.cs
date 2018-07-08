@@ -33,8 +33,8 @@ namespace IBbasic
         public int[] traitsToLearnAtLevelTable = new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         public int[] spellsToLearnAtLevelTable = new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         public int[] xpTable = new int[]{0,200,400,800,1600,3200,6500,12500,25000,50000};
-	    //public List<ItemRefs> itemsAllowed = new List<ItemRefs>();
-	    public List<TraitAllowed> traitsAllowed = new List<TraitAllowed>();
+        public List<string> itemsAllowed = new List<string>();
+        public List<TraitAllowed> traitsAllowed = new List<TraitAllowed>();
 	    public List<SpellAllowed> spellsAllowed = new List<SpellAllowed>();
 	
 	    public PlayerClass()
@@ -95,11 +95,11 @@ namespace IBbasic
 		    copy.xpTable = (int[])this.xpTable.Clone();
             copy.traitsToLearnAtLevelTable = (int[])this.traitsToLearnAtLevelTable.Clone();
             copy.spellsToLearnAtLevelTable = (int[])this.spellsToLearnAtLevelTable.Clone();
-            /*copy.itemsAllowed = new List<ItemRefs>();
-            foreach (ItemRefs s in this.itemsAllowed)
+            copy.itemsAllowed = new List<string>();
+            foreach (string s in this.itemsAllowed)
             {
-                copy.itemsAllowed.Add(s.DeepCopy());
-            }*/
+                copy.itemsAllowed.Add(s);
+            }
             copy.spellsAllowed = new List<SpellAllowed>();
             foreach (SpellAllowed sa in this.spellsAllowed)
             {
