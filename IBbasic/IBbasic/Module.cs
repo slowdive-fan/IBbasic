@@ -150,6 +150,35 @@ namespace IBbasic
                     Area are = (Area)serializer.Deserialize(sr, typeof(Area));
                     if (are != null)
                     {
+                        if (gv.cc.saveMod != null)
+                        {
+                            foreach (AreaSave sar in gv.cc.saveMod.moduleAreasObjects)
+                            {
+                                if (sar.Filename.Equals(are.Filename)) //sar is saved game, ar is new game from toolset version
+                                {
+                                    //tiles
+                                    for (int index = 0; index < are.Visible.Count; index++)
+                                    {
+                                        are.Visible[index] = sar.Visible[index];
+                                    }
+                                    //triggers
+                                    foreach (Trigger tr in are.Triggers)
+                                    {
+                                        foreach (TriggerSave str in sar.Triggers)
+                                        {
+                                            if (tr.TriggerTag.Equals(str.TriggerTag))
+                                            {
+                                                tr.Enabled = str.Enabled;
+                                                tr.EnabledEvent1 = str.EnabledEvent1;
+                                                tr.EnabledEvent2 = str.EnabledEvent2;
+                                                tr.EnabledEvent3 = str.EnabledEvent3;
+                                                //may want to copy the trigger's squares list from the save game if builders can modify the list with scripts
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         this.moduleAreasObjects.Add(are);
                         this.currentArea = are;
                         return true;
@@ -183,6 +212,20 @@ namespace IBbasic
                     Encounter enc = (Encounter)serializer.Deserialize(sr, typeof(Encounter));
                     if (enc != null)
                     {
+                        if (gv.cc.saveMod != null)
+                        {
+                            foreach (EncounterSave encsav in gv.cc.saveMod.moduleEncountersCompletedList)
+                            {
+                                if (encsav.encounterName.Equals(enc.encounterName))
+                                {
+                                    if (encsav.completed)
+                                    {
+                                        enc.encounterCreatureList.Clear();
+                                        enc.encounterCreatureRefsList.Clear();
+                                    }
+                                }
+                            }
+                        }
                         this.moduleEncountersList.Add(enc);
                         this.currentEncounter = enc;
                         return true;

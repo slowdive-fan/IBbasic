@@ -59,6 +59,8 @@ namespace IBbasic
 
         //Info Panel
         public Coordinate selectedSquare = new Coordinate();
+        public IbbToggle tglMoveCrtMode = null;
+
 
         //Walkable-LoS Panel
         public IbbToggle rbtnWalkBlocking = null;
@@ -108,6 +110,7 @@ namespace IBbasic
             gv = g;
             mapStartLocXinPixels = 1 * gv.uiSquareSize;
             setControlsStart();
+            setupInfoPanelControls();
             setupTilesPanelControls();
             setupSettingsPanelControls();
             setupWalkLoSPanelControls();
@@ -226,6 +229,23 @@ namespace IBbasic
             btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
+        }
+        public void setupInfoPanelControls()
+        {
+            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
+            panelTopLocation = (gv.oYshift / 4);
+
+            //TILES PANEL            
+            if (tglMoveCrtMode == null)
+            {
+                tglMoveCrtMode = new IbbToggle(gv);
+            }
+            tglMoveCrtMode.ImgOn = "mtgl_rbtn_on";
+            tglMoveCrtMode.ImgOff = "mtgl_rbtn_off";
+            tglMoveCrtMode.X = panelLeftLocation;
+            tglMoveCrtMode.Y = panelTopLocation + (15 * (gv.fontHeight + gv.fontLineSpacing));
+            tglMoveCrtMode.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglMoveCrtMode.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
         public void setupTilesPanelControls()
         {
@@ -840,6 +860,7 @@ namespace IBbasic
 
             if (currentMode.Equals("Info"))
             {
+                setupInfoPanelControls();
                 drawInfoPanel();
             }
             else if (currentMode.Equals("Tiles"))
@@ -1080,35 +1101,41 @@ namespace IBbasic
             }
             gv.DrawText("Creature Tag:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             gv.DrawText(crtTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            
+
+            //Move Creature Mode
+            tglMoveCrtMode.Draw();
+            gv.DrawText("MOVE CREATURE:", tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y, "yl");
+            gv.DrawText(crtTag, tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+
+
             //info on trigger
             string trigTag = "none";
             if (gv.mod.currentEncounter.getTriggerByLocation(selectedSquare.X, selectedSquare.Y) != null)
             {
                 trigTag = gv.mod.currentEncounter.getTriggerByLocation(selectedSquare.X, selectedSquare.Y).TriggerTag;
             }
-            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (18 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             //info on walk/LoS
-            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentEncounter.Walkable[index] == 1)
             {
-                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //info on walk/LoS
-            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentEncounter.LoSBlocked[index] == 1)
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //draw selected info tile highlight
@@ -2057,9 +2084,35 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    //figure out if tapped on a map square
                     int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
                     int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+
+                    if (!tapInMapViewport(x, y))
+                    {
+                        if (tglMoveCrtMode.getImpact(x, y))
+                        {
+                            tglMoveCrtMode.toggleOn = !tglMoveCrtMode.toggleOn;
+                        }
+                        else
+                        {
+                            tglMoveCrtMode.toggleOn = false;
+                        }
+                    }
+                    else
+                    {
+                        if (tglMoveCrtMode.toggleOn)
+                        {
+                            string crtTag = "none";
+                            if (gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y) != null)
+                            {
+                                CreatureRefs crtref = gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y);
+                                crtref.creatureStartLocationX = gridX;
+                                crtref.creatureStartLocationY = gridY;
+                            }
+                        }
+                    }
+
+                    //figure out if tapped on a map square
                     if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
                     {
                         selectedSquare.X = gridX;

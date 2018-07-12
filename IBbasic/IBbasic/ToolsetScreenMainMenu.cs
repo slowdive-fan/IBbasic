@@ -523,7 +523,11 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                if (gv.mod.currentArea.MapSizeX > 10)
+                if (gv.mod.currentArea.MapSizeX > 20)
+                {
+                    gv.tsAreaEditor.mapSquareSizeScaler = 4;
+                }
+                else if (gv.mod.currentArea.MapSizeX > 10)
                 {
                     gv.tsAreaEditor.mapSquareSizeScaler = 2;
                 }

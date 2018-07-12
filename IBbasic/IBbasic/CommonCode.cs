@@ -69,6 +69,7 @@ namespace IBbasic
         public List<Creature> allCreaturesList = new List<Creature>();
         public List<Prop> allPropsList = new List<Prop>();
         public List<ScriptObject> scriptList = new List<ScriptObject>();
+        public SaveGame saveMod = null;
 
         public Spell currentSelectedSpell = new Spell();
         public Trait currentSelectedTrait = new Trait();
@@ -1180,7 +1181,7 @@ namespace IBbasic
         {
             //  load a new module (actually already have a new module at this point from launch screen		
             //  load the saved game module
-            SaveGame saveMod = null;
+            //SaveGame saveMod = null;
             string json = gv.LoadStringFromUserFolder("\\saves\\" + gv.mod.moduleName + "\\" + filename);
             //string strg = gv.GetSaveFileString(gv.mod.moduleName, filename);
             using (StringReader sr = new StringReader(json))

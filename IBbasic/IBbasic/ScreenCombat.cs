@@ -266,6 +266,8 @@ namespace IBbasic
             if (tglSettings == null)
             {
                 tglSettings = new IbbToggle(gv);
+                tglSettings.toggleOn = gv.toggleSettings.showTogglePanel;
+                showTogglePanel = gv.toggleSettings.showTogglePanel;
             }
             tglSettings.ImgOn = "tgl_toggles_on";
             tglSettings.ImgOff = "tgl_toggles_off";
@@ -273,8 +275,7 @@ namespace IBbasic
             tglSettings.Y = buttonPanelLocY + 6 * gv.uiSquareSize;
             tglSettings.Height = (int)(gv.ibbheight * gv.scaler);
             tglSettings.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglSettings.toggleOn = gv.toggleSettings.showTogglePanel;
-            showTogglePanel = gv.toggleSettings.showTogglePanel;
+            
 
 
 
@@ -481,6 +482,8 @@ namespace IBbasic
             if (tglPortraits == null)
             {
                 tglPortraits = new IbbToggle(gv);
+                tglPortraits.toggleOn = gv.toggleSettings.showPortraitPanel;
+                showPortraitPanel = gv.toggleSettings.showPortraitPanel;
             }
             tglPortraits.ImgOn = "tgl_portrait_on";
             tglPortraits.ImgOff = "tgl_portrait_off";
@@ -488,12 +491,12 @@ namespace IBbasic
             tglPortraits.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglPortraits.Height = (int)(gv.ibbheight * gv.scaler);
             tglPortraits.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglPortraits.toggleOn = gv.toggleSettings.showPortraitPanel;
-            showPortraitPanel = gv.toggleSettings.showPortraitPanel;
-
+            
             if (tglHP == null)
             {
                 tglHP = new IbbToggle(gv);
+                tglHP.toggleOn = gv.toggleSettings.showHP;
+                showHP = gv.toggleSettings.showHP;
             }
             tglHP.ImgOff = "tgl_hp_off";
             tglHP.ImgOn = "tgl_hp_on";
@@ -501,12 +504,12 @@ namespace IBbasic
             tglHP.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglHP.Height = (int)(gv.ibbheight * gv.scaler);
             tglHP.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglHP.toggleOn = gv.toggleSettings.showHP;
-            showHP = gv.toggleSettings.showHP;
-            
+                        
             if (tglSP == null)
             {
                 tglSP = new IbbToggle(gv);
+                tglSP.toggleOn = gv.toggleSettings.showSP;
+                showSP = gv.toggleSettings.showSP;
             }
             tglSP.ImgOn = "tgl_sp_on";
             tglSP.ImgOff = "tgl_sp_off";
@@ -514,12 +517,12 @@ namespace IBbasic
             tglSP.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglSP.Height = (int)(gv.ibbheight * gv.scaler);
             tglSP.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglSP.toggleOn = gv.toggleSettings.showSP;
-            showSP = gv.toggleSettings.showSP;
-
+            
             if (tglMoveOrder == null)
             {
                 tglMoveOrder = new IbbToggle(gv);
+                tglMoveOrder.toggleOn = gv.toggleSettings.showMO;
+                showMoveOrder = gv.toggleSettings.showMO;
             }
             tglMoveOrder.ImgOn = "tgl_mo_on";
             tglMoveOrder.ImgOff = "tgl_mo_off";
@@ -527,9 +530,7 @@ namespace IBbasic
             tglMoveOrder.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglMoveOrder.Height = (int)(gv.ibbheight * gv.scaler);
             tglMoveOrder.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglMoveOrder.toggleOn = gv.toggleSettings.showMO;
-            showMoveOrder = gv.toggleSettings.showMO;
-
+            
             if (tglSpeed == null)
             {
                 tglSpeed = new IbbToggle(gv);
@@ -564,6 +565,8 @@ namespace IBbasic
             if (tglGrid == null)
             {
                 tglGrid = new IbbToggle(gv);
+                tglGrid.toggleOn = gv.toggleSettings.com_showGrid;
+                gv.mod.com_showGrid = gv.toggleSettings.com_showGrid;
             }
             tglGrid.ImgOn = "tgl_grid_on";
             tglGrid.ImgOff = "tgl_grid_off";
@@ -571,9 +574,7 @@ namespace IBbasic
             tglGrid.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglGrid.Height = (int)(gv.ibbheight * gv.scaler);
             tglGrid.Width = (int)(gv.ibbwidthR * gv.scaler);
-            tglGrid.toggleOn = gv.toggleSettings.com_showGrid;
-            gv.mod.com_showGrid = gv.toggleSettings.com_showGrid;
-
+            
             if (tglHelp == null)
             {
                 tglHelp = new IbbToggle(gv);
@@ -5082,7 +5083,7 @@ namespace IBbasic
 
             if (showTogglePanel)
             {
-                yLoc = (6 * gv.uiSquareSize) + gv.oYshift - gv.fontHeight - gv.fontHeight;
+                yLoc = (6 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
             }
             for (int x = 0; x <= 2; x++)
             {
