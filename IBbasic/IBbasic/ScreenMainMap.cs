@@ -2247,7 +2247,22 @@ namespace IBbasic
                 int shiftY = (5 * gv.scaler);
                 int shiftX = (8 * gv.uiSquareSize) - (12 * gv.scaler);
                 int mapSquareSizeScaler = 1;
-                if (gv.mod.currentArea.MapSizeX > 10) { mapSquareSizeScaler = 2; }
+                if (gv.mod.currentArea.MapSizeX > 40)
+                {
+                    mapSquareSizeScaler = 8;
+                }
+                else if (gv.mod.currentArea.MapSizeX > 20)
+                {
+                    mapSquareSizeScaler = 4;
+                }
+                else if (gv.mod.currentArea.MapSizeX > 10)
+                {
+                    mapSquareSizeScaler = 2;
+                }
+                else
+                {
+                    mapSquareSizeScaler = 1;
+                }
 
                 //Draw Layers
                 #region Draw Layer 1                
@@ -2302,10 +2317,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer3Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                        int brX = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                        int brY = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
 
                         try
                         {
@@ -2347,6 +2362,24 @@ namespace IBbasic
                             {
                                 gv.DrawBitmap(gv.cc.walkPass, src, dst);
                             }
+                        }
+                    }
+                }
+
+                //Draw any Trigger Images
+                foreach (Trigger t in gv.mod.currentArea.Triggers)
+                {
+                    foreach (Coordinate p in t.TriggerSquaresList)
+                    {
+                        if ((!t.ImageFileName.Equals("none")) && (t.isShown))
+                        {
+                            int tlX = p.X * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int tlY = p.Y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                            src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
+                            dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
                         }
                     }
                 }
@@ -2432,7 +2465,7 @@ namespace IBbasic
                 int tlX1 = 0;
                 int tlY1 = 0;
                 int brX1 = (gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeX;
-                int brY1 = (gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeX;
+                int brY1 = (gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeY;
                 dst = new IbRect(tlX1 + shiftX, tlY1 + shiftY, brX1, brY1);
                 gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_minimap_frame"), src, dst);
             }

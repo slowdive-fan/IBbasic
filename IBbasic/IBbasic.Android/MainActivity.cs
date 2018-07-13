@@ -9,7 +9,7 @@ using Android.OS;
 
 namespace IBbasic.Droid
 {
-    [Activity(Label = "IBbasic", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "IBbasic", Icon = "@drawable/ic_ibmini", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public GameView gv;

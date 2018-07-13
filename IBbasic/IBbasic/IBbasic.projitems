@@ -125,6 +125,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav2.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav3.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav4.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brick2.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brick4.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_cave_2.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_cave_3.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_cave_4.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_ccav3.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_ccav4.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_hole01.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_w_brcav0b.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_minimap_frame.png" />
@@ -825,7 +835,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_wood4.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_woodstn.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_00_blank.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_dd1_0.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_marbl1.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_a_black_tile.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_a_blank.png" />
