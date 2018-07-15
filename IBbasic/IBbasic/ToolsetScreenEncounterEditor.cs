@@ -2106,8 +2106,12 @@ namespace IBbasic
                             if (gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y) != null)
                             {
                                 CreatureRefs crtref = gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y);
-                                crtref.creatureStartLocationX = gridX;
-                                crtref.creatureStartLocationY = gridY;
+                                //check if any other creature or PC is on this square
+                                if (!squareUsedByAnyCrtOrPC(gridX, gridY))
+                                {
+                                    crtref.creatureStartLocationX = gridX;
+                                    crtref.creatureStartLocationY = gridY;
+                                }
                             }
                         }
                     }
@@ -2647,6 +2651,24 @@ namespace IBbasic
                     {
                         return true;
                     }
+                }
+            }
+            return false;
+        }
+        public bool squareUsedByAnyCrtOrPC(int gridX, int gridY)
+        {
+            foreach (Coordinate coor in gv.mod.currentEncounter.encounterPcStartLocations)
+            {
+                if ((coor.X == gridX) && (coor.Y == gridY))
+                {
+                    return true;
+                }
+            }
+            foreach (CreatureRefs crtref in gv.mod.currentEncounter.encounterCreatureRefsList)
+            {
+                if ((crtref.creatureStartLocationX == gridX) && (crtref.creatureStartLocationY == gridY))
+                {
+                    return true;
                 }
             }
             return false;

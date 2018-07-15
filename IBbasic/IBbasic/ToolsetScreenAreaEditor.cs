@@ -12,6 +12,8 @@ namespace IBbasic
     {
         public GameView gv;
         public int mapSquareSizeScaler = 1;
+        public int upperSquareX = 0;
+        public int upperSquareY = 0;
         public int panelTopLocation = 0;
         public int panelLeftLocation = 0;
         public IbRect src = null;
@@ -52,6 +54,12 @@ namespace IBbasic
 
         //Info Panel
         public Coordinate selectedSquare = new Coordinate();
+        public IbbToggle rbtnZoom1 = null;
+        public IbbToggle rbtnZoom2 = null;
+        public IbbToggle rbtnPanNW = null;
+        public IbbToggle rbtnPanNE = null;
+        public IbbToggle rbtnPanSW = null;
+        public IbbToggle rbtnPanSE = null;
 
         //Walkable-LoS Panel
         public IbbToggle rbtnWalkBlocking = null;
@@ -119,10 +127,17 @@ namespace IBbasic
             mapStartLocXinPixels = 1 * gv.uiSquareSize;
             setControlsStart();
             setupTilesPanelControls();
+            setupInfoPanelControls();
             setupSettingsPanelControls();
             setupWalkLoSPanelControls();
             setupTriggerPanelControls();
             setup3DPreviewControls();
+            rbtnZoom1.toggleOn = true;
+            rbtnZoom2.toggleOn = false;
+            rbtnPanNW.toggleOn = true;
+            rbtnPanSW.toggleOn = false;
+            rbtnPanNE.toggleOn = false;
+            rbtnPanSE.toggleOn = false;
             rbtnEditLayer1.toggleOn = true;
             rbtnEditLayer2.toggleOn = false;
             rbtnEditLayer3.toggleOn = false;
@@ -358,6 +373,78 @@ namespace IBbasic
             rbtnEditLayer3.Y = panelTopLocation + (5 * gv.uiSquareSize) + ((gv.fontHeight + gv.fontLineSpacing) * 6);
             rbtnEditLayer3.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnEditLayer3.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+        }
+        public void setupInfoPanelControls()
+        {
+            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
+            panelTopLocation = (gv.oYshift / 4);
+
+            //INFO PANEL            
+            if (rbtnZoom1 == null)
+            {
+                rbtnZoom1 = new IbbToggle(gv);
+            }
+            rbtnZoom1.ImgOn = "mtgl_rbtn_on";
+            rbtnZoom1.ImgOff = "mtgl_rbtn_off";
+            rbtnZoom1.X = panelLeftLocation;
+            rbtnZoom1.Y = panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnZoom1.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnZoom1.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (rbtnZoom2 == null)
+            {
+                rbtnZoom2 = new IbbToggle(gv);
+            }
+            rbtnZoom2.ImgOn = "mtgl_rbtn_on";
+            rbtnZoom2.ImgOff = "mtgl_rbtn_off";
+            rbtnZoom2.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
+            rbtnZoom2.Y = panelTopLocation + panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnZoom2.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnZoom2.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (rbtnPanNW == null)
+            {
+                rbtnPanNW = new IbbToggle(gv);
+            }
+            rbtnPanNW.ImgOn = "mtgl_rbtn_on";
+            rbtnPanNW.ImgOff = "mtgl_rbtn_off";
+            rbtnPanNW.X = panelLeftLocation;
+            rbtnPanNW.Y = panelTopLocation + (26 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnPanNW.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnPanNW.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (rbtnPanNE == null)
+            {
+                rbtnPanNE = new IbbToggle(gv);
+            }
+            rbtnPanNE.ImgOn = "mtgl_rbtn_on";
+            rbtnPanNE.ImgOff = "mtgl_rbtn_off";
+            rbtnPanNE.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
+            rbtnPanNE.Y = panelTopLocation + (26 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnPanNE.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnPanNE.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (rbtnPanSW == null)
+            {
+                rbtnPanSW = new IbbToggle(gv);
+            }
+            rbtnPanSW.ImgOn = "mtgl_rbtn_on";
+            rbtnPanSW.ImgOff = "mtgl_rbtn_off";
+            rbtnPanSW.X = panelLeftLocation;
+            rbtnPanSW.Y = panelTopLocation + (28 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnPanSW.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnPanSW.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (rbtnPanSE == null)
+            {
+                rbtnPanSE = new IbbToggle(gv);
+            }
+            rbtnPanSE.ImgOn = "mtgl_rbtn_on";
+            rbtnPanSE.ImgOff = "mtgl_rbtn_off";
+            rbtnPanSE.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
+            rbtnPanSE.Y = panelTopLocation + (28 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnPanSE.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            rbtnPanSE.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
         public void setupSettingsPanelControls()
         {
@@ -883,6 +970,7 @@ namespace IBbasic
 
             if (currentMode.Equals("Info"))
             {
+                setupInfoPanelControls();
                 drawInfoPanel();
             }
             else if (currentMode.Equals("Tiles"))
@@ -1963,13 +2051,13 @@ namespace IBbasic
             #region Draw Layer 1
             if (rbtnShowLayer1.toggleOn)
             {
-                for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                for (int x = upperSquareX; x <= gv.mod.currentArea.MapSizeX - 1; x++)
                 {
-                    for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                    for (int y = upperSquareY; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer1Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (x - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlY = (y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
 
@@ -1989,13 +2077,13 @@ namespace IBbasic
             #region Draw Layer 2
             if (rbtnShowLayer2.toggleOn)
             {
-                for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                for (int x = upperSquareX; x <= gv.mod.currentArea.MapSizeX - 1; x++)
                 {
-                    for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                    for (int y = upperSquareY; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer2Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (x - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlY = (y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
 
@@ -2021,13 +2109,13 @@ namespace IBbasic
             {
                 if (gv.mod.currentArea.Layer3Filename.Count > 0)
                 {
-                    for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+                    for (int x = upperSquareX; x <= gv.mod.currentArea.MapSizeX - 1; x++)
                     {
-                        for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                        for (int y = upperSquareY; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                         {
                             string tile = gv.mod.currentArea.Layer3Filename[y * gv.mod.currentArea.MapSizeX + x];
-                            int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                            int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                            int tlX = (x - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                            int tlY = (y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                             int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                             int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
 
@@ -2056,8 +2144,8 @@ namespace IBbasic
             {
                 foreach (Coordinate p in t.TriggerSquaresList)
                 {
-                    int dx = (p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels;
-                    int dy = p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                    int dx = ((p.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels;
+                    int dy = (p.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                     //Pen pen = new Pen(Color.Orange, 2);
                     SKColor clr = SKColors.Orange;
                     if ((t.Event1Type.Equals("encounter")) || (t.Event2Type.Equals("encounter")) || (t.Event3Type.Equals("encounter")))
@@ -2085,8 +2173,8 @@ namespace IBbasic
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
-                        int tlX = p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (p.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlY = (p.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
@@ -2098,12 +2186,12 @@ namespace IBbasic
         }
         public void drawGrid()
         {
-            for (int x = 0; x <= gv.mod.currentArea.MapSizeX - 1; x++)
+            for (int x = upperSquareX; x <= gv.mod.currentArea.MapSizeX - 1; x++)
             {
-                for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
+                for (int y = upperSquareY; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                 {
-                    int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                    int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                    int tlX = (x - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                    int tlY = (y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
                     int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                     int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
                     src = new IbRect(0, 0, gv.cc.walkBlocked.Width, gv.cc.walkBlocked.Height);
@@ -2137,55 +2225,65 @@ namespace IBbasic
             gv.DrawText("Layer 3:", panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             gv.DrawText(gv.mod.currentArea.Layer3Filename[index], panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
 
-            //info on prop         
-            /*string propTag = "none";
-            if (gv.mod.currentArea.getPropByLocation(selectedSquare.X, selectedSquare.Y) != null)
-            {
-                propTag = gv.mod.currentArea.getPropByLocation(selectedSquare.X, selectedSquare.Y).PropTag;
-            }
-            gv.DrawText("Prop:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(propTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            */
             //info on trigger
             string trigTag = "none";
             if (gv.mod.currentArea.getTriggerByLocation(selectedSquare.X, selectedSquare.Y) != null)
             {
                 trigTag = gv.mod.currentArea.getTriggerByLocation(selectedSquare.X, selectedSquare.Y).TriggerTag;
             }
-            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             //info on walk/LoS
-            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentArea.Walkable[index] == 1)
             {
-                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
+            {
+                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            }
+
+            //info on walk/LoS
+            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            if (gv.mod.currentArea.LoSBlocked[index] == 1)
             {
                 gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
-            
-            //info on walk/LoS
-            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            if (gv.mod.currentArea.LoSBlocked[index] == 1)
-            {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            }
             else
             {
-                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            }            
+                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            }
+
+            //ZOOM
+            gv.DrawText("ZOOM LEVEL", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            int shiftForFont = (rbtnShowLayer1.Height / 2) - (gv.fontHeight / 2);
+            rbtnZoom1.Draw();
+            gv.DrawText("1X", rbtnZoom1.X + rbtnZoom1.Width + gv.scaler, rbtnZoom1.Y + shiftForFont, "wh");
+            rbtnZoom2.Draw();
+            gv.DrawText("2X", rbtnZoom2.X + rbtnZoom2.Width + gv.scaler, rbtnZoom2.Y + shiftForFont, "wh");
+
+            //PAN
+            gv.DrawText("PAN QUADRANT", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            rbtnPanNW.Draw();
+            gv.DrawText("NW", rbtnPanNW.X + rbtnPanNW.Width + gv.scaler, rbtnPanNW.Y + shiftForFont, "wh");
+            rbtnPanSW.Draw();
+            gv.DrawText("SW", rbtnPanSW.X + rbtnPanSW.Width + gv.scaler, rbtnPanSW.Y + shiftForFont, "wh");
+            rbtnPanNE.Draw();
+            gv.DrawText("NE", rbtnPanNE.X + rbtnPanNE.Width + gv.scaler, rbtnPanNE.Y + shiftForFont, "wh");
+            rbtnPanSE.Draw();
+            gv.DrawText("SE", rbtnPanSE.X + rbtnPanSE.Width + gv.scaler, rbtnPanSE.Y + shiftForFont, "wh");
 
             //draw selected info tile highlight
-            int tlX = selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int tlY = selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlX = (selectedSquare.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlY = (selectedSquare.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
             int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
             int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
-            
-            btnHelp.Draw();
+
+            //btnHelp.Draw();
         }
         public void drawTilesPanel()
         {
@@ -2654,8 +2752,8 @@ namespace IBbasic
             }
 
             //draw selected info tile highlight
-            int tlX = selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int tlY = selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlX = (selectedSquare.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlY = (selectedSquare.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler;
             int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
             int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
@@ -2961,8 +3059,8 @@ namespace IBbasic
                     if (touchDown)
                     {
                         //figure out if tapped on a map square
-                        int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                        int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                        int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
+                        int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
                         if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
                         {
                             if (rbtnEditLayer1.toggleOn)
@@ -3247,12 +3345,161 @@ namespace IBbasic
                     y = (int)eY;
 
                     //figure out if tapped on a map square
-                    int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                    int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                    int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
+                    int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
                     if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
                     {
                         selectedSquare.X = gridX;
                         selectedSquare.Y = gridY;
+                    }
+
+                    else if (rbtnZoom1.getImpact(x, y))
+                    {
+                        rbtnZoom1.toggleOn = true;
+                        rbtnZoom2.toggleOn = false;
+                        rbtnPanNW.toggleOn = true;
+                        rbtnPanNE.toggleOn = false;
+                        rbtnPanSW.toggleOn = false;
+                        rbtnPanSE.toggleOn = false;
+                        upperSquareX = 0;
+                        upperSquareY = 0;
+                        selectedSquare.X = 0;
+                        selectedSquare.Y = 0;
+                        if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
+                        {
+                            mapSquareSizeScaler = 8;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
+                        {
+                            mapSquareSizeScaler = 4;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
+                        {
+                            mapSquareSizeScaler = 2;
+                        }
+                        else
+                        {
+                            mapSquareSizeScaler = 1;
+                        }
+                    }
+                    else if (rbtnZoom2.getImpact(x, y))
+                    {
+                        rbtnZoom1.toggleOn = false;
+                        rbtnZoom2.toggleOn = true;
+                        rbtnPanNW.toggleOn = true;
+                        rbtnPanNE.toggleOn = false;
+                        rbtnPanSW.toggleOn = false;
+                        rbtnPanSE.toggleOn = false;
+                        upperSquareX = 0;
+                        upperSquareY = 0;
+                        selectedSquare.X = 0;
+                        selectedSquare.Y = 0;
+                        if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
+                        {
+                            mapSquareSizeScaler = 4;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
+                        {
+                            mapSquareSizeScaler = 2;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
+                        {
+                            mapSquareSizeScaler = 1;
+                        }
+                        else
+                        {
+                            mapSquareSizeScaler = 1;
+                        }
+                    }
+                    else if (rbtnPanNW.getImpact(x, y))
+                    {
+                        rbtnPanNW.toggleOn = true;
+                        rbtnPanNE.toggleOn = false;
+                        rbtnPanSW.toggleOn = false;
+                        rbtnPanSE.toggleOn = false;
+                        upperSquareX = 0;
+                        upperSquareY = 0;
+                    }
+                    else if (rbtnPanNE.getImpact(x, y))
+                    {
+                        rbtnPanNW.toggleOn = false;
+                        rbtnPanNE.toggleOn = true;
+                        rbtnPanSW.toggleOn = false;
+                        rbtnPanSE.toggleOn = false;
+                        if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
+                        {
+                            upperSquareX = 40;
+                            upperSquareY = 0;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
+                        {
+                            upperSquareX = 20;
+                            upperSquareY = 0;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
+                        {
+                            upperSquareX = 10;
+                            upperSquareY = 0;
+                        }
+                        else
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 0;
+                        }
+                    }
+                    else if (rbtnPanSW.getImpact(x, y))
+                    {
+                        rbtnPanNW.toggleOn = false;
+                        rbtnPanNE.toggleOn = false;
+                        rbtnPanSW.toggleOn = true;
+                        rbtnPanSE.toggleOn = false;
+                        if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 40;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 20;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 10;
+                        }
+                        else
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 0;
+                        }
+                    }
+                    else if (rbtnPanSE.getImpact(x, y))
+                    {
+                        rbtnPanNW.toggleOn = false;
+                        rbtnPanNE.toggleOn = false;
+                        rbtnPanSW.toggleOn = false;
+                        rbtnPanSE.toggleOn = true;
+                        if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
+                        {
+                            upperSquareX = 40;
+                            upperSquareY = 40;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
+                        {
+                            upperSquareX = 20;
+                            upperSquareY = 20;
+                        }
+                        else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
+                        {
+                            upperSquareX = 10;
+                            upperSquareY = 10;
+                        }
+                        else
+                        {
+                            upperSquareX = 0;
+                            upperSquareY = 0;
+                        }
                     }
 
                     btnHelp.glowOn = false;
@@ -3274,8 +3521,8 @@ namespace IBbasic
                     if (touchDown)
                     {
                         //figure out if tapped on a map square
-                        int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                        int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                        int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
+                        int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
                         if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
                         {
                             if (rbtnWalkOpen.toggleOn)
@@ -3365,8 +3612,8 @@ namespace IBbasic
                     y = (int)eY;
 
                     //figure out if tapped on a map square
-                    int gridX = (eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
-                    int gridY = eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler));
+                    int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
+                    int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
                     if ((tapInMapArea(gridX, gridY)) && (tapInMapViewport(x, y)))
                     {
                         selectedSquare.X = gridX;
@@ -3715,8 +3962,8 @@ namespace IBbasic
                     //figure out if tapped on a map square
                     int shiftY = panelTopLocation + gv.fontHeight + gv.fontLineSpacing;
                     int shiftX = panelLeftLocation - (gv.squareSize / 1);
-                    int gridX = (eX - shiftX) / (int)(gv.squareSize * ((float)gv.scaler / (float)(mapSquareSizeScaler * 2)));
-                    int gridY = (eY - shiftY) / (int)(gv.squareSize * ((float)gv.scaler / (float)(mapSquareSizeScaler * 2)));
+                    int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
+                    int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
                     if ((tapInMapArea(gridX, gridY)) && (tapInMiniMapViewport(x, y)))
                     {
                         PlayerLocationX = gridX;
@@ -4102,23 +4349,26 @@ namespace IBbasic
                 }
                 else if (selectedTrigger.Event1Type.Equals("transition"))
                 {
-                    foreach (Area a in gv.mod.moduleAreasObjects)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".are");
+                    foreach (string s in ret)
                     {
-                        types.Add(a.Filename);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event1Type.Equals("conversation"))
                 {
-                    foreach (Convo c in gv.mod.moduleConvoList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".dlg");
+                    foreach (string s in ret)
                     {
-                        types.Add(c.ConvoFileName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event1Type.Equals("encounter"))
                 {
-                    foreach (Encounter e in gv.mod.moduleEncountersList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".enc");
+                    foreach (string s in ret)
                     {
-                        types.Add(e.encounterName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event1Type.Equals("script"))
@@ -4154,23 +4404,26 @@ namespace IBbasic
                 }
                 else if (selectedTrigger.Event2Type.Equals("transition"))
                 {
-                    foreach (Area a in gv.mod.moduleAreasObjects)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".are");
+                    foreach (string s in ret)
                     {
-                        types.Add(a.Filename);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event2Type.Equals("conversation"))
                 {
-                    foreach (Convo c in gv.mod.moduleConvoList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".dlg");
+                    foreach (string s in ret)
                     {
-                        types.Add(c.ConvoFileName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event2Type.Equals("encounter"))
                 {
-                    foreach (Encounter e in gv.mod.moduleEncountersList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".enc");
+                    foreach (string s in ret)
                     {
-                        types.Add(e.encounterName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event2Type.Equals("script"))
@@ -4206,23 +4459,26 @@ namespace IBbasic
                 }
                 else if (selectedTrigger.Event3Type.Equals("transition"))
                 {
-                    foreach (Area a in gv.mod.moduleAreasObjects)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".are");
+                    foreach (string s in ret)
                     {
-                        types.Add(a.Filename);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event3Type.Equals("conversation"))
                 {
-                    foreach (Convo c in gv.mod.moduleConvoList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".dlg");
+                    foreach (string s in ret)
                     {
-                        types.Add(c.ConvoFileName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event3Type.Equals("encounter"))
                 {
-                    foreach (Encounter e in gv.mod.moduleEncountersList)
+                    List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".enc");
+                    foreach (string s in ret)
                     {
-                        types.Add(e.encounterName);
+                        types.Add(s);
                     }
                 }
                 else if (selectedTrigger.Event3Type.Equals("script"))

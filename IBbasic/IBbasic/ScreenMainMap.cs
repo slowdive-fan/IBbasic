@@ -2249,7 +2249,7 @@ namespace IBbasic
                 int mapSquareSizeScaler = 1;
                 if (gv.mod.currentArea.MapSizeX > 40)
                 {
-                    mapSquareSizeScaler = 8;
+                    mapSquareSizeScaler = 4;
                 }
                 else if (gv.mod.currentArea.MapSizeX > 20)
                 {

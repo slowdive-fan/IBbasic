@@ -101,7 +101,7 @@ namespace IBbasic
             btnUnZip.Draw();
 
             //Draw IceBlink2RPG Engine Version Number
-            int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (2 * gv.fontWidth);
+            int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (4 * gv.fontWidth);
             int pH = (int)((float)gv.screenHeight / 100.0f);
             for (int x = 0; x <= 2; x++)
             {

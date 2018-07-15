@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace IBbasic
         public GameView gv;
         private IbbToggle btnModuleName = null;
         private IbbToggle btnModuleLabelName = null;
+        private IbbToggle btnModuleTitleImage = null;
         private IbbToggle btnModuleDescription = null;
         private IbbToggle btnModuleCredits = null;
         private IbbToggle btnModuleVersion = null;
@@ -135,6 +137,17 @@ namespace IBbasic
             btnStartingGold.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingGold.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
+            if (btnModuleTitleImage == null)
+            {
+                btnModuleTitleImage = new IbbToggle(gv);
+            }
+            btnModuleTitleImage.ImgOn = "mtgl_edit_btn";
+            btnModuleTitleImage.ImgOff = "mtgl_edit_btn";
+            btnModuleTitleImage.X = 1 * gv.uiSquareSize;
+            btnModuleTitleImage.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnModuleTitleImage.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnModuleTitleImage.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+            
             if (btnHelp == null)
             {
                 btnHelp = new IbbButton(gv, 0.8f);
@@ -202,6 +215,8 @@ namespace IBbasic
             btnStartingGold.Draw();
             gv.DrawText(" Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
             btnHelp.Draw();
+            btnModuleTitleImage.Draw();
+            gv.DrawText(" Title Image: " + gv.mod.titleImageName, btnModuleTitleImage.X + btnModuleTitleImage.Width + gv.scaler, btnModuleTitleImage.Y + shiftForFont, "wh");
 
             gv.tsMainMenu.redrawTsMainMenu();
 
@@ -298,6 +313,10 @@ namespace IBbasic
                     else if (btnStartingGold.getImpact(x, y))
                     {
                         changeStartingGold();
+                    }
+                    else if (btnModuleTitleImage.getImpact(x, y))
+                    {
+                        changeTitleImage();
                     }
                     else if (btnHelp.getImpact(x, y))
                     {
@@ -493,6 +512,48 @@ namespace IBbasic
                     gv.mod.partyGold = itSel.numInput;
                 }
             }*/
+        }
+        public async void changeTitleImage()
+        {
+            List<string> items = GetTitleImageList();
+            items.Insert(0, "default");
+
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select an image for the creature:");
+            
+            if (selected != "default")
+            {
+                gv.mod.titleImageName = selected;
+            }
+            else
+            {
+                gv.mod.titleImageName = "title";
+            }
+            
+            gv.touchEnabled = true;            
+        }
+        public List<string> GetTitleImageList()
+        {
+            List<string> titleImageList = new List<string>();
+            //MODULE SPECIFIC
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+            foreach (string f in files)
+            {
+                string filename = Path.GetFileName(f);
+                if ((filename.StartsWith("fx_")) || (filename.StartsWith("it_")) || (filename.StartsWith("ptr_")) || (filename.StartsWith("prp_")) || (filename.StartsWith("t_")) || (filename.StartsWith("tkn_")))
+                {
+                    //ignore these files
+                }
+                else
+                {
+                    string fileNameWithOutExt = Path.GetFileNameWithoutExtension(f);
+                    if (!titleImageList.Contains(fileNameWithOutExt))
+                    {
+                        titleImageList.Add(fileNameWithOutExt);
+                    }
+                }
+            }
+            return titleImageList;
         }
     }
 }

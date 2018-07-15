@@ -1722,7 +1722,7 @@ namespace IBbasic
         {
             List<string> crtTokenList = new List<string>();
             //MODULE SPECIFIC
-            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\sounds", "\\modules\\" + gv.mod.moduleName + "\\sounds", ".wav");
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\sounds", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".wav");
             foreach (string f in files)
             {
                 string filenameNoExt = Path.GetFileNameWithoutExtension(f);

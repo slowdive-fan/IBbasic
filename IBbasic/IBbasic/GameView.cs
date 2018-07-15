@@ -13,9 +13,9 @@ namespace IBbasic
 {
     public class GameView
     {
-        ContentPage cp;
-        SKCanvas canvas;
-        //this class is handled differently than Android version
+        public string versionNum = "0.9.02";
+        public ContentPage cp;
+        public SKCanvas canvas;
         public float screenDensity;
         public int screenWidth;
         public int screenHeight;
@@ -66,7 +66,6 @@ namespace IBbasic
         public SolidColorBrush sceneColorBrush;
         */
 
-        public string versionNum = "1";
         public string fixedModule = "";
         public Dictionary<char, SKRect> charList = new Dictionary<char, SKRect>();
         public string screenType = "splash"; //launcher, title, main, party, inventory, combatInventory, shop, journal, combat, combatCast, convo

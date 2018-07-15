@@ -26,6 +26,7 @@ namespace IBbasic
         public IbbButton btnJournalEditor = null;
         //BOTTOM PANEL
         public IbbButton btnSave = null;
+        public IbbButton btnBackUpModule = null;
         public IbbButton btnModuleEditor = null;
         public IbbButton btnCreatureEditor = null;
         public IbbButton btnItem = null;
@@ -157,6 +158,19 @@ namespace IBbasic
             btnSave.Height = (int)(gv.ibbheight * gv.scaler);
             btnSave.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            if (btnBackUpModule == null)
+            {
+                btnBackUpModule = new IbbButton(gv, 0.8f);
+            }
+            btnBackUpModule.Img = "btn_small";
+            btnBackUpModule.Img2 = "btndisk";
+            btnBackUpModule.Glow = "btn_small_glow";
+            btnBackUpModule.HotKey = "";
+            btnBackUpModule.X = bottomPanelLocX + 1 * gv.uiSquareSize;
+            btnBackUpModule.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
+            btnBackUpModule.Height = (int)(gv.ibbheight * gv.scaler);
+            btnBackUpModule.Width = (int)(gv.ibbwidthR * gv.scaler);
+
             if (btnModuleEditor == null)
             {
                 btnModuleEditor = new IbbButton(gv, 0.8f);
@@ -166,7 +180,7 @@ namespace IBbasic
             btnModuleEditor.Text = "MOD";
             btnModuleEditor.Glow = "btn_small_glow";
             btnModuleEditor.HotKey = "";
-            btnModuleEditor.X = bottomPanelLocX + 1 * gv.uiSquareSize;
+            btnModuleEditor.X = bottomPanelLocX + 2 * gv.uiSquareSize;
             btnModuleEditor.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnModuleEditor.Height = (int)(gv.ibbheight * gv.scaler);
             btnModuleEditor.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -180,7 +194,7 @@ namespace IBbasic
             btnCreatureEditor.Text = "CRT";
             btnCreatureEditor.Glow = "btn_small_glow";
             btnCreatureEditor.HotKey = "";
-            btnCreatureEditor.X = bottomPanelLocX + 2 * gv.uiSquareSize;
+            btnCreatureEditor.X = bottomPanelLocX + 3 * gv.uiSquareSize;
             btnCreatureEditor.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnCreatureEditor.Height = (int)(gv.ibbheight * gv.scaler);
             btnCreatureEditor.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -194,7 +208,7 @@ namespace IBbasic
             btnItem.Text = "ITEM";
             btnItem.Glow = "btn_small_glow";
             btnItem.HotKey = "";
-            btnItem.X = bottomPanelLocX + 3 * gv.uiSquareSize;
+            btnItem.X = bottomPanelLocX + 4 * gv.uiSquareSize;
             btnItem.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnItem.Height = (int)(gv.ibbheight * gv.scaler);
             btnItem.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -208,7 +222,7 @@ namespace IBbasic
             btnPlayer.Text = "PLYR";
             btnPlayer.Glow = "btn_small_glow";
             btnPlayer.HotKey = "";
-            btnPlayer.X = bottomPanelLocX + 4 * gv.uiSquareSize;
+            btnPlayer.X = bottomPanelLocX + 5 * gv.uiSquareSize;
             btnPlayer.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnPlayer.Height = (int)(gv.ibbheight * gv.scaler);
             btnPlayer.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -222,7 +236,7 @@ namespace IBbasic
             btnExit.Text = "EXIT";
             btnExit.Glow = "btn_small_glow";
             btnExit.HotKey = "";
-            btnExit.X = bottomPanelLocX + 6 * gv.uiSquareSize;
+            btnExit.X = bottomPanelLocX + 7 * gv.uiSquareSize;
             btnExit.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnExit.Height = (int)(gv.ibbheight * gv.scaler);
             btnExit.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -243,6 +257,7 @@ namespace IBbasic
                 btnShopEditor.Draw();
                 btnJournalEditor.Draw();
                 btnSave.Draw();
+                btnBackUpModule.Draw();
                 btnModuleEditor.Draw();
                 btnCreatureEditor.Draw();
                 btnItem.Draw();
@@ -259,6 +274,7 @@ namespace IBbasic
             btnShopEditor.glowOn = false;
             btnJournalEditor.glowOn = false;
             btnSave.glowOn = false;
+            btnBackUpModule.glowOn = false;
             btnModuleEditor.glowOn = false;
             btnCreatureEditor.glowOn = false;
             btnItem.glowOn = false;
@@ -301,6 +317,10 @@ namespace IBbasic
                         else if (btnSave.getImpact(x, y))
                         {
                             btnSave.glowOn = true;
+                        }
+                        else if (btnBackUpModule.getImpact(x, y))
+                        {
+                            btnBackUpModule.glowOn = true;
                         }
                         else if (btnModuleEditor.getImpact(x, y))
                         {
@@ -346,6 +366,7 @@ namespace IBbasic
                         btnShopEditor.glowOn = false;
                         btnJournalEditor.glowOn = false;
                         btnSave.glowOn = false;
+                        btnBackUpModule.glowOn = false;
                         btnModuleEditor.glowOn = false;
                         btnCreatureEditor.glowOn = false;
                         btnItem.glowOn = false;
@@ -394,6 +415,11 @@ namespace IBbasic
                             SaveModule();
                             return true;
                         }
+                        else if (btnBackUpModule.getImpact(x, y))
+                        {
+                            BackupModule();
+                            return true;
+                        }
                         else if (btnModuleEditor.getImpact(x, y))
                         {
                             gv.screenType = "tsModule";
@@ -417,7 +443,7 @@ namespace IBbasic
                         }
                         else if (btnPlayer.getImpact(x, y))
                         {
-                            BackupModule();
+                            //BackupModule();
                             return true;
                         }
                         else if (btnExit.getImpact(x, y))

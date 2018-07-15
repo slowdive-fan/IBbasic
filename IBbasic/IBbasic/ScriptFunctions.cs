@@ -176,6 +176,7 @@ namespace IBbasic
             {
                 try
                 {
+                    if (!filename.EndsWith(".cs")) { filename += ".cs"; }
                     //go through each parm1-4 and replace if GlobalInt variable, GlobalString variable or rand(3-16)
                     string p1 = replaceParameter(prm1);
                     string p2 = replaceParameter(prm2);
@@ -507,6 +508,7 @@ namespace IBbasic
             {
                 try
                 {
+                    if (!filename.EndsWith(".cs")) { filename += ".cs"; }
                     //go through each parm1-4 and replace if GlobalInt variable, GlobalString variable or rand(3-16)
                     string p1 = replaceParameter(prm1);
                     string p2 = replaceParameter(prm2);
@@ -740,6 +742,7 @@ namespace IBbasic
             {
                 try
                 {
+                    if (!filename.EndsWith(".cs")) { filename += ".cs"; }
                     //go through each parm1-4 and replace if GlobalInt variable, GlobalString variable or rand(3-16)
                     string p1 = replaceParameter(prm1);
                     string p2 = replaceParameter(prm2);
@@ -882,6 +885,7 @@ namespace IBbasic
             {
                 try
                 {
+                    if (!filename.EndsWith(".cs")) { filename += ".cs"; }
                     //go through each parm1-4 and replace if GlobalInt variable, GlobalString variable or rand(3-16)
                     string p1 = replaceParameter(prm1);
                     string p2 = replaceParameter(prm2);
