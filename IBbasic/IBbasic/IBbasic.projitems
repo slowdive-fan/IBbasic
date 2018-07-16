@@ -119,6 +119,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenJournalEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenMainMenu.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenPlayerEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenShopEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trait.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraitAllowed.cs" />

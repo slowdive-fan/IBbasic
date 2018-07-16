@@ -443,7 +443,9 @@ namespace IBbasic
                         }
                         else if (btnPlayer.getImpact(x, y))
                         {
-                            //BackupModule();
+                            gv.screenType = "tsPlayerEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
                             return true;
                         }
                         else if (btnExit.getImpact(x, y))

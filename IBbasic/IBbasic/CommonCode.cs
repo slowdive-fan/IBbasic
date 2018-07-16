@@ -3167,6 +3167,16 @@ namespace IBbasic
             }
             return new Item();
         }
+        public ItemRefs createItemRefsFromItem(Item it)
+        {
+            ItemRefs newIR = new ItemRefs();
+            newIR.tag = it.tag + "_" + gv.mod.getNextIdNumber();
+            newIR.name = it.name;
+            newIR.resref = it.resref;
+            newIR.quantity = it.quantity;
+            newIR.canNotBeUnequipped = it.canNotBeUnequipped;
+            return newIR;
+        }
         public Spell getSpellByTag(string tag)
         {
             foreach (Spell s in this.datafile.dataSpellsList)
@@ -3188,6 +3198,14 @@ namespace IBbasic
             foreach (Trait t in this.datafile.dataTraitsList)
             {
                 if (t.tag.Equals(tag)) return t;
+            }
+            return null;
+        }
+        public Trait getTraitByName(string name)
+        {
+            foreach (Trait s in this.datafile.dataTraitsList)
+            {
+                if (s.name.Equals(name)) return s;
             }
             return null;
         }
