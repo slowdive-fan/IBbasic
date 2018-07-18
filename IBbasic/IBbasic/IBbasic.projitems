@@ -126,6 +126,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ctrl_turn_left_arrow.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ctrl_turn_right_arrow.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav2.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav3.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav4.png" />

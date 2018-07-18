@@ -50,6 +50,8 @@ namespace IBbasic
         public IbbButton btnArrowDown = null;
         public IbbButton btnArrowLeft = null;
         public IbbButton btnArrowRight = null;
+        public IbbButton btnArrowTurnLeft = null;
+        public IbbButton btnArrowTurnRight = null;
         public IbbButton btnArrowWait = null;
         //BUTTONS PANEL        
         public IbbToggle tglPortraits = null;
@@ -746,6 +748,30 @@ namespace IBbasic
             btnArrowRight.Y = arrowPanelLocY + 1 * gv.uiSquareSize;
             btnArrowRight.Height = (int)(gv.ibbheight * gv.scaler);
             btnArrowRight.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnArrowTurnLeft == null)
+            {
+                btnArrowTurnLeft = new IbbButton(gv, 0.8f);
+            }
+            btnArrowTurnLeft.Img = "btn_small";
+            btnArrowTurnLeft.Img2 = "ctrl_turn_left_arrow";
+            btnArrowTurnLeft.Glow = "btn_small_glow";
+            btnArrowTurnLeft.X = arrowPanelLocX + 0 * gv.uiSquareSize;
+            btnArrowTurnLeft.Y = arrowPanelLocY + 0 * gv.uiSquareSize;
+            btnArrowTurnLeft.Height = (int)(gv.ibbheight * gv.scaler);
+            btnArrowTurnLeft.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnArrowTurnRight == null)
+            {
+                btnArrowTurnRight = new IbbButton(gv, 0.8f);
+            }
+            btnArrowTurnRight.Img = "btn_small";
+            btnArrowTurnRight.Img2 = "ctrl_turn_right_arrow";
+            btnArrowTurnRight.Glow = "btn_small_glow";
+            btnArrowTurnRight.X = arrowPanelLocX + 2 * gv.uiSquareSize;
+            btnArrowTurnRight.Y = arrowPanelLocY + 0 * gv.uiSquareSize;
+            btnArrowTurnRight.Height = (int)(gv.ibbheight * gv.scaler);
+            btnArrowTurnRight.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnArrowWait == null)
             {
@@ -2279,6 +2305,10 @@ namespace IBbasic
                         try
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
+                            if (gv.mod.currentArea.Is3dArea)
+                            {
+                                src = new IbRect(32, 64, 24, 24);
+                            }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
@@ -2813,7 +2843,7 @@ namespace IBbasic
             int xLoc = 1 * gv.uiSquareSize + (2 * gv.scaler);
             if (gv.mod.currentArea.Is3dArea)
             {
-                xLoc = map3DViewStartLocXinPixels + (2 * gv.squareSize * gv.scaler);
+                xLoc = 2 * gv.uiSquareSize;
             }
             int yLoc = (7 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
             if (gv.mod.currentArea.Is3dArea)
@@ -2991,13 +3021,18 @@ namespace IBbasic
             IbRect src = new IbRect(0, 0, width, height);
             IbRect dst = new IbRect(gv.log.tbXloc - (2 * gv.scaler), gv.log.tbYloc, width * gv.scaler, height * gv.scaler);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
-                        
+
             createArrowsPanel();
-            btnArrowUp.Draw();
-            if (!gv.mod.currentArea.Is3dArea)
+            if (gv.mod.currentArea.Is3dArea)
+            {
+                btnArrowTurnLeft.Draw();
+                btnArrowTurnRight.Draw();
+            }
+            else
             {
                 btnArrowDown.Draw();
             }
+            btnArrowUp.Draw();
             btnArrowLeft.Draw();
             btnArrowRight.Draw();
             btnArrowWait.Draw();
@@ -3204,6 +3239,8 @@ namespace IBbasic
             btnArrowLeft.glowOn = false;
             btnArrowRight.glowOn = false;
             btnArrowWait.glowOn = false;
+            btnArrowTurnRight.glowOn = false;
+            btnArrowTurnLeft.glowOn = false;
 
             btnParty.glowOn = false;
             btnInventory.glowOn = false;
@@ -3247,6 +3284,14 @@ namespace IBbasic
                     else if (btnArrowRight.getImpact(x, y))
                     {
                         btnArrowRight.glowOn = true;
+                    }
+                    else if (btnArrowTurnLeft.getImpact(x, y))
+                    {
+                        btnArrowTurnLeft.glowOn = true;
+                    }
+                    else if (btnArrowTurnRight.getImpact(x, y))
+                    {
+                        btnArrowTurnRight.glowOn = true;
                     }
                     else if (btnArrowWait.getImpact(x, y))
                     {
@@ -3323,6 +3368,8 @@ namespace IBbasic
                     btnArrowLeft.glowOn = false;
                     btnArrowRight.glowOn = false;
                     btnArrowWait.glowOn = false;
+                    btnArrowTurnRight.glowOn = false;
+                    btnArrowTurnLeft.glowOn = false;
 
                     btnParty.glowOn = false;
                     btnInventory.glowOn = false;
@@ -3508,13 +3555,155 @@ namespace IBbasic
                         }
                         else if (btnArrowLeft.getImpact(x, y))
                         {
+                            if (gv.mod.PlayerFacingDirection == 1) //EAST
+                            {
+                                if (gv.mod.PlayerLocationY > 0)
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY - 1) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationY--;
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+                            {
+                                int mapwidth = gv.mod.currentArea.MapSizeX;
+                                if (gv.mod.PlayerLocationX < (mapwidth - 1))
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX + 1, gv.mod.PlayerLocationY) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationX++;
+                                        foreach (Player pc in gv.mod.playerList)
+                                        {
+                                            if (pc.combatFacingLeft)
+                                            {
+                                                pc.combatFacingLeft = false;
+                                            }
+                                        }
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 3) //WEST
+                            {
+                                int mapheight = gv.mod.currentArea.MapSizeY;
+                                if (gv.mod.PlayerLocationY < (mapheight - 1))
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY + 1) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationY++;
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 0) //NORTH
+                            {
+                                if (gv.mod.PlayerLocationX > 0)
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX - 1, gv.mod.PlayerLocationY) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationX--;
+                                        foreach (Player pc in gv.mod.playerList)
+                                        {
+                                            if (!pc.combatFacingLeft)
+                                            {
+                                                pc.combatFacingLeft = true;
+                                            }
+                                        }
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                        }
+                        else if (btnArrowRight.getImpact(x, y))
+                        {
+                            if (gv.mod.PlayerFacingDirection == 3) //WEST
+                            {
+                                if (gv.mod.PlayerLocationY > 0)
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY - 1) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationY--;
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 0) //NORTH
+                            {
+                                int mapwidth = gv.mod.currentArea.MapSizeX;
+                                if (gv.mod.PlayerLocationX < (mapwidth - 1))
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX + 1, gv.mod.PlayerLocationY) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationX++;
+                                        foreach (Player pc in gv.mod.playerList)
+                                        {
+                                            if (pc.combatFacingLeft)
+                                            {
+                                                pc.combatFacingLeft = false;
+                                            }
+                                        }
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 1) //EAST
+                            {
+                                int mapheight = gv.mod.currentArea.MapSizeY;
+                                if (gv.mod.PlayerLocationY < (mapheight - 1))
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY + 1) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationY++;
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                            else if (gv.mod.PlayerFacingDirection == 2) //SOUTH
+                            {
+                                if (gv.mod.PlayerLocationX > 0)
+                                {
+                                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX - 1, gv.mod.PlayerLocationY) == false)
+                                    {
+                                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                                        gv.mod.PlayerLocationX--;
+                                        foreach (Player pc in gv.mod.playerList)
+                                        {
+                                            if (!pc.combatFacingLeft)
+                                            {
+                                                pc.combatFacingLeft = true;
+                                            }
+                                        }
+                                        gv.cc.doUpdate();
+                                    }
+                                }
+                            }
+                        }
+                        else if (btnArrowTurnLeft.getImpact(x, y))
+                        {
                             gv.mod.PlayerFacingDirection--;
                             if (gv.mod.PlayerFacingDirection < 0)
                             {
                                 gv.mod.PlayerFacingDirection = 3;
                             }
                         }
-                        else if (btnArrowRight.getImpact(x, y))
+                        else if (btnArrowTurnRight.getImpact(x, y))
                         {
                             gv.mod.PlayerFacingDirection++;
                             if (gv.mod.PlayerFacingDirection > 3)
@@ -3530,6 +3719,7 @@ namespace IBbasic
 
                             if (gv.mod.PlayerLocationY > 0)
                             {
+                                gv.mod.PlayerFacingDirection = 0;
                                 if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY - 1) == false)
                                 {
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -3547,6 +3737,7 @@ namespace IBbasic
                             int mapheight = gv.mod.currentArea.MapSizeY;
                             if (gv.mod.PlayerLocationY < (mapheight - 1))
                             {
+                                gv.mod.PlayerFacingDirection = 2;
                                 if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY + 1) == false)
                                 {
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -3562,6 +3753,7 @@ namespace IBbasic
 
                             if (gv.mod.PlayerLocationX > 0)
                             {
+                                gv.mod.PlayerFacingDirection = 3;
                                 if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX - 1, gv.mod.PlayerLocationY) == false)
                                 {
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -3585,6 +3777,7 @@ namespace IBbasic
                             int mapwidth = gv.mod.currentArea.MapSizeX;
                             if (gv.mod.PlayerLocationX < (mapwidth - 1))
                             {
+                                gv.mod.PlayerFacingDirection = 1;
                                 if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX + 1, gv.mod.PlayerLocationY) == false)
                                 {
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -4020,6 +4213,7 @@ namespace IBbasic
             {
                 if (gv.mod.PlayerLocationX > 0)
                 {
+                    gv.mod.PlayerFacingDirection = 3;
                     if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX - 1, gv.mod.PlayerLocationY) == false)
                     {
                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -4052,6 +4246,7 @@ namespace IBbasic
                 int mapwidth = gv.mod.currentArea.MapSizeX;
                 if (gv.mod.PlayerLocationX < (mapwidth - 1))
                 {
+                    gv.mod.PlayerFacingDirection = 1;
                     if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX + 1, gv.mod.PlayerLocationY) == false)
                     {
                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -4146,6 +4341,7 @@ namespace IBbasic
             {
                 if (gv.mod.PlayerLocationY > 0)
                 {
+                    gv.mod.PlayerFacingDirection = 0;
                     if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY - 1) == false)
                     {
                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
@@ -4158,15 +4354,19 @@ namespace IBbasic
         }
         private void moveDown()
         {
-            int mapheight = gv.mod.currentArea.MapSizeY;
-            if (gv.mod.PlayerLocationY < (mapheight - 1))
+            if (!gv.mod.currentArea.Is3dArea)
             {
-                if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY + 1) == false)
+                int mapheight = gv.mod.currentArea.MapSizeY;
+                if (gv.mod.PlayerLocationY < (mapheight - 1))
                 {
-                    gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
-                    gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
-                    gv.mod.PlayerLocationY++;
-                    gv.cc.doUpdate();
+                    gv.mod.PlayerFacingDirection = 2;
+                    if (gv.mod.currentArea.GetBlocked(gv.mod.PlayerLocationX, gv.mod.PlayerLocationY + 1) == false)
+                    {
+                        gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
+                        gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
+                        gv.mod.PlayerLocationY++;
+                        gv.cc.doUpdate();
+                    }
                 }
             }
         }

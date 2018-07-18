@@ -373,13 +373,13 @@ namespace IBbasic
             else { actext = 20 - pc.AC; }
             gv.DrawText("AC: " + actext + " BAB: " + pc.baseAttBonus, locX, locY += spacing, "wh");
             gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, locX, locY += spacing, "wh");
-            gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, locX, locY += spacing, "wh");            
+            gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, locX, locY += spacing, "wh");
             //gv.DrawText("---------------", locX, locY += spacing, 1.0f, Color.White);
 
             //LOCATE STATS INFO BUTTONS
             //locY += spacing;
-                        
-            int bottomLocY = 2 * gv.uiSquareSize + gv.uiSquareSize / 2;
+
+            int bottomLocY = (gv.ibbheight * gv.scaler) + (pH * 4) + (6 * (gv.fontHeight + gv.fontLineSpacing));
             btnSpells.Y = bottomLocY;
             btnTraits.Y = bottomLocY;
             btnEffects.Y = bottomLocY;

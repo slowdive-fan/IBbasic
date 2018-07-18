@@ -67,9 +67,11 @@ namespace IBbasic
         public int PlayerLastLocationY = 1;
         [JsonIgnore]
         public bool PlayerFacingLeft = true;
+        [JsonIgnore]
         public Area currentArea = new Area();
         [JsonIgnore]
         public Encounter currentEncounter = new Encounter();
+        [JsonIgnore]
         public Convo currentConvo = new Convo();
         public int partyGold = 0;
         public bool showPartyToken = false;
