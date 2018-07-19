@@ -428,6 +428,11 @@ namespace IBbasic.Droid
             return list;
         }
 
+        public void TrackAppEvent(string Category, string Event)
+        {
+
+        }
+
         Android.Media.MediaPlayer playerAreaMusic;
         public void CreateAreaMusicPlayer()
         {

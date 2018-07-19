@@ -38,6 +38,8 @@ namespace IBbasic.iOS
                 App.ScreenHeight = dim1;
             }
 
+            SaveAndLoad_iOS.GetGASInstance().InitializeNativeGAS();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

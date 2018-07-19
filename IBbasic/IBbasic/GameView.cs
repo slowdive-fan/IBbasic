@@ -372,6 +372,7 @@ namespace IBbasic
 	    public void resetGame()
 	    {
             mod = cc.LoadModule(mod.moduleName + ".mod");
+            cc.commonBitmapList.Clear();
             //reset log number of lines based on the value from the Module's mod file
             log.numberOfLinesToShow = mod.logNumberOfLines;            
                         
@@ -652,34 +653,34 @@ namespace IBbasic
         public void DrawText(string text, float xLoc, float yLoc, string color)
         {
             //default is WHITE
-            SKBitmap bm = cc.GetFromBitmapList("fontWh.png");
+            SKBitmap bm = cc.GetFromBitmapList("fontWh");
             if (color.Equals("bk"))
             {
-                bm = cc.GetFromBitmapList("fontBk.png");
+                bm = cc.GetFromBitmapList("fontBk");
             }
             else if (color.Equals("bu"))
             {
-                bm = cc.GetFromBitmapList("fontBu.png");
+                bm = cc.GetFromBitmapList("fontBu");
             }
             else if (color.Equals("gn"))
             {
-                bm = cc.GetFromBitmapList("fontGn.png");
+                bm = cc.GetFromBitmapList("fontGn");
             }
             else if (color.Equals("gy"))
             {
-                bm = cc.GetFromBitmapList("fontGy.png");
+                bm = cc.GetFromBitmapList("fontGy");
             }
             else if (color.Equals("ma"))
             {
-                bm = cc.GetFromBitmapList("fontMa.png");
+                bm = cc.GetFromBitmapList("fontMa");
             }
             else if (color.Equals("rd"))
             {
-                bm = cc.GetFromBitmapList("fontRd.png");
+                bm = cc.GetFromBitmapList("fontRd");
             }
             else if (color.Equals("yl"))
             {
-                bm = cc.GetFromBitmapList("fontYl.png");
+                bm = cc.GetFromBitmapList("fontYl");
             }
 
             float x = 0;
@@ -1683,6 +1684,12 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
         }
+
+        public void TrackAppEvent(string Category, string Event)
+        {
+            DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, Event);
+        }
+
         public void CreateAreaMusicPlayer()
         {
             DependencyService.Get<ISaveAndLoad>().CreateAreaMusicPlayer();

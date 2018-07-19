@@ -3421,6 +3421,7 @@ namespace IBbasic
                             gv.mod.map_showGrid = true;
                             gv.toggleSettings.map_showGrid = gv.mod.map_showGrid;
                         }
+                        gv.TrackAppEvent("tglGrid", "the grid was toggled");
                     }                    
                     if (tglClock.getImpact(x, y))
                     {

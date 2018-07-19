@@ -10,12 +10,33 @@ using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 using System.IO.Compression;
+using Google.Analytics;
 
 [assembly: Dependency(typeof(SaveAndLoad_iOS))]
 namespace IBbasic.iOS
 {
     public class SaveAndLoad_iOS : ISaveAndLoad
     {
+        public string TrackingId = "UA-60615839-12";
+        public ITracker Tracker;
+        const string AllowTrackingKey = "AllowTracking";
+
+        #region Instantition...
+        private static SaveAndLoad_iOS thisRef;
+        public SaveAndLoad_iOS()
+        {
+            // no code req'd
+        }
+
+        public static SaveAndLoad_iOS GetGASInstance()
+        {
+            if (thisRef == null)
+                // it's ok, we can call this constructor
+                thisRef = new SaveAndLoad_iOS();
+            return thisRef;
+        }
+        #endregion
+
         public void CreateUserFolders()
         {
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -427,6 +448,24 @@ namespace IBbasic.iOS
             }
 
             return list;
+        }
+
+        public void TrackAppEvent(string Category, string Event)
+        {
+            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent(Category, Event, "AppEvent", null).Build());
+            Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
+        }
+        public void InitializeNativeGAS()
+        {
+            var optionsDict = NSDictionary.FromObjectAndKey(new NSString("YES"), new NSString(AllowTrackingKey));
+            NSUserDefaults.StandardUserDefaults.RegisterDefaults(optionsDict);
+
+            Gai.SharedInstance.OptOut = !NSUserDefaults.StandardUserDefaults.BoolForKey(AllowTrackingKey);
+
+            Gai.SharedInstance.DispatchInterval = 10;
+            Gai.SharedInstance.TrackUncaughtExceptions = true;
+
+            Tracker = Gai.SharedInstance.GetTracker("TestApp", TrackingId);
         }
 
         //Android.Media.MediaPlayer playerAreaMusic;
