@@ -34,7 +34,7 @@ namespace IBbasic
         List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension);
         List<string> GetAllModuleFiles();
 
-        void TrackAppEvent(string Category, string Event);
+        void TrackAppEvent(string Category, string EventAction, string EventLabel);
 
         void CreateAreaMusicPlayer();
         void LoadAreaMusicFile(string fileName);

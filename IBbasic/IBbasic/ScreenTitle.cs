@@ -168,6 +168,7 @@ namespace IBbasic
                     if (btnNewGame.getImpact(x, y))
                     {
                         gv.PlaySound("btn_click");
+                        gv.mod.uniqueSessionIdNumberTag = gv.sf.RandInt(1000000) + "";
                         if (gv.mod.mustUsePreMadePC)
                         {
                             //no spell selection offered

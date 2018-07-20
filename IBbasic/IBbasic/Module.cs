@@ -17,6 +17,7 @@ namespace IBbasic
         public string titleImageName = "title";
         public int moduleVersion = 1;
         public string saveName = "empty";
+        public string uniqueSessionIdNumberTag = "";
         public string defaultPlayerFilename = "drin.json";
         public List<StringForDropDownList> defaultPlayerFilenameList = new List<StringForDropDownList>();
         public bool mustUsePreMadePC = false;

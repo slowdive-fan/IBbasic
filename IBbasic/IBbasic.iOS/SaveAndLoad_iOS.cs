@@ -450,9 +450,9 @@ namespace IBbasic.iOS
             return list;
         }
 
-        public void TrackAppEvent(string Category, string Event)
+        public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent(Category, Event, "AppEvent", null).Build());
+            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent(Category, EventAction, EventLabel, null).Build());
             Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
         }
         public void InitializeNativeGAS()

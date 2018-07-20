@@ -9,6 +9,7 @@ namespace IBbasic
     public class SaveGame
     {
         public string saveName = "empty";
+        public string uniqueSessionIdNumberTag = "";
         public List<Player> playerList = new List<Player>();
         public List<Player> partyRosterList = new List<Player>();
         public List<JournalQuest> partyJournalQuests = new List<JournalQuest>();

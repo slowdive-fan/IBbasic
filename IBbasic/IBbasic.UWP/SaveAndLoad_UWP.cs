@@ -402,7 +402,7 @@ namespace IBbasic.UWP
             return list;
         }
 
-        public void TrackAppEvent(string Category, string Event)
+        public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
 
         }

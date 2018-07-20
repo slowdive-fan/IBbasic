@@ -385,6 +385,14 @@ namespace IBbasic
                         gv.resetGame();
                         gv.screenType = "title";
                     }
+                    else if (filename.Equals("gaSendTrackingPartyInfo.cs"))
+                    {
+                        gv.TrackerSendMilestoneEvent(prm1);
+                    }
+                    else if (filename.Equals("gaSendTrackingCompletedQuest.cs"))
+                    {
+                        gv.TrackerSendMilestoneEvent(prm1);
+                    }
                     else if (filename.Equals("gaPlaySound.cs"))
                     {
                         gv.PlaySound(p1);
@@ -3998,7 +4006,7 @@ namespace IBbasic
                             //}
                             //Toast.makeText(gv.gameContext, "Your journal has been updated with: " + jem.EntryTitle, Toast.LENGTH_LONG).show();
                             //gv.TrackerSendEvent("Journal", jcp.Name, jem.EntryTitle, 0l);
-                            //gv.TrackerSendEventJournal(jcp.Name + " -- " + jem.EntryTitle);
+                            gv.TrackerSendEventJournal(jcp.Name + " -- " + jem.EntryTitle);
                         }
                     }
                     else
@@ -4019,7 +4027,7 @@ namespace IBbasic
                         mod.partyJournalQuests.Add(jcp2);
                         //Toast.makeText(gv.gameContext, "Your journal has been updated with: " + jem.EntryTitle, Toast.LENGTH_LONG).show();
                         //gv.TrackerSendEvent("Journal", jcp2.Name, jem.EntryTitle, 0l);
-                        //gv.TrackerSendEventJournal(jcp2.Name + " -- " + jem.EntryTitle);
+                        gv.TrackerSendEventJournal(jcp2.Name + " -- " + jem.EntryTitle);
                     }
                     else
                     {

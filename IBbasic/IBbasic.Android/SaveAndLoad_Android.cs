@@ -1,4 +1,6 @@
-﻿using IBbasic.Droid;
+﻿using Android.Content;
+using Android.Gms.Analytics;
+using IBbasic.Droid;
 using Newtonsoft.Json;
 using SkiaSharp;
 using System;
@@ -15,6 +17,36 @@ namespace IBbasic.Droid
 {
     public class SaveAndLoad_Android : ISaveAndLoad
     {
+        public string TrackingId = "UA-60615839-12";
+        private static GoogleAnalytics GAInstance;
+        private static Tracker GATracker;
+
+        #region Instantiation ...
+        private static SaveAndLoad_Android thisRef;
+        public SaveAndLoad_Android()
+        {
+            // no code req'd
+        }
+
+        public static SaveAndLoad_Android GetGASInstance()
+        {
+            if (thisRef == null)
+                // it's ok, we can call this constructor
+                thisRef = new SaveAndLoad_Android();
+            return thisRef;
+        }
+        #endregion
+
+        public void Initialize_NativeGAS(Context AppContext = null)
+        {
+            GAInstance = GoogleAnalytics.GetInstance(AppContext.ApplicationContext);
+            GAInstance.SetLocalDispatchPeriod(10);
+
+            GATracker = GAInstance.NewTracker(TrackingId);
+            GATracker.EnableExceptionReporting(true);
+            GATracker.EnableAdvertisingIdCollection(true);
+        }
+
         public string ConvertFullPath(string fullPath, string replaceWith)
         {
             string convertedFullPath = "";
@@ -428,9 +460,13 @@ namespace IBbasic.Droid
             return list;
         }
 
-        public void TrackAppEvent(string Category, string Event)
+        public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-
+            HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder();
+            builder.SetCategory(Category);
+            builder.SetAction(EventAction);
+            builder.SetLabel(EventLabel);
+            GATracker.Send(builder.Build());
         }
 
         Android.Media.MediaPlayer playerAreaMusic;

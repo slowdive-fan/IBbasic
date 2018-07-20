@@ -1154,6 +1154,7 @@ namespace IBbasic
             saveMod.showTutorialInventory = gv.mod.showTutorialInventory;
             saveMod.showTutorialParty = gv.mod.showTutorialParty;
             saveMod.minutesSinceLastRationConsumed = gv.mod.minutesSinceLastRationConsumed;
+            saveMod.uniqueSessionIdNumberTag = gv.mod.uniqueSessionIdNumberTag;
 
             //SAVE THE FILE
             string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
@@ -1293,6 +1294,14 @@ namespace IBbasic
             foreach (GlobalString g in saveMod.moduleGlobalStrings)
             {
                 gv.mod.moduleGlobalStrings.Add(g.DeepCopy());
+            }
+            if (saveMod.uniqueSessionIdNumberTag.Equals(""))
+            {
+                gv.mod.uniqueSessionIdNumberTag = gv.sf.RandInt(1000000) + "";
+            }
+            else
+            {
+                gv.mod.uniqueSessionIdNumberTag = saveMod.uniqueSessionIdNumberTag;
             }
             //U  "partyGold": 70, (use all save)
             gv.mod.partyGold = saveMod.partyGold;
@@ -2473,6 +2482,7 @@ namespace IBbasic
         {
             try
             {
+                gv.TrackerSendEventContainer(tag);
                 Container container = gv.mod.getContainerByTag(tag);
                 gv.screenType = "itemSelector";
                 gv.screenItemSelector.resetItemSelector(container.containerItemRefs, "container", "main");
@@ -2627,6 +2637,7 @@ namespace IBbasic
                 }
                 gv.mod.PlayerLocationX = x;
                 gv.mod.PlayerLocationY = y;
+                gv.TrackerSendEventArea(areaFilename);
                 gv.screenMainMap.resetMiniMapBitmap();
                 doOnEnterAreaUpdate = true;
                 doOnEnterAreaUpdate = false;

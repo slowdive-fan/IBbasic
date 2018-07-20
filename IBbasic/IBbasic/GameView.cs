@@ -14,6 +14,7 @@ namespace IBbasic
     public class GameView
     {
         public string versionNum = "0.9.02";
+        public int numOfTrackerEventHitsInThisSession = 0;
         public ContentPage cp;
         public SKCanvas canvas;
         public float screenDensity;
@@ -1685,9 +1686,83 @@ namespace IBbasic
             return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
         }
 
-        public void TrackAppEvent(string Category, string Event)
+        //ANALYTICS
+        public void TrackerSendEvent(string action, string label)
         {
-            DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, Event);
+            //if (myTracker != null)
+            //{
+            string realtime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string mainPcName = GetMainPcName();
+            int totalHP = 0;
+            int totalSP = 0;
+            int totalXP = 0;
+            int totalLVL = 0;
+            int partySize = 0;
+            if (mod.playerList.Count > 0)
+            {
+                foreach (Player pc in mod.playerList)
+                {
+                    totalHP += pc.hp;
+                    totalSP += pc.sp;
+                    totalXP += pc.XP;
+                    totalLVL += pc.classLevel;
+                    partySize++;
+                }
+            }
+            string totals = "HP" + totalHP + ":SP" + totalSP + ":XP" + totalXP + ":LVL" + totalLVL + ":PS" + partySize;
+            string totAction = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag + ":" + realtime + ":" + mod.WorldTime.ToString("D8") + ":" + totals + ":" + action;
+
+            try
+            {
+                //Hearkenwold:Drin_586842:20170101123456:00027546:HP234:SP123:XP4567:LVL18:PS6::CONVO:guard
+                string category = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag;
+                TrackAppEvent(category, totAction, label);
+            }
+            catch (Exception e)
+            {
+                //e.printStackTrace();               
+            }
+        }
+        public void TrackerSendMilestoneEvent(string milestone)
+        {
+            string mainPcName = GetMainPcName();
+            TrackerSendEvent("none", mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag + "::" + milestone);
+        }
+        public void TrackerSendEventEncounter(string encounterName)
+        {
+            TrackerSendEvent(":ENC:" + encounterName, "none");
+        }
+        public void TrackerSendEventJournal(string category_entry)
+        {
+            TrackerSendEvent(":JOURNAL:" + category_entry, "none");            
+        }
+        public void TrackerSendEventConvo(string convoName)
+        {
+            TrackerSendEvent(":CONVO:" + convoName, "none");            
+        }
+        public void TrackerSendEventArea(string areaName)
+        {
+            TrackerSendEvent(":AREA:" + areaName, "none");                        
+        }
+        public void TrackerSendEventContainer(string containerName)
+        {
+            TrackerSendEvent(":CONTAINER:" + containerName, "none");            
+        }
+        public string GetMainPcName()
+        {
+            string name = "none";
+            foreach (Player pc in mod.playerList)
+            {
+                if (pc.mainPc)
+                {
+                    return pc.name;
+                }
+            }
+            return name;
+        }
+        public void TrackAppEvent(string Category, string EventAction, string EventLabel)
+        {
+            DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, EventAction, EventLabel);
         }
 
         public void CreateAreaMusicPlayer()

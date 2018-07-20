@@ -328,6 +328,7 @@ namespace IBbasic
 	    //methods
 	    public void startConvo()
         {
+            gv.TrackerSendEventConvo(gv.mod.currentConvo.ConvoFileName);
             if (gv.mod.currentConvo.SpeakToMainPcOnly)
 		    {
                 int x = 0;

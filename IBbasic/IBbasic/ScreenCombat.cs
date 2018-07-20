@@ -1457,6 +1457,7 @@ namespace IBbasic
                 encounterXP += crtr.cr_XP;
             }
             pf = new PathFinderEncounters(gv, gv.mod);
+            gv.TrackerSendEventEncounter(gv.mod.currentEncounter.encounterName + "START");
             //tutorialMessageCombat(false);            
             gv.cc.tutorialMessageCombat(false);
             //IBScript Setup Combat Hook (run only once)
@@ -3799,6 +3800,9 @@ namespace IBbasic
                 {
                     givePcXp.XP = givePcXp.XP + giveEachXP;
                 }
+
+                gv.TrackerSendEventEncounter(gv.mod.currentEncounter.encounterName + "END");
+
                 //btnSelect.Text = "SELECT";
                 gv.screenType = "main";
                 //hide image of trigger if setting says to do so
