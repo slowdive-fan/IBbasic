@@ -13,8 +13,9 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "0.9.02";
+        public string versionNum = "1.0.03";
         public int numOfTrackerEventHitsInThisSession = 0;
+        //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
         public SKCanvas canvas;
         public float screenDensity;
@@ -105,6 +106,7 @@ namespace IBbasic
         public ScreenPartyRoster screenPartyRoster;
         public bool touchEnabled = true;
         public Settings toggleSettings;
+        public IBbasicPrefernces IBprefs;
         //TOOLSET SCREENS
         public ToolsetScreenModule tsModule;
         public ToolsetScreenAreaEditor tsAreaEditor;
@@ -142,10 +144,12 @@ namespace IBbasic
             mod = new Module();
             bsc = new BitmapStringConversion();
             toggleSettings = new Settings();
-
+            
             //this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GameView_MouseWheel);
             mainDirectory = Directory.GetCurrentDirectory();
             CreateUserFolders();
+
+            loadPreferences();
 
             //this.MinimumSize = new Size(100, 100);
 
@@ -430,6 +434,32 @@ namespace IBbasic
 		    cc.stringMessageParty = cc.loadTextToString("MessageParty.txt");
 		    cc.stringMessageMainMap = cc.loadTextToString("MessageMainMap.txt");
 	    }
+        public void loadPreferences()
+        {
+            IBprefs = new IBbasicPrefernces();
+            string s = LoadStringFromEitherFolder("\\IBbasicPreferences.json", "\\IBbasicPreferences.json");
+            if (s != "")
+            {
+                try
+                {
+                    using (StringReader sr = new StringReader(s))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        IBprefs = (IBbasicPrefernces)serializer.Deserialize(sr, typeof(IBbasicPrefernces));
+                    }
+                }
+                catch { }
+            }
+        }
+        public void savePreferences()
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(IBprefs, Newtonsoft.Json.Formatting.Indented);
+                SaveText("\\IBbasicPreferences.json", json);
+            }
+            catch { }
+        }
         public void loadSettings()
         {
             toggleSettings = new Settings();
@@ -1627,6 +1657,10 @@ namespace IBbasic
             }*/
             return 0;
         }
+        public void IBMessageBox(string title, string message)
+        {
+            cp.DisplayAlert(title, message, "OK");
+        }
 
         //PLATFORM SPECIFIC CALLS
         public void CreateUserFolders()
@@ -1762,7 +1796,10 @@ namespace IBbasic
         }
         public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-            DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, EventAction, EventLabel);
+            if (IBprefs.GoogleAnalyticsOn)
+            {
+                DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, EventAction, EventLabel);
+            }
         }
 
         public void CreateAreaMusicPlayer()

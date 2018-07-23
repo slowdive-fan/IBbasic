@@ -654,7 +654,7 @@ namespace IBbasic
                     gv.tsConvoEditor.resetAllParentIds();
                     gv.tsConvoEditor.ResetTreeView();
                     gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
-                    gv.cc.ResetAllVariablesUsedList();
+                    //gv.cc.ResetAllVariablesUsedList();
                     if (gv.mod.currentConvo != null)
                     {
                         gv.screenType = "tsConvoEditor";
@@ -686,7 +686,7 @@ namespace IBbasic
                     gv.tsConvoEditor.resetAllParentIds();
                     gv.tsConvoEditor.ResetTreeView();
                     gv.tsConvoEditor.parentNode = gv.mod.currentConvo.GetContentNodeById(gv.tsConvoEditor.currentNode.parentIdNum);
-                    gv.cc.ResetAllVariablesUsedList();
+                    //gv.cc.ResetAllVariablesUsedList();
                     if (gv.mod.currentConvo != null)
                     {
                         gv.screenType = "tsConvoEditor";

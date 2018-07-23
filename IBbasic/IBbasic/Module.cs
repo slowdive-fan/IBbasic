@@ -40,7 +40,7 @@ namespace IBbasic
         public bool ArmorClassAscending = true;
         public List<Container> moduleContainersList = new List<Container>();
         public List<Shop> moduleShopsList = new List<Shop>();
-
+        public List<string> moduleVariablesList = new List<string>();
         public List<Item> moduleItemsList = new List<Item>();            
         public List<Creature> moduleCreaturesList = new List<Creature>();
         public List<Prop> modulePropsList = new List<Prop>();

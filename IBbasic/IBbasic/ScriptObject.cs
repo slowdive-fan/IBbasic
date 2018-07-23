@@ -13,13 +13,45 @@ namespace IBbasic
         //item_tags, player_index, mapX, mapY, pc_filename, 
         public string name = "none";
         public string description = "";
-        public string parmType1 = "";
+        public parmType parmType1 = parmType.none;
         public string parmDescription1 = "";
-        public string parmType2 = "";
+        public parmType parmType2 = parmType.none;
         public string parmDescription2 = "";
-        public string parmType3 = "";
+        public parmType parmType3 = parmType.none;
         public string parmDescription3 = "";
-        public string parmType4 = "";
+        public parmType parmType4 = parmType.none;
         public string parmDescription4 = "";
     }
+
+    public enum parmType
+    {
+        none,
+        strg,
+        variable,
+        boolean,
+        item_resref_list,
+        race_tag_list,
+        class_tag_list,
+        creature_resref_list,
+        trait_tag_list,
+        spell_tag_list,
+        area_list,
+        convo_list,
+        encounter_list,
+        shop_tag_list,
+        attribute,
+        journalCategoryTag,
+        small_int,
+        large_int,
+        this_obj,
+        simple_oper,
+        basic_chk_oper,
+        basic_oper,
+        full_oper,
+        player_index,
+        mapX,
+        mapY,
+        colors,
+        pc_filename
+    };
 }

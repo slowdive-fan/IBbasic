@@ -30,4 +30,16 @@ namespace IBbasic
 
         }
     }
+
+    public class IBbasicPrefernces
+    {
+        public bool GoogleAnalyticsOn = true;
+        public int CustomWindowSizeWidth = 1024;
+        public int CustomWindowSizeHeight = 768;
+
+        public IBbasicPrefernces()
+        {
+
+        }
+    }
 }

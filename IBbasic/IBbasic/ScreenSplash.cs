@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,15 +14,15 @@ namespace IBbasic
     public class ScreenSplash
     {
         //private Module gv.mod;
-        private GameView gv;
-        bool dialogOpen = false;
-
+        private GameView gv;        
+        bool dialogOpen = false;        
         //private IbbButton btnUnzip = null;
         //private IbbButton btnZip = null;
         private IbbButton btnPlay = null;
         private IbbButton btnCreate = null;
         private IbbButton btnZip = null;
         private IbbButton btnUnZip = null;
+        public IbbToggle tglGoogleAnalytics = null;
         private SKBitmap titleBitmap;
         //private List<string> moduleFolderList = new List<string>();
         //private List<string> moduleZipList = new List<string>();
@@ -31,7 +32,7 @@ namespace IBbasic
         {
             gv = g;
             setControlsStart();
-            titleBitmap = gv.cc.GetFromBitmapList("iblogo.png");
+            titleBitmap = gv.cc.GetFromBitmapList("iblogo.png");            
         }
 
         public void setControlsStart()
@@ -83,7 +84,19 @@ namespace IBbasic
                 btnUnZip.Height = (int)(gv.ibbheight * gv.scaler);
                 btnUnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
+            if (tglGoogleAnalytics == null)
+            {
+                tglGoogleAnalytics = new IbbToggle(gv);
+            }
+                tglGoogleAnalytics.ImgOn = "mtgl_rbtn_on";
+                tglGoogleAnalytics.ImgOff = "mtgl_rbtn_off";
+                tglGoogleAnalytics.X = wideX - (gv.uiSquareSize / 2);
+                tglGoogleAnalytics.Y = 6 * gv.uiSquareSize - (gv.uiSquareSize / 6);
+                tglGoogleAnalytics.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+                tglGoogleAnalytics.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
+        
+        
 
         //TITLE SCREEN
         public void redrawSplash()
@@ -100,6 +113,22 @@ namespace IBbasic
             btnZip.Draw();
             btnUnZip.Draw();
 
+            //Google Analytics
+            if (gv.IBprefs.GoogleAnalyticsOn) { tglGoogleAnalytics.toggleOn = true; }
+            else { tglGoogleAnalytics.toggleOn = false; }
+            tglGoogleAnalytics.Draw();
+            for (int x = 0; x <= 2; x++)
+            {
+                for (int y = 0; y <= 2; y++)
+                {
+                    gv.DrawText("Share Game Play", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler + x, tglGoogleAnalytics.Y + y, "bk");
+                    gv.DrawText("Analytics with IB Team:", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler + x, tglGoogleAnalytics.Y + gv.fontHeight + gv.fontLineSpacing + y, "bk");
+
+                }
+            }
+            gv.DrawText("Share Game Play", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler, tglGoogleAnalytics.Y, "wh");
+            gv.DrawText("Analytics with IB Team", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler, tglGoogleAnalytics.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            
             //Draw IceBlink2RPG Engine Version Number
             int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (4 * gv.fontWidth);
             int pH = (int)((float)gv.screenHeight / 100.0f);
@@ -107,10 +136,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("v" + gv.versionNum, xLoc + x, (6 * gv.uiSquareSize) + (pH * 4) + y, "bk");
+                    gv.DrawText("v" + gv.versionNum, xLoc + x, (6 * gv.uiSquareSize) + (gv.uiSquareSize / 2) + y, "bk");
                 }
             }
-            gv.DrawText("v" + gv.versionNum, xLoc, (6 * gv.uiSquareSize) + (pH * 4), "wh");
+            gv.DrawText("v" + gv.versionNum, xLoc, (6 * gv.uiSquareSize) + (gv.uiSquareSize / 2), "wh");
         }
 
         public void onTouchSplash(int eX, int eY, MouseEventType.EventType eventType)
@@ -159,8 +188,25 @@ namespace IBbasic
                     {
                         SelectModuleToUnZip();
                     }
+                    else if (tglGoogleAnalytics.getImpact(x, y))
+                    {
+                        tglGoogleAnalytics.toggleOn = !tglGoogleAnalytics.toggleOn;
+                        gv.IBprefs.GoogleAnalyticsOn = tglGoogleAnalytics.toggleOn;
+                        gv.savePreferences();
+                        string policy = "When this box is checked, data about your game play will be sent " +
+                        "to the Iceblink Engine Team's Google Analytics Dashboard. There is no personally " +
+                        "identifiable information contained in the data sent. The data is used to see " +
+                        "where we can improve on the app and to let builders know when and how their module " +
+                        "is being played. Since we all do this for free, this little bit of insight into how " +
+                        "our project is going and seeing that others are enjoying it is part of our fuel to " +
+                        "keep us motivated. The type of data sent looks like this:" + Environment.NewLine + Environment.NewLine +
+                        "7/22/2018 7:41:21 AM: TheElderinStone(v7):(IBv1.0.03):none_754200 *** TheElderinStone(v7):(IBv1.0.03):none_754200:20180722074120:00000420:HP5005:SP5045:XP0:LVL6:PS6::NEWGAME:TheElderinStone *** none" + Environment.NewLine + Environment.NewLine +
+                        "7/22/2018 7:41:22 AM: TheElderinStone(v7):(IBv1.0.03):Odren_754200 *** TheElderinStone(v7):(IBv1.0.03):Odren_754200: 20180722074122:00000424:HP4018: SP4051: XP0: LVL6: PS6::CONVO:0 Intro *** none" + Environment.NewLine + Environment.NewLine +
+                        "7/22/2018 7:41:25 AM: TheElderinStone(v7):(IBv1.0.03):Odren_754200 *** TheElderinStone(v7):(IBv1.0.03):Odren_754200: 20180722074125:00000424:HP4018: SP4051: XP0: LVL6: PS6::JOURNAL:The Elderin Stone-- Retrieving the Stone *** none";
+                        gv.IBMessageBox("IBbasic Privacy Policy", policy);
+                    }
                     break;
-
+                    
                 case MouseEventType.EventType.MouseMove:
                 case MouseEventType.EventType.MouseDown:
                     x = (int) eX;
@@ -222,12 +268,14 @@ namespace IBbasic
                 gv.mod = gv.cc.LoadModule("NewModule.mod");
                 gv.resetGame();
                 gv.screenType = "tsModule";
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none");
             }
             else
             {
                 gv.mod = gv.cc.LoadModule(selectedModule + ".mod");
                 gv.resetGame();
                 gv.screenType = "tsModule";
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none");
             }
             
             gv.touchEnabled = true;

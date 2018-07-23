@@ -3223,7 +3223,7 @@ namespace IBbasic
             floatyBox.showShadow = true;
             floatyBox.gv = gv;
             floatyBox.linesList.Clear();
-            floatyBox.tbWidth = 5 * gv.squareSize;
+            floatyBox.tbWidth = 4 * gv.uiSquareSize;
             floatyBox.AddFormattedTextToTextBox(value);
             //based on number of lines, pick YLoc
             //floatyBox.location.Y = (gridy * (int)(gv.squareSize * sqrScale)) - ((floatyTextBox.linesList.Count / 2) * (gv.fontHeight + gv.fontLineSpacing)) + ((int)(gv.squareSize * sqrScale) / 2);

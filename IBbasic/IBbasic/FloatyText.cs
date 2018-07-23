@@ -119,8 +119,8 @@ namespace IBbasic
         {
             //location.X should be the the props actual map location in squares (not screen location)            
             //only draw lines needed to fill textbox
-            float xLoc = (location.X + gv.playerOffsetX - gv.mod.PlayerLocationX) * gv.squareSize + gv.screenMainMap.mapStartLocXinPixels;
-            float yLoc = ((location.Y + gv.playerOffsetY - gv.mod.PlayerLocationY) * gv.squareSize) - (z);
+            float xLoc = (location.X + gv.playerOffsetX - 2 - gv.mod.PlayerLocationX) * (gv.squareSize * gv.scaler) + gv.screenMainMap.mapStartLocXinPixels;
+            float yLoc = ((location.Y + gv.playerOffsetY + 2 - gv.mod.PlayerLocationY) * (gv.squareSize * gv.scaler)) - (z);
             //loop through all lines from current index point
             for (int i = 0; i < linesList.Count; i++)
             {
@@ -130,7 +130,7 @@ namespace IBbasic
                     DrawString(word.text + " ", xLoc, yLoc, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
-                xLoc = (location.X + gv.playerOffsetX - gv.mod.PlayerLocationX) * gv.squareSize + gv.screenMainMap.mapStartLocXinPixels;
+                xLoc = (location.X + gv.playerOffsetX - 2 - gv.mod.PlayerLocationX) * (gv.squareSize * gv.scaler) + gv.screenMainMap.mapStartLocXinPixels;
                 yLoc += gv.fontHeight + gv.fontLineSpacing;
             }
         }

@@ -2231,107 +2231,251 @@ namespace IBbasic
             types.Add("none");
             foreach (ScriptObject s in gv.cc.scriptList)
             {
-                types.Add(s.name);
+                if (s.name.StartsWith("ga"))
+                {
+                    types.Add(s.name);
+                }
             }
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(types, "Select a script from the list");
-            editNode.actions[getIndexOfActionSelected()].a_script = selected;
-            gv.touchEnabled = true;
-
-            /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.actions[getIndexOfActionSelected()].a_script))
+            if ((editNode.actions[getIndexOfActionSelected()].a_script.Equals(selected)) || (editNode.actions[getIndexOfActionSelected()].a_script.Equals(selected + ".cs")))
             {
-                var ret = itSel.ShowDialog();
-
-                if (ret == DialogResult.OK)
-                {
-                    editNode.actions[getIndexOfActionSelected()].a_script = itSel.selectedAreaName;
-                }
-            }*/            
+                //don't change it
+            }
+            else
+            {
+                editNode.actions[getIndexOfActionSelected()].a_script = selected;
+                editNode.actions[getIndexOfActionSelected()].a_parameter_1 = null;
+                editNode.actions[getIndexOfActionSelected()].a_parameter_2 = null;
+                editNode.actions[getIndexOfActionSelected()].a_parameter_3 = null;
+                editNode.actions[getIndexOfActionSelected()].a_parameter_4 = null;
+            }
+            gv.touchEnabled = true;           
         }
         public async void changeActionParm1()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType1.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
-
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
-            editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput;
-            gv.touchEnabled = true;
-
-            //string title = "Enter the first parameter for this script.";
-            //editNode.actions[getIndexOfActionSelected()].a_parameter_1 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
-
-            //start of an idea for intelligent system
-            /*
-            List<string> types = new List<string>();
-            if (gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script).parmType1.Equals("variable"))
+            try
             {
-                types = gv.cc.variablesUsedList;
-            }
-            
-            //List<string> types = new List<string>(); //container, transition, conversation, encounter, script
-            string title = "Select a variable";
-            ScriptObject so = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
-            if (!so.name.Equals("none")) { title = so.parmDescription1; }
-            using (DropDownDialog itSel = new DropDownDialog(gv, title, types, editNode.actions[getIndexOfActionSelected()].a_parameter_1))
-            {
-                var ret = itSel.ShowDialog();
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType1 == parmType.none) { return; }
 
-                if (ret == DialogResult.OK)
+                string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
+                //check if a string entry or list type
+                if (script.parmType1 == parmType.strg)
                 {
-                    editNode.actions[getIndexOfActionSelected()].a_parameter_1 = itSel.selectedAreaName;
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_1);
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput;
+                    gv.touchEnabled = true;
                 }
-            }   
-            */
+                else if ((script.parmType1 == parmType.large_int) || (script.parmType1 == parmType.mapX) || (script.parmType1 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.actions[getIndexOfActionSelected()].a_parameter_1));
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType1);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_1 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_1 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeActionParm2()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType2.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the second parameter for this script:" + Environment.NewLine + script.parmDescription2;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType2 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
-            editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the second parameter for this script.";
-            //editNode.actions[getIndexOfActionSelected()].a_parameter_2 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
+                string title = script.description + Environment.NewLine + "Enter the second parameter for this script:" + Environment.NewLine + script.parmDescription2;
+                //check if a string entry or list type
+                if (script.parmType2 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_2);
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType2 == parmType.large_int) || (script.parmType2 == parmType.mapX) || (script.parmType2 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.actions[getIndexOfActionSelected()].a_parameter_2));
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType2);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_2 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_2 = selected;
+                        }
+                    }
+                }
+                gv.touchEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeActionParm3()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType3.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the third parameter for this script:" + Environment.NewLine + script.parmDescription3;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType3 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
-            editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the third parameter for this script.";
-            //editNode.actions[getIndexOfActionSelected()].a_parameter_3 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
+                string title = script.description + Environment.NewLine + "Enter the third parameter for this script:" + Environment.NewLine + script.parmDescription3;
+                //check if a string entry or list type
+                if (script.parmType3 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_3);
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType3 == parmType.large_int) || (script.parmType3 == parmType.mapX) || (script.parmType3 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.actions[getIndexOfActionSelected()].a_parameter_3));
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType3);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_3 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_3 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeActionParm4()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType4.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the fourth parameter for this script:" + Environment.NewLine + script.parmDescription4;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.actions[getIndexOfActionSelected()].a_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType4 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
-            editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the fourth parameter for this script.";
-            //editNode.actions[getIndexOfActionSelected()].a_parameter_4 = gv.DialogReturnString(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
+                string title = script.description + Environment.NewLine + "Enter the fourth parameter for this script:" + Environment.NewLine + script.parmDescription4;
+                //check if a string entry or list type
+                if (script.parmType4 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.actions[getIndexOfActionSelected()].a_parameter_4);
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType4 == parmType.large_int) || (script.parmType4 == parmType.mapX) || (script.parmType4 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.actions[getIndexOfActionSelected()].a_parameter_4));
+                    editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType4);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_4 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.actions[getIndexOfActionSelected()].a_parameter_4 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
 
         public async void changeCondScript()
@@ -2342,85 +2486,253 @@ namespace IBbasic
             types.Add("none");
             foreach (ScriptObject s in gv.cc.scriptList)
             {
-                types.Add(s.name);
+                if (s.name.StartsWith("gc"))
+                {
+                    types.Add(s.name);
+                }
             }
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(types, "Select a script from the list");
-            editNode.conditions[getIndexOfCondSelected()].c_script = selected;
-            gv.touchEnabled = true;
-
-            /*using (DropDownDialog itSel = new DropDownDialog(gv, "Select a script from the list", types, editNode.conditions[getIndexOfCondSelected()].c_script))
+            if ((editNode.conditions[getIndexOfCondSelected()].c_script.Equals(selected)) || (editNode.conditions[getIndexOfCondSelected()].c_script.Equals(selected + ".cs")))
             {
-                var ret = itSel.ShowDialog();
-
-                if (ret == DialogResult.OK)
-                {
-                    editNode.conditions[getIndexOfCondSelected()].c_script = itSel.selectedAreaName;
-                }
-            }*/
+                //don't change it
+            }
+            else
+            {
+                editNode.conditions[getIndexOfCondSelected()].c_script = selected;
+                editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = null;
+                editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = null;
+                editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = null;
+                editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = null;
+            }
+            gv.touchEnabled = true;
         }
         public async void changeCondParm1()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType1.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType1 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the first parameter for this script.";
-            //editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
+                string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription1;
+                //check if a string entry or list type
+                if (script.parmType1 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_1);
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType1 == parmType.large_int) || (script.parmType1 == parmType.mapX) || (script.parmType1 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.conditions[getIndexOfCondSelected()].c_parameter_1));
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType1);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_1 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeCondParm2()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType2.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the second parameter for this script:" + Environment.NewLine + script.parmDescription2;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType2 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the second parameter for this script.";
-            //editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
+                string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription2;
+                //check if a string entry or list type
+                if (script.parmType2 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_2);
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType2 == parmType.large_int) || (script.parmType2 == parmType.mapX) || (script.parmType2 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.conditions[getIndexOfCondSelected()].c_parameter_2));
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType2);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_2 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeCondParm3()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType3.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the third parameter for this script:" + Environment.NewLine + script.parmDescription3;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType3 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the third parameter for this script.";
-            //editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
+                string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription3;
+                //check if a string entry or list type
+                if (script.parmType3 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_3);
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType3 == parmType.large_int) || (script.parmType3 == parmType.mapX) || (script.parmType3 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.conditions[getIndexOfCondSelected()].c_parameter_3));
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType3);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_3 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
         public async void changeCondParm4()
         {
-            if (editNode == null) { return; }
-            ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
-            if (script.name.Equals("none")) { return; }
-            if (script.parmType4.Equals("")) { return; }
-            string title = script.description + Environment.NewLine + "Enter the fourth parameter for this script:" + Environment.NewLine + script.parmDescription4;
+            try
+            {
+                if (editNode == null) { return; }
+                ScriptObject script = gv.cc.GetScriptObjectByName(editNode.conditions[getIndexOfCondSelected()].c_script);
+                if (script == null) { return; }
+                if (script.name.Equals("none")) { return; }
+                if (script.parmType4 == parmType.none) { return; }
 
-            gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
-            editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput;
-            gv.touchEnabled = true;
-            //string title = "Enter the fourth parameter for this script.";
-            //editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = gv.DialogReturnString(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
+                string title = script.description + Environment.NewLine + "Enter the first parameter for this script:" + Environment.NewLine + script.parmDescription4;
+                //check if a string entry or list type
+                if (script.parmType4 == parmType.strg)
+                {
+                    gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox(title, editNode.conditions[getIndexOfCondSelected()].c_parameter_4);
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput;
+                    gv.touchEnabled = true;
+                }
+                else if ((script.parmType4 == parmType.large_int) || (script.parmType4 == parmType.mapX) || (script.parmType4 == parmType.mapY))
+                {
+                    gv.touchEnabled = false;
+                    int myinput = await gv.NumInputBox(title, Convert.ToInt32(editNode.conditions[getIndexOfCondSelected()].c_parameter_4));
+                    editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput.ToString();
+                    gv.touchEnabled = true;
+                }
+                else //must be a list type
+                {
+                    List<string> items = gv.cc.GetListOfItems(script.parmType4);
+                    if (items.Count == 0) { return; }
+                    gv.touchEnabled = false;
+                    string selected = await gv.ListViewPage(items, title);
+                    if (selected != "none")
+                    {
+                        if (selected.Equals("create a new variable"))
+                        {
+                            string myinput = await gv.StringInputBox("Enter a new variable name:", "");
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = myinput;
+                            if (!gv.mod.moduleVariablesList.Contains(myinput))
+                            {
+                                gv.mod.moduleVariablesList.Add(myinput);
+                            }
+                        }
+                        else
+                        {
+                            editNode.conditions[getIndexOfCondSelected()].c_parameter_4 = selected;
+                        }
+                    }
+                    gv.touchEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.touchEnabled = true;
+            }
         }
-        
+
         public void PushToUndoStack()
         {
             Convo newConvo = new Convo();

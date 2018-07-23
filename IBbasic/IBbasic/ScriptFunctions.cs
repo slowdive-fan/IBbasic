@@ -1966,7 +1966,7 @@ namespace IBbasic
             try
             {
                 Player pc = gv.mod.playerList[0];
-                if ((PCtag != null) && (!PCtag.Equals("")))
+                if ((PCtag != null) && (!PCtag.Equals("use_index")))
                 {
                     pc = gv.mod.getPlayerByName(PCtag);
                     if (pc == null)

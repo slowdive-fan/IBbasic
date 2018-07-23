@@ -12,10 +12,11 @@ namespace IBbasic
 	    public GameView gv;
 	
 	    public List<IbbButton> btnPartyIndex = new List<IbbButton>();
-	
-	    //Convo STUFF
-	    //public Convo currentConvo = new Convo();
-	    public string currentNpcNode = "";
+        public List<IbbButton> btnLineNumber = new List<IbbButton>();
+
+        //Convo STUFF
+        //public Convo currentConvo = new Convo();
+        public string currentNpcNode = "";
 	    public string currentPcNode = "";
 	    public List<string> currentPcNodeList = new List<string>();
 	    public List<IbRect> currentPcNodeRectList = new List<IbRect>();
@@ -39,33 +40,57 @@ namespace IBbasic
 	    {		
     	    int pW = (int)((float)gv.screenWidth / 100.0f);
 		    int pH = (int)((float)gv.screenHeight / 100.0f);
-		    int padW = gv.squareSize/6;
+            float padW = gv.squareSize / 6;
 
             htmltext = new IBminiTextBox(gv, 320, 100, 500, 300);
             htmltext.showBoxBorder = false;
 
-		    for (int x = 0; x < 6; x++)
-		    {
-			    IbbButton btnNew = new IbbButton(gv, 1.0f);	
-			    btnNew.Img = "item_slot"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.item_slot);
-			    btnNew.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
-			    btnNew.X = ((x+2) * gv.uiSquareSize) + (padW * (x+1));
-			    btnNew.Y = 6 * gv.uiSquareSize - (pH * 2);
+            for (int x = 0; x < 6; x++)
+            {
+                IbbButton btnNew = new IbbButton(gv, 1.0f);
+                btnNew.Img = "item_slot"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.item_slot);
+                btnNew.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+                btnNew.X = ((x + 2) * gv.uiSquareSize) + (int)(padW * (x + 1));
+                btnNew.Y = 6 * gv.uiSquareSize - (pH * 2);
                 btnNew.Height = (int)(gv.ibbheight * gv.scaler);
-                btnNew.Width = (int)(gv.ibbwidthR * gv.scaler);	
-			
-			    btnPartyIndex.Add(btnNew);
-		    }
-	    }
+                btnNew.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+                btnPartyIndex.Add(btnNew);
+            }
+            for (int y = 0; y < 7; y++)
+            {
+                IbbButton btnNew = new IbbButton(gv, 1.0f);
+                btnNew.Img = "btn_small";
+                btnNew.Glow = "btn_small_glow";
+                btnNew.Text = (y + 1).ToString();
+                btnNew.X = 10 * gv.uiSquareSize;
+                btnNew.Y = y * gv.uiSquareSize;
+                btnNew.Height = (int)(gv.ibbheight * gv.scaler);
+                btnNew.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+                btnLineNumber.Add(btnNew);
+            }
+        }
 	
 	    //CONVO SCREEN
 	    public void redrawConvo()
         {
             drawPortrait();
 		    drawNpcNode();
-		    drawPcNode();	 
-		
-		    if (gv.mod.currentConvo.PartyChat)
+		    drawPcNode();
+
+            //DRAW EACH LINE BUTTON
+            int cntLine = 0;
+            foreach (IbbButton btn in btnLineNumber)
+            {
+                if (cntLine < currentPcNodeList.Count)
+                {
+                    btn.Draw();
+                }
+                cntLine++;
+            }
+
+            if (gv.mod.currentConvo.PartyChat)
 		    {
 			    //DRAW EACH PC BUTTON
 			    int cntPCs = 0;
@@ -124,7 +149,7 @@ namespace IBbasic
             int pH = (int)((float)gv.screenHeight / 100.0f);
             int startX = gv.uiSquareSize * 2 + (pW * 3);
             int startY = pH * 4;
-            int width = gv.uiSquareSize * gv.uiSquaresInWidth - startX;
+            int width = gv.uiSquareSize * (gv.uiSquaresInWidth - 1) - startX;
 
             if (gv.mod.currentConvo.Narration)
             {
@@ -133,7 +158,7 @@ namespace IBbasic
                     //do narration with image setup
                     startX = (int)(gv.uiSquareSize * 0.5);
                     startY = (int)(gv.uiSquareSize * 2.5);
-                    width = gv.uiSquareSize * gv.uiSquaresInWidth - (startX);
+                    width = gv.uiSquareSize * (gv.uiSquaresInWidth - 1) - (startX);
                 }
                 else //Narration without image
                 {
@@ -167,7 +192,7 @@ namespace IBbasic
 		    int startX = gv.uiSquareSize * 0 + gv.uiSquareSize / 4;
             int sY = (int)((float)gv.screenHeight / 100.0f) * 4;
             int startY = (int)(gv.uiSquareSize * 3) + (pH * 5);
-            int width = gv.uiSquareSize * gv.uiSquaresInWidth - (startX);
+            int width = gv.uiSquareSize * (gv.uiSquaresInWidth - 1) - (startX);
 
             if (gv.mod.currentConvo.Narration)
             {
@@ -244,8 +269,19 @@ namespace IBbasic
 				    }
 				    cnt++;
 			    }
-											
-			    break;
+                foreach (IbbButton btn in btnLineNumber)
+                {
+                    if (btn.getImpact(x, y))
+                    {
+                        btn.glowOn = true;
+                    }
+                    else
+                    {
+                        btn.glowOn = false;
+                    }
+                }
+
+                break;
 			
 		    case MouseEventType.EventType.MouseUp:
 			    x = (int) eX;
@@ -265,8 +301,18 @@ namespace IBbasic
 				    }
 				    cnt++;
 			    }
-			
-			    if (gv.mod.currentConvo.PartyChat)
+
+                cnt = 0;
+                foreach (IbbButton btn in btnLineNumber)
+                {
+                    if (btn.getImpact(x, y))
+                    {
+                        selectedLine(cnt);
+                    }
+                    cnt++;
+                }
+
+                if (gv.mod.currentConvo.PartyChat)
 			    {
 				    for (int j = 0; j < gv.mod.playerList.Count; j++)
 				    {
