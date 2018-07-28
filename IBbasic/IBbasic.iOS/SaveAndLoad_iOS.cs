@@ -134,6 +134,33 @@ namespace IBbasic.iOS
 
             }
         }
+        public void SaveImage(string fullPath, SKBitmap bmp)
+        {
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string convertedFullPath = documents + ConvertFullPath(fullPath, "/");
+            string dir = Path.GetDirectoryName(convertedFullPath);
+
+            try
+            {
+                Directory.CreateDirectory(dir);
+                // create an image and then get the PNG (or any other) encoded data
+                using (var image = SKImage.FromBitmap(bmp))
+                {
+                    using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                    {
+                        // save the data to a stream
+                        using (var stream = File.OpenWrite(convertedFullPath))
+                        {
+                            data.SaveTo(stream);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public string LoadStringFromUserFolder(string fullPath)
         {

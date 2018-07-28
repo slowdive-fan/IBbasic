@@ -13,7 +13,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.03";
+        public string versionNum = "1.0.04";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -119,6 +119,7 @@ namespace IBbasic
         public ToolsetScreenCreatureEditor tsCreatureEditor;
         public ToolsetScreenItemEditor tsItemEditor;
         public ToolsetScreenPlayerEditor tsPlayerEditor;
+        public ToolsetScreenArtEditor tsArtEditor;
 
         //public SoundPlayer soundPlayer = new SoundPlayer();
         //public Dictionary<string, Stream> oSoundStreams = new Dictionary<string, Stream>();
@@ -332,6 +333,8 @@ namespace IBbasic
             tsCreatureEditor = new ToolsetScreenCreatureEditor(this);
             tsItemEditor = new ToolsetScreenItemEditor(this);
             tsPlayerEditor = new ToolsetScreenPlayerEditor(this);
+            tsArtEditor = new ToolsetScreenArtEditor(this);
+
         }
         public void LoadStandardImages()
         {
@@ -944,6 +947,10 @@ namespace IBbasic
             {
                 tsPlayerEditor.redrawTsPlayerEditor();
             }
+            else if (screenType.Equals("tsArtEditor"))
+            {
+                tsArtEditor.redrawTsArtEditor();
+            }
             //GAME SCREENS
             else if (screenType.Equals("title"))
             {
@@ -1271,6 +1278,10 @@ namespace IBbasic
                     else if (screenType.Equals("tsPlayerEditor"))
                     {
                         tsPlayerEditor.onTouchTsPlayerEditor(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsArtEditor"))
+                    {
+                        tsArtEditor.onTouchTsArtEditor(eX, eY, eventType);
                     }
                     //GAME SCREENS
                     else if (screenType.Equals("main"))
@@ -1674,6 +1685,10 @@ namespace IBbasic
         public void SaveText(string fullPath, string text)
         {
             DependencyService.Get<ISaveAndLoad>().SaveText(fullPath, text);
+        }
+        public void SaveImage(string fullPath, SKBitmap bmp)
+        {
+            DependencyService.Get<ISaveAndLoad>().SaveImage(fullPath, bmp);
         }
         public void ZipModule(string modFilename)
         {

@@ -18,6 +18,7 @@ namespace IBbasic
         void CreateUserFolders();
         void CreateBackUpModuleFolder(string modFilename);
         void SaveText(string fullPath, string text);
+        void SaveImage(string fullPath, SKBitmap bmp);
         void ZipModule(string modFilename);
         void UnZipModule(string modFilename);
 

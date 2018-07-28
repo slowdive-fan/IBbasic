@@ -111,6 +111,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Sprite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringForDropDownList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenAreaEditor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenArtEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenContainerEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenConvoEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ToolsetScreenCreatureEditor.cs" />
@@ -126,6 +127,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\color_palette.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\grid_black.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ctrl_turn_left_arrow.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ctrl_turn_right_arrow.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\o_w_brcav2.png" />

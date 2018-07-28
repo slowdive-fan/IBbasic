@@ -135,6 +135,34 @@ namespace IBbasic.Droid
                 sw.Write(text);
             }
         }
+        public void SaveImage(string fullPath, SKBitmap bmp)
+        {
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string convertedFullPath = sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(fullPath, "/");
+            string path = ConvertFullPath(fullPath, "\\");
+            string dir = Path.GetDirectoryName(convertedFullPath);
+
+            try
+            {
+                Directory.CreateDirectory(dir);
+                // create an image and then get the PNG (or any other) encoded data
+                using (var image = SKImage.FromBitmap(bmp))
+                {
+                    using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
+                    {
+                        // save the data to a stream
+                        using (var stream = File.OpenWrite(convertedFullPath))
+                        {
+                            data.SaveTo(stream);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public string LoadStringFromUserFolder(string fullPath)
         {

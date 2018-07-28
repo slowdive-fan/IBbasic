@@ -31,6 +31,7 @@ namespace IBbasic
         public IbbButton btnCreatureEditor = null;
         public IbbButton btnItem = null;
         public IbbButton btnPlayer = null;
+        public IbbButton btnArt = null;
         public IbbButton btnExit = null;
 
         public ToolsetScreenMainMenu(GameView g)
@@ -227,6 +228,20 @@ namespace IBbasic
             btnPlayer.Height = (int)(gv.ibbheight * gv.scaler);
             btnPlayer.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            if (btnArt == null)
+            {
+                btnArt = new IbbButton(gv, 0.8f);
+            }
+            btnArt.Img = "btn_small";
+            btnArt.Img2 = "none";
+            btnArt.Text = "ART";
+            btnArt.Glow = "btn_small_glow";
+            btnArt.HotKey = "";
+            btnArt.X = bottomPanelLocX + 6 * gv.uiSquareSize;
+            btnArt.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
+            btnArt.Height = (int)(gv.ibbheight * gv.scaler);
+            btnArt.Width = (int)(gv.ibbwidthR * gv.scaler);
+
             if (btnExit == null)
             {
                 btnExit = new IbbButton(gv, 0.8f);
@@ -236,7 +251,7 @@ namespace IBbasic
             btnExit.Text = "EXIT";
             btnExit.Glow = "btn_small_glow";
             btnExit.HotKey = "";
-            btnExit.X = bottomPanelLocX + 7 * gv.uiSquareSize;
+            btnExit.X = bottomPanelLocX + 8 * gv.uiSquareSize;
             btnExit.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
             btnExit.Height = (int)(gv.ibbheight * gv.scaler);
             btnExit.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -262,6 +277,7 @@ namespace IBbasic
                 btnCreatureEditor.Draw();
                 btnItem.Draw();
                 btnPlayer.Draw();
+                btnArt.Draw();
                 btnExit.Draw();
             }    
         }
@@ -279,6 +295,7 @@ namespace IBbasic
             btnCreatureEditor.glowOn = false;
             btnItem.glowOn = false;
             btnPlayer.glowOn = false;
+            btnArt.glowOn = false;
             btnExit.glowOn = false;
 
             switch (eventType)
@@ -338,6 +355,10 @@ namespace IBbasic
                         {
                             btnPlayer.glowOn = true;
                         }
+                        else if (btnArt.getImpact(x, y))
+                        {
+                            btnArt.glowOn = true;
+                        }
                         else if (btnExit.getImpact(x, y))
                         {
                             btnExit.glowOn = true;
@@ -371,6 +392,7 @@ namespace IBbasic
                         btnCreatureEditor.glowOn = false;
                         btnItem.glowOn = false;
                         btnPlayer.glowOn = false;
+                        btnArt.glowOn = false;
                         btnExit.glowOn = false;
 
                         if (btnAreaEditor.getImpact(x, y))
@@ -444,6 +466,13 @@ namespace IBbasic
                         else if (btnPlayer.getImpact(x, y))
                         {
                             gv.screenType = "tsPlayerEditor";
+                            showMainMenuPanels = false;
+                            tglMainMenu.toggleOn = false;
+                            return true;
+                        }
+                        else if (btnArt.getImpact(x, y))
+                        {
+                            gv.screenType = "tsArtEditor";
                             showMainMenuPanels = false;
                             tglMainMenu.toggleOn = false;
                             return true;
