@@ -27,14 +27,15 @@ namespace IBbasic
         public IbbButton btnCanvasBackground = null;
         public IbbButton btnPreviewBackground = null;
         public IbbButton btnToggleLayer = null;
-        public IbbButton btnShowLayers = null;
+        public IbbButton tglPencil = null;
         public IbbButton btnGetColor = null;
         public IbbButton btnUndo = null;
         public IbbButton btnRedo = null;
         public IbPalette palette = null;
+        public IbbButton tglZoom = null;
         public SKColor currentColor;
         public bool isIdleLayerShown = true;
-        public bool showLayers = true;
+        //public bool showLayers = true;
         public bool getColorMode = false;
         public List<int> colorPaletteList = new List<int>();
         public int previewBackIndex = 0;
@@ -44,11 +45,19 @@ namespace IBbasic
         public Stack<SKBitmap> redoStack = new Stack<SKBitmap>();
         public bool continuousDrawMode = false;
         public int mapStartLocXinPixels;
-        public int mapSquareSizeScaler = 1;
+        public int zoomScaler = 1;
+        public int pencilSize = 1;
+        public int upperSquareX = 0;
+        public int upperSquareY = 0;
+        public int panSquareX = 0;
+        public int panSquareY = 0;
+        public int artSquareSize = 48;
+        public float artScaler = 1;
 
         public ToolsetScreenArtEditor(GameView g)
         {
             gv = g;
+            artScaler = (float)gv.scaler / 2f;
             mapStartLocXinPixels = 1 * gv.uiSquareSize;
             //var bitmapProperties = new BitmapProperties(new SharpDX.Direct2D1.PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied));
             myBitmapGDI = new SKBitmap(48, 48);
@@ -173,7 +182,7 @@ namespace IBbasic
             if (btnToggleLayer == null)
             {
                 btnToggleLayer = new IbbButton(gv, 1.0f);
-                btnToggleLayer.Text = "TglLayer";
+                btnToggleLayer.Text = "IDLE";
             }
             btnToggleLayer.Img = "btn_small";
             btnToggleLayer.Glow = "btn_small_glow";
@@ -183,18 +192,17 @@ namespace IBbasic
             btnToggleLayer.Height = (int)(gv.ibbheight * gv.scaler);
             btnToggleLayer.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnShowLayers == null)
+            if (tglPencil == null)
             {
-                btnShowLayers = new IbbButton(gv, 1.0f);
-                btnShowLayers.Text = "ShowLyrs";
+                tglPencil = new IbbButton(gv, 1.0f);
+                tglPencil.Text = "1PX";
             }
-            btnShowLayers.Img = "btn_small";
-            btnShowLayers.Glow = "btn_small_glow";
-            //btnShowLayers.Text = "ShowLyrs";
-            btnShowLayers.X = 10 * gv.uiSquareSize;
-            btnShowLayers.Y = 3 * gv.uiSquareSize + gv.scaler;
-            btnShowLayers.Height = (int)(gv.ibbheight * gv.scaler);
-            btnShowLayers.Width = (int)(gv.ibbwidthR * gv.scaler);
+            tglPencil.Img = "btn_small";
+            tglPencil.Glow = "btn_small_glow";
+            tglPencil.X = 10 * gv.uiSquareSize;
+            tglPencil.Y = 3 * gv.uiSquareSize + gv.scaler;
+            tglPencil.Height = (int)(gv.ibbheight * gv.scaler);
+            tglPencil.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnEraser == null)
             {
@@ -231,37 +239,76 @@ namespace IBbasic
             palette.Width = (int)(2 * gv.uiSquareSize) - (gv.scaler * 2);
             palette.Height = (int)(palette.Width * 20f / 9f);
 
+            if (tglZoom == null)
+            {
+                tglZoom = new IbbButton(gv, 1.0f);
+                tglZoom.Text = "1X";
+            }
+            tglZoom.Img = "tgl_zoom_off";
+            tglZoom.Glow = "btn_small_glow";
+            tglZoom.X = 10 * gv.uiSquareSize;
+            tglZoom.Y = 6 * gv.uiSquareSize + gv.scaler;
+            tglZoom.Height = (int)(gv.ibbheight * gv.scaler);
+            tglZoom.Width = (int)(gv.ibbwidthR * gv.scaler);
+
         }
         //public void updateBitmapDX()
         //{
-            //myBitmapDX = gv.cc.ConvertGDIBitmapToD2D(myBitmapGDI);
+        //myBitmapDX = gv.cc.ConvertGDIBitmapToD2D(myBitmapGDI);
         //}
         //public void updateSelectedColorBitmapDX()
         //{
-            //selectedColorBitmapDX = gv.cc.ConvertGDIBitmapToD2D(selectedColorBitmapGDI);
+        //selectedColorBitmapDX = gv.cc.ConvertGDIBitmapToD2D(selectedColorBitmapGDI);
         //}
         public async void doNewDialog()
         {
             List<string> items = new List<string>();
             items.Add("cancel");
-            items.Add("24x24");
-            items.Add("48x48");
+            items.Add("item");
+            items.Add("token_regular");
+            items.Add("token_tall");
+            items.Add("token_wide");
+            items.Add("token_large");
+            items.Add("prop");
+            items.Add("ui");
+            items.Add("tiles");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select a canvas size:");
             if (selected != "cancel")
             {
-                if (selected.Equals("24x24"))
-                {
-                    myBitmapGDI = new SKBitmap(24, 24);
-                    //updateBitmapDX();
-                }
-                else if (selected.Equals("48x48"))
+                if (selected.Equals("item"))
                 {
                     myBitmapGDI = new SKBitmap(48, 48);
-                    //updateBitmapDX();
                 }
-                //gv.mod.companionPlayerList[playerListIndex].raceTag = selected;
+                else if (selected.Equals("token_regular"))
+                {
+                    myBitmapGDI = new SKBitmap(48, 96);
+                }
+                else if (selected.Equals("token_tall"))
+                {
+                    myBitmapGDI = new SKBitmap(48, 192);
+                }
+                else if (selected.Equals("token_wide"))
+                {
+                    myBitmapGDI = new SKBitmap(96, 96);
+                }
+                else if (selected.Equals("token_large"))
+                {
+                    myBitmapGDI = new SKBitmap(96, 192);
+                }
+                else if (selected.Equals("prop"))
+                {
+                    myBitmapGDI = new SKBitmap(48, 48);
+                }
+                else if (selected.Equals("ui"))
+                {
+                    myBitmapGDI = new SKBitmap(48, 48);
+                }
+                else if (selected.Equals("tiles"))
+                {
+                    myBitmapGDI = new SKBitmap(48, 48);
+                }
             }
             gv.touchEnabled = true;
         }
@@ -276,9 +323,9 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
-            items.Add("walls");
-            items.Add("backdrops");
-            items.Add("overlays");
+            //items.Add("walls");
+            //items.Add("backdrops");
+            //items.Add("overlays");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image type to open:");
@@ -350,7 +397,7 @@ namespace IBbasic
             foreach (string f in files)
             {
                 string filenameNoExt = Path.GetFileNameWithoutExtension(f);
-                if (filenameNoExt.StartsWith(prefix))
+                if ((filenameNoExt.StartsWith(prefix)) || (prefix.Equals("ui_")))
                 {
                     imageList.Add(filenameNoExt);
                 }
@@ -557,43 +604,52 @@ namespace IBbasic
         {
             setControlsStart();
 
-            int drawingSurfaceWidth = gv.squareSize * 10 * gv.scaler;
-            int drawingSurfaceHeight = gv.squareSize * 10 * gv.scaler;
-            int drawingPreviewWidth = (int)(gv.uiSquareSize * 1.5);
-            int drawingPreviewHeight = (int)(gv.uiSquareSize * 1.5);
-            int convoPanelLeftLocation = 1 * gv.uiSquareSize + 2 * gv.scaler;
-            int convoPanelTopLocation = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
-            int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
-            int shiftForFont = (gv.ibbMiniTglHeight * gv.scaler / 2) - (gv.fontHeight / 2);
+            int drawingSurfaceSize = (int)(artSquareSize * 10); //default 480x480 no scale applied
+            int drawingPreviewSize = (int)(artSquareSize * 2); //default 96x96 no scale applied
 
-            //determine canvas size
+            int canvasScaler = 10; //multiply image size by this to fill canvas
+            int previewScaler = 2; //multiply image size by this to fill preview
+
+            int previewImageWidth = artSquareSize; //draw image size in default screen size
+            int previewImageHeight = artSquareSize; //draw image size in default screen size
+
+            float previewLocX = 8.25f * gv.uiSquareSize;
+            float previewLocY = 5.5f * gv.uiSquareSize;
+
+            int zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+
+            //determine pixel size
             if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 96)) //normal
             {
-                drawingSurfaceWidth = gv.squareSize * 10 * gv.scaler;
-                drawingSurfaceHeight = gv.squareSize * 10 * gv.scaler;
-                drawingPreviewWidth = (int)(gv.uiSquareSize * 1.5);
-                drawingPreviewHeight = (int)(gv.uiSquareSize * 1.5);
+                previewImageWidth = artSquareSize;
+                previewImageHeight = artSquareSize;
+                previewScaler = 2;
+                canvasScaler = 10;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
             }
             else if ((myBitmapGDI.Width == 96) && (myBitmapGDI.Height == 96)) //wide
             {
-                drawingSurfaceWidth = gv.squareSize * 10 * gv.scaler;
-                drawingSurfaceHeight = gv.squareSize * 5 * gv.scaler;
-                drawingPreviewWidth = (int)(gv.uiSquareSize * 1.5);
-                drawingPreviewHeight = (int)(gv.uiSquareSize * 0.75);
+                previewImageWidth = artSquareSize * 2;
+                previewImageHeight = artSquareSize;
+                previewScaler = 1;
+                canvasScaler = 5;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
             }
             else if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192)) //tall
             {
-                drawingSurfaceWidth = gv.squareSize * 5 * gv.scaler;
-                drawingSurfaceHeight = gv.squareSize * 10 * gv.scaler;
-                drawingPreviewWidth = (int)(gv.uiSquareSize * 0.75);
-                drawingPreviewHeight = (int)(gv.uiSquareSize * 1.5);
+                previewImageWidth = artSquareSize;
+                previewImageHeight = artSquareSize * 2;
+                previewScaler = 1;
+                canvasScaler = 5;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
             }
-            else if ((myBitmapGDI.Width == 96) && (myBitmapGDI.Height == 192)) //tall
+            else if ((myBitmapGDI.Width == 96) && (myBitmapGDI.Height == 192)) //large
             {
-                drawingSurfaceWidth = gv.squareSize * 10 * gv.scaler;
-                drawingSurfaceHeight = gv.squareSize * 10 * gv.scaler;
-                drawingPreviewWidth = (int)(gv.uiSquareSize * 1.5);
-                drawingPreviewHeight = (int)(gv.uiSquareSize * 1.5);
+                previewImageWidth = artSquareSize * 2;
+                previewImageHeight = artSquareSize * 2;
+                previewScaler = 1;
+                canvasScaler = 5;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
             }
 
             //CANVAS
@@ -611,60 +667,67 @@ namespace IBbasic
                 background = button;
             }
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
-            dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
+            dst = new IbRect(mapStartLocXinPixels, 0, (int)(drawingSurfaceSize * artScaler), (int)(drawingSurfaceSize * artScaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
+
+            int tknWidth = (int)(drawingSurfaceSize * artScaler * ((float)myBitmapGDI.Width / (float)zoomBoxSize));
+            int tknHeight = (int)(drawingSurfaceSize * artScaler * ((float)(myBitmapGDI.Height / 2) / (float)zoomBoxSize));
+            if (tknWidth > drawingSurfaceSize * artScaler) { tknWidth = (int)(drawingSurfaceSize * artScaler); }
+            if (tknHeight > drawingSurfaceSize * artScaler) { tknHeight = (int)(drawingSurfaceSize * artScaler); }
 
             //if combat token, show idle or attack
             if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))
             {
+
+
                 if (isIdleLayerShown) //idle layer on top
                 {
-                    if (showLayers)
-                    {
-                        //draw attack first with low opacity
-                        src = new IbRect(0, myBitmapGDI.Height / 2, myBitmapGDI.Width, myBitmapGDI.Height / 2);
-                        dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
-                        gv.DrawBitmap(myBitmapGDI, src, dst);
-                    }
                     //draw idle at full opacity
                     src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height / 2);
-                    dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
+                    if (zoomScaler > 1)
+                    {
+                        src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
+                    }
+                    dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
                     gv.DrawBitmap(myBitmapGDI, src, dst);
                 }
                 else //attack layer on top
                 {
-                    if (showLayers)
-                    {
-                        //draw idle first with low opacity
-                        src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height / 2);
-                        dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
-                        gv.DrawBitmap(myBitmapGDI, src, dst);
-                    }
                     //draw attack at full opacity
                     src = new IbRect(0, myBitmapGDI.Height / 2, myBitmapGDI.Width, myBitmapGDI.Height / 2);
-                    dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
+                    if (zoomScaler > 1)
+                    {
+                        src = new IbRect(panSquareX / previewScaler, myBitmapGDI.Height / 2 + panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
+                    }
+                    dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
                     gv.DrawBitmap(myBitmapGDI, src, dst);
                 }
             }
             else
             {
                 src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height);
-                dst = new IbRect(mapStartLocXinPixels, 0, drawingSurfaceWidth, drawingSurfaceHeight);
+                if (zoomScaler > 1)
+                {
+                    src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
+                }
+                dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknWidth);
                 gv.DrawBitmap(myBitmapGDI, src, dst);
             }
 
             //DRAW GRID
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("grid_black").Width, gv.cc.GetFromTileBitmapList("grid_black").Height);
-            int pixelSize = gv.squareSize * 10 * gv.scaler / myBitmapGDI.Width;
-            if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192))
+            int pixelSize = (int)(drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
+            if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192)) //tall creature
             {
-                pixelSize = gv.squareSize * 5 * gv.scaler / myBitmapGDI.Width;
+                pixelSize = (int)(drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
             }
+            int gridSqrSize = gv.squareSize * gv.scaler * pencilSize;
+            if (zoomScaler > 4) { gridSqrSize = gridSqrSize * 2 * pencilSize; }
             for (int x = 0; x < myBitmapGDI.Width; x++)
             {
                 for (int y = 0; y < myBitmapGDI.Height; y++)
                 {
-                    dst = new IbRect(mapStartLocXinPixels + x * pixelSize, y * pixelSize, pixelSize * 5, pixelSize * 5);
+                    dst = new IbRect(mapStartLocXinPixels + (int)(x * pixelSize), (int)(y * pixelSize), gridSqrSize, gridSqrSize);
                     gv.DrawBitmap(gv.cc.GetFromTileBitmapList("grid_black"), src, dst);
                 }
             }
@@ -694,7 +757,7 @@ namespace IBbasic
                 background = button;
             }
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
-            dst = new IbRect((int)(8.25 * gv.uiSquareSize), (int)(5.5 * gv.uiSquareSize), drawingPreviewWidth, drawingPreviewHeight);
+            dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(drawingPreviewSize * artScaler), (int)(drawingPreviewSize * artScaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
 
 
@@ -708,8 +771,7 @@ namespace IBbasic
                     src = new IbRect(0, myBitmapGDI.Height / 2, myBitmapGDI.Width, myBitmapGDI.Height / 2);
                 }
             }
-
-            dst = new IbRect((int)(8.25 * gv.uiSquareSize), (int)(5.5 * gv.uiSquareSize), drawingPreviewWidth, drawingPreviewHeight);
+            dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(previewImageWidth * artScaler * previewScaler), (int)(previewImageHeight * artScaler * previewScaler));
             gv.DrawBitmap(myBitmapGDI, src, dst);
 
 
@@ -721,21 +783,33 @@ namespace IBbasic
             dst = new IbRect((int)(8.6 * gv.uiSquareSize), (int)(4.5 * gv.uiSquareSize), (int)(0.8 * gv.uiSquareSize), (int)(0.8 * gv.uiSquareSize));
             gv.DrawBitmap(selectedColorBitmapGDI, src, dst);
 
+            if (zoomScaler > 1)
+            {
+                //draw pan selection square highlight
+                int tlX = (int)(previewLocX + panSquareX * artScaler);
+                int tlY = (int)(previewLocY + panSquareY * artScaler);
+                int brX = (int)(drawingPreviewSize * artScaler / zoomScaler);
+                int brY = (int)(drawingPreviewSize * artScaler / zoomScaler);
+                src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Width, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Height);
+                dst = new IbRect(tlX, tlY, brX, brY);
+                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
+            }
+
             //CONTROLS            
             btnNew.Draw();
             btnOpen.Draw();
             btnSave.Draw();
             btnSaveAs.Draw();
             btnToggleLayer.Draw();
-            btnShowLayers.Draw();
+            tglPencil.Draw();
             btnAlphaAdjust.Draw();
             btnEraser.Draw();
             btnGetColor.Draw();
             btnCanvasBackground.Draw();
-            btnPreviewBackground.Draw();
+            //btnPreviewBackground.Draw();
             btnUndo.Draw();
             btnRedo.Draw();
-
+            tglZoom.Draw();
             palette.Draw();
 
             gv.tsMainMenu.redrawTsMainMenu();
@@ -766,14 +840,6 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseMove:
                     int x = (int)eX;
                     int y = (int)eY;
-                    //sqrSize = total area width / number of pixels
-                    int pixelSize = gv.squareSize * 10 * gv.scaler / myBitmapGDI.Width;
-                    if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192))
-                    {
-                        pixelSize = gv.squareSize * 5 * gv.scaler / myBitmapGDI.Width;
-                    }
-                    int gridX = ((eX - mapStartLocXinPixels) / pixelSize);
-                    int gridY = (eY / pixelSize);
 
                     if (gv.showMessageBox)
                     {
@@ -785,6 +851,93 @@ namespace IBbasic
                     }
                     //if (e.Button == MouseButtons.Left)
                     //{
+                        int drawingSurfaceSize = (int)(artSquareSize * 10); //default 480x480 no scale applied
+                        int drawingPreviewSize = (int)(artSquareSize * 2); //default 96x96 no scale applied
+
+                        int canvasScaler = 10; //multiply image size by this to fill canvas
+                        int previewScaler = 2; //multiply image size by this to fill preview
+
+                        int previewImageWidth = artSquareSize; //draw image size in default screen size
+                        int previewImageHeight = artSquareSize; //draw image size in default screen size
+
+                        float previewLocX = 8.25f * gv.uiSquareSize;
+                        float previewLocY = 5.5f * gv.uiSquareSize;
+
+                        int zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+
+                        //int drawingSurfaceSize = gv.squareSize * 10 * gv.scaler;
+                        //int drawingPreviewSize = gv.squareSize * 2 * gv.scaler;
+                        //int zoomBoxSize = drawingPreviewSize / zoomScaler;
+                        float pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                        //int previewImageWidth = gv.squareSize * 1 * gv.scaler;
+                        //int previewImageHeight = gv.squareSize * 1 * gv.scaler;
+                        //float previewLocX = 8.25f * gv.uiSquareSize;
+                        //float previewLocY = 5.5f * gv.uiSquareSize;
+                        //int previewScaler = 2;
+
+                        float gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                        float gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+
+                        if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 96)) //normal
+                        {
+                            previewImageWidth = artSquareSize;
+                            previewImageHeight = artSquareSize;
+                            previewScaler = 2;
+                            canvasScaler = 10;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+                        else if ((myBitmapGDI.Width == 96) && (myBitmapGDI.Height == 96)) //wide
+                        {
+                            previewImageWidth = artSquareSize * 2;
+                            previewImageHeight = artSquareSize;
+                            previewScaler = 1;
+                            canvasScaler = 5;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+                        else if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192)) //tall
+                        {
+                            previewImageWidth = artSquareSize;
+                            previewImageHeight = artSquareSize * 2;
+                            previewScaler = 1;
+                            canvasScaler = 5;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+                        else if ((myBitmapGDI.Width == 96) && (myBitmapGDI.Height == 192)) //large
+                        {
+                            previewImageWidth = artSquareSize * 2;
+                            previewImageHeight = artSquareSize * 2;
+                            previewScaler = 1;
+                            canvasScaler = 5;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+
+                        if (tapInPreviewViewport(x, y))
+                        {
+                            panSquareX = (int)((x - previewLocX) / artScaler) - (int)(zoomBoxSize * previewScaler / 2);
+                            panSquareY = (int)((y - previewLocY) / artScaler) - (int)(zoomBoxSize * previewScaler / 2);
+                            panSquareX = panSquareX / 2;
+                            panSquareX = panSquareX * 2;
+                            panSquareY = panSquareY / 2;
+                            panSquareY = panSquareY * 2;
+
+
+                            if (panSquareX < 0) { panSquareX = 0; }
+                            if (panSquareX > (int)(previewImageWidth * previewScaler - (zoomBoxSize * previewScaler))) { panSquareX = (int)(previewImageWidth * previewScaler - (zoomBoxSize * previewScaler)); }
+                            if (panSquareY < 0) { panSquareY = 0; }
+                            if (panSquareY > (int)(previewImageHeight * previewScaler - (zoomBoxSize * previewScaler))) { panSquareY = (int)(previewImageHeight * previewScaler - (zoomBoxSize * previewScaler)); }
+                        }
                         if (getColorMode)
                         {
                             //check to see if in drawing area first
@@ -795,21 +948,21 @@ namespace IBbasic
                                 {
                                     if (isIdleLayerShown) //get color from idle layer
                                     {
-                                        currentColor = myBitmapGDI.GetPixel(gridX, gridY);
-                                        selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                                    currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY));
+                                    selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
                                         //updateSelectedColorBitmapDX();
                                     }
                                     else //get color from attack layer
                                     {
-                                        currentColor = myBitmapGDI.GetPixel(gridX, gridY + myBitmapGDI.Height / 2);
-                                        selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                                    currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY) + myBitmapGDI.Height / 2);
+                                    selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
                                         //updateSelectedColorBitmapDX();
                                     }
                                 }
                                 else //not a combat token
                                 {
-                                    currentColor = myBitmapGDI.GetPixel(gridX, gridY);
-                                    selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                                currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY));
+                                selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
                                     //updateSelectedColorBitmapDX();
                                 }
                             }
@@ -827,22 +980,49 @@ namespace IBbasic
                             }
                             if (tapInMapViewport(x, y))
                             {
+                                int pGridX = (int)(gridX);
+                                int pGridY = (int)(gridY);
+                                if (pencilSize == 2)
+                                {
+                                    pGridX = (int)(gridX / 2);
+                                    pGridY = (int)(gridY / 2);
+                                    pGridX = pGridX * 2;
+                                    pGridY = pGridY * 2;
+                                }
                                 if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))//combat token so draw on active layer
                                 {
                                     if (isIdleLayerShown) //draw on idle layer
                                     {
-                                        myBitmapGDI.SetPixel(gridX, gridY, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX, pGridY, currentColor);
+                                        if (pencilSize == 2)
+                                        {
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
+                                        }
                                     }
                                     else //draw on attack layer
                                     {
-                                        myBitmapGDI.SetPixel(gridX, gridY + myBitmapGDI.Height / 2, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX, pGridY + myBitmapGDI.Height / 2, currentColor);
+                                        if (pencilSize == 2)
+                                        {
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
+                                        }
                                     }
                                 }
                                 else //not combat token
                                 {
-                                    myBitmapGDI.SetPixel(gridX, gridY, currentColor);
+                                    myBitmapGDI.SetPixel(pGridX, pGridY, currentColor);
+                                    if (pencilSize == 2)
+                                    {
+                                        myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
+                                    }
                                 }
-                                //updateBitmapDX();
+                            //updateBitmapDX();
                             }
                         }
                     //}
@@ -945,17 +1125,17 @@ namespace IBbasic
                             btnToggleLayer.Text = "Idle";
                         }
                     }
-                    else if (btnShowLayers.getImpact(x, y))
+                    else if (tglPencil.getImpact(x, y))
                     {
-                        if (showLayers)
+                        if (pencilSize == 1)
                         {
-                            showLayers = false;
-                            btnShowLayers.Text = "HideLyrs";
+                            pencilSize = 2;
+                            tglPencil.Text = "2PX";
                         }
                         else
                         {
-                            showLayers = true;
-                            btnShowLayers.Text = "ShowLyrs";
+                            pencilSize = 1;
+                            tglPencil.Text = "1PX";
                         }
                     }
                     else if (btnGetColor.getImpact(x, y))
@@ -990,13 +1170,41 @@ namespace IBbasic
                     {
                         canvasBackIndex++;
                         if (canvasBackIndex > 2) { canvasBackIndex = 0; }
-                    }
-                    else if (btnPreviewBackground.getImpact(x, y))
-                    {
                         previewBackIndex++;
                         if (previewBackIndex > 2) { previewBackIndex = 0; }
                     }
-
+                    //else if (btnPreviewBackground.getImpact(x, y))
+                    //{
+                    //    previewBackIndex++;
+                    //    if (previewBackIndex > 2) { previewBackIndex = 0; }
+                    //}
+                    else if (tglZoom.getImpact(x, y))
+                    {
+                        upperSquareX = 0;
+                        upperSquareY = 0;
+                        panSquareX = 0;
+                        panSquareY = 0;
+                        if (zoomScaler == 1)
+                        {
+                            zoomScaler = 2;
+                            tglZoom.Text = "2X";
+                        }
+                        else if (zoomScaler == 2)
+                        {
+                            zoomScaler = 4;
+                            tglZoom.Text = "4X";
+                        }
+                        else if (zoomScaler == 4)
+                        {
+                            zoomScaler = 8;
+                            tglZoom.Text = "8X";
+                        }
+                        else if (zoomScaler == 8)
+                        {
+                            zoomScaler = 1;
+                            tglZoom.Text = "1X";
+                        }
+                    }
 
                     //if (btnHelp.getImpact(x, y))
                     //{
@@ -1012,6 +1220,15 @@ namespace IBbasic
             if (y < 0) { return false; }
             if (x > mapStartLocXinPixels + gv.squareSize * gv.scaler * 10) { return false; }
             if (y > gv.squareSize * gv.scaler * 10) { return false; }
+            return true;
+        }
+
+        public bool tapInPreviewViewport(int x, int y)
+        {
+            if (x < (int)(8.25 * gv.uiSquareSize)) { return false; }
+            if (y < (int)(5.5 * gv.uiSquareSize)) { return false; }
+            if (x > (int)(8.25 * gv.uiSquareSize) + (int)(gv.uiSquareSize * 1.5)) { return false; }
+            if (y > (int)(5.5 * gv.uiSquareSize) + (int)(gv.uiSquareSize * 1.5)) { return false; }
             return true;
         }
     }
