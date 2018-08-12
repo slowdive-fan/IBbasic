@@ -151,8 +151,9 @@ namespace IBbasic
                 btnInfo = new IbbButton(gv, 1.0f);
             }
             btnInfo.Img = "btn_small";
+            btnInfo.Img2 = "btninfo";
             btnInfo.Glow = "btn_small_glow";
-            btnInfo.Text = "INFO";
+            //btnInfo.Text = "INFO";
             btnInfo.X = 0 * gv.uiSquareSize;
             btnInfo.Y = 0 * gv.uiSquareSize + gv.scaler;
             btnInfo.Height = (int)(gv.ibbheight * gv.scaler);
@@ -163,8 +164,9 @@ namespace IBbasic
                 btnTiles = new IbbButton(gv, 1.0f);
             }
             btnTiles.Img = "btn_small";
+            btnTiles.Img2 = "btntiles";
             btnTiles.Glow = "btn_small_glow";
-            btnTiles.Text = "TILES";
+            //btnTiles.Text = "TILES";
             btnTiles.X = 0 * gv.uiSquareSize;
             btnTiles.Y = 1 * gv.uiSquareSize + gv.scaler;
             btnTiles.Height = (int)(gv.ibbheight * gv.scaler);
@@ -175,8 +177,9 @@ namespace IBbasic
                 btnTriggers = new IbbButton(gv, 0.8f);
             }
             btnTriggers.Img = "btn_small";
+            btnTriggers.Img2 = "btntriggers";
             btnTriggers.Glow = "btn_small_glow";
-            btnTriggers.Text = "TRIGR";
+            //btnTriggers.Text = "TRIGR";
             btnTriggers.X = 0 * gv.uiSquareSize;
             btnTriggers.Y = 2 * gv.uiSquareSize + gv.scaler;
             btnTriggers.Height = (int)(gv.ibbheight * gv.scaler);
@@ -186,7 +189,8 @@ namespace IBbasic
             {
                 btnWalkLoS = new IbbButton(gv, 1.0f);
             }
-            btnWalkLoS.Text = "WLKLOS";
+            //btnWalkLoS.Text = "WLKLOS";
+            btnWalkLoS.Img2 = "btnwalklos";
             btnWalkLoS.Img = "btn_small";
             btnWalkLoS.Glow = "btn_small_glow";
             btnWalkLoS.X = 0 * gv.uiSquareSize;
@@ -198,8 +202,9 @@ namespace IBbasic
             {
                 btnCrt = new IbbButton(gv, 1.0f);
             }
-            btnCrt.Text = "CRTRS";
+            //btnCrt.Text = "CRTRS";
             btnCrt.Img = "btn_small";
+            btnCrt.Img2 = "btncreature";
             btnCrt.Glow = "btn_small_glow";
             btnCrt.X = 0 * gv.uiSquareSize;
             btnCrt.Y = 4 * gv.uiSquareSize + gv.scaler;
@@ -210,8 +215,9 @@ namespace IBbasic
             {
                 btnSettings = new IbbButton(gv, 1.0f);
             }
-            btnSettings.Text = "SETTING";
+            //btnSettings.Text = "SETTING";
             btnSettings.Img = "btn_small";
+            btnSettings.Img2 = "btnsettings2";
             btnSettings.Glow = "btn_small_glow";
             btnSettings.X = 0 * gv.uiSquareSize;
             btnSettings.Y = 5 * gv.uiSquareSize + gv.scaler;
@@ -222,8 +228,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;

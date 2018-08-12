@@ -187,8 +187,9 @@ namespace IBbasic
                 btnInfo = new IbbButton(gv, 1.0f);
             }
             btnInfo.Img = "btn_small";
+            btnInfo.Img2 = "btninfo";
             btnInfo.Glow = "btn_small_glow";
-            btnInfo.Text = "INFO";
+            //btnInfo.Text = "INFO";
             btnInfo.X = 0 * gv.uiSquareSize;
             btnInfo.Y = 0 * gv.uiSquareSize + gv.scaler;
             btnInfo.Height = (int)(gv.ibbheight * gv.scaler);
@@ -199,8 +200,9 @@ namespace IBbasic
                 btnTiles = new IbbButton(gv, 1.0f);
             }
             btnTiles.Img = "btn_small";
+            btnTiles.Img2 = "btntiles";
             btnTiles.Glow = "btn_small_glow";
-            btnTiles.Text = "TILES";
+            //btnTiles.Text = "TILES";
             btnTiles.X = 0 * gv.uiSquareSize;
             btnTiles.Y = 1 * gv.uiSquareSize + gv.scaler;
             btnTiles.Height = (int)(gv.ibbheight * gv.scaler);
@@ -211,8 +213,9 @@ namespace IBbasic
                 btnTriggers = new IbbButton(gv, 0.8f);
             }
             btnTriggers.Img = "btn_small";
+            btnTriggers.Img2 = "btntriggers";
             btnTriggers.Glow = "btn_small_glow";
-            btnTriggers.Text = "TRIGR";
+            //btnTriggers.Text = "TRIGR";
             btnTriggers.X = 0 * gv.uiSquareSize;
             btnTriggers.Y = 2 * gv.uiSquareSize + gv.scaler;
             btnTriggers.Height = (int)(gv.ibbheight * gv.scaler);
@@ -222,7 +225,8 @@ namespace IBbasic
             {
                 btnWalkLoS = new IbbButton(gv, 1.0f);
             }
-            btnWalkLoS.Text = "WLKLOS";
+            btnWalkLoS.Img2 = "btnwalklos";
+            //btnWalkLoS.Text = "WLKLOS";
             btnWalkLoS.Img = "btn_small";
             btnWalkLoS.Glow = "btn_small_glow";
             btnWalkLoS.X = 0 * gv.uiSquareSize;
@@ -234,8 +238,9 @@ namespace IBbasic
             {
                 btn3DPreview = new IbbButton(gv, 1.0f);
             }
-            btn3DPreview.Text = "3DTest";
+            //btn3DPreview.Text = "3DTest";
             btn3DPreview.Img = "btn_small";
+            btn3DPreview.Img2 = "btn3dtest";
             btn3DPreview.Glow = "btn_small_glow";
             btn3DPreview.X = 0 * gv.uiSquareSize;
             btn3DPreview.Y = 4 * gv.uiSquareSize + gv.scaler;
@@ -246,25 +251,27 @@ namespace IBbasic
             {
                 btnSettings = new IbbButton(gv, 1.0f);
             }
-            btnSettings.Text = "SETTING";
+            //btnSettings.Text = "SETTING";
+            btnSettings.Img2 = "btnsettings2";
             btnSettings.Img = "btn_small";
             btnSettings.Glow = "btn_small_glow";
             btnSettings.X = 0 * gv.uiSquareSize;
             btnSettings.Y = 5 * gv.uiSquareSize + gv.scaler;
             btnSettings.Height = (int)(gv.ibbheight * gv.scaler);
             btnSettings.Width = (int)(gv.ibbwidthR * gv.scaler);
-                        
+
             if (btnHelp == null)
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Img = "btn_small";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);           
+            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setupTilesPanelControls()
         {
@@ -3962,8 +3969,8 @@ namespace IBbasic
                     //figure out if tapped on a map square
                     int shiftY = panelTopLocation + gv.fontHeight + gv.fontLineSpacing;
                     int shiftX = panelLeftLocation - (gv.squareSize / 1);
-                    int gridX = ((eX - mapStartLocXinPixels) / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareX;
-                    int gridY = (eY / (int)(gv.squareSize * ((float)gv.scaler / (float)mapSquareSizeScaler))) + upperSquareY;
+                    int gridX = ((eX - shiftX) / (int)(gv.squareSize * ((float)gv.scaler / ((float)mapSquareSizeScaler * 2))));
+                    int gridY = ((eY - shiftY) / (int)(gv.squareSize * ((float)gv.scaler / ((float)mapSquareSizeScaler * 2))));
                     if ((tapInMapArea(gridX, gridY)) && (tapInMiniMapViewport(x, y)))
                     {
                         PlayerLocationX = gridX;

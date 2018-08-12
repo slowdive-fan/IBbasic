@@ -162,8 +162,9 @@ namespace IBbasic
                 btnNode = new IbbButton(gv, 1.0f);
             }
             btnNode.Img = "btn_small";
+            btnNode.Img2 = "btnnode";
             btnNode.Glow = "btn_small_glow";
-            btnNode.Text = "NODE";
+            //btnNode.Text = "NODE";
             btnNode.X = 0 * gv.uiSquareSize;
             btnNode.Y = 0 * gv.uiSquareSize + gv.scaler;
             btnNode.Height = (int)(gv.ibbheight * gv.scaler);
@@ -174,8 +175,9 @@ namespace IBbasic
                 btnConditionals = new IbbButton(gv, 1.0f);
             }
             btnConditionals.Img = "btn_small";
+            btnConditionals.Img2 = "btnconditional";
             btnConditionals.Glow = "btn_small_glow";
-            btnConditionals.Text = "COND";
+            //btnConditionals.Text = "COND";
             btnConditionals.X = 0 * gv.uiSquareSize;
             btnConditionals.Y = 1 * gv.uiSquareSize + gv.scaler;
             btnConditionals.Height = (int)(gv.ibbheight * gv.scaler);
@@ -186,8 +188,9 @@ namespace IBbasic
                 btnActions = new IbbButton(gv, 0.8f);
             }
             btnActions.Img = "btn_small";
+            btnActions.Img2 = "btnaction";
             btnActions.Glow = "btn_small_glow";
-            btnActions.Text = "ACTN";
+            //btnActions.Text = "ACTN";
             btnActions.X = 0 * gv.uiSquareSize;
             btnActions.Y = 2 * gv.uiSquareSize + gv.scaler;
             btnActions.Height = (int)(gv.ibbheight * gv.scaler);
@@ -197,8 +200,9 @@ namespace IBbasic
             {
                 btnExpandAllNodes = new IbbButton(gv, 1.0f);
             }
-            btnExpandAllNodes.Text = "EXPAND";
+            //btnExpandAllNodes.Text = "EXPAND";
             btnExpandAllNodes.Img = "btn_small";
+            btnExpandAllNodes.Img2 = "btnexpand";
             btnExpandAllNodes.Glow = "btn_small_glow";
             btnExpandAllNodes.X = 0 * gv.uiSquareSize;
             btnExpandAllNodes.Y = 3 * gv.uiSquareSize + gv.scaler;
@@ -209,8 +213,9 @@ namespace IBbasic
             {
                 btnCollapseAllNodes = new IbbButton(gv, 1.0f);
             }
-            btnCollapseAllNodes.Text = "COLLAPSE";
+            //btnCollapseAllNodes.Text = "COLLAPSE";
             btnCollapseAllNodes.Img = "btn_small";
+            btnCollapseAllNodes.Img2 = "btncollapse";
             btnCollapseAllNodes.Glow = "btn_small_glow";
             btnCollapseAllNodes.X = 0 * gv.uiSquareSize;
             btnCollapseAllNodes.Y = 4 * gv.uiSquareSize + gv.scaler;
@@ -221,8 +226,9 @@ namespace IBbasic
             {
                 btnSettings = new IbbButton(gv, 1.0f);
             }
-            btnSettings.Text = "CONVO";
+            //btnSettings.Text = "CONVO";
             btnSettings.Img = "btn_small";
+            btnSettings.Img2 = "btnsettings2";
             btnSettings.Glow = "btn_small_glow";
             btnSettings.X = 0 * gv.uiSquareSize;
             btnSettings.Y = 5 * gv.uiSquareSize + gv.scaler;
@@ -233,8 +239,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
@@ -362,8 +369,9 @@ namespace IBbasic
                 btnNodeAdd = new IbbButton(gv, 1.0f);
             }
             btnNodeAdd.Img = "btn_small";
+            btnNodeAdd.Img2 = "btnadd";
             btnNodeAdd.Glow = "btn_small_glow";
-            btnNodeAdd.Text = "ADD";
+            //btnNodeAdd.Text = "ADD";
             btnNodeAdd.X = panelLeftLocation;
             btnNodeAdd.Y = panelTopLocation + (4 * gv.uiSquareSize);
             btnNodeAdd.Height = (int)(gv.ibbheight * gv.scaler);
@@ -374,8 +382,9 @@ namespace IBbasic
                 btnNodeMoveUp = new IbbButton(gv, 1.0f);
             }
             btnNodeMoveUp.Img = "btn_small";
+            btnNodeMoveUp.Img2 = "ctrl_up_arrow";
             btnNodeMoveUp.Glow = "btn_small_glow";
-            btnNodeMoveUp.Text = "UP";
+            //btnNodeMoveUp.Text = "UP";
             btnNodeMoveUp.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnNodeMoveUp.Y = panelTopLocation + (4 * gv.uiSquareSize);
             btnNodeMoveUp.Height = (int)(gv.ibbheight * gv.scaler);
@@ -386,8 +395,9 @@ namespace IBbasic
                 btnNodeMoveDown = new IbbButton(gv, 1.0f);
             }
             btnNodeMoveDown.Img = "btn_small";
+            btnNodeMoveDown.Img2 = "ctrl_down_arrow";
             btnNodeMoveDown.Glow = "btn_small_glow";
-            btnNodeMoveDown.Text = "DOWN";
+            //btnNodeMoveDown.Text = "DOWN";
             btnNodeMoveDown.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnNodeMoveDown.Y = panelTopLocation + (4 * gv.uiSquareSize);
             btnNodeMoveDown.Height = (int)(gv.ibbheight * gv.scaler);
@@ -398,8 +408,9 @@ namespace IBbasic
                 btnNodeRemove = new IbbButton(gv, 1.0f);
             }
             btnNodeRemove.Img = "btn_small";
+            btnNodeRemove.Img2 = "btnremove";
             btnNodeRemove.Glow = "btn_small_glow";
-            btnNodeRemove.Text = "REMOVE";
+            //btnNodeRemove.Text = "REMOVE";
             btnNodeRemove.X = panelLeftLocation;
             btnNodeRemove.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnNodeRemove.Height = (int)(gv.ibbheight * gv.scaler);
@@ -410,8 +421,9 @@ namespace IBbasic
                 btnNodeCopy = new IbbButton(gv, 1.0f);
             }
             btnNodeCopy.Img = "btn_small";
+            btnNodeCopy.Img2 = "btncopy";
             btnNodeCopy.Glow = "btn_small_glow";
-            btnNodeCopy.Text = "COPY";
+            //btnNodeCopy.Text = "COPY";
             btnNodeCopy.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnNodeCopy.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnNodeCopy.Height = (int)(gv.ibbheight * gv.scaler);
@@ -422,8 +434,9 @@ namespace IBbasic
                 btnNodePaste = new IbbButton(gv, 1.0f);
             }
             btnNodePaste.Img = "btn_small";
+            btnNodePaste.Img2 = "btnpaste";
             btnNodePaste.Glow = "btn_small_glow";
-            btnNodePaste.Text = "PASTE";
+            //btnNodePaste.Text = "PASTE";
             btnNodePaste.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnNodePaste.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnNodePaste.Height = (int)(gv.ibbheight * gv.scaler);
@@ -434,8 +447,9 @@ namespace IBbasic
                 btnNodePasteAsLink = new IbbButton(gv, 1.0f);
             }
             btnNodePasteAsLink.Img = "btn_small";
+            btnNodePasteAsLink.Img2 = "btnlink";
             btnNodePasteAsLink.Glow = "btn_small_glow";
-            btnNodePasteAsLink.Text = "LINK";
+            //btnNodePasteAsLink.Text = "LINK";
             btnNodePasteAsLink.X = panelLeftLocation + 0 * gv.uiSquareSize;
             btnNodePasteAsLink.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnNodePasteAsLink.Height = (int)(gv.ibbheight * gv.scaler);
@@ -446,8 +460,9 @@ namespace IBbasic
                 btnNodeRelocateCopiedNodes = new IbbButton(gv, 1.0f);
             }
             btnNodeRelocateCopiedNodes.Img = "btn_small";
+            btnNodeRelocateCopiedNodes.Img2 = "btnrelocate";
             btnNodeRelocateCopiedNodes.Glow = "btn_small_glow";
-            btnNodeRelocateCopiedNodes.Text = "RELOCATE";
+            //btnNodeRelocateCopiedNodes.Text = "RELOCATE";
             btnNodeRelocateCopiedNodes.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnNodeRelocateCopiedNodes.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnNodeRelocateCopiedNodes.Height = (int)(gv.ibbheight * gv.scaler);
@@ -638,8 +653,9 @@ namespace IBbasic
                 btnCondAdd = new IbbButton(gv, 1.0f);
             }
             btnCondAdd.Img = "btn_small";
+            btnCondAdd.Img2 = "btnadd";
             btnCondAdd.Glow = "btn_small_glow";
-            btnCondAdd.Text = "ADD";
+            //btnCondAdd.Text = "ADD";
             btnCondAdd.X = panelLeftLocation;
             btnCondAdd.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnCondAdd.Height = (int)(gv.ibbheight * gv.scaler);
@@ -650,8 +666,9 @@ namespace IBbasic
                 btnCondMoveUp = new IbbButton(gv, 1.0f);
             }
             btnCondMoveUp.Img = "btn_small";
+            btnCondMoveUp.Img2 = "ctrl_up_arrow";
             btnCondMoveUp.Glow = "btn_small_glow";
-            btnCondMoveUp.Text = "UP";
+            //btnCondMoveUp.Text = "UP";
             btnCondMoveUp.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnCondMoveUp.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnCondMoveUp.Height = (int)(gv.ibbheight * gv.scaler);
@@ -662,8 +679,9 @@ namespace IBbasic
                 btnCondMoveDown = new IbbButton(gv, 1.0f);
             }
             btnCondMoveDown.Img = "btn_small";
+            btnCondMoveDown.Img2 = "ctrl_down_arrow";
             btnCondMoveDown.Glow = "btn_small_glow";
-            btnCondMoveDown.Text = "DOWN";
+            //btnCondMoveDown.Text = "DOWN";
             btnCondMoveDown.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnCondMoveDown.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnCondMoveDown.Height = (int)(gv.ibbheight * gv.scaler);
@@ -674,8 +692,9 @@ namespace IBbasic
                 btnCondRemove = new IbbButton(gv, 1.0f);
             }
             btnCondRemove.Img = "btn_small";
+            btnCondRemove.Img2 = "btnremove";
             btnCondRemove.Glow = "btn_small_glow";
-            btnCondRemove.Text = "REMOVE";
+            //btnCondRemove.Text = "REMOVE";
             btnCondRemove.X = panelLeftLocation;
             btnCondRemove.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnCondRemove.Height = (int)(gv.ibbheight * gv.scaler);
@@ -686,8 +705,9 @@ namespace IBbasic
                 btnCondCopy = new IbbButton(gv, 1.0f);
             }
             btnCondCopy.Img = "btn_small";
+            btnCondCopy.Img2 = "btncopy";
             btnCondCopy.Glow = "btn_small_glow";
-            btnCondCopy.Text = "COPY";
+            //btnCondCopy.Text = "COPY";
             btnCondCopy.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnCondCopy.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnCondCopy.Height = (int)(gv.ibbheight * gv.scaler);
@@ -698,8 +718,9 @@ namespace IBbasic
                 btnCondPaste = new IbbButton(gv, 1.0f);
             }
             btnCondPaste.Img = "btn_small";
+            btnCondPaste.Img2 = "btnpaste";
             btnCondPaste.Glow = "btn_small_glow";
-            btnCondPaste.Text = "PASTE";
+            //btnCondPaste.Text = "PASTE";
             btnCondPaste.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnCondPaste.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnCondPaste.Height = (int)(gv.ibbheight * gv.scaler);
@@ -818,8 +839,9 @@ namespace IBbasic
                 btnActionAdd = new IbbButton(gv, 1.0f);
             }
             btnActionAdd.Img = "btn_small";
+            btnActionAdd.Img2 = "btnadd";
             btnActionAdd.Glow = "btn_small_glow";
-            btnActionAdd.Text = "ADD";
+            //btnActionAdd.Text = "ADD";
             btnActionAdd.X = panelLeftLocation;
             btnActionAdd.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnActionAdd.Height = (int)(gv.ibbheight * gv.scaler);
@@ -830,8 +852,9 @@ namespace IBbasic
                 btnActionMoveUp = new IbbButton(gv, 1.0f);
             }
             btnActionMoveUp.Img = "btn_small";
+            btnActionMoveUp.Img2 = "ctrl_up_arrow";
             btnActionMoveUp.Glow = "btn_small_glow";
-            btnActionMoveUp.Text = "UP";
+            //btnActionMoveUp.Text = "UP";
             btnActionMoveUp.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnActionMoveUp.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnActionMoveUp.Height = (int)(gv.ibbheight * gv.scaler);
@@ -842,8 +865,9 @@ namespace IBbasic
                 btnActionMoveDown = new IbbButton(gv, 1.0f);
             }
             btnActionMoveDown.Img = "btn_small";
+            btnActionMoveDown.Img2 = "ctrl_down_arrow";
             btnActionMoveDown.Glow = "btn_small_glow";
-            btnActionMoveDown.Text = "DOWN";
+            //btnActionMoveDown.Text = "DOWN";
             btnActionMoveDown.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnActionMoveDown.Y = panelTopLocation + (5 * gv.uiSquareSize);
             btnActionMoveDown.Height = (int)(gv.ibbheight * gv.scaler);
@@ -854,8 +878,9 @@ namespace IBbasic
                 btnActionRemove = new IbbButton(gv, 1.0f);
             }
             btnActionRemove.Img = "btn_small";
+            btnActionRemove.Img2 = "btnremove";
             btnActionRemove.Glow = "btn_small_glow";
-            btnActionRemove.Text = "REMOVE";
+            //btnActionRemove.Text = "REMOVE";
             btnActionRemove.X = panelLeftLocation;
             btnActionRemove.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnActionRemove.Height = (int)(gv.ibbheight * gv.scaler);
@@ -866,8 +891,9 @@ namespace IBbasic
                 btnActionCopy = new IbbButton(gv, 1.0f);
             }
             btnActionCopy.Img = "btn_small";
+            btnActionCopy.Img2 = "btncopy";
             btnActionCopy.Glow = "btn_small_glow";
-            btnActionCopy.Text = "COPY";
+            //btnActionCopy.Text = "COPY";
             btnActionCopy.X = panelLeftLocation + 1 * gv.uiSquareSize;
             btnActionCopy.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnActionCopy.Height = (int)(gv.ibbheight * gv.scaler);
@@ -878,8 +904,9 @@ namespace IBbasic
                 btnActionPaste = new IbbButton(gv, 1.0f);
             }
             btnActionPaste.Img = "btn_small";
+            btnActionPaste.Img2 = "btnpaste";
             btnActionPaste.Glow = "btn_small_glow";
-            btnActionPaste.Text = "PASTE";
+            //btnActionPaste.Text = "PASTE";
             btnActionPaste.X = panelLeftLocation + 2 * gv.uiSquareSize;
             btnActionPaste.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnActionPaste.Height = (int)(gv.ibbheight * gv.scaler);

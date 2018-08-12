@@ -264,7 +264,11 @@ namespace IBbasic.iOS
             else if (modFilename.Equals("NewModule.mod"))
             {
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.NewModule.mod");
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.NewModule.mod");
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.iOS.NewModule.mod");
+                }
                 using (var reader = new System.IO.StreamReader(stream))
                 {
                     return reader.ReadToEnd();

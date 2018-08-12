@@ -50,8 +50,8 @@ namespace IBbasic
                 btnAreaEditor = new IbbButton(gv, 0.8f);
             }
             btnAreaEditor.Img = "btn_small";
-            btnAreaEditor.Img2 = "none";
-            btnAreaEditor.Text = "AREA";
+            btnAreaEditor.Img2 = "btnarea";
+            //btnAreaEditor.Text = "AREA";
             btnAreaEditor.Glow = "btn_small_glow";
             btnAreaEditor.HotKey = "";
             btnAreaEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -64,8 +64,8 @@ namespace IBbasic
                 btnEncounterEditor = new IbbButton(gv, 0.8f);
             }
             btnEncounterEditor.Img = "btn_small";
-            btnEncounterEditor.Img2 = "none";
-            btnEncounterEditor.Text = "ENC";
+            btnEncounterEditor.Img2 = "btnencounter";
+            //btnEncounterEditor.Text = "ENC";
             btnEncounterEditor.Glow = "btn_small_glow";
             btnEncounterEditor.HotKey = "";
             btnEncounterEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -78,8 +78,8 @@ namespace IBbasic
                 btnConvoEditor = new IbbButton(gv, 0.8f);
             }
             btnConvoEditor.Img = "btn_small";
-            btnConvoEditor.Img2 = "none";
-            btnConvoEditor.Text = "CONVO";
+            btnConvoEditor.Img2 = "btnconvo";
+            //btnConvoEditor.Text = "CONVO";
             btnConvoEditor.Glow = "btn_small_glow";
             btnConvoEditor.HotKey = "";
             btnConvoEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -92,8 +92,8 @@ namespace IBbasic
                 btnContainerEditor = new IbbButton(gv, 0.8f);
             }
             btnContainerEditor.Img = "btn_small";
-            btnContainerEditor.Img2 = "none";
-            btnContainerEditor.Text = "CONT";
+            btnContainerEditor.Img2 = "btncontainer";
+            //btnContainerEditor.Text = "CONT";
             btnContainerEditor.Glow = "btn_small_glow";
             btnContainerEditor.HotKey = "C";
             btnContainerEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -106,8 +106,8 @@ namespace IBbasic
                 btnShopEditor = new IbbButton(gv, 0.8f);
             }
             btnShopEditor.Img = "btn_small";
-            btnShopEditor.Img2 = "none";
-            btnShopEditor.Text = "SHOP";
+            btnShopEditor.Img2 = "btnshop";
+            //btnShopEditor.Text = "SHOP";
             btnShopEditor.Glow = "btn_small_glow";
             btnShopEditor.HotKey = "C";
             btnShopEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -120,8 +120,8 @@ namespace IBbasic
                 btnJournalEditor = new IbbButton(gv, 0.8f);
             }
             btnJournalEditor.Img = "btn_small";
-            btnJournalEditor.Img2 = "none";
-            btnJournalEditor.Text = "JRNL";
+            btnJournalEditor.Img2 = "btnjournal";
+            //btnJournalEditor.Text = "JRNL";
             btnJournalEditor.Glow = "btn_small_glow";
             btnJournalEditor.HotKey = "C";
             btnJournalEditor.X = leftPanelLocX + 0 * gv.uiSquareSize;
@@ -133,8 +133,8 @@ namespace IBbasic
             {
                 tglMainMenu = new IbbToggle(gv);
             }
-            tglMainMenu.ImgOn = "tgl_toggles_on";
-            tglMainMenu.ImgOff = "tgl_toggles_off";
+            tglMainMenu.ImgOn = "tgl_menu_on";
+            tglMainMenu.ImgOff = "tgl_menu_off";
             tglMainMenu.X = leftPanelLocX + 0 * gv.uiSquareSize;
             tglMainMenu.Y = leftPanelLocY + 6 * gv.uiSquareSize;
             tglMainMenu.Height = (int)(gv.ibbheight * gv.scaler);
@@ -145,13 +145,13 @@ namespace IBbasic
         {
             bottomPanelLocX = (1 * gv.uiSquareSize);
             bottomPanelLocY = (6 * gv.uiSquareSize) + 1 * gv.scaler;
-            
+
             if (btnSave == null)
             {
                 btnSave = new IbbButton(gv, 0.8f);
             }
             btnSave.Img = "btn_small";
-            btnSave.Img2 = "btndisk";            
+            btnSave.Img2 = "btndisk";
             btnSave.Glow = "btn_small_glow";
             btnSave.HotKey = "";
             btnSave.X = bottomPanelLocX + 0 * gv.uiSquareSize;
@@ -164,7 +164,7 @@ namespace IBbasic
                 btnBackUpModule = new IbbButton(gv, 0.8f);
             }
             btnBackUpModule.Img = "btn_small";
-            btnBackUpModule.Img2 = "btndisk";
+            btnBackUpModule.Img2 = "btndiskinc";
             btnBackUpModule.Glow = "btn_small_glow";
             btnBackUpModule.HotKey = "";
             btnBackUpModule.X = bottomPanelLocX + 1 * gv.uiSquareSize;
@@ -177,8 +177,8 @@ namespace IBbasic
                 btnModuleEditor = new IbbButton(gv, 0.8f);
             }
             btnModuleEditor.Img = "btn_small";
-            btnModuleEditor.Img2 = "none";
-            btnModuleEditor.Text = "MOD";
+            btnModuleEditor.Img2 = "btnsettings2";
+            //btnModuleEditor.Text = "MOD";
             btnModuleEditor.Glow = "btn_small_glow";
             btnModuleEditor.HotKey = "";
             btnModuleEditor.X = bottomPanelLocX + 2 * gv.uiSquareSize;
@@ -191,8 +191,8 @@ namespace IBbasic
                 btnCreatureEditor = new IbbButton(gv, 0.8f);
             }
             btnCreatureEditor.Img = "btn_small";
-            btnCreatureEditor.Img2 = "none";
-            btnCreatureEditor.Text = "CRT";
+            btnCreatureEditor.Img2 = "btncreature";
+            //btnCreatureEditor.Text = "CRT";
             btnCreatureEditor.Glow = "btn_small_glow";
             btnCreatureEditor.HotKey = "";
             btnCreatureEditor.X = bottomPanelLocX + 3 * gv.uiSquareSize;
@@ -205,8 +205,8 @@ namespace IBbasic
                 btnItem = new IbbButton(gv, 0.8f);
             }
             btnItem.Img = "btn_small";
-            btnItem.Img2 = "none";
-            btnItem.Text = "ITEM";
+            btnItem.Img2 = "btnitems";
+            //btnItem.Text = "ITEM";
             btnItem.Glow = "btn_small_glow";
             btnItem.HotKey = "";
             btnItem.X = bottomPanelLocX + 4 * gv.uiSquareSize;
@@ -219,8 +219,8 @@ namespace IBbasic
                 btnPlayer = new IbbButton(gv, 0.8f);
             }
             btnPlayer.Img = "btn_small";
-            btnPlayer.Img2 = "none";
-            btnPlayer.Text = "PLYR";
+            btnPlayer.Img2 = "btnplayers";
+            //btnPlayer.Text = "PLYR";
             btnPlayer.Glow = "btn_small_glow";
             btnPlayer.HotKey = "";
             btnPlayer.X = bottomPanelLocX + 5 * gv.uiSquareSize;
@@ -233,8 +233,8 @@ namespace IBbasic
                 btnArt = new IbbButton(gv, 0.8f);
             }
             btnArt.Img = "btn_small";
-            btnArt.Img2 = "none";
-            btnArt.Text = "ART";
+            btnArt.Img2 = "btnart";
+            //btnArt.Text = "ART";
             btnArt.Glow = "btn_small_glow";
             btnArt.HotKey = "";
             btnArt.X = bottomPanelLocX + 6 * gv.uiSquareSize;
@@ -247,8 +247,8 @@ namespace IBbasic
                 btnExit = new IbbButton(gv, 0.8f);
             }
             btnExit.Img = "btn_small";
-            btnExit.Img2 = "none";
-            btnExit.Text = "EXIT";
+            btnExit.Img2 = "btnexit";
+            //btnExit.Text = "EXIT";
             btnExit.Glow = "btn_small_glow";
             btnExit.HotKey = "";
             btnExit.X = bottomPanelLocX + 8 * gv.uiSquareSize;

@@ -166,14 +166,16 @@ namespace IBbasic
                 cnt++;
             }
         }
+
         public void setControlsStart()
         {
             if (btnAddItem == null)
             {
                 btnAddItem = new IbbButton(gv, 0.8f);
             }
-            btnAddItem.Text = "ADD";
+            //btnAddItem.Text = "ADD";
             btnAddItem.Img = "btn_small";
+            btnAddItem.Img2 = "btnadd";
             btnAddItem.Glow = "btn_small_glow";
             btnAddItem.X = 0 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnAddItem.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -184,8 +186,9 @@ namespace IBbasic
             {
                 btnRemoveItem = new IbbButton(gv, 0.8f);
             }
-            btnRemoveItem.Text = "REMOVE";
+            //btnRemoveItem.Text = "REMOVE";
             btnRemoveItem.Img = "btn_small";
+            btnRemoveItem.Img2 = "btnremove";
             btnRemoveItem.Glow = "btn_small_glow";
             btnRemoveItem.X = 1 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnRemoveItem.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -196,8 +199,9 @@ namespace IBbasic
             {
                 btnCopyItem = new IbbButton(gv, 0.8f);
             }
-            btnCopyItem.Text = "COPY";
+            //btnCopyItem.Text = "COPY";
             btnCopyItem.Img = "btn_small";
+            btnCopyItem.Img2 = "btncopy";
             btnCopyItem.Glow = "btn_small_glow";
             btnCopyItem.X = 2 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnCopyItem.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -399,8 +403,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize;
@@ -1010,8 +1015,9 @@ namespace IBbasic
             {
                 btnAddClass = new IbbButton(gv, 0.8f);
             }
-            btnAddClass.Text = "ADD";
+            //btnAddClass.Text = "ADD";
             btnAddClass.Img = "btn_small";
+            btnAddClass.Img2 = "btnadd";
             btnAddClass.Glow = "btn_small_glow";
             btnAddClass.X = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnAddClass.Y = 2 * gv.uiSquareSize + 4 * gv.fontHeight;
@@ -1022,8 +1028,9 @@ namespace IBbasic
             {
                 btnRemoveClass = new IbbButton(gv, 0.8f);
             }
-            btnRemoveClass.Text = "REMOVE";
+            //btnRemoveClass.Text = "REMOVE";
             btnRemoveClass.Img = "btn_small";
+            btnRemoveClass.Img2 = "btnremove";
             btnRemoveClass.Glow = "btn_small_glow";
             btnRemoveClass.X = 6 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnRemoveClass.Y = 2 * gv.uiSquareSize + 4 * gv.fontHeight;

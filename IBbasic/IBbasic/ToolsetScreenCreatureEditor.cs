@@ -133,14 +133,16 @@ namespace IBbasic
                 cnt++;
             }
         }
+
         public void setControlsStart()
         {
             if (btnAddCreature == null)
             {
                 btnAddCreature = new IbbButton(gv, 0.8f);
             }
-            btnAddCreature.Text = "ADD";
+            //btnAddCreature.Text = "ADD";
             btnAddCreature.Img = "btn_small";
+            btnAddCreature.Img2 = "btnadd";
             btnAddCreature.Glow = "btn_small_glow";
             btnAddCreature.X = 0 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnAddCreature.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -151,8 +153,9 @@ namespace IBbasic
             {
                 btnRemoveCreature = new IbbButton(gv, 0.8f);
             }
-            btnRemoveCreature.Text = "REMOVE";
+            //btnRemoveCreature.Text = "REMOVE";
             btnRemoveCreature.Img = "btn_small";
+            btnRemoveCreature.Img2 = "btnremove";
             btnRemoveCreature.Glow = "btn_small_glow";
             btnRemoveCreature.X = 1 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnRemoveCreature.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -163,8 +166,9 @@ namespace IBbasic
             {
                 btnCopyCreature = new IbbButton(gv, 0.8f);
             }
-            btnCopyCreature.Text = "COPY";
+            //btnCopyCreature.Text = "COPY";
             btnCopyCreature.Img = "btn_small";
+            btnCopyCreature.Img2 = "btncopy";
             btnCopyCreature.Glow = "btn_small_glow";
             btnCopyCreature.X = 2 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnCopyCreature.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -342,8 +346,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize;
@@ -697,8 +702,9 @@ namespace IBbasic
             {
                 btnAddKnownSpell = new IbbButton(gv, 0.8f);
             }
-            btnAddKnownSpell.Text = "ADD";
+            //btnAddKnownSpell.Text = "ADD";
             btnAddKnownSpell.Img = "btn_small";
+            btnAddKnownSpell.Img2 = "btnadd";
             btnAddKnownSpell.Glow = "btn_small_glow";
             btnAddKnownSpell.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnAddKnownSpell.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;
@@ -709,8 +715,9 @@ namespace IBbasic
             {
                 btnRemoveKnownSpell = new IbbButton(gv, 0.8f);
             }
-            btnRemoveKnownSpell.Text = "REMOVE";
+            //btnRemoveKnownSpell.Text = "REMOVE";
             btnRemoveKnownSpell.Img = "btn_small";
+            btnRemoveKnownSpell.Img2 = "btnremove";
             btnRemoveKnownSpell.Glow = "btn_small_glow";
             btnRemoveKnownSpell.X = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnRemoveKnownSpell.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;

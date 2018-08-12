@@ -39,8 +39,9 @@ namespace IBbasic
             {
                 btnAddContainer = new IbbButton(gv, 0.8f);
             }
-            btnAddContainer.Text = "ADD";
+            //btnAddContainer.Text = "ADD";
             btnAddContainer.Img = "btn_small";
+            btnAddContainer.Img2 = "btnadd";
             btnAddContainer.Glow = "btn_small_glow";
             btnAddContainer.X = 0 * gv.uiSquareSize + gv.fontWidth;
             btnAddContainer.Y = 3 * gv.fontHeight;
@@ -51,8 +52,9 @@ namespace IBbasic
             {
                 btnRemoveContainer = new IbbButton(gv, 0.8f);
             }
-            btnRemoveContainer.Text = "REMOVE";
+            //btnRemoveContainer.Text = "REMOVE";
             btnRemoveContainer.Img = "btn_small";
+            btnRemoveContainer.Img2 = "btnremove";
             btnRemoveContainer.Glow = "btn_small_glow";
             btnRemoveContainer.X = 1 * gv.uiSquareSize + gv.fontWidth;
             btnRemoveContainer.Y = 3 * gv.fontHeight;
@@ -63,8 +65,9 @@ namespace IBbasic
             {
                 btnAddItem = new IbbButton(gv, 0.8f);
             }
-            btnAddItem.Text = "ADD";
+            //btnAddItem.Text = "ADD";
             btnAddItem.Img = "btn_small";
+            btnAddItem.Img2 = "btnadd";
             btnAddItem.Glow = "btn_small_glow";
             btnAddItem.X = 4 * gv.uiSquareSize;
             btnAddItem.Y = 1 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -75,8 +78,9 @@ namespace IBbasic
             {
                 btnRemoveItem = new IbbButton(gv, 0.8f);
             }
-            btnRemoveItem.Text = "REMOVE";
+            //btnRemoveItem.Text = "REMOVE";
             btnRemoveItem.Img = "btn_small";
+            btnRemoveItem.Img2 = "btnremove";
             btnRemoveItem.Glow = "btn_small_glow";
             btnRemoveItem.X = 5 * gv.uiSquareSize;
             btnRemoveItem.Y = 1 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -87,8 +91,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;

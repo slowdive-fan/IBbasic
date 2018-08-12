@@ -62,11 +62,19 @@ namespace IBbasic
             {
                 if (gv.mod.defaultPlayerFilenameList.Count > 0)
                 {
+                    if (!gv.mod.defaultPlayerFilenameList[0].stringValue.EndsWith(".json"))
+                    {
+                        gv.mod.defaultPlayerFilenameList[0].stringValue += ".json";
+                    }
                     pc = gv.cc.LoadPlayer(gv.mod.defaultPlayerFilenameList[0].stringValue);
                 }                
             }
             else
             {
+                if (!gv.mod.defaultPlayerFilename.EndsWith(".json"))
+                {
+                    gv.mod.defaultPlayerFilename += ".json";
+                }
                 pc = gv.cc.LoadPlayer(gv.mod.defaultPlayerFilename);
             }
             //pc = gv.cc.LoadPlayer(gv.mod.defaultPlayerFilename);

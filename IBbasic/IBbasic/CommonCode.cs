@@ -944,7 +944,8 @@ namespace IBbasic
                 }
             }
             // deserialize JSON directly from a file
-            string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\data\\" + nameMinusJson + ".json");
+            string json = gv.LoadStringFromAssetFolder("\\data\\" + nameMinusJson + ".json");
+            //string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\data\\" + nameMinusJson + ".json");
             using (StringReader sr = new StringReader(json))
             {
                 JsonSerializer serializer = new JsonSerializer();

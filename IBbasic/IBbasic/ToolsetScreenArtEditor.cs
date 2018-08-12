@@ -76,8 +76,9 @@ namespace IBbasic
                 btnNew = new IbbButton(gv, 1.0f);
             }
             btnNew.Img = "btn_small";
+            btnNew.Img2 = "btnnew";
             btnNew.Glow = "btn_small_glow";
-            btnNew.Text = "NEW";
+            //btnNew.Text = "NEW";
             btnNew.X = 0 * gv.uiSquareSize;
             btnNew.Y = 0 * gv.uiSquareSize + gv.scaler;
             btnNew.Height = (int)(gv.ibbheight * gv.scaler);
@@ -88,8 +89,9 @@ namespace IBbasic
                 btnOpen = new IbbButton(gv, 1.0f);
             }
             btnOpen.Img = "btn_small";
+            btnOpen.Img2 = "btnopen";
             btnOpen.Glow = "btn_small_glow";
-            btnOpen.Text = "OPEN";
+            //btnOpen.Text = "OPEN";
             btnOpen.X = 0 * gv.uiSquareSize;
             btnOpen.Y = 1 * gv.uiSquareSize + gv.scaler;
             btnOpen.Height = (int)(gv.ibbheight * gv.scaler);
@@ -100,8 +102,9 @@ namespace IBbasic
                 btnSave = new IbbButton(gv, 1.0f);
             }
             btnSave.Img = "btn_small";
+            btnSave.Img2 = "btnsave";
             btnSave.Glow = "btn_small_glow";
-            btnSave.Text = "SAVE";
+            //btnSave.Text = "SAVE";
             btnSave.X = 0 * gv.uiSquareSize;
             btnSave.Y = 2 * gv.uiSquareSize + gv.scaler;
             btnSave.Height = (int)(gv.ibbheight * gv.scaler);
@@ -112,8 +115,9 @@ namespace IBbasic
                 btnSaveAs = new IbbButton(gv, 1.0f);
             }
             btnSaveAs.Img = "btn_small";
+            btnSaveAs.Img2 = "btnsaveas";
             btnSaveAs.Glow = "btn_small_glow";
-            btnSaveAs.Text = "SAVEAS";
+            //btnSaveAs.Text = "SAVEAS";
             btnSaveAs.X = 0 * gv.uiSquareSize;
             btnSaveAs.Y = 3 * gv.uiSquareSize + gv.scaler;
             btnSaveAs.Height = (int)(gv.ibbheight * gv.scaler);
@@ -124,8 +128,9 @@ namespace IBbasic
                 btnUndo = new IbbButton(gv, 1.0f);
             }
             btnUndo.Img = "btn_small";
+            btnUndo.Img2 = "btnundo";
             btnUndo.Glow = "btn_small_glow";
-            btnUndo.Text = "UNDO";
+            //btnUndo.Text = "UNDO";
             btnUndo.X = 10 * gv.uiSquareSize;
             btnUndo.Y = 4 * gv.uiSquareSize + gv.scaler;
             btnUndo.Height = (int)(gv.ibbheight * gv.scaler);
@@ -136,8 +141,9 @@ namespace IBbasic
                 btnRedo = new IbbButton(gv, 1.0f);
             }
             btnRedo.Img = "btn_small";
+            btnRedo.Img2 = "btnredo";
             btnRedo.Glow = "btn_small_glow";
-            btnRedo.Text = "REDO";
+            //btnRedo.Text = "REDO";
             btnRedo.X = 10 * gv.uiSquareSize;
             btnRedo.Y = 5 * gv.uiSquareSize + gv.scaler;
             btnRedo.Height = (int)(gv.ibbheight * gv.scaler);
@@ -148,8 +154,9 @@ namespace IBbasic
                 btnAlphaAdjust = new IbbButton(gv, 1.0f);
             }
             btnAlphaAdjust.Img = "btn_small";
+            btnAlphaAdjust.Img2 = "btnalphaset";
             btnAlphaAdjust.Glow = "btn_small_glow";
-            btnAlphaAdjust.Text = "ALPHASET";
+            //btnAlphaAdjust.Text = "ALPHASET";
             btnAlphaAdjust.X = 0 * gv.uiSquareSize;
             btnAlphaAdjust.Y = 4 * gv.uiSquareSize + gv.scaler;
             btnAlphaAdjust.Height = (int)(gv.ibbheight * gv.scaler);
@@ -160,8 +167,9 @@ namespace IBbasic
                 btnPreviewBackground = new IbbButton(gv, 1.0f);
             }
             btnPreviewBackground.Img = "btn_small";
+            btnPreviewBackground.Img2 = "btncanvas";
             btnPreviewBackground.Glow = "btn_small_glow";
-            btnPreviewBackground.Text = "PREVIEW";
+            //btnPreviewBackground.Text = "PREVIEW";
             btnPreviewBackground.X = 10 * gv.uiSquareSize;
             btnPreviewBackground.Y = 6 * gv.uiSquareSize + gv.scaler;
             btnPreviewBackground.Height = (int)(gv.ibbheight * gv.scaler);
@@ -172,8 +180,9 @@ namespace IBbasic
                 btnCanvasBackground = new IbbButton(gv, 1.0f);
             }
             btnCanvasBackground.Img = "btn_small";
+            btnCanvasBackground.Img2 = "btncanvas";
             btnCanvasBackground.Glow = "btn_small_glow";
-            btnCanvasBackground.Text = "CANVAS";
+            //btnCanvasBackground.Text = "CANVAS";
             btnCanvasBackground.X = 0 * gv.uiSquareSize;
             btnCanvasBackground.Y = 5 * gv.uiSquareSize + gv.scaler;
             btnCanvasBackground.Height = (int)(gv.ibbheight * gv.scaler);
@@ -182,11 +191,9 @@ namespace IBbasic
             if (btnToggleLayer == null)
             {
                 btnToggleLayer = new IbbButton(gv, 1.0f);
-                btnToggleLayer.Text = "IDLE";
+                btnToggleLayer.Img = "tgl_idle_on";
             }
-            btnToggleLayer.Img = "btn_small";
             btnToggleLayer.Glow = "btn_small_glow";
-            //btnToggleLayer.Text = "TglLayer";
             btnToggleLayer.X = 10 * gv.uiSquareSize;
             btnToggleLayer.Y = 2 * gv.uiSquareSize + gv.scaler;
             btnToggleLayer.Height = (int)(gv.ibbheight * gv.scaler);
@@ -198,6 +205,7 @@ namespace IBbasic
                 tglPencil.Text = "1PX";
             }
             tglPencil.Img = "btn_small";
+            tglPencil.Img2 = "btnpencil";
             tglPencil.Glow = "btn_small_glow";
             tglPencil.X = 10 * gv.uiSquareSize;
             tglPencil.Y = 3 * gv.uiSquareSize + gv.scaler;
@@ -209,8 +217,9 @@ namespace IBbasic
                 btnEraser = new IbbButton(gv, 1.0f);
             }
             btnEraser.Img = "btn_small";
+            btnEraser.Img2 = "btneraser";
             btnEraser.Glow = "btn_small_glow";
-            btnEraser.Text = "Eraser";
+            //btnEraser.Text = "Eraser";
             btnEraser.X = 10 * gv.uiSquareSize;
             btnEraser.Y = 1 * gv.uiSquareSize + gv.scaler;
             btnEraser.Height = (int)(gv.ibbheight * gv.scaler);
@@ -220,10 +229,11 @@ namespace IBbasic
             {
                 btnGetColor = new IbbButton(gv, 1.0f);
                 btnGetColor.Img = "btn_small";
+
             }
-            //btnGetColor.Img = "btn_small";
+            btnGetColor.Img2 = "btneyedropper";
             btnGetColor.Glow = "btn_small_glow";
-            btnGetColor.Text = "GetColor";
+            //btnGetColor.Text = "GetColor";
             btnGetColor.X = 10 * gv.uiSquareSize;
             btnGetColor.Y = 0 * gv.uiSquareSize + gv.scaler;
             btnGetColor.Height = (int)(gv.ibbheight * gv.scaler);
@@ -279,34 +289,42 @@ namespace IBbasic
             {
                 if (selected.Equals("item"))
                 {
+                    filename = "it_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
                 }
                 else if (selected.Equals("token_regular"))
                 {
+                    filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 96);
                 }
                 else if (selected.Equals("token_tall"))
                 {
+                    filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 192);
                 }
                 else if (selected.Equals("token_wide"))
                 {
+                    filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(96, 96);
                 }
                 else if (selected.Equals("token_large"))
                 {
+                    filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(96, 192);
                 }
                 else if (selected.Equals("prop"))
                 {
+                    filename = "prp_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
                 }
                 else if (selected.Equals("ui"))
                 {
+                    filename = "ui_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
                 }
                 else if (selected.Equals("tiles"))
                 {
+                    filename = "t_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
                 }
             }
@@ -407,7 +425,9 @@ namespace IBbasic
         public async void doSaveAsDialog()
         {
             gv.touchEnabled = false;
-            string myinput = await gv.StringInputBox("Filename for this image (do not include the extension)", filename);
+            string header = "Filename for this image (do not include the extension). Files should use the following prefixes: "
+                            + "it_ for items, tkn_ for creature tokens, prp_ for props, ui_ for ui elements, t_ for tiles.";
+            string myinput = await gv.StringInputBox(header, filename);
             if ((myinput.Equals("newdrawing")) || myinput.Equals("none"))
             {
                 gv.sf.MessageBoxHtml("you can't use a blank filename or 'newdrawing' filename.");
@@ -1117,12 +1137,12 @@ namespace IBbasic
                         if (isIdleLayerShown)
                         {
                             isIdleLayerShown = false;
-                            btnToggleLayer.Text = "Attack";
+                            btnToggleLayer.Img = "tgl_attack_on";
                         }
                         else
                         {
                             isIdleLayerShown = true;
-                            btnToggleLayer.Text = "Idle";
+                            btnToggleLayer.Img = "tgl_idle_on";
                         }
                     }
                     else if (tglPencil.getImpact(x, y))

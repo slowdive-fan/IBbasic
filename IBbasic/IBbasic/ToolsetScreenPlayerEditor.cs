@@ -92,8 +92,9 @@ namespace IBbasic
             {
                 btnAddPlayer = new IbbButton(gv, 0.8f);
             }
-            btnAddPlayer.Text = "ADD";
+            //btnAddPlayer.Text = "ADD";
             btnAddPlayer.Img = "btn_small";
+            btnAddPlayer.Img2 = "btnadd";
             btnAddPlayer.Glow = "btn_small_glow";
             btnAddPlayer.X = 0 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnAddPlayer.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -104,8 +105,9 @@ namespace IBbasic
             {
                 btnRemovePlayer = new IbbButton(gv, 0.8f);
             }
-            btnRemovePlayer.Text = "REMOVE";
+            //btnRemovePlayer.Text = "REMOVE";
             btnRemovePlayer.Img = "btn_small";
+            btnRemovePlayer.Img2 = "btnremove";
             btnRemovePlayer.Glow = "btn_small_glow";
             btnRemovePlayer.X = 1 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnRemovePlayer.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -116,8 +118,9 @@ namespace IBbasic
             {
                 btnCopyPlayer = new IbbButton(gv, 0.8f);
             }
-            btnCopyPlayer.Text = "COPY";
+            //btnCopyPlayer.Text = "COPY";
             btnCopyPlayer.Img = "btn_small";
+            btnCopyPlayer.Img2 = "btncopy";
             btnCopyPlayer.Glow = "btn_small_glow";
             btnCopyPlayer.X = 2 * gv.uiSquareSize + 1 * gv.fontWidth;
             btnCopyPlayer.Y = 0 * gv.uiSquareSize + 2 * gv.fontHeight;
@@ -295,8 +298,9 @@ namespace IBbasic
             {
                 btnHelp = new IbbButton(gv, 0.8f);
             }
-            btnHelp.Text = "HELP";
+            //btnHelp.Text = "HELP";
             btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
             btnHelp.Y = 6 * gv.uiSquareSize;
@@ -524,8 +528,9 @@ namespace IBbasic
             {
                 btnAddKnownTrait = new IbbButton(gv, 0.8f);
             }
-            btnAddKnownTrait.Text = "ADD";
+            //btnAddKnownTrait.Text = "ADD";
             btnAddKnownTrait.Img = "btn_small";
+            btnAddKnownTrait.Img2 = "btnadd";
             btnAddKnownTrait.Glow = "btn_small_glow";
             btnAddKnownTrait.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnAddKnownTrait.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;
@@ -536,8 +541,9 @@ namespace IBbasic
             {
                 btnRemoveKnownTrait = new IbbButton(gv, 0.8f);
             }
-            btnRemoveKnownTrait.Text = "REMOVE";
+            //btnRemoveKnownTrait.Text = "REMOVE";
             btnRemoveKnownTrait.Img = "btn_small";
+            btnRemoveKnownTrait.Img2 = "btnremove";
             btnRemoveKnownTrait.Glow = "btn_small_glow";
             btnRemoveKnownTrait.X = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnRemoveKnownTrait.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;
@@ -550,8 +556,9 @@ namespace IBbasic
             {
                 btnAddKnownSpell = new IbbButton(gv, 0.8f);
             }
-            btnAddKnownSpell.Text = "ADD";
+            //btnAddKnownSpell.Text = "ADD";
             btnAddKnownSpell.Img = "btn_small";
+            btnAddKnownSpell.Img2 = "btnadd";
             btnAddKnownSpell.Glow = "btn_small_glow";
             btnAddKnownSpell.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnAddKnownSpell.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;
@@ -562,8 +569,9 @@ namespace IBbasic
             {
                 btnRemoveKnownSpell = new IbbButton(gv, 0.8f);
             }
-            btnRemoveKnownSpell.Text = "REMOVE";
+            //btnRemoveKnownSpell.Text = "REMOVE";
             btnRemoveKnownSpell.Img = "btn_small";
+            btnRemoveKnownSpell.Img2 = "btnremove";
             btnRemoveKnownSpell.Glow = "btn_small_glow";
             btnRemoveKnownSpell.X = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 1 * gv.fontWidth;
             btnRemoveKnownSpell.Y = 1 * gv.uiSquareSize + 4 * gv.fontHeight;
