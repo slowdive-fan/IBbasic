@@ -298,20 +298,6 @@
           "allow": true
         },
         {
-          "name": "Pick Pocket (L1)",
-          "tag": "pickpocket",
-          "atWhatLevelIsAvailable": 1,
-          "automaticallyLearned": true,
-          "allow": true
-        },
-        {
-          "name": "Pick Pocket (L2)",
-          "tag": "pickpocket2",
-          "atWhatLevelIsAvailable": 3,
-          "automaticallyLearned": false,
-          "allow": true
-        },
-        {
           "name": "Spot (L1)",
           "tag": "spot",
           "atWhatLevelIsAvailable": 1,

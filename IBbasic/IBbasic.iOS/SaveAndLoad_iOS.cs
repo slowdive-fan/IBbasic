@@ -199,9 +199,12 @@ namespace IBbasic.iOS
             {
                 stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
             }
-            using (var reader = new System.IO.StreamReader(stream))
+            if (stream != null)
             {
-                text = reader.ReadToEnd();
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
             }
             return text;
         }

@@ -20,7 +20,7 @@ namespace IBbasic
 	    private IbbButton btnLeft = null;
 	    private IbbButton btnRight = null;
 	    private IbbButton btnModuleName = null;
-        private IbbButton btnGetUpdates = null;
+        //private IbbButton btnGetUpdates = null;
         private IBminiTextBox description;
 	    //private List<Module> moduleList = new List<Module>();
         private List<Module> moduleInfoList = new List<Module>();
@@ -197,7 +197,7 @@ namespace IBbasic
                 btnRight.Height = (int)(gv.ibbheight * gv.scaler);
                 btnRight.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnGetUpdates == null)
+            /*if (btnGetUpdates == null)
             {
                 btnGetUpdates = new IbbButton(gv, 1.0f);
             }
@@ -208,7 +208,7 @@ namespace IBbasic
                 btnGetUpdates.Y = (6 * gv.uiSquareSize) - (pH * 2);
                 btnGetUpdates.Height = (int)(gv.ibbheight * gv.scaler);
                 btnGetUpdates.Width = (int)(gv.ibbwidthL * gv.scaler);
-            
+            */
         }
         //TITLE SCREEN  
         public void redrawLauncher()
@@ -249,14 +249,14 @@ namespace IBbasic
 		    btnLeft.Draw();		
 		    btnRight.Draw();
 		    btnModuleName.Draw();
-            btnGetUpdates.Draw();
+            //btnGetUpdates.Draw();
 	    }
         public void onTouchLauncher(int eX, int eY, MouseEventType.EventType eventType)
 	    {
     	    btnLeft.glowOn = false;
     	    btnRight.glowOn = false;	
     	    btnModuleName.glowOn = false;
-            btnGetUpdates.glowOn = false;
+            //btnGetUpdates.glowOn = false;
 		
 		    switch (eventType)
 		    {
@@ -267,7 +267,7 @@ namespace IBbasic
 			        btnLeft.glowOn = false;
 	    	        btnRight.glowOn = false;	
 	    	        btnModuleName.glowOn = false;
-                    btnGetUpdates.glowOn = false;
+                    //btnGetUpdates.glowOn = false;
 
                     if (btnLeft.getImpact(x, y))
 			        {
@@ -339,10 +339,10 @@ namespace IBbasic
 			        {
                         btnModuleName.glowOn = true;
 			        }
-                    else if (btnGetUpdates.getImpact(x, y))
+                    /*else if (btnGetUpdates.getImpact(x, y))
                     {
                         btnGetUpdates.glowOn = true;
-                    }
+                    }*/
                     break;		
 		    }
 	    }

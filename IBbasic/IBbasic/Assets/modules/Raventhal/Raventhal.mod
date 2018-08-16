@@ -3862,7 +3862,6 @@
       "knownSpellsTags": [],
       "knownTraitsTags": [
         "disabledevice",
-        "pickpocket",
         "spot",
         "stealth"
       ],
