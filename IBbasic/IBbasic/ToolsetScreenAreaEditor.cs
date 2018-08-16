@@ -275,8 +275,8 @@ namespace IBbasic
         }
         public void setupTilesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (btnTilesLeft == null)
@@ -383,8 +383,8 @@ namespace IBbasic
         }
         public void setupInfoPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //INFO PANEL            
             if (rbtnZoom1 == null)
@@ -405,7 +405,7 @@ namespace IBbasic
             rbtnZoom2.ImgOn = "mtgl_rbtn_on";
             rbtnZoom2.ImgOff = "mtgl_rbtn_off";
             rbtnZoom2.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
-            rbtnZoom2.Y = panelTopLocation + panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing));
+            rbtnZoom2.Y = panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing));
             rbtnZoom2.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnZoom2.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -455,8 +455,8 @@ namespace IBbasic
         }
         public void setupSettingsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (tglSettingAreaName == null)
@@ -549,8 +549,8 @@ namespace IBbasic
         }
         public void setupWalkLoSPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //WALK-LoS PANEL           
             if (rbtnWalkBlocking == null)
@@ -599,8 +599,8 @@ namespace IBbasic
         }
         public void setupTriggerPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //Trigger Panel           
             if (rbtnViewInfoTrigger == null)
@@ -904,8 +904,8 @@ namespace IBbasic
         }
         public void setup3DPreviewControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (btnTurnLeft == null)
@@ -1759,10 +1759,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer1Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlX = x * gv.squareSize / (2 * 2) * gv.scaler;
+                        int tlY = y * gv.squareSize / (2 * 2) * gv.scaler;
+                        int brX = gv.squareSize / (2 * 2) * gv.scaler;
+                        int brY = gv.squareSize / (2 * 2) * gv.scaler;
 
                         try
                         {
@@ -1783,10 +1783,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer2Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlX = x * gv.squareSize / (2 * 2) * gv.scaler;
+                        int tlY = y * gv.squareSize / (2 * 2) * gv.scaler;
+                        int brX = gv.squareSize / (2 * 2) * gv.scaler;
+                        int brY = gv.squareSize / (2 * 2) * gv.scaler;
 
                         try
                         {
@@ -1813,10 +1813,10 @@ namespace IBbasic
                         for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                         {
                             string tile = gv.mod.currentArea.Layer3Filename[y * gv.mod.currentArea.MapSizeX + x];
-                            int tlX = x * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                            int tlY = y * gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                            int brX = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
-                            int brY = gv.squareSize / (mapSquareSizeScaler * 5) * gv.scaler;
+                            int tlX = x * gv.squareSize / (2 * 2) * gv.scaler;
+                            int tlY = y * gv.squareSize / (2 * 5) * gv.scaler;
+                            int brX = gv.squareSize / (2 * 5) * gv.scaler;
+                            int brY = gv.squareSize / (2 * 2) * gv.scaler;
 
                             try
                             {
@@ -1840,10 +1840,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                 {
-                    int tlX = x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                    int tlY = y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                    int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                    int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                    int tlX = x * gv.squareSize / (2 * 2) * gv.scaler;
+                    int tlY = y * gv.squareSize / (2 * 2) * gv.scaler;
+                    int brX = gv.squareSize / (2 * 2) * gv.scaler;
+                    int brY = gv.squareSize / (2 * 2) * gv.scaler;
                     src = new IbRect(0, 0, gv.cc.walkBlocked.Width, gv.cc.walkBlocked.Height);
                     dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                     if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
@@ -1866,8 +1866,8 @@ namespace IBbasic
             {
                 foreach (Coordinate p in t.TriggerSquaresList)
                 {
-                    int dx = (p.X * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) + shiftX;
-                    int dy = (p.Y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) + shiftY;
+                    int dx = (p.X * gv.squareSize / (2 * 2) * gv.scaler) + shiftX;
+                    int dy = (p.Y * gv.squareSize / (2 * 2) * gv.scaler) + shiftY;
                     //Pen pen = new Pen(Color.Orange, 2);
                     SKColor clr = SKColors.Orange;
                     if ((t.Event1Type.Equals("encounter")) || (t.Event2Type.Equals("encounter")) || (t.Event3Type.Equals("encounter")))
@@ -1890,15 +1890,15 @@ namespace IBbasic
                     {
                         clr = SKColors.Magenta;
                     }
-                    IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler - 6, gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler - 6);
+                    IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / (2 * 2) * gv.scaler - 6, gv.squareSize / (2 * 2) * gv.scaler - 6);
                     gv.DrawRectangle(rect, clr, 2);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
-                        int tlX = p.X * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int tlY = p.Y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brX = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-                        int brY = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+                        int tlX = p.X * gv.squareSize / (2 * 2) * gv.scaler;
+                        int tlY = p.Y * gv.squareSize / (2 * 2) * gv.scaler;
+                        int brX = gv.squareSize / (2 * 2) * gv.scaler;
+                        int brY = gv.squareSize / (2 * 2) * gv.scaler;
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                         gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
@@ -1907,10 +1907,10 @@ namespace IBbasic
             }
 
             //Draw Location Marker
-            int tlX2 = PlayerLocationX * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-            int tlY2 = PlayerLocationY * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-            int brX2 = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-            int brY2 = gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+            int tlX2 = PlayerLocationX * gv.squareSize / (2 * 2) * gv.scaler;
+            int tlY2 = PlayerLocationY * gv.squareSize / (2 * 2) * gv.scaler;
+            int brX2 = gv.squareSize / (2 * 2) * gv.scaler;
+            int brY2 = gv.squareSize / (2 * 2) * gv.scaler;
             if (PlayerFacingDirection == 0) //NORTH
             {                
                 try
@@ -3969,8 +3969,8 @@ namespace IBbasic
                     //figure out if tapped on a map square
                     int shiftY = panelTopLocation + gv.fontHeight + gv.fontLineSpacing;
                     int shiftX = panelLeftLocation - (gv.squareSize / 1);
-                    int gridX = ((eX - shiftX) / (int)(gv.squareSize * ((float)gv.scaler / ((float)mapSquareSizeScaler * 2))));
-                    int gridY = ((eY - shiftY) / (int)(gv.squareSize * ((float)gv.scaler / ((float)mapSquareSizeScaler * 2))));
+                    int gridX = ((eX - shiftX) / (int)(gv.squareSize * ((float)gv.scaler / ((float)2 * 2))));
+                    int gridY = ((eY - shiftY) / (int)(gv.squareSize * ((float)gv.scaler / ((float)2 * 2))));
                     if ((tapInMapArea(gridX, gridY)) && (tapInMiniMapViewport(x, y)))
                     {
                         PlayerLocationX = gridX;

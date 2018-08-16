@@ -1742,7 +1742,12 @@ namespace IBbasic
                 this.datafile = (Data)serializer.Deserialize(sr, typeof(Data));
             }
             //APPEND MODULE DATA FILE (CLASSS, RACES, SPELLS, TRAITS, EFFECTS)
+            s = "";
             s = gv.LoadStringFromUserFolder("\\modules\\" + toReturn.moduleName + "\\data.json");
+            if (s.Equals(""))
+            {
+                s = gv.LoadStringFromAssetFolder("\\modules\\" + toReturn.moduleName + "\\data.json");
+            }
             if (!s.Equals(""))
             {
                 Data appendData = new Data();

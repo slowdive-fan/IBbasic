@@ -224,7 +224,7 @@ namespace IBbasic.iOS
 
                 }
                 return text;
-            }
+            }            
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."));
@@ -292,10 +292,11 @@ namespace IBbasic.iOS
                     }
                     return text;
                 }
-                               
+
                 //try asset module            
+                string modFilenameNoExtension = modFilename.Replace(".mod", "");
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS." + modFilename);
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + modFilenameNoExtension + "." + modFilename);
                 if (stream != null)
                 {
                     using (var reader = new System.IO.StreamReader(stream))
@@ -332,7 +333,15 @@ namespace IBbasic.iOS
                 }
             }
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename);            
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename + ".png");
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+            }
             if (stream == null)
             {
                 stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename + ".png");
@@ -404,7 +413,7 @@ namespace IBbasic.iOS
 
             return list;
         }
-        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
+        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension) //NOT USED
         {
             List<string> list = new List<string>();
             Assembly assembly = GetType().GetTypeInfo().Assembly;

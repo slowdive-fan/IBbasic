@@ -250,8 +250,9 @@ namespace IBbasic
         }
         public void setupConvoNodeControls()
         {
-            panelLeftLocation = 1 * gv.uiSquareSize + 2 * gv.scaler;
-            panelTopLocation = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
+
             int xLoc = 1 * gv.uiSquareSize + 2 * gv.scaler;
             int xIndent = gv.uiSquareSize / 2;
             int yLoc = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
@@ -316,8 +317,8 @@ namespace IBbasic
         }
         public void setupNodePropertiesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //SETTINGS PANEL
             if (tglNodeText == null)
@@ -470,8 +471,8 @@ namespace IBbasic
         }
         public void setupConvoPropertiesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //SETTINGS PANEL
             if (tglSettingConvoFileName == null)
@@ -542,8 +543,8 @@ namespace IBbasic
         }
         public void setupNodeConditionalsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //CONDITIONALS PANEL
             if (tglCond1Radio == null)
@@ -728,8 +729,8 @@ namespace IBbasic
         }
         public void setupNodeActionsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //CONDITIONALS PANEL
             if (tglAction1Radio == null)

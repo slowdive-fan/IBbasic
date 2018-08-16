@@ -208,7 +208,7 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\" + EncFilename + ".enc");
+                string json = gv.LoadStringFromEitherFolder("\\modules\\" + gv.mod.moduleName + "\\" + EncFilename + ".enc","\\modules\\" + gv.mod.moduleName + "\\" + EncFilename + ".enc");
                 using (StringReader sr = new StringReader(json))
                 {
                     JsonSerializer serializer = new JsonSerializer();
@@ -255,7 +255,7 @@ namespace IBbasic
                     }
                 }
                 //didn't find the area in the mod list so try and load it
-                string json = gv.LoadStringFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\" + ConvoFilename + ".dlg");
+                string json = gv.LoadStringFromEitherFolder("\\modules\\" + gv.mod.moduleName + "\\" + ConvoFilename + ".dlg","\\modules\\" + gv.mod.moduleName + "\\" + ConvoFilename + ".dlg");
                 using (StringReader sr = new StringReader(json))
                 {
                     JsonSerializer serializer = new JsonSerializer();
@@ -334,7 +334,7 @@ namespace IBbasic
             }
             return null;
         }
-        public Convo getConvoByName(string name, GameView gv)
+        public Convo getConvoByName(string name, GameView gv) //NOT USED
         {
             try
             {

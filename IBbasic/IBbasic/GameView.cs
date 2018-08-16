@@ -1714,10 +1714,10 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromUserFolder(folderpath, extension);
         }
-        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
+        /*public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromAssetFolder(folderpath, extension);
-        }
+        }*/
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromBothFolders(assetFolderpath, userFolderpath, extension);

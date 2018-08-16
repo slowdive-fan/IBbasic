@@ -239,8 +239,8 @@ namespace IBbasic
         }
         public void setupInfoPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL            
             if (tglMoveCrtMode == null)
@@ -256,8 +256,8 @@ namespace IBbasic
         }
         public void setupTilesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (btnTilesLeft == null)
@@ -364,8 +364,8 @@ namespace IBbasic
         }
         public void setupCrtPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (btnCrtLeft == null)
@@ -405,8 +405,8 @@ namespace IBbasic
         }
         public void setupSettingsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //TILES PANEL
             if (tglSettingEncounterName == null)
@@ -499,8 +499,8 @@ namespace IBbasic
         }
         public void setupWalkLoSPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //WALK-LoS PANEL           
             if (rbtnWalkBlocking == null)
@@ -549,8 +549,8 @@ namespace IBbasic
         }
         public void setupTriggerPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (gv.oXshift / 2);
-            panelTopLocation = (gv.oYshift / 4);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelTopLocation = 0;
 
             //Trigger Panel           
             if (rbtnViewInfoTrigger == null)

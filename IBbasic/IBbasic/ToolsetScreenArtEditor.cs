@@ -291,41 +291,49 @@ namespace IBbasic
                 {
                     filename = "it_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("token_regular"))
                 {
                     filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 96);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("token_tall"))
                 {
                     filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 192);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("token_wide"))
                 {
                     filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(96, 96);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("token_large"))
                 {
                     filename = "tkn_newdrawing";
                     myBitmapGDI = new SKBitmap(96, 192);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("prop"))
                 {
                     filename = "prp_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("ui"))
                 {
                     filename = "ui_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
+                    clearAllPixels();
                 }
                 else if (selected.Equals("tiles"))
                 {
                     filename = "t_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 48);
+                    clearAllPixels();
                 }
             }
             gv.touchEnabled = true;
@@ -479,6 +487,16 @@ namespace IBbasic
                 }
             }
             //updateBitmapDX();
+        }
+        public void clearAllPixels()
+        {
+            for (int x = 0; x < myBitmapGDI.Width; x++)
+            {
+                for (int y = 0; y < myBitmapGDI.Height; y++)
+                {
+                    myBitmapGDI.SetPixel(x, y, new SKColor(0, 0, 0, 0));
+                }
+            }
         }
         public void fillPaletteColorList()
         {
@@ -1026,9 +1044,9 @@ namespace IBbasic
                                         myBitmapGDI.SetPixel(pGridX, pGridY + myBitmapGDI.Height / 2, currentColor);
                                         if (pencilSize == 2)
                                         {
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + myBitmapGDI.Height / 2, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
+                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
                                         }
                                     }
                                 }

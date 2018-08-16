@@ -265,8 +265,9 @@ namespace IBbasic.Droid
                     }
                 }
                 //try asset area            
+                string modFilenameNoExtension = modFilename.Replace(".mod", "");
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFolder + "." + modFilename);
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + modFilenameNoExtension + "." + modFilename);
                 if (stream != null)
                 {
                     using (var reader = new System.IO.StreamReader(stream))
@@ -310,7 +311,15 @@ namespace IBbasic.Droid
                 }
                 //If not found then try in Asset folder
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.graphics." + filename);
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + mdl.moduleName + ".graphics." + filename);
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.modules." + mdl.moduleName + ".graphics." + filename + ".png");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.graphics." + filename);
+                }
                 if (stream == null)
                 {
                     stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets.graphics." + filename + ".png");
@@ -377,7 +386,7 @@ namespace IBbasic.Droid
             }
             return list;
         }
-        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
+        public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension) //NOT USED
         {
             List<string> list = new List<string>();
             Assembly assembly = GetType().GetTypeInfo().Assembly;
