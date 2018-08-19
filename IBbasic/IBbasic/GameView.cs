@@ -13,7 +13,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.04";
+        public string versionNum = "1.0.07";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -1730,9 +1730,9 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().LoadBitmap(filename, mdl);
         }
-        public List<string> GetAllModuleFiles()
+        public List<string> GetAllModuleFiles(bool userOnly)
         {
-            return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles();
+            return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles(userOnly);
         }
 
         //ANALYTICS

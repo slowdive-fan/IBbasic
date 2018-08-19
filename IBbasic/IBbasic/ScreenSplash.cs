@@ -336,19 +336,20 @@ namespace IBbasic
         public List<string> loadModuleNamesToList()
         {
             List<string> retList = new List<string>();
-            List<string> modList = gv.GetAllModuleFiles();
+            List<string> modList = gv.GetAllModuleFiles(true);
             foreach (string file in modList)
             {
-                if (Path.GetFileName(file) != "NewModule.mod")
+                if (Path.GetFileName(file) == "NewModule.mod")
                 {
-                    // Process each file
-                    Module modinfo = gv.cc.LoadModuleFileInfo(file);
-                    if (modinfo == null)
-                    {
-                        gv.sf.MessageBox("returned a null module");
-                    }
-                    retList.Add(modinfo.moduleName);                    
+                    continue;
                 }
+                // Process each file
+                Module modinfo = gv.cc.LoadModuleFileInfo(file);
+                if (modinfo == null)
+                {
+                    gv.sf.MessageBox("returned a null module");
+                }
+                retList.Add(modinfo.moduleName);                    
             }
 
             return retList;

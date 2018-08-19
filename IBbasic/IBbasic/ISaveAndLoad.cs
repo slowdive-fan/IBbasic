@@ -33,7 +33,7 @@ namespace IBbasic
         List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension);
         List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension);
         List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension);
-        List<string> GetAllModuleFiles();
+        List<string> GetAllModuleFiles(bool userOnly);
 
         void TrackAppEvent(string Category, string EventAction, string EventLabel);
 

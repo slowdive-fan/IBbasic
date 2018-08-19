@@ -134,7 +134,7 @@ namespace IBbasic
             moduleInfoList.Clear();
             titleList.Clear();
 
-            List<string> modList = gv.GetAllModuleFiles();
+            List<string> modList = gv.GetAllModuleFiles(false);
             foreach (string file in modList)
             {
                 string s = gv.GetModuleFileString(file);

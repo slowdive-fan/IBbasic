@@ -165,7 +165,19 @@ namespace IBbasic.iOS
         public string LoadStringFromUserFolder(string fullPath)
         {
             string text = "";
-            //check in module folder first
+            //check in app module folderr first
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(fullPath, "."));
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                }
+                return text;
+            }
+
+            //check in user module folder next
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string convertedFullPath = documents + ConvertFullPath(fullPath, "/");
             if (File.Exists(convertedFullPath))
@@ -414,6 +426,35 @@ namespace IBbasic.iOS
         {
             List<string> list = new List<string>();
 
+            //FROM ASSETS
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+
+            //DEBUGGING RESOURCE PATH
+            //foreach (var res in assembly.GetManifestResourceNames())
+            //{
+            //    int x3 = 0;
+            //}
+
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+
+            //FROM USER FOLDER
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (Directory.Exists(documents + ConvertFullPath(folderpath, "/")))
+            {
+                string[] files = Directory.GetFiles(documents + ConvertFullPath(folderpath, "/"), "*" + extension, SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    list.Add(Path.GetFileNameWithoutExtension(file));
+                }
+            }
+
             return list;
         }
         public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension) //NOT USED
@@ -448,16 +489,25 @@ namespace IBbasic.iOS
 
             //FROM ASSETS
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            
+
             //DEBUGGING RESOURCE PATH
             //foreach (var res in assembly.GetManifestResourceNames())
             //{
             //    int x3 = 0;
             //}
+            //module folder in app 
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains("IBbasic.iOS.Assets" + ConvertFullPath(userFolderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
 
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
+                if ((res.Contains("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
@@ -465,17 +515,20 @@ namespace IBbasic.iOS
             }
             return list;
         }
-        public List<string> GetAllModuleFiles()
+        public List<string> GetAllModuleFiles(bool userOnly)
         {
             List<string> list = new List<string>();
 
-            //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
+            if (!userOnly)
             {
-                if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                //search in assets
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                foreach (var res in assembly.GetManifestResourceNames())
                 {
-                    list.Add(res);
+                    if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                    {
+                        list.Add(res);
+                    }
                 }
             }
 
@@ -495,7 +548,7 @@ namespace IBbasic.iOS
 
         public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent(Category, EventAction, EventLabel, null).Build());
+            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("iOS_" + Category, "iOS_" + EventAction, "iOS_" + EventLabel, null).Build());
             Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
         }
         public void InitializeNativeGAS()

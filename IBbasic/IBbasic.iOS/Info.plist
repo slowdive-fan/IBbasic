@@ -61,12 +61,12 @@
 		</dict>
 	</array>
 	<key>XSLaunchImageAssets</key>
-	<string>Resources/Media.xcassets/LaunchImages.launchimage</string>
+	<string>Media.xcassets/LaunchImages.launchimage</string>
 	<key>XSAppIconAssets</key>
-	<string>Resources/Media.xcassets/AppIcons.appiconset</string>
+	<string>Media.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.04</string>
+	<string>1.0.07</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>7</string>
 </dict>
 </plist>

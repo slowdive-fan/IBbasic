@@ -167,6 +167,19 @@ namespace IBbasic.Droid
         public string LoadStringFromUserFolder(string fullPath)
         {
             string text = "";
+            //check in app module folderr first
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.Droid.Assets" + ConvertFullPath(fullPath, "."));
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();                    
+                }
+                return text;
+            }
+
+            //check in user module folder next
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
             string filePath = sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(fullPath, "/");
             if (File.Exists(filePath))
@@ -371,17 +384,30 @@ namespace IBbasic.Droid
         public List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension)
         {
             List<string> list = new List<string>();
+            //FROM ASSETS
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+
             //search in external folder
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
             Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(folderpath, "/"));
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
+            //directory.Mkdirs();
+            if (directory.Exists())
             {
-                if (f.Name.EndsWith(extension))
+                foreach (Java.IO.File f in directory.ListFiles())
                 {
-                    string[] split = f.Name.Split('.');
-                    list.Add(split[split.Length - 2]);
+                    if (f.Name.EndsWith(extension))
+                    {
+                        string[] split = f.Name.Split('.');
+                        list.Add(split[split.Length - 2]);
+                    }
                 }
             }
             return list;
@@ -406,20 +432,32 @@ namespace IBbasic.Droid
             //search in external folder
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
             Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(userFolderpath, "/"));
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File f in directory.ListFiles())
+            //directory.Mkdirs();
+            if (directory.Exists())
             {
-                if (f.Name.EndsWith(extension))
+                foreach (Java.IO.File f in directory.ListFiles())
                 {
-                    string[] split = f.Name.Split('.');
-                    list.Add(split[split.Length - 2]);
+                    if (f.Name.EndsWith(extension))
+                    {
+                        string[] split = f.Name.Split('.');
+                        list.Add(split[split.Length - 2]);
+                    }
                 }
             }
             Assembly assembly = GetType().GetTypeInfo().Assembly;
+            //module folder in app 
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
+                if ((res.Contains("IBbasic.Droid.Assets" + ConvertFullPath(userFolderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+            //from main asset folder
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains("IBbasic.Droid.Assets" + ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
@@ -427,68 +465,74 @@ namespace IBbasic.Droid
             }
             return list;
         }
-        public List<string> GetAllModuleFiles()
+        public List<string> GetAllModuleFiles(bool userOnly)
         {
             List<string> list = new List<string>();
 
             //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
+            if (!userOnly)
             {
-                if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                foreach (var res in assembly.GetManifestResourceNames())
                 {
-                    list.Add(res);
+                    if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                    {
+                        list.Add(res);
+                    }
                 }
             }
 
             //search in personal folder
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             Java.IO.File directory = new Java.IO.File(documentsPath + "/modules");
-            directory.Mkdirs();
-            foreach (Java.IO.File d in directory.ListFiles())
+            if (directory.Exists())
             {
-                if (d.IsDirectory)
+                foreach (Java.IO.File d in directory.ListFiles())
                 {
-                    Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
-                    foreach (Java.IO.File f in modDirectory.ListFiles())
+                    if (d.IsDirectory)
                     {
-                        try
+                        Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
+                        foreach (Java.IO.File f in modDirectory.ListFiles())
                         {
-                            if (f.Name.EndsWith(".mod"))
+                            try
                             {
-                                list.Add(f.Name);
+                                if (f.Name.EndsWith(".mod"))
+                                {
+                                    list.Add(f.Name);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
                             }
                         }
-                        catch (Exception ex)
-                        {
-
-                        }
                     }
-                }
 
+                }
             }
             //search in external folder
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
             directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules");
-            directory.Mkdirs();
-            //check to see if Lanterna2 exists, if not copy it over
-            foreach (Java.IO.File d in directory.ListFiles())
+            if (directory.Exists())
             {
-                if (d.IsDirectory)
+                foreach (Java.IO.File d in directory.ListFiles())
                 {
-                    Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
-                    foreach (Java.IO.File f in modDirectory.ListFiles())
+                    if (d.IsDirectory)
                     {
-                        try
+                        Java.IO.File modDirectory = new Java.IO.File(directory.Path + "/" + d.Name);
+                        foreach (Java.IO.File f in modDirectory.ListFiles())
                         {
-                            if (f.Name.EndsWith(".mod"))
+                            try
                             {
-                                list.Add(f.Name);
+                                if (f.Name.EndsWith(".mod"))
+                                {
+                                    list.Add(f.Name);
+                                }
                             }
-                        }
-                        catch (Exception ex)
-                        {
+                            catch (Exception ex)
+                            {
 
+                            }
                         }
                     }
                 }
@@ -500,9 +544,9 @@ namespace IBbasic.Droid
         public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
             HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder();
-            builder.SetCategory(Category);
-            builder.SetAction(EventAction);
-            builder.SetLabel(EventLabel);
+            builder.SetCategory("An_" + Category);
+            builder.SetAction("An_" + EventAction);
+            builder.SetLabel("An_" + EventLabel);
             GATracker.Send(builder.Build());
         }
 

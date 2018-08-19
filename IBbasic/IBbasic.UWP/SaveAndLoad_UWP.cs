@@ -403,16 +403,19 @@ namespace IBbasic.UWP
             }
             return list;
         }
-        public List<string> GetAllModuleFiles()
+        public List<string> GetAllModuleFiles(bool userOnly)
         {
             List<string> list = new List<string>();
             //search in assets
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
+            if (!userOnly)
             {
-                if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                Assembly assembly = GetType().GetTypeInfo().Assembly;
+                foreach (var res in assembly.GetManifestResourceNames())
                 {
-                    list.Add(res);
+                    if ((res.EndsWith(".mod")) && (!res.EndsWith("NewModule.mod")))
+                    {
+                        list.Add(res);
+                    }
                 }
             }
             //search in personal folder
