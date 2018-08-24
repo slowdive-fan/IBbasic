@@ -1539,6 +1539,7 @@ namespace IBbasic
 
             gv.createScreens();
             gv.screenMainMap.resetMiniMapBitmap();
+            gv.TrackerSendEventFullPartyInfo(":LOADSAVE:");
             return true;
         }
         public void updateShops(SaveGame saveMod)

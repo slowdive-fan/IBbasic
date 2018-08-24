@@ -282,13 +282,6 @@
           "quantity": 1
         },
         {
-          "resref": "spear",
-          "tag": "spear_9801",
-          "name": "Spear",
-          "canNotBeUnequipped": false,
-          "quantity": 1
-        },
-        {
           "resref": "crossbow",
           "tag": "crossbow_9802",
           "name": "Crossbow",

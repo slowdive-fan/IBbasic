@@ -178,21 +178,59 @@ namespace IBbasic
                     }
                     else if (btnCreate.getImpact(x, y))
                     {
-                        SelectModuleToEdit();
+                        if (!gv.AllowReadWriteExternal())
+                        {
+                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                        }
+                        else
+                        {
+                            SelectModuleToEdit();
+                        }
                     }
                     else if (btnZip.getImpact(x, y))
                     {
-                        SelectModuleToZip();
+                        if (!gv.AllowReadWriteExternal())
+                        {
+                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                        }
+                        else
+                        {
+                            SelectModuleToZip();
+                        }
                     }
                     else if (btnUnZip.getImpact(x, y))
                     {
-                        SelectModuleToUnZip();
+                        if (!gv.AllowReadWriteExternal())
+                        {
+                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                        }
+                        else
+                        {
+                            SelectModuleToUnZip();
+                        }
                     }
                     else if (tglGoogleAnalytics.getImpact(x, y))
                     {
+                        if (tglGoogleAnalytics.toggleOn)
+                        {
+                            gv.TrackerSendEvent(":TURN_ANALYTICS_OFF:", "none", true);
+                        }
                         tglGoogleAnalytics.toggleOn = !tglGoogleAnalytics.toggleOn;
                         gv.IBprefs.GoogleAnalyticsOn = tglGoogleAnalytics.toggleOn;
                         gv.savePreferences();
+                        if (tglGoogleAnalytics.toggleOn)
+                        {
+                            gv.TrackerSendEvent(":TURN_ANALYTICS_ON:", "none", true);
+                        }
                         string policy = "When this box is checked, data about your game play will be sent " +
                         "to the Iceblink Engine Team's Google Analytics Dashboard. There is no personally " +
                         "identifiable information contained in the data sent. The data is used to see " +
@@ -268,14 +306,14 @@ namespace IBbasic
                 gv.mod = gv.cc.LoadModule("NewModule.mod");
                 gv.resetGame();
                 gv.screenType = "tsModule";
-                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none");
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none", false);
             }
             else
             {
                 gv.mod = gv.cc.LoadModule(selectedModule + ".mod");
                 gv.resetGame();
                 gv.screenType = "tsModule";
-                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none");
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName, "none", false);
             }
             
             gv.touchEnabled = true;

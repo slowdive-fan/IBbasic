@@ -17,6 +17,10 @@ namespace IBbasic.UWP
 {    
     public class SaveAndLoad_UWP : ISaveAndLoad
     {
+        public bool AllowReadWriteExternal()
+        {
+            return true;
+        }
         public string ConvertFullPath(string fullPath, string replaceWith)
         {
             string convertedFullPath = "";

@@ -15,6 +15,7 @@ namespace IBbasic
     /// </summary>
     public interface ISaveAndLoad
     {
+        bool AllowReadWriteExternal();
         void CreateUserFolders();
         void CreateBackUpModuleFolder(string modFilename);
         void SaveText(string fullPath, string text);

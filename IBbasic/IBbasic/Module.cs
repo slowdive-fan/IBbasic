@@ -281,11 +281,18 @@ namespace IBbasic
             this.nextIdNumber++;
             return this.nextIdNumber;
         }
-        public Player getPlayerByName(string tag)
+        public Player getPlayerByNameOrTag(string tag)
         {
             foreach (Player pc in this.playerList)
             {
                 if (pc.name.Equals(tag))
+                {
+                    return pc;
+                }
+            }
+            foreach (Player pc in this.playerList)
+            {
+                if (pc.tag.Equals(tag))
                 {
                     return pc;
                 }

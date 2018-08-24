@@ -37,6 +37,11 @@ namespace IBbasic.iOS
         }
         #endregion
 
+        public bool AllowReadWriteExternal()
+        {
+            return true;
+        }
+
         public void CreateUserFolders()
         {
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

@@ -1,5 +1,9 @@
-﻿using Android.Content;
+﻿using Android;
+using Android.App;
+using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Analytics;
+using Android.Support.V4.App;
 using IBbasic.Droid;
 using Newtonsoft.Json;
 using SkiaSharp;
@@ -20,6 +24,7 @@ namespace IBbasic.Droid
         public string TrackingId = "UA-60615839-12";
         private static GoogleAnalytics GAInstance;
         private static Tracker GATracker;
+        public Context thisContext;
 
         #region Instantiation ...
         private static SaveAndLoad_Android thisRef;
@@ -39,6 +44,7 @@ namespace IBbasic.Droid
 
         public void Initialize_NativeGAS(Context AppContext = null)
         {
+            thisContext = AppContext;
             GAInstance = GoogleAnalytics.GetInstance(AppContext.ApplicationContext);
             GAInstance.SetLocalDispatchPeriod(10);
 
@@ -54,8 +60,23 @@ namespace IBbasic.Droid
             return convertedFullPath;
         }
 
+        public bool AllowReadWriteExternal()
+        {
+            if (Android.App.Application.Context.CheckSelfPermission(Manifest.Permission.WriteExternalStorage) == (int)Permission.Granted)
+            {
+                return true;
+            }
+            else
+            {
+                //string[] perms = {Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage};
+                //ActivityCompat.RequestPermissions(MainActivity.ThisActivity, perms, 0);
+                return false;
+            }
+        }
+
         public void CreateUserFolders()
         {
+            /*
             Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
             string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules";
             string path = ConvertFullPath(convertedFullPath, "\\");
@@ -66,6 +87,28 @@ namespace IBbasic.Droid
             convertedFullPath = sdCard.AbsolutePath + "/IBbasic/module_backups";
             path = ConvertFullPath(convertedFullPath, "\\");
             Directory.CreateDirectory(path);
+            */
+
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules";
+                string path = ConvertFullPath(convertedFullPath, "\\");
+                Directory.CreateDirectory(path);
+                convertedFullPath = sdCard.AbsolutePath + "/IBbasic/saves";
+                path = ConvertFullPath(convertedFullPath, "\\");
+                Directory.CreateDirectory(path);
+                convertedFullPath = sdCard.AbsolutePath + "/IBbasic/module_backups";
+                path = ConvertFullPath(convertedFullPath, "\\");
+                Directory.CreateDirectory(path);
+            }
+            else
+            {
+                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string convertedFullPath = documents + "/IBbasic/saves";
+                string path = ConvertFullPath(convertedFullPath, "\\");
+                Directory.CreateDirectory(path);
+            }
         }
 
         public void CreateBackUpModuleFolder(string modFilename)
@@ -125,8 +168,14 @@ namespace IBbasic.Droid
 
         public void SaveText(string fullPath, string text)
         {
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            string convertedFullPath = sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(fullPath, "/");
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string convertedFullPath = root + "/IBbasic" + ConvertFullPath(fullPath, "/");
             string path = ConvertFullPath(fullPath, "\\");
             string dir = Path.GetDirectoryName(convertedFullPath);
             Directory.CreateDirectory(dir);
@@ -180,8 +229,14 @@ namespace IBbasic.Droid
             }
 
             //check in user module folder next
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            string filePath = sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(fullPath, "/");
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string filePath = root + "/IBbasic" + ConvertFullPath(fullPath, "/");
             if (File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);
@@ -214,8 +269,14 @@ namespace IBbasic.Droid
         {
             string text = "";
             //check in module folder first
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            string filePath = sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(userFolderpath, "/");
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string filePath = root + "/IBbasic" + ConvertFullPath(userFolderpath, "/");
             if (File.Exists(filePath))
             {
                 return File.ReadAllText(filePath);
@@ -261,8 +322,20 @@ namespace IBbasic.Droid
             else
             {
                 string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+
+                string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (AllowReadWriteExternal())
+                {
+                    Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                    root = sdCard.AbsolutePath;
+                }
+                string filePath = root + "/IBbasic/modules/" + modFolder + "/" + modFilename;
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath);
+                }
                 //try from personal folder first
-                var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                /*var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 var filePath = documentsPath + "/IBbasic/modules/" + modFolder + "/" + modFilename;
                 if (File.Exists(filePath))
                 {
@@ -276,7 +349,7 @@ namespace IBbasic.Droid
                     {
                         return File.ReadAllText(filePath);
                     }
-                }
+                }*/
                 //try asset area            
                 string modFilenameNoExtension = modFilename.Replace(".mod", "");
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
@@ -299,24 +372,27 @@ namespace IBbasic.Droid
             {
                 //string storageFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                string storageFolder = sdCard.AbsolutePath + "/IBbasic";
-                if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png"))
+                if (AllowReadWriteExternal())
                 {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png");
+                    Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                    string storageFolder = sdCard.AbsolutePath + "/IBbasic";
+                    if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png"))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".png");
+                    }
+                    else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".PNG"))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".PNG");
+                    }
+                    else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".jpg"))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".jpg");
+                    }
+                    else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename);
+                    }
                 }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".jpg"))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename + ".jpg");
-                }
-                else if (File.Exists(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename);
-                }                
                 //STOP here if already found bitmap
                 if (bm != null)
                 {
@@ -396,8 +472,14 @@ namespace IBbasic.Droid
             }
 
             //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(folderpath, "/"));
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(root + "/IBbasic" + ConvertFullPath(folderpath, "/"));
             //directory.Mkdirs();
             if (directory.Exists())
             {
@@ -430,8 +512,14 @@ namespace IBbasic.Droid
         {
             List<string> list = new List<string>();
             //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            Java.IO.File directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic" + ConvertFullPath(userFolderpath, "/"));
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(root + "/IBbasic" + ConvertFullPath(userFolderpath, "/"));
             //directory.Mkdirs();
             if (directory.Exists())
             {
@@ -483,7 +571,7 @@ namespace IBbasic.Droid
             }
 
             //search in personal folder
-            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            /*var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             Java.IO.File directory = new Java.IO.File(documentsPath + "/modules");
             if (directory.Exists())
             {
@@ -509,10 +597,16 @@ namespace IBbasic.Droid
                     }
 
                 }
-            }
+            }*/
             //search in external folder
-            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-            directory = new Java.IO.File(sdCard.AbsolutePath + "/IBbasic/modules");
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (AllowReadWriteExternal())
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                root = sdCard.AbsolutePath;
+            }
+            //Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            Java.IO.File directory = new Java.IO.File(root + "/IBbasic/modules");
             if (directory.Exists())
             {
                 foreach (Java.IO.File d in directory.ListFiles())

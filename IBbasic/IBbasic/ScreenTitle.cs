@@ -169,7 +169,7 @@ namespace IBbasic
                     {
                         gv.PlaySound("btn_click");
                         gv.mod.uniqueSessionIdNumberTag = gv.sf.RandInt(1000000) + "";
-                        gv.TrackerSendEvent(":NEWGAME:" + gv.mod.moduleName, "none");
+                        gv.TrackerSendEvent(":NEWGAME:" + gv.mod.moduleName, "none", false);
                         if (gv.mod.mustUsePreMadePC)
                         {
                             //no spell selection offered
@@ -187,7 +187,7 @@ namespace IBbasic
                     else if (btnLoadSavedGame.getImpact(x, y))
                     {
                         gv.PlaySound("btn_click");
-                        gv.TrackerSendEvent(":LOADSAVE:" + gv.mod.moduleName, "none");
+                        gv.TrackerSendEvent(":LOADSAVE:" + gv.mod.moduleName, "none", false);
                         if (gv.cc.slot5.Equals(""))
                         {
                             //Toast.makeText(gv.gameContext, "Still Loading Data... try again in a second", Toast.LENGTH_SHORT).show();

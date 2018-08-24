@@ -13,7 +13,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.07";
+        public string versionNum = "1.0.10";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -1674,19 +1674,23 @@ namespace IBbasic
         }
 
         //PLATFORM SPECIFIC CALLS
-        public void CreateUserFolders()
+        public bool AllowReadWriteExternal()
+        {
+            return DependencyService.Get<ISaveAndLoad>().AllowReadWriteExternal();
+        }
+        public void CreateUserFolders() //called at start-up
         {
             DependencyService.Get<ISaveAndLoad>().CreateUserFolders();
         }
-        public void CreateBackUpModuleFolder(string modFilename)
+        public void CreateBackUpModuleFolder(string modFilename) //called from toolset button disk+
         {
             DependencyService.Get<ISaveAndLoad>().CreateBackUpModuleFolder(modFilename);
         }
-        public void SaveText(string fullPath, string text)
+        public void SaveText(string fullPath, string text) //save games, save characters, save mod files, save preferences, save settings
         {
             DependencyService.Get<ISaveAndLoad>().SaveText(fullPath, text);
         }
-        public void SaveImage(string fullPath, SKBitmap bmp)
+        public void SaveImage(string fullPath, SKBitmap bmp) //save from art editor
         {
             DependencyService.Get<ISaveAndLoad>().SaveImage(fullPath, bmp);
         }
@@ -1736,17 +1740,22 @@ namespace IBbasic
         }
 
         //ANALYTICS
-        public void TrackerSendEvent(string action, string label)
+        public void TrackerSendEvent(string action, string label, bool mustSend)
         {
             //if (myTracker != null)
             //{
             string realtime = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string mainPcName = GetMainPcName();
+            //string mainPcName = GetMainPcName();
             int totalHP = 0;
             int totalSP = 0;
             int totalXP = 0;
             int totalLVL = 0;
             int partySize = 0;
+            if (IBprefs.UserID.Equals("none"))
+            {
+                IBprefs.GenerateUniqueUserID();
+                savePreferences();
+            }
             if (mod.playerList.Count > 0)
             {
                 foreach (Player pc in mod.playerList)
@@ -1759,13 +1768,13 @@ namespace IBbasic
                 }
             }
             string totals = "HP" + totalHP + ":SP" + totalSP + ":XP" + totalXP + ":LVL" + totalLVL + ":PS" + partySize;
-            string totAction = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag + ":" + realtime + ":" + mod.WorldTime.ToString("D8") + ":" + totals + ":" + action;
+            string totAction = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + ":" + realtime + ":" + mod.WorldTime.ToString("D8") + ":" + totals + ":" + action;
 
             try
             {
                 //Hearkenwold:Drin_586842:20170101123456:00027546:HP234:SP123:XP4567:LVL18:PS6::CONVO:guard
-                string category = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag;
-                TrackAppEvent(category, totAction, label);
+                string category = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID;
+                TrackAppEvent(category, totAction, label, mustSend);
             }
             catch (Exception e)
             {
@@ -1774,28 +1783,51 @@ namespace IBbasic
         }
         public void TrackerSendMilestoneEvent(string milestone)
         {
-            string mainPcName = GetMainPcName();
-            TrackerSendEvent("none", mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + mainPcName + "_" + mod.uniqueSessionIdNumberTag + "::" + milestone);
+            //string mainPcName = GetMainPcName();
+            TrackerSendEvent("none", mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + "::" + milestone, false);
+            TrackerSendEventFullPartyInfo("PARTYINFO");
         }
         public void TrackerSendEventEncounter(string encounterName)
         {
-            TrackerSendEvent(":ENC:" + encounterName, "none");
+            TrackerSendEvent(":ENC:" + encounterName, "none", false);
+            //TrackerSendEventFullPartyInfo("PARTYINFO");
         }
         public void TrackerSendEventJournal(string category_entry)
         {
-            TrackerSendEvent(":JOURNAL:" + category_entry, "none");            
+            TrackerSendEvent(":JOURNAL:" + category_entry, "none", false);            
         }
         public void TrackerSendEventConvo(string convoName)
         {
-            TrackerSendEvent(":CONVO:" + convoName, "none");            
+            TrackerSendEvent(":CONVO:" + convoName, "none", false);            
         }
         public void TrackerSendEventArea(string areaName)
         {
-            TrackerSendEvent(":AREA:" + areaName, "none");                        
+            TrackerSendEvent(":AREA:" + areaName, "none", false);                        
         }
         public void TrackerSendEventContainer(string containerName)
         {
-            TrackerSendEvent(":CONTAINER:" + containerName, "none");            
+            TrackerSendEvent(":CONTAINER:" + containerName, "none", false);            
+        }
+        public void TrackerSendEventFullPartyInfo(string actionLabel)
+        {
+            //actions: PartyStart, PartyAddCompanion, PartyEndingCh1
+            if (mod.playerList.Count > 0)
+            {
+                try
+                {
+                    int x = 1;
+                    foreach (Player pc in mod.playerList)
+                    {
+                        string partyInfo = PlayerInfoFull(pc, x);
+                        TrackerSendEvent(":::" + actionLabel + ":::" + partyInfo, "none", false);
+                        x++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    //e.printStackTrace();
+                }
+            }
         }
         public string GetMainPcName()
         {
@@ -1809,9 +1841,31 @@ namespace IBbasic
             }
             return name;
         }
-        public void TrackAppEvent(string Category, string EventAction, string EventLabel)
+        public string PlayerInfoFull(Player pc, int index)
         {
-            if (IBprefs.GoogleAnalyticsOn)
+            string info = "";
+            info = "INDEX:" + index + ",NAME:" + pc.name + ",TOKEN:" + pc.tokenFilename + ",RACE:" + pc.raceTag + ",CLASS:" + pc.classTag
+                    + ",STR:" + pc.strength + ",DEX:" + pc.dexterity + ",CON:" + pc.constitution + ",INT:" + pc.intelligence + ",WIS:" + pc.wisdom + ",CHA:" + pc.charisma
+                    + ",LVL:" + pc.classLevel + ",XP:" + pc.XP + ",AC:" + pc.AC + ",HP:" + pc.hp + "/" + pc.hpMax + ",SP:" + pc.sp + "/" + pc.spMax + ",WEAPON:" + pc.MainHandRefs.name
+                    + ",HEAD:" + pc.HeadRefs.name + ",NECK:" + pc.NeckRefs.name + ",BODY:" + pc.BodyRefs.name
+                    + ",OFFHAND:" + pc.OffHandRefs.name + ",RING1:" + pc.RingRefs.name + ",RING2:" + pc.Ring2Refs.name
+                    + ",FEET:" + pc.FeetRefs.name + ",AMMO:" + pc.AmmoRefs.name;
+            info += ",TRAITS:";
+            foreach (string tag in pc.knownTraitsTags)
+            {
+                info += tag + ",";
+            }
+            info += ",SPELLS:";
+            foreach (string tag in pc.knownSpellsTags)
+            {
+                info += tag + ",";
+            }
+            return info;
+        }
+
+        public void TrackAppEvent(string Category, string EventAction, string EventLabel, bool mustSend)
+        {
+            if ((IBprefs.GoogleAnalyticsOn) || (mustSend))
             {
                 DependencyService.Get<ISaveAndLoad>().TrackAppEvent(Category, EventAction, EventLabel);
             }

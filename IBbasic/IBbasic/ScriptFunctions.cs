@@ -813,7 +813,7 @@ namespace IBbasic
                         Player pc = gv.mod.playerList[0];
                         if ((prm1 != null) && (!prm1.Equals("")))
                         {
-                            pc = gv.mod.getPlayerByName(prm1);
+                            pc = gv.mod.getPlayerByNameOrTag(prm1);
                         }
                         else if ((p2 != null) && (!p2.Equals("")))
                         {
@@ -1968,7 +1968,7 @@ namespace IBbasic
                 Player pc = gv.mod.playerList[0];
                 if ((PCtag != null) && (!PCtag.Equals("use_index")))
                 {
-                    pc = gv.mod.getPlayerByName(PCtag);
+                    pc = gv.mod.getPlayerByNameOrTag(PCtag);
                     if (pc == null)
                     {
                         if (mod.debugMode) //SD_20131102
@@ -2014,7 +2014,7 @@ namespace IBbasic
                 Player pc = gv.mod.playerList[0];
                 if ((PCtag != null) && (!PCtag.Equals("")))
                 {
-                    pc = gv.mod.getPlayerByName(PCtag);
+                    pc = gv.mod.getPlayerByNameOrTag(PCtag);
                     if (pc == null)
                     {
                         if (mod.debugMode) //SD_20131102
@@ -2380,7 +2380,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2413,7 +2413,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2446,7 +2446,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2502,7 +2502,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2633,7 +2633,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2679,7 +2679,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -2771,7 +2771,7 @@ namespace IBbasic
             Player pc = gv.mod.playerList[0];
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
@@ -3852,7 +3852,7 @@ namespace IBbasic
             Player pc = null;
             if ((tag != null) && (!tag.Equals("")))
             {
-                pc = gv.mod.getPlayerByName(tag);
+                pc = gv.mod.getPlayerByNameOrTag(tag);
                 if (pc == null)
                 {
                     if (mod.debugMode) //SD_20131102
