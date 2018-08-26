@@ -62,6 +62,10 @@ namespace IBbasic.Droid
 
         public bool AllowReadWriteExternal()
         {
+            if (Android.OS.Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.M)
+            {
+                return true;
+            }
             if (Android.App.Application.Context.CheckSelfPermission(Manifest.Permission.WriteExternalStorage) == (int)Permission.Granted)
             {
                 return true;

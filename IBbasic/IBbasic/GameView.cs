@@ -13,7 +13,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.10";
+        public string versionNum = "1.0.12";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;

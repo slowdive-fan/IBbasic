@@ -639,54 +639,86 @@ namespace IBbasic
             //p.token = gv.cc.LoadBitmap(p.tokenFilename);
             btnToken.Img2 = p.tokenFilename;
         }
-        public void changePcName()
+        public async void changePcName()
         {
-           /* using (TextInputDialog itSel = new TextInputDialog(gv, "Choose a unique Name for this PC.", pc.name))
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Choose a Name for this character:", pc.name);
+            pc.name = myinput;
+            pc.tag = myinput.ToLower();
+            gv.touchEnabled = true;
+
+            bool foundNameConflict = false;
+            foreach (Player p in gv.mod.playerList)
             {
-                itSel.textInput = "Type unique Name Here";
-
-                var ret = itSel.ShowDialog();
-
-                if (ret == DialogResult.OK)
+                if ((p.name == pc.name) || (p.tag == pc.tag))
                 {
-                    if (itSel.textInput.Length > 0)
+                    gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
+                    pc.name = "name";
+                    pc.tag = "name";                    
+                    foundNameConflict = true;
+                    break;
+                }
+            }
+            if (foundNameConflict == false)
+            {
+                foreach (Player p in gv.screenPartyBuild.pcList)
+                {
+                    if ((p.name == pc.name) || (p.tag == pc.tag))
                     {
-                        pc.name = itSel.textInput;
-                        pc.tag = itSel.textInput.ToLower();
-                        bool foundNameConflict = false;
-                        foreach (Player p in gv.mod.playerList)
-                        {
-                            if ((p.name == pc.name) || (p.tag == pc.tag))
-                            {
-                                gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
-                                pc.name = "";
-                                pc.tag = "";
-                                itSel.textInput = "Type unique Name Here";
-                                foundNameConflict = true;
-                                break;
-                            }
-                        }
-                        if (foundNameConflict == false)
-                        {
-                            foreach (Player p in gv.screenPartyBuild.pcList)
-                            {
-                                if ((p.name == pc.name) || (p.tag == pc.tag))
-                                {
-                                    gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
-                                    pc.name = "";
-                                    pc.tag = "";
-                                    itSel.textInput = "Type unique Name Here";
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //Toast.makeText(gv.gameContext, "Entering a blank name is not allowed", Toast.LENGTH_SHORT).show();
+                        gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
+                        pc.name = "name";
+                        pc.tag = "name";
+                        break;
                     }
                 }
-            }*/
+            }
+
+            /* using (TextInputDialog itSel = new TextInputDialog(gv, "Choose a unique Name for this PC.", pc.name))
+             {
+                 itSel.textInput = "Type unique Name Here";
+
+                 var ret = itSel.ShowDialog();
+
+                 if (ret == DialogResult.OK)
+                 {
+                     if (itSel.textInput.Length > 0)
+                     {
+                         pc.name = itSel.textInput;
+                         pc.tag = itSel.textInput.ToLower();
+                         bool foundNameConflict = false;
+                         foreach (Player p in gv.mod.playerList)
+                         {
+                             if ((p.name == pc.name) || (p.tag == pc.tag))
+                             {
+                                 gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
+                                 pc.name = "";
+                                 pc.tag = "";
+                                 itSel.textInput = "Type unique Name Here";
+                                 foundNameConflict = true;
+                                 break;
+                             }
+                         }
+                         if (foundNameConflict == false)
+                         {
+                             foreach (Player p in gv.screenPartyBuild.pcList)
+                             {
+                                 if ((p.name == pc.name) || (p.tag == pc.tag))
+                                 {
+                                     gv.sf.MessageBoxHtml("This name already exists, please choose a different one.");
+                                     pc.name = "";
+                                     pc.tag = "";
+                                     itSel.textInput = "Type unique Name Here";
+                                     break;
+                                 }
+                             }
+                         }
+                     }
+                     else
+                     {
+                         //Toast.makeText(gv.gameContext, "Entering a blank name is not allowed", Toast.LENGTH_SHORT).show();
+                     }
+                 }
+             }*/
         }
         public void reRollStats(Player p)
         {

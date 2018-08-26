@@ -523,6 +523,7 @@ namespace IBbasic
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
                 gv.tsAreaEditor.mapSquareSizeScaler = 1;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 2D 20x20 Area"))
             {
@@ -538,6 +539,7 @@ namespace IBbasic
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
                 gv.tsAreaEditor.mapSquareSizeScaler = 2;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 3D 10x10 Area"))
             {
@@ -553,6 +555,7 @@ namespace IBbasic
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
                 gv.tsAreaEditor.mapSquareSizeScaler = 1;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 3D 20x20 Area"))
             {
@@ -568,6 +571,7 @@ namespace IBbasic
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
                 gv.tsAreaEditor.mapSquareSizeScaler = 2;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else
             {
@@ -596,7 +600,8 @@ namespace IBbasic
                 {
                     gv.tsAreaEditor.mapSquareSizeScaler = 1;
                 }
-            }            
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + gv.mod.currentArea.Filename + ":", "none", false);
+            }
         }
         public async void SelectEncToEdit()
         {
@@ -630,6 +635,7 @@ namespace IBbasic
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
                 gv.tsEncEditor.mapSquareSizeScaler = 1;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":ENC:" + gv.mod.currentEncounter.encounterName + ":", "none", false);
             }
             else
             {
@@ -641,6 +647,7 @@ namespace IBbasic
                 gv.screenType = "tsEncEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
+                gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":ENC:" + gv.mod.currentEncounter.encounterName + ":", "none", false);
             }
         }
         public async void SelectConvoToEdit()
@@ -689,6 +696,7 @@ namespace IBbasic
                         gv.screenType = "tsConvoEditor";
                         showMainMenuPanels = false;
                         tglMainMenu.toggleOn = false;
+                        gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":CONVO:" + gv.mod.currentConvo.ConvoFileName + ":", "none", false);
                     }
                     else
                     {
@@ -721,6 +729,7 @@ namespace IBbasic
                         gv.screenType = "tsConvoEditor";
                         showMainMenuPanels = false;
                         tglMainMenu.toggleOn = false;
+                        gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":CONVO:" + gv.mod.currentConvo.ConvoFileName + ":", "none", false);
                     }
                     else
                     {

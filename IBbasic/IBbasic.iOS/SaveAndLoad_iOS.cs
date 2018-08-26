@@ -553,20 +553,34 @@ namespace IBbasic.iOS
 
         public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-            Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("iOS_" + Category, "iOS_" + EventAction, "iOS_" + EventLabel, null).Build());
-            Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
+            try
+            {
+                Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("iOS_" + Category, "iOS_" + EventAction, "iOS_" + EventLabel, null).Build());
+                Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
+            }
+            catch
+            {
+
+            }
         }
         public void InitializeNativeGAS()
         {
-            var optionsDict = NSDictionary.FromObjectAndKey(new NSString("YES"), new NSString(AllowTrackingKey));
-            NSUserDefaults.StandardUserDefaults.RegisterDefaults(optionsDict);
+            try
+            {
+                var optionsDict = NSDictionary.FromObjectAndKey(new NSString("YES"), new NSString(AllowTrackingKey));
+                NSUserDefaults.StandardUserDefaults.RegisterDefaults(optionsDict);
 
-            Gai.SharedInstance.OptOut = !NSUserDefaults.StandardUserDefaults.BoolForKey(AllowTrackingKey);
+                Gai.SharedInstance.OptOut = !NSUserDefaults.StandardUserDefaults.BoolForKey(AllowTrackingKey);
 
-            Gai.SharedInstance.DispatchInterval = 10;
-            Gai.SharedInstance.TrackUncaughtExceptions = true;
+                Gai.SharedInstance.DispatchInterval = 10;
+                Gai.SharedInstance.TrackUncaughtExceptions = true;
 
-            Tracker = Gai.SharedInstance.GetTracker("TestApp", TrackingId);
+                Tracker = Gai.SharedInstance.GetTracker("TestApp", TrackingId);
+            }
+            catch
+            {
+
+            }
         }
 
         //Android.Media.MediaPlayer playerAreaMusic;

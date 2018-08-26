@@ -65,6 +65,7 @@ namespace IBbasic
             {
                 try
                 {
+                    gv.sf.AddCharacterToParty("");
                     AddCharacterToList(file);
                 }
                 catch (Exception ex)
@@ -108,12 +109,26 @@ namespace IBbasic
         public Player LoadPlayer(string filename)
         {
             Player toReturn = null;
-            // deserialize JSON directly from a file
-            using (StreamReader file = File.OpenText(filename))
+
+            try
             {
-                JsonSerializer serializer = new JsonSerializer();
-                toReturn = (Player)serializer.Deserialize(file, typeof(Player));
+                if (!filename.EndsWith(".json"))
+                {
+                    filename += ".json";
+                }
+                string json = gv.LoadStringFromUserFolder("\\saves\\" + gv.mod.moduleName + "\\characters\\" + filename);
+                //string s = gv.GetSaveFileString(gv.mod.moduleName, filename);
+                if (json != "")
+                {
+                    using (StringReader sr = new StringReader(json))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        toReturn = (Player)serializer.Deserialize(sr, typeof(Player));
+                    }
+                }
             }
+            catch { }
+
             return toReturn;
         }
 
