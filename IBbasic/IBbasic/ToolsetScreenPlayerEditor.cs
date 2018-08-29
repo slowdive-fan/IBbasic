@@ -192,6 +192,20 @@ namespace IBbasic
             tglSpells.Y = 0 * gv.uiSquareSize + (gv.uiSquareSize / 2) + 2 * gv.fontHeight;
             tglSpells.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSpells.Width = (int)(gv.ibbMiniTglHeight * gv.scaler);
+
+
+            if (btnHelp == null)
+            {
+                btnHelp = new IbbButton(gv, 0.8f);
+            }
+            //btnHelp.Text = "HELP";
+            btnHelp.Img = "btn_small";
+            btnHelp.Img2 = "btnhelp";
+            btnHelp.Glow = "btn_small_glow";
+            btnHelp.X = 10 * gv.uiSquareSize;
+            btnHelp.Y = 6 * gv.uiSquareSize;
+            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
+            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setMainControlsStart()
         {
@@ -293,19 +307,6 @@ namespace IBbasic
             btnPcTokenFilename.Y = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2);
             btnPcTokenFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnPcTokenFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
-
-            if (btnHelp == null)
-            {
-                btnHelp = new IbbButton(gv, 0.8f);
-            }
-            //btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small";
-            btnHelp.Img2 = "btnhelp";
-            btnHelp.Glow = "btn_small_glow";
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize;
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setAttributesControlsStart()
         {
@@ -628,37 +629,39 @@ namespace IBbasic
             tglSpells.Draw();
             gv.DrawText("SPELLS", tglSpells.X + tglSpells.Width + gv.scaler, tglSpells.Y + shiftForFont, "ma");
 
-            if (currentMode.Equals("Main"))
+            if (gv.mod.companionPlayerList.Count > 0)
             {
-                setMainControlsStart();
-                drawMain();
+                if (currentMode.Equals("Main"))
+                {
+                    setMainControlsStart();
+                    drawMain();
+                }
+                else if (currentMode.Equals("Attributes"))
+                {
+                    setAttributesControlsStart();
+                    drawAttributes();
+                }
+                else if (currentMode.Equals("Images"))
+                {
+                    setImagesControlsStart();
+                    drawImages();
+                }
+                else if (currentMode.Equals("Items"))
+                {
+                    setEquippedItemsControlsStart();
+                    drawItems();
+                }
+                else if (currentMode.Equals("Traits"))
+                {
+                    setTraitsControlsStart();
+                    drawTraits();
+                }
+                else if (currentMode.Equals("Spells"))
+                {
+                    setSpellsControlsStart();
+                    drawSpells();
+                }
             }
-            else if (currentMode.Equals("Attributes"))
-            {
-                setAttributesControlsStart();
-                drawAttributes();
-            }
-            else if (currentMode.Equals("Images"))
-            {
-                setImagesControlsStart();
-                drawImages();
-            }
-            else if (currentMode.Equals("Items"))
-            {
-                setEquippedItemsControlsStart();
-                drawItems();
-            }
-            else if (currentMode.Equals("Traits"))
-            {
-                setTraitsControlsStart();
-                drawTraits();
-            }
-            else if (currentMode.Equals("Spells"))
-            {
-                setSpellsControlsStart();
-                drawSpells();
-            }
-
 
             btnHelp.Draw();
 

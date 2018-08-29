@@ -11,6 +11,7 @@ namespace IBbasic
 	{
         static public int ScreenWidth;
         static public int ScreenHeight;
+        static public string fixedModule = "";
 
         public App ()
 		{

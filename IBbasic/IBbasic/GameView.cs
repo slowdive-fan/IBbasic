@@ -13,7 +13,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.12";
+        public string versionNum = "1.0.13";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -268,6 +268,8 @@ namespace IBbasic
             itemListSelector.currentLocY = 10;
             itemListSelector.Width = 344;
             itemListSelector.Height = 220;
+
+            fixedModule = App.fixedModule;
 
             if (fixedModule.Equals("")) //this is the IceBlink Engine app
             {
