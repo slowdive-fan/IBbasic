@@ -152,6 +152,7 @@ namespace IBbasic
 
             loadPreferences();
 
+            versionNum = GetVersion();
             //this.MinimumSize = new Size(100, 100);
 
             #region screen size selection
@@ -1676,6 +1677,10 @@ namespace IBbasic
         }
 
         //PLATFORM SPECIFIC CALLS
+        public string GetVersion()
+        {
+            return DependencyService.Get<ISaveAndLoad>().GetVersion();
+        }
         public bool AllowReadWriteExternal()
         {
             return DependencyService.Get<ISaveAndLoad>().AllowReadWriteExternal();

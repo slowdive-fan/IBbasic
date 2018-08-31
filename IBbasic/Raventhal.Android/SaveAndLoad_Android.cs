@@ -22,7 +22,7 @@ namespace Raventhal.Droid
 {
     public class SaveAndLoad_Android : ISaveAndLoad
     {
-        public string TrackingId = "UA-60615839-12";
+        public string TrackingId = "UA-60615839-14";
         private static GoogleAnalytics GAInstance;
         private static Tracker GATracker;
         public Context thisContext;
@@ -52,6 +52,16 @@ namespace Raventhal.Droid
             GATracker = GAInstance.NewTracker(TrackingId);
             GATracker.EnableExceptionReporting(true);
             GATracker.EnableAdvertisingIdCollection(true);
+        }
+
+        public string GetVersion()
+        {
+            var context = global::Android.App.Application.Context;
+
+            PackageManager manager = context.PackageManager;
+            PackageInfo info = manager.GetPackageInfo(context.PackageName, 0);
+
+            return info.VersionName;
         }
 
         public string ConvertFullPath(string fullPath, string replaceWith)
@@ -205,7 +215,7 @@ namespace Raventhal.Droid
             {
                 //string storageFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
                 //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                if (AllowReadWriteExternal())
+                /*if (AllowReadWriteExternal())
                 {
                     Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
                     string storageFolder = sdCard.AbsolutePath + "/Raventhal";
@@ -225,12 +235,12 @@ namespace Raventhal.Droid
                     {
                         bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename);
                     }
-                }
+                }*/
                 //STOP here if already found bitmap
-                if (bm != null)
+                /*if (bm != null)
                 {
                     return bm;
-                }
+                }*/
                 //If not found then try in Asset folder
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
                 Stream stream = assembly.GetManifestResourceStream("Raventhal.Droid.Assets.modules." + mdl.moduleName + ".graphics." + filename);

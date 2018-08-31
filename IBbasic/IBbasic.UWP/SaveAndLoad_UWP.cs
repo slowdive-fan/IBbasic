@@ -21,6 +21,12 @@ namespace IBbasic.UWP
         {
             return true;
         }
+
+        public string GetVersion()
+        {
+            return typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
+        }
+
         public string ConvertFullPath(string fullPath, string replaceWith)
         {
             string convertedFullPath = "";

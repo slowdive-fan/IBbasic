@@ -3,7 +3,7 @@ using Foundation;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using IBbasic.iOS;
+using Raventhal.iOS;
 using SkiaSharp;
 using System.Reflection;
 using System.Collections.Generic;
@@ -11,13 +11,14 @@ using System;
 using Newtonsoft.Json;
 using System.IO.Compression;
 using Google.Analytics;
+using IBbasic;
 
 [assembly: Dependency(typeof(SaveAndLoad_iOS))]
-namespace IBbasic.iOS
+namespace Raventhal.iOS
 {
     public class SaveAndLoad_iOS : ISaveAndLoad
     {
-        public string TrackingId = "UA-60615839-12";
+        public string TrackingId = "UA-60615839-14";
         public ITracker Tracker;
         const string AllowTrackingKey = "AllowTracking";
 
@@ -50,80 +51,23 @@ namespace IBbasic.iOS
         public void CreateUserFolders()
         {
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var directoryname = Path.Combine(documents, "modules");
-            Directory.CreateDirectory(directoryname);
-            directoryname = Path.Combine(documents, "saves");
-            Directory.CreateDirectory(directoryname);
-            directoryname = Path.Combine(documents, "module_backups");
+            var directoryname = Path.Combine(documents, "saves");
             Directory.CreateDirectory(directoryname);
         }
 
         public void CreateBackUpModuleFolder(string modFilename)
         {
-            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var directoryname = Path.Combine(documents, "module_backups");
-            try
-            {
-                string incrementFolderName = "";
-                for (int i = 0; i < 999; i++) // add an incremental save option (uses directoryName plus number for folder name)
-                {
-                    if (!Directory.Exists(directoryname + "/" + modFilename + "(" + i.ToString() + ")"))
-                    {
-                        incrementFolderName = modFilename + "(" + i.ToString() + ")";
-                        DirectoryInfo diSource = new DirectoryInfo(documents + "/modules/" + modFilename);
-                        DirectoryInfo diTarget = new DirectoryInfo(documents + "/module_backups/" + modFilename + "(" + i.ToString() + ")");
-
-                        Directory.CreateDirectory(diTarget.FullName);
-
-                        // Copy each file into the new directory.
-                        foreach (FileInfo fi in diSource.GetFiles())
-                        {
-                            fi.CopyTo(Path.Combine(diTarget.FullName, fi.Name), true);
-                        }
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
+            //not used
         }
 
         public void ZipModule(string modFilename)
         {
-            try
-            {
-                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                var directoryname = Path.Combine(documents, "modules");
-                var path = Path.Combine(directoryname, modFilename);
-                ZipFile.CreateFromDirectory(path, path + ".zip");
-            }
-            catch (Exception ex)
-            {
-
-            }
+            //not used
         }
 
         public void UnZipModule(string modFilename)
         {
-            try
-            {
-                //if module folder already exists then copy to back-up folder and delete
-                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                var directoryname = Path.Combine(documents, "modules");
-                var path = Path.Combine(directoryname, modFilename);
-                if (Directory.Exists(path))
-                {
-                    CreateBackUpModuleFolder(modFilename);
-                    Directory.Delete(path, true);
-                }
-                ZipFile.ExtractToDirectory(path + ".zip", path);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            //not used
         }
 
         public void SaveText(string fullPath, string text)
@@ -146,30 +90,7 @@ namespace IBbasic.iOS
         }
         public void SaveImage(string fullPath, SKBitmap bmp)
         {
-            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string convertedFullPath = documents + ConvertFullPath(fullPath, "/");
-            string dir = Path.GetDirectoryName(convertedFullPath);
-
-            try
-            {
-                Directory.CreateDirectory(dir);
-                // create an image and then get the PNG (or any other) encoded data
-                using (var image = SKImage.FromBitmap(bmp))
-                {
-                    using (var data = image.Encode(SKEncodedImageFormat.Png, 100))
-                    {
-                        // save the data to a stream
-                        using (var stream = File.OpenWrite(convertedFullPath))
-                        {
-                            data.SaveTo(stream);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
+            //not used
         }
 
         public string LoadStringFromUserFolder(string fullPath)
@@ -177,7 +98,7 @@ namespace IBbasic.iOS
             string text = "";
             //check in app module folderr first
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(fullPath, "."));
+            Stream stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets" + ConvertFullPath(fullPath, "."));
             if (stream != null)
             {
                 using (var reader = new System.IO.StreamReader(stream))
@@ -216,10 +137,10 @@ namespace IBbasic.iOS
             {
                  //System.Diagnostics.Debug.WriteLine(res);
             }
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(fullPath, "."));
+            Stream stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets" + ConvertFullPath(fullPath, "."));
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS." + filename);
             }
             if (stream != null)
             {
@@ -252,10 +173,10 @@ namespace IBbasic.iOS
             }            
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."));
+            Stream stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets" + ConvertFullPath(assetFolderpath, "."));
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS." + filename);
             }
             if (stream != null)
             {
@@ -275,161 +196,106 @@ namespace IBbasic.iOS
         }
 
         public string GetModuleFileString(string modFilename)
-        {
-            //asset module
-            if (modFilename.StartsWith("IBbasic."))
+        {            
+            string modFolder = Path.GetFileNameWithoutExtension(modFilename);
+            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string convertedFullPath = documents + "/modules/" + modFolder + "/" + modFilename;
+            if (File.Exists(convertedFullPath))
             {
-                Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream(modFilename);
+                string text = "";
+                try
+                {
+                    text = File.ReadAllText(convertedFullPath);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return text;
+            }
+
+            //try asset module            
+            string modFilenameNoExtension = modFilename.Replace(".mod", "");
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + modFilenameNoExtension + "." + modFilename);
+            if (stream != null)
+            {
                 using (var reader = new System.IO.StreamReader(stream))
                 {
                     return reader.ReadToEnd();
                 }
             }
-            else if (modFilename.Equals("NewModule.mod"))
-            {
-                Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.NewModule.mod");
-                if (stream == null)
-                {
-                    stream = assembly.GetManifestResourceStream("IBbasic.iOS.NewModule.mod");
-                }
-                using (var reader = new System.IO.StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-            else
-            {
-                string modFolder = Path.GetFileNameWithoutExtension(modFilename);
-                var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string convertedFullPath = documents + "/modules/" + modFolder + "/" + modFilename;
-                if (File.Exists(convertedFullPath))
-                {
-                    string text = "";
-                    try
-                    {
-                        text = File.ReadAllText(convertedFullPath);
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                    return text;
-                }
-
-                //try asset module            
-                string modFilenameNoExtension = modFilename.Replace(".mod", "");
-                Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + modFilenameNoExtension + "." + modFilename);
-                if (stream != null)
-                {
-                    using (var reader = new System.IO.StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
-                }
-            }
+            
             return "";
         }
 
-        public SKBitmap LoadBitmap(string filename, Module mdl)
-        {
-            var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var modulesDir = Path.Combine(documents, "modules");
-            var modFolder = Path.Combine(modulesDir, mdl.moduleName);
-            var modGraphicsFolder = Path.Combine(modFolder, "graphics");
-            var filePath = Path.Combine(modGraphicsFolder, filename);
-
-            if (File.Exists(filePath))
-            {
-                SKBitmap bm = SKBitmap.Decode(filePath);
-                if (bm != null)
-                {
-                    return bm;
-                }
-            }
-            else if (File.Exists(filePath + ".png"))
-            {
-                SKBitmap bm = SKBitmap.Decode(filePath + ".png");
-                if (bm != null)
-                {
-                    return bm;
-                }
-            }
+        public SKBitmap LoadBitmap(string filename, IBbasic.Module mdl)
+        {            
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename);            
+            Stream stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename);            
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename + ".png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS." + filename + ".png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS." + filename + ".jpg");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS." + filename + ".jpg");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.graphics." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.graphics." + filename + ".png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics." + filename + ".jpg");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.graphics." + filename + ".jpg");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.tiles." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.tiles." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.tiles." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.tiles." + filename + ".png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.tiles." + filename + ".jpg");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.tiles." + filename + ".jpg");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.ui." + filename);
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.ui." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.ui." + filename + ".png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.ui." + filename + ".png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.ui." + filename + ".jpg");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.ui." + filename + ".jpg");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.graphics.ui_missingtexture.png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.graphics.ui_missingtexture.png");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("IBbasic.iOS.ui_missingtexture.png");
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.ui_missingtexture.png");
             }
             SKManagedStream skStream = new SKManagedStream(stream);
 
-            //Stream fileStream = File.OpenRead("btn_small_on.png");
             return SKBitmap.Decode(skStream);
-
-            //StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            //StorageFile sampleFile = await storageFolder.GetFileAsync(filename);
-            //SKBitmap text = await Windows.Storage.FileIO.ReadTextAsync(sampleFile);
-            //return text;
-
-
         }
 
         public List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension)
@@ -508,7 +374,7 @@ namespace IBbasic.iOS
             //module folder in app 
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains("IBbasic.iOS.Assets" + ConvertFullPath(userFolderpath, "."))) && (res.EndsWith(extension)))
+                if ((res.Contains("Raventhal.iOS.Assets" + ConvertFullPath(userFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
@@ -517,7 +383,7 @@ namespace IBbasic.iOS
 
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains("IBbasic.iOS.Assets" + ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
+                if ((res.Contains("Raventhal.iOS.Assets" + ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
