@@ -241,8 +241,8 @@ namespace IBbasic
 	            if ((it.category.Equals("Melee")) || (it.category.Equals("Ranged")))
 	            {
 	        	    textToSpan += "Damage: " + it.damageNumDice + "d" + it.damageDie + "+" + it.damageAdder + "<BR>";
-	                textToSpan += "Attack Bonus: " + it.attackBonus + "<BR>";
-	                textToSpan += "Attack Range: " + it.attackRange + "<BR>";
+	                textToSpan += "Att Bonus: " + it.attackBonus + "<BR>";
+	                textToSpan += "Att Range: " + it.attackRange + "<BR>";
 	                textToSpan += "Useable By: " + isUseableBy(it) + "<BR>";
 	                textToSpan += "Tap 'INFO' for Full Description<BR>";
 	            }    

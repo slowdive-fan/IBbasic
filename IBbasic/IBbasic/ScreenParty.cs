@@ -121,7 +121,7 @@ namespace IBbasic
             btnPartyRoster.Text = "ROSTER";
             btnPartyRoster.Img = "btn_small"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small);
             btnPartyRoster.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
-            btnPartyRoster.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) + (int)((gv.ibbwidthL / 2) * gv.scaler) + (int)(gv.uiSquareSize * 0.5);
+            btnPartyRoster.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)((gv.ibbwidthL / 2) * gv.scaler) - (int)(gv.uiSquareSize * 1.5);
             btnPartyRoster.Y = 6 * gv.uiSquareSize - pH * 2;
             btnPartyRoster.Height = (int)(gv.ibbheight * gv.scaler);
             btnPartyRoster.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -555,7 +555,7 @@ namespace IBbasic
             int height = 8 * gv.uiSquareSize;
             DrawTextLayout(description, textToSpan, xLoc, yLoc, width, height);
 
-            btnHelp.Draw();
+            //btnHelp.Draw();
             btnInfo.Draw();
             btnReturn.Draw();
 
@@ -690,7 +690,7 @@ namespace IBbasic
         {
             btnLevelUp.glowOn = false;
             btnPartyRoster.glowOn = false;
-            btnHelp.glowOn = false;
+            //btnHelp.glowOn = false;
             btnInfo.glowOn = false;
             btnReturn.glowOn = false;
             btnSpells.glowOn = false;
@@ -727,10 +727,10 @@ namespace IBbasic
                     {
                         btnPartyRoster.glowOn = true;
                     }
-                    else if (btnHelp.getImpact(x, y))
+                    /*else if (btnHelp.getImpact(x, y))
                     {
                         btnHelp.glowOn = true;
-                    }
+                    }*/
                     else if (btnInfo.getImpact(x, y))
                     {
                         btnInfo.glowOn = true;
@@ -763,7 +763,7 @@ namespace IBbasic
 
                     btnLevelUp.glowOn = false;
                     btnPartyRoster.glowOn = false;
-                    btnHelp.glowOn = false;
+                    //btnHelp.glowOn = false;
                     btnInfo.glowOn = false;
                     btnReturn.glowOn = false;
                     btnSpells.glowOn = false;
@@ -953,10 +953,10 @@ namespace IBbasic
                             }
                         }
                     }
-                    else if (btnHelp.getImpact(x, y))
+                    /*else if (btnHelp.getImpact(x, y))
                     {
                         tutorialMessageParty(true);
-                    }
+                    }*/
                     else if (btnInfo.getImpact(x, y))
                     {
                         Item it = new Item();
