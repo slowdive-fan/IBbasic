@@ -179,6 +179,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\graphics\t_home06.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\graphics\t_home07.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\graphics\t_home08.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\font.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\data.json" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\graphics\fx_bitsabrainproj.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\Raventhal\graphics\fx_kavenvomitproj.png" />
@@ -1646,14 +1647,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\facing7.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\facing8.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\facing9.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontBk.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontBu.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontGn.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontGy.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontMa.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontRd.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontWh.png" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\fontYl.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\highlight_blueTrig.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\highlight_green.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\highlight_greenTrig.png" />

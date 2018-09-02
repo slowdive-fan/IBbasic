@@ -25,6 +25,7 @@ namespace IBbasic.Droid
         private static GoogleAnalytics GAInstance;
         private static Tracker GATracker;
         public Context thisContext;
+        int numOfTrackerEventHitsInThisSession = 0;
 
         #region Instantiation ...
         private static SaveAndLoad_Android thisRef;
@@ -651,11 +652,24 @@ namespace IBbasic.Droid
 
         public void TrackAppEvent(string Category, string EventAction, string EventLabel)
         {
-            HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder();
-            builder.SetCategory("An_" + Category);
-            builder.SetAction("An_" + EventAction);
-            builder.SetLabel("An_" + EventLabel);
-            GATracker.Send(builder.Build());
+            try
+            {
+                if (numOfTrackerEventHitsInThisSession > 300)
+                {
+                    GATracker.Send(new HitBuilders.EventBuilder().SetNewSession().Build());
+                    numOfTrackerEventHitsInThisSession = 0;
+                }
+                else
+                {
+                    numOfTrackerEventHitsInThisSession++;
+                }
+                HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder();
+                builder.SetCategory("An_" + Category);
+                builder.SetAction("An_" + EventAction);
+                builder.SetLabel("An_" + EventLabel);
+                GATracker.Send(builder.Build());
+            }
+            catch { }
         }
 
         Android.Media.MediaPlayer playerAreaMusic;

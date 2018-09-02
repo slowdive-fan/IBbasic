@@ -572,7 +572,8 @@ namespace IBbasic
                             gv.showMessageBox = true;
                             gv.cc.tutorialMessageMainMap();
                             gv.screenType = "main";
-                            gv.cc.doUpdate();
+                            gv.TrackerSendEventFullPartyInfo(":NEWGAME:");
+                            gv.cc.doUpdate();                            
                         }
                     }
                     for (int j = 0; j < gv.mod.playerList.Count; j++)

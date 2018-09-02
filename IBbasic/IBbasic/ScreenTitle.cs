@@ -100,18 +100,25 @@ namespace IBbasic
             IbRect dst = new IbRect(0 - gv.oXshift, 0 - gv.oYshift, gv.screenWidth, (int)dstHeight);
             gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.titleImageName), src, dst);
 
-            //Draw This Module's Version Number
-            int xLoc = (gv.uiSquareSize * gv.uiSquaresInWidth / 2) - (1 * gv.fontWidth);
+            //Draw This Module's Version Number or engine version number
             int pH = (int)((float)gv.screenHeight / 100.0f);
+            string textVer = gv.mod.moduleVersion.ToString();
+            if (!gv.fixedModule.Equals(""))
+            {
+                textVer = gv.versionNum;
+            }
+            int xLoc = (gv.uiSquareSize * gv.uiSquaresInWidth / 2) - ((textVer.Length / 2) * gv.fontWidth);
+            int yLoc = (6 * gv.uiSquareSize) + (14 * pH) - (gv.uiSquareSize / 2);            
+            
             for (int x = 0; x <= 2; x++)
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("v" + gv.mod.moduleVersion, xLoc + x, (6 * gv.uiSquareSize) + (pH * 4) + y, "bk");
+                    gv.DrawText("v" + textVer, xLoc + x, yLoc + y, "bk");
                 }
             }
-            gv.DrawText("v" + gv.mod.moduleVersion, xLoc, (6 * gv.uiSquareSize) + (pH * 4), "wh");
-            
+            gv.DrawText("v" + textVer, xLoc, yLoc, "wh");
+
             drawTitleControls();
             if (gv.showMessageBox)
             {

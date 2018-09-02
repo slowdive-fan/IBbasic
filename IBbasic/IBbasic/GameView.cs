@@ -49,8 +49,8 @@ namespace IBbasic
         public int oYshift = 0;
         public string mainDirectory;
         public bool showHotKeys = false;
-        public int fontHeight = 8;
-        public int fontWidth = 8;
+        public int fontHeight = 9;
+        public int fontWidth = 6;
         public int fontCharSpacing = 1;
         public int fontLineSpacing = 2;
         public SKRect srcRect = new SKRect();
@@ -238,10 +238,7 @@ namespace IBbasic
 
             //InitializeRenderer(); //uncomment this for DIRECT2D ADDITIONS
 
-            //CREATES A FONTFAMILY
-            fillCharList();
-
-            setupFonts();
+            resetFonts();
 
             //TODO animationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
 
@@ -291,15 +288,53 @@ namespace IBbasic
             gameTimerStopwatch.Start();
             previousTime = gameTimerStopwatch.ElapsedMilliseconds;
             //gameTimer.Start();
-        }        
-        public void setupFonts()
-        {
-            fontWidth = 6 * scaler;
-            fontHeight = 6 * scaler;
-            fontCharSpacing = 0 * scaler;
-            fontLineSpacing = 2  * scaler;
         }
-        
+        public void resetFonts()
+        {
+            //reload standard font images
+            cc.fontBk = cc.LoadBitmap("font");
+            changeFontColor(cc.fontBk, 0, 0, 0);
+            cc.fontBu = cc.LoadBitmap("font");
+            changeFontColor(cc.fontBu, 0, 127, 255);
+            cc.fontGn = cc.LoadBitmap("font");
+            changeFontColor(cc.fontGn, 53, 147, 37);
+            cc.fontGy = cc.LoadBitmap("font");
+            changeFontColor(cc.fontGy, 155, 155, 155);
+            cc.fontMa = cc.LoadBitmap("font");
+            changeFontColor(cc.fontMa, 255, 0, 255);
+            cc.fontRd = cc.LoadBitmap("font");
+            changeFontColor(cc.fontRd, 255, 0, 0);
+            cc.fontWh = cc.LoadBitmap("font");
+            changeFontColor(cc.fontWh, 255, 255, 255);
+            cc.fontYl = cc.LoadBitmap("font");
+            changeFontColor(cc.fontYl, 255, 255, 0);
+
+            //CREATES A FONTFAMILY
+            charList.Clear();
+            fontWidth = cc.fontBk.Width / 13;
+            fontHeight = cc.fontBk.Height / 7;
+            //fontWidth = 6;
+            //fontHeight = 9;
+            fillCharList();
+            fontWidth = fontWidth * scaler;
+            fontHeight = fontHeight * scaler;
+            fontCharSpacing = 0 * scaler;
+            fontLineSpacing = 0 * scaler;
+        }
+        public void changeFontColor(SKBitmap b, byte R, byte G, byte B)
+        {            
+            for (int x = 0; x < b.Width; x++)
+            {
+                for (int y = 0; y < b.Height; y++)
+                {
+                    if (b.GetPixel(x, y).Alpha > 30)
+                    {
+                        b.SetPixel(x, y, new SKColor(R, G, B, 255));
+                    }
+                }
+            }            
+        }
+
         public void createScreens()
 	    {
 		    sf = new ScriptFunctions(mod, this);
@@ -341,23 +376,14 @@ namespace IBbasic
         }
         public void LoadStandardImages()
         {
-            //cc.btnIni = cc.LoadBitmap("btn_ini");
-            //cc.btnIniGlow = cc.LoadBitmap("btn_ini_glow");
             cc.walkPass = cc.LoadBitmap("walk_pass");
             cc.walkBlocked = cc.LoadBitmap("walk_block");
             cc.losBlocked = cc.LoadBitmap("los_block");
             cc.black_tile = cc.LoadBitmap("black_tile");
-            //cc.black_tile2 = cc.LoadBitmap("black_tile2");
             cc.turn_marker = cc.LoadBitmap("turn_marker");
             cc.map_marker = cc.LoadBitmap("map_marker");
             cc.pc_dead = cc.LoadBitmap("pcdead");
             cc.pc_stealth = cc.LoadBitmap("pc_stealth");
-            //cc.offScreen = cc.LoadBitmap("offScreen");
-            //cc.offScreen5 = cc.LoadBitmap("offScreen5");
-            //cc.offScreen6 = cc.LoadBitmap("offScreen6");
-            //cc.offScreen7 = cc.LoadBitmap("offScreen7");
-            //cc.offScreenTrans = cc.LoadBitmap("offScreenTrans");
-            //cc.death_fx = cc.LoadBitmap("death_fx");
             cc.hitSymbol = cc.LoadBitmap("hit_symbol");
             cc.missSymbol = cc.LoadBitmap("miss_symbol");
             cc.highlight_green = cc.LoadBitmap("highlight_green");
@@ -367,8 +393,6 @@ namespace IBbasic
             cc.tint_sunset = cc.LoadBitmap("tint_sunset");
             cc.tint_dusk = cc.LoadBitmap("tint_dusk");
             cc.tint_night = cc.LoadBitmap("tint_night");
-            //off for now
-            //cc.tint_rain = cc.LoadBitmap("tint_rain");
             cc.ui_portrait_frame = cc.LoadBitmap("ui_portrait_frame");
             cc.ui_bg_fullscreen = cc.LoadBitmap("ui_bg_fullscreen");
             cc.facing1 = cc.LoadBitmap("facing1");
@@ -383,7 +407,9 @@ namespace IBbasic
 	    public void resetGame()
 	    {
             mod = cc.LoadModule(mod.moduleName + ".mod");
+            cc.saveMod = new SaveGame();
             cc.commonBitmapList.Clear();
+            resetFonts();
             //reset log number of lines based on the value from the Module's mod file
             log.numberOfLinesToShow = mod.logNumberOfLines;            
                         
@@ -484,7 +510,7 @@ namespace IBbasic
             string json = JsonConvert.SerializeObject(toggleSettings, Newtonsoft.Json.Formatting.Indented);
             SaveText("\\settings.json", json);            
         }
-        private void fillCharList()
+        private void fillCharListold()
         {
             charList.Add('A', new SKRect(fontWidth * 0, fontHeight * 0, fontWidth * 0 + fontWidth, fontHeight * 0 + fontHeight));
             charList.Add('B', new SKRect(fontWidth * 1, fontHeight * 0, fontWidth * 1 + fontWidth, fontHeight * 0 + fontHeight));
@@ -586,7 +612,107 @@ namespace IBbasic
             //charList.Add('/', new SharpDX.SKRect(64, 64, 8, 12));
             charList.Add(' ', new SKRect(fontWidth * 9, fontHeight * 8, fontWidth * 9 + fontWidth, fontHeight * 8 + fontHeight));
         }
-                
+        private void fillCharList()
+        {
+            charList.Add('A', new SKRect(fontWidth * 0, fontHeight * 0, fontWidth * 0 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('B', new SKRect(fontWidth * 1, fontHeight * 0, fontWidth * 1 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('C', new SKRect(fontWidth * 2, fontHeight * 0, fontWidth * 2 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('D', new SKRect(fontWidth * 3, fontHeight * 0, fontWidth * 3 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('E', new SKRect(fontWidth * 4, fontHeight * 0, fontWidth * 4 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('F', new SKRect(fontWidth * 5, fontHeight * 0, fontWidth * 5 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('G', new SKRect(fontWidth * 6, fontHeight * 0, fontWidth * 6 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('H', new SKRect(fontWidth * 7, fontHeight * 0, fontWidth * 7 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('I', new SKRect(fontWidth * 8, fontHeight * 0, fontWidth * 8 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('J', new SKRect(fontWidth * 9, fontHeight * 0, fontWidth * 9 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('K', new SKRect(fontWidth * 10, fontHeight * 0, fontWidth * 10 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('L', new SKRect(fontWidth * 11, fontHeight * 0, fontWidth * 11 + fontWidth, fontHeight * 0 + fontHeight));
+            charList.Add('M', new SKRect(fontWidth * 12, fontHeight * 0, fontWidth * 12 + fontWidth, fontHeight * 0 + fontHeight));
+
+            charList.Add('N', new SKRect(fontWidth * 0, fontHeight * 1, fontWidth * 0 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('O', new SKRect(fontWidth * 1, fontHeight * 1, fontWidth * 1 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('P', new SKRect(fontWidth * 2, fontHeight * 1, fontWidth * 2 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('Q', new SKRect(fontWidth * 3, fontHeight * 1, fontWidth * 3 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('R', new SKRect(fontWidth * 4, fontHeight * 1, fontWidth * 4 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('S', new SKRect(fontWidth * 5, fontHeight * 1, fontWidth * 5 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('T', new SKRect(fontWidth * 6, fontHeight * 1, fontWidth * 6 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('U', new SKRect(fontWidth * 7, fontHeight * 1, fontWidth * 7 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('V', new SKRect(fontWidth * 8, fontHeight * 1, fontWidth * 8 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('W', new SKRect(fontWidth * 9, fontHeight * 1, fontWidth * 9 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('X', new SKRect(fontWidth * 10, fontHeight * 1, fontWidth * 10 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('Y', new SKRect(fontWidth * 11, fontHeight * 1, fontWidth * 11 + fontWidth, fontHeight * 1 + fontHeight));
+            charList.Add('Z', new SKRect(fontWidth * 12, fontHeight * 1, fontWidth * 12 + fontWidth, fontHeight * 1 + fontHeight));
+
+            charList.Add('a', new SKRect(fontWidth * 0, fontHeight * 2, fontWidth * 0 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('b', new SKRect(fontWidth * 1, fontHeight * 2, fontWidth * 1 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('c', new SKRect(fontWidth * 2, fontHeight * 2, fontWidth * 2 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('d', new SKRect(fontWidth * 3, fontHeight * 2, fontWidth * 3 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('e', new SKRect(fontWidth * 4, fontHeight * 2, fontWidth * 4 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('f', new SKRect(fontWidth * 5, fontHeight * 2, fontWidth * 5 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('g', new SKRect(fontWidth * 6, fontHeight * 2, fontWidth * 6 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('h', new SKRect(fontWidth * 7, fontHeight * 2, fontWidth * 7 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('i', new SKRect(fontWidth * 8, fontHeight * 2, fontWidth * 8 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('j', new SKRect(fontWidth * 9, fontHeight * 2, fontWidth * 9 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('k', new SKRect(fontWidth * 10, fontHeight * 2, fontWidth * 10 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('l', new SKRect(fontWidth * 11, fontHeight * 2, fontWidth * 11 + fontWidth, fontHeight * 2 + fontHeight));
+            charList.Add('m', new SKRect(fontWidth * 12, fontHeight * 2, fontWidth * 12 + fontWidth, fontHeight * 2 + fontHeight));
+
+            charList.Add('n', new SKRect(fontWidth * 0, fontHeight * 3, fontWidth * 0 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('o', new SKRect(fontWidth * 1, fontHeight * 3, fontWidth * 1 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('p', new SKRect(fontWidth * 2, fontHeight * 3, fontWidth * 2 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('q', new SKRect(fontWidth * 3, fontHeight * 3, fontWidth * 3 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('r', new SKRect(fontWidth * 4, fontHeight * 3, fontWidth * 4 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('s', new SKRect(fontWidth * 5, fontHeight * 3, fontWidth * 5 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('t', new SKRect(fontWidth * 6, fontHeight * 3, fontWidth * 6 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('u', new SKRect(fontWidth * 7, fontHeight * 3, fontWidth * 7 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('v', new SKRect(fontWidth * 8, fontHeight * 3, fontWidth * 8 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('w', new SKRect(fontWidth * 9, fontHeight * 3, fontWidth * 9 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('x', new SKRect(fontWidth * 10, fontHeight * 3, fontWidth * 10 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('y', new SKRect(fontWidth * 11, fontHeight * 3, fontWidth * 11 + fontWidth, fontHeight * 3 + fontHeight));
+            charList.Add('z', new SKRect(fontWidth * 12, fontHeight * 3, fontWidth * 12 + fontWidth, fontHeight * 3 + fontHeight));
+
+            charList.Add('0', new SKRect(fontWidth * 0, fontHeight * 4, fontWidth * 0 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('1', new SKRect(fontWidth * 1, fontHeight * 4, fontWidth * 1 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('2', new SKRect(fontWidth * 2, fontHeight * 4, fontWidth * 2 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('3', new SKRect(fontWidth * 3, fontHeight * 4, fontWidth * 3 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('4', new SKRect(fontWidth * 4, fontHeight * 4, fontWidth * 4 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('5', new SKRect(fontWidth * 5, fontHeight * 4, fontWidth * 5 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('6', new SKRect(fontWidth * 6, fontHeight * 4, fontWidth * 6 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('7', new SKRect(fontWidth * 7, fontHeight * 4, fontWidth * 7 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('8', new SKRect(fontWidth * 8, fontHeight * 4, fontWidth * 8 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('9', new SKRect(fontWidth * 9, fontHeight * 4, fontWidth * 9 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('.', new SKRect(fontWidth * 10, fontHeight * 4, fontWidth * 10 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add(',', new SKRect(fontWidth * 11, fontHeight * 4, fontWidth * 11 + fontWidth, fontHeight * 4 + fontHeight));
+            charList.Add('"', new SKRect(fontWidth * 12, fontHeight * 4, fontWidth * 12 + fontWidth, fontHeight * 4 + fontHeight));
+
+            charList.Add('\'', new SKRect(fontWidth * 0, fontHeight * 5, fontWidth * 0 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('?', new SKRect(fontWidth * 1, fontHeight * 5, fontWidth * 1 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('!', new SKRect(fontWidth * 2, fontHeight * 5, fontWidth * 2 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('~', new SKRect(fontWidth * 3, fontHeight * 5, fontWidth * 3 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('#', new SKRect(fontWidth * 4, fontHeight * 5, fontWidth * 4 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('$', new SKRect(fontWidth * 5, fontHeight * 5, fontWidth * 5 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('%', new SKRect(fontWidth * 6, fontHeight * 5, fontWidth * 6 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('^', new SKRect(fontWidth * 7, fontHeight * 5, fontWidth * 7 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('&', new SKRect(fontWidth * 8, fontHeight * 5, fontWidth * 8 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('*', new SKRect(fontWidth * 9, fontHeight * 5, fontWidth * 9 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('(', new SKRect(fontWidth * 10, fontHeight * 5, fontWidth * 10 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add(')', new SKRect(fontWidth * 11, fontHeight * 5, fontWidth * 11 + fontWidth, fontHeight * 5 + fontHeight));
+            charList.Add('-', new SKRect(fontWidth * 12, fontHeight * 5, fontWidth * 12 + fontWidth, fontHeight * 5 + fontHeight));
+
+            charList.Add('_', new SKRect(fontWidth * 0, fontHeight * 6, fontWidth * 0 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('+', new SKRect(fontWidth * 1, fontHeight * 6, fontWidth * 1 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('=', new SKRect(fontWidth * 2, fontHeight * 6, fontWidth * 2 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('[', new SKRect(fontWidth * 3, fontHeight * 6, fontWidth * 3 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add(']', new SKRect(fontWidth * 4, fontHeight * 6, fontWidth * 4 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('/', new SKRect(fontWidth * 5, fontHeight * 6, fontWidth * 5 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add(':', new SKRect(fontWidth * 6, fontHeight * 6, fontWidth * 6 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('|', new SKRect(fontWidth * 7, fontHeight * 6, fontWidth * 7 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add(';', new SKRect(fontWidth * 8, fontHeight * 6, fontWidth * 8 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('<', new SKRect(fontWidth * 9, fontHeight * 6, fontWidth * 9 + fontWidth, fontHeight * 6 + fontHeight));
+            charList.Add('>', new SKRect(fontWidth * 10, fontHeight * 6, fontWidth * 10 + fontWidth, fontHeight * 6 + fontHeight));
+            //charList.Add('/', new SharpDX.SKRect(64, 64, 8, 12));
+            charList.Add(' ', new SKRect(fontWidth * 12, fontHeight * 6, fontWidth * 12 + fontWidth, fontHeight * 6 + fontHeight));
+        }
+
         /*public void initializeSounds()
 	    {
             oSoundStreams.Clear();
@@ -597,7 +723,7 @@ namespace IBbasic
                 oSoundStreams.Add(Path.GetFileNameWithoutExtension(f), File.OpenRead(Path.GetFullPath(f)));
             }
 	    }*/
-	    public void PlaySound(string filenameNoExtension)
+        public void PlaySound(string filenameNoExtension)
 	    {            
             /*if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!mod.playSoundFx))
             {
@@ -690,7 +816,7 @@ namespace IBbasic
         public void DrawText(string text, float xLoc, float yLoc, string color)
         {
             //default is WHITE
-            SKBitmap bm = cc.GetFromBitmapList("fontWh");
+            /*SKBitmap bm = cc.GetFromBitmapList("fontWh");
             if (color.Equals("bk"))
             {
                 bm = cc.GetFromBitmapList("fontBk");
@@ -718,8 +844,7 @@ namespace IBbasic
             else if (color.Equals("yl"))
             {
                 bm = cc.GetFromBitmapList("fontYl");
-            }
-
+            }*/
             float x = 0;
             foreach (char c in text)
             {
@@ -728,7 +853,39 @@ namespace IBbasic
                 char c1 = '0';
                 if (!charList.ContainsKey(c)) { c1 = '#'; }
                 else c1 = c;
-                canvas.DrawBitmap(bm, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                if (color.Equals("bk"))
+                {
+                    canvas.DrawBitmap(cc.fontBk, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("wh"))
+                {
+                    canvas.DrawBitmap(cc.fontWh, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("bu"))
+                {
+                    canvas.DrawBitmap(cc.fontBu, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("gn"))
+                {
+                    canvas.DrawBitmap(cc.fontGn, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("gy"))
+                {
+                    canvas.DrawBitmap(cc.fontGy, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("ma"))
+                {
+                    canvas.DrawBitmap(cc.fontMa, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("rd"))
+                {
+                    canvas.DrawBitmap(cc.fontRd, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                else if (color.Equals("yl"))
+                {
+                    canvas.DrawBitmap(cc.fontYl, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                }
+                //canvas.DrawBitmap(bm, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
                 x += fontWidth + fontCharSpacing;
             }
         }        

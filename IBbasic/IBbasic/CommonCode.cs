@@ -59,7 +59,15 @@ namespace IBbasic
         public SKBitmap facing7;
         public SKBitmap facing8;
         public SKBitmap facing9;
-        
+        public SKBitmap fontBk;
+        public SKBitmap fontBu;
+        public SKBitmap fontGn;
+        public SKBitmap fontGy;
+        public SKBitmap fontMa;
+        public SKBitmap fontRd;
+        public SKBitmap fontWh;
+        public SKBitmap fontYl;
+
         public Dictionary<string, SKBitmap> commonBitmapList = new Dictionary<string, SKBitmap>();
         public Dictionary<string, SKBitmap> moduleBitmapList = new Dictionary<string, SKBitmap>();
         public Dictionary<string, SKBitmap> tileGDIBitmapList = new Dictionary<string, SKBitmap>();
@@ -1363,6 +1371,8 @@ namespace IBbasic
             //SAVE THE FILE
             string json = JsonConvert.SerializeObject(saveMod, Newtonsoft.Json.Formatting.Indented);
             gv.SaveText("\\saves\\" + gv.mod.moduleName + "\\" + filename, json);
+            gv.TrackerSendEventFullPartyInfo(":SAVEGAME:");
+            gv.TrackerSendEvent(":SAVEGAME:" + gv.mod.moduleName, "none", false);            
             //gv.SaveSaveGame(gv.mod.moduleName, filename, saveMod);
             /*string filepath = gv.mainDirectory + "\\saves\\" + gv.mod.moduleName + "\\" + filename;
             MakeDirectoryIfDoesntExist(filepath);

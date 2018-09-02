@@ -21,6 +21,7 @@ namespace Raventhal.iOS
         public string TrackingId = "UA-60615839-14";
         public ITracker Tracker;
         const string AllowTrackingKey = "AllowTracking";
+        int numOfTrackerEventHitsInThisSession = 0;
 
         #region Instantition...
         private static SaveAndLoad_iOS thisRef;
@@ -426,6 +427,16 @@ namespace Raventhal.iOS
         {
             try
             {
+                if (numOfTrackerEventHitsInThisSession > 300)
+                {
+                    Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateScreenView().Build());
+                    Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
+                    numOfTrackerEventHitsInThisSession = 0;
+                }
+                else
+                {
+                    numOfTrackerEventHitsInThisSession++;
+                }
                 Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("iOS_" + Category, "iOS_" + EventAction, "iOS_" + EventLabel, null).Build());
                 Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
             }

@@ -24,7 +24,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>9.3</string>
+	<string>10.3</string>
 	<key>CFBundleDisplayName</key>
 	<string>The Raventhal</string>
 	<key>CFBundleIdentifier</key>
@@ -38,7 +38,7 @@
 		<string>Default-Portrait@2x</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -46,6 +46,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.01</string>
+	<string>1.0.02</string>
 </dict>
 </plist>

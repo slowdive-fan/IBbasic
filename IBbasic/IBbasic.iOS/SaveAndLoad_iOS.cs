@@ -20,6 +20,7 @@ namespace IBbasic.iOS
         public string TrackingId = "UA-60615839-12";
         public ITracker Tracker;
         const string AllowTrackingKey = "AllowTracking";
+        int numOfTrackerEventHitsInThisSession = 0;
 
         #region Instantition...
         private static SaveAndLoad_iOS thisRef;
@@ -97,7 +98,7 @@ namespace IBbasic.iOS
                 var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 var directoryname = Path.Combine(documents, "modules");
                 var path = Path.Combine(directoryname, modFilename);
-                ZipFile.CreateFromDirectory(path, path + ".zip");
+                //ZipFile.CreateFromDirectory(path, path + ".zip");
             }
             catch (Exception ex)
             {
@@ -118,7 +119,7 @@ namespace IBbasic.iOS
                     CreateBackUpModuleFolder(modFilename);
                     Directory.Delete(path, true);
                 }
-                ZipFile.ExtractToDirectory(path + ".zip", path);
+                //ZipFile.ExtractToDirectory(path + ".zip", path);
             }
             catch (Exception ex)
             {
@@ -560,6 +561,16 @@ namespace IBbasic.iOS
         {
             try
             {
+                if (numOfTrackerEventHitsInThisSession > 300)
+                {
+                    Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateScreenView().Build());
+                    Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
+                    numOfTrackerEventHitsInThisSession = 0;
+                }
+                else
+                {
+                    numOfTrackerEventHitsInThisSession++;
+                }
                 Gai.SharedInstance.DefaultTracker.Send(DictionaryBuilder.CreateEvent("iOS_" + Category, "iOS_" + EventAction, "iOS_" + EventLabel, null).Build());
                 Gai.SharedInstance.Dispatch(); // Manually dispatch the event immediately
             }
