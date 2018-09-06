@@ -1,0 +1,1323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{187CD6E9-5C5E-49C3-A316-430361ACA096}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ElderinStone.Droid</RootNamespace>
+    <AssemblyName>ElderinStone.Android</AssemblyName>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>1.60.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Analytics">
+      <Version>60.1142.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndLoad_Android.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Camp Entrance Trap.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Camp Entrance.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Camp Sneaky caught.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Camp Trap 2.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Camp Trap.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Campfire .dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Conicles.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Dalamar Diary.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Dalamar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Intro.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Intro2.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Intro3.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Is you a Wizard.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Lennil.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Thanis.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Tracks.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Vines.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0 Winvale.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0a Basilisk.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\0a Stoneman.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Big Hole.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Chittering.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Convo Tutorial.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Emerging Temple.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Entrance.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Fear the Gap.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Finding Kirkmor.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 first doors.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Grave.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Grove Triffids.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Grove.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Locked Door.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Main Chamber.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 second doors.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Temple Gates.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 The Druids.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Tracks training.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Tracks.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\1 Trap Training.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Bandirs Underground Alternative.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Bandits Underground.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Dalamar Diary.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Funny Wall.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 Private Altar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\2 the big black hole.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Big Scary.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books make you clever.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books make you gooderer.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books make you lighter on your feet.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books make you stronger somehow.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books make you wise.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Books that entrap your soul.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Climb to the Library.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Dalamar Diary.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Dead Dalamar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Descent to the Library.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 No books worthwhile.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 The Archivist Speaks.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 The Archivist.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Tracks.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\3 Wraith Book.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4 Kirkmor arrives.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4 Strange Green Pool.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4 Tomb.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4 Tracks.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b Alakin.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b Rhyll.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b Warden.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b Warden.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4b wiz.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\4Blood Pools.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5 Belascarin.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5a Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b Azzerakin gets pissed.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b Bansheetrap.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b Dalamar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b Meeting Azzerakin.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b merton.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\5b Pressure plate.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Bow of Belascarin.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\data.json" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\END.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\ENDING.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Bandit Camp Lennil 1.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Bandit Camp Version 2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Bandit Camp.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 BC L2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Bridge Axin.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Bridge Bandits.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0 Wizard Fight.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0a Ogres.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 0a.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1 Day of the Triffids.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1 Druids.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1 Finding Kirkmor.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1 Spiders mooore!.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1 Spiiiiiders!!!.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 1.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Alternative Bandits.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Bandits.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Secret Spiders.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Spider Swarm!.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Spiders Alternative.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2 Spiders.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 2.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Mad Wizard.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Spider Boss.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Wraiths.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Wraiths.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zom NE1.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zom NE2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zom SE1.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zom SE2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zombies BL1.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zombies BL2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zombies E.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3 Zombies E2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 3.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 BloodE.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 BloodW.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Great Hammer.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Hall.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Holy Blade.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Imp.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Kirkmor.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 long and straight.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 Orb.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 SE.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4 SW.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Crystakyn.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Crystakyn.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Elzaerik.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Escape.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b hidden orb.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Kirkmor pt2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b NW.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Orb.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b Wraiths.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 4b.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Blood Pool.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Blood Pool2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Boss.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 boss2.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Boss3.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Corridor.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Dalamar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Interregnum.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Spiders.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5 Surprise.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5a Dalamar.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5a Deadakkin.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5a Outro.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5a.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b BANSHEE!.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b Banshee2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b boss.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b boss2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b boss3.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b Merton.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b Stone lizards2.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b Stonelizards3.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 5b.are" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 C.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 Campfire.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 E.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 One Dead Vandrid.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 ropeebridge.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 Super Vandrid.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 The Vandrid.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 W.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 Weak Vandrid.enc" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6 whatthefuck.dlg" />
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\Level 6.are" />
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.axml" />
+    <AndroidResource Include="Resources\layout\Toolbar.axml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\drawable\icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
+    <AndroidResource Include="Resources\drawable\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_ibmini.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\TheElderinStone.mod" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO2_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO3_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO4_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO5_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\HERO6_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_%40cult1f.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_%40drklrd3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_%40magef1c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_%40magem5a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_00_inhab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_06_devil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_Azzerakin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_blood.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_c_k2allit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_c_prist1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_c_prist2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_cultistfighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_deadDalamar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_diary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_doortombclosed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_dropseapillar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_dropseapillarrunes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_Ettin2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_pedastalhammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_pedastalorb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_pedastalsword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_picwall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_poisongas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_sideshadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_stone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_stonecritter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_stonegate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_stonewall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_stonewallfulldoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_triffid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_unspikeson.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\prp_woodenhousetilebaselever.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0Axin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0banditguard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0Belascarin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0general.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0vines.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_0winvale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1 Tracks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1BigHole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1Campfire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1doors.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1doubledoors.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1druids.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1gap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1grave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1spidertreees.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1templepews.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_1triffid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_2bandits.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_2Campfire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_2spiderhole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_2spiderholeattack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_3archivistghpst.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_3ArchyGone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_3book.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4axe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bcampfire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bcrystalkin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4borb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bwarden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bwitch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bwiz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4bwiza2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_4orb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_5campfire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_6bridge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_6campfire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_6drop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_6Vandrid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aAzzerakin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aAzzerakin2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_abigail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aBorian.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aBorian2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aBorian3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Ahelmethead2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_aSlar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Azombiehelmethead2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_basibones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Blackwinter approach2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Blackwinterstreets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Dala4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Dalamar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Dalamar2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_Dalamar3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_doordoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_elderinstone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_fountain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_hiddencrypt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_holyswoeds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_imp2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_lennil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_olren.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_ringing bells.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_stoneman.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_temple wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\ptr_traptile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_A.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_alterL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_alterM.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_alterR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_arch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_B.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_barrels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_barrels2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_basliliskbonesL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_basliliskbonesR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_blood.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_Bloodpool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_blueflor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_blurfloorgrass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_blurpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_boat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_boatwide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_bones.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_boneswall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_boneswall2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_buffer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_buffernowshadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_C.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_carpet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_carpetend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cblackdoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ceme1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ceme2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ceme3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ceme4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cemeopen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cgreendoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobweb_crate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobweb4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobweb5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobwebfloor01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobwebs1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobwebs2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobwebs3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cobwebslightfloor01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_cornershadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_crate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_crates.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_creddoor2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_D.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_darkspaces.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doorgrate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_DoorL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_DoorR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doortombclosed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doortombclosedstone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doortombopengate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doorwooden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_doorwoodenopen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_DorianPic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dropseapillar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dropseapillar2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dropseapillargap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dropseapillarrunes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dungeonbloodstain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dungeonbloodstain2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dungeonlittorch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dungeontorch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_dungeonwristbrackets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_E.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ENDbufferdrop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fencebottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fencetop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_field.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01both.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01corner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01edge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01end.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wallcentre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wallcorner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01walledge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorcobbles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorgrass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstone2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstone2hole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstonegap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwater.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwatercorner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwateredge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwaterstraight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_flooryellowplanks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_foresttree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fountain1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fountain2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fountain3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_G.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_greenwall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_greywall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_greywalltop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_greywalltopdoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_I.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_innsign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_K.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01corner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01end.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01side.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01stright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_libraryweb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_marks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_N.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_O.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_o2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_pedastal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_pedastalhammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_pedastalmace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_pedastalorb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_pedastalsword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picwall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_planks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_planksend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_poisongas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_possfloorstone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_R.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_reddoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_roofshadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftilered.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftilered2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftilered3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftilereddark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftilereddarkchimney.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_rooftileredpurple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_RulianArchivist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_S.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_shadowcorner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ShinyFloorBL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ShinyFloorBR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ShinyFloorTL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_ShinyFloorTR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_sideshadow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_simpleboat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_skeleton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stagnant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_steps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stepsletters.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stilts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stiltsend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonecritterL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonecritterR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonegate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallcoffin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallfulldoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallhalfdoor2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallmarks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallsecret1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallsmashedcoffin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_stonewallsmashedcoffin2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_straw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_T_cocoon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_table2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_townsign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_tracks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_treebottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_treetops.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_U.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_unspikes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_unspikeson.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_wearetrees.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_weeds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_weeds2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_weirdlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_window2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_Winvale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousedoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousetile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousetilebase.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousetilebaseleft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousetilebaselever.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenhousetileleft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenroof.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenwallside.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenwallsidevines1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenwallsidevines2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_woodenwindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tes_title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40drklrd1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40drklrd3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40gntskl2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40golem1c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40guard2c.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40guard2czombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40magef1a.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_%40magem2b.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_01_demon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_06_devil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_archran.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_banshee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_bc_vet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_bloodmonster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_bloodske.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_djmm03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_elffb4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_fireel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_hilsmn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_hugesp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_kallit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_m015.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_prist1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_prist2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_rockre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_c_wraith.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_cultistfighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_ettin1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_ettin2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_expzombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_fight1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_hero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_jwight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_jwraith.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_kangath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_kano.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_mh_wiz5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_mirthal_spider2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_mithral_bandits.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_spidersw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_triffid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_x_asia45.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\tkn_zombie.png" />
+  </ItemGroup>
+  <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>

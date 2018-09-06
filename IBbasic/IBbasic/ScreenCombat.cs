@@ -93,9 +93,10 @@ namespace IBbasic
         public IbbButton btnArrowDownLeft = null;
         public IbbButton btnArrowSelect = null;
         //BUTTONS PANEL        
-        public IbbButton btnSwitchWeapon = null;
+        //public IbbButton btnSwitchWeapon = null;
         public IbbButton btnInventory = null;
         public IbbButton btnSkipTurn = null;
+        public IbbButton btnUseTrait = null;
         public IbbButton btnCast = null;
         public IbbButton btnMove = null;
         public IbbButton btnAttack = null;
@@ -174,7 +175,7 @@ namespace IBbasic
         {
             buttonPanelLocX = 0;
             buttonPanelLocY = 0;
-                        
+            /*            
             if (btnSwitchWeapon == null)
             {
                 btnSwitchWeapon = new IbbButton(gv, 0.8f);
@@ -188,7 +189,7 @@ namespace IBbasic
             btnSwitchWeapon.Y = buttonPanelLocY + 0 * gv.uiSquareSize;
             btnSwitchWeapon.Height = (int)(gv.ibbheight * gv.scaler);
             btnSwitchWeapon.Width = (int)(gv.ibbwidthR * gv.scaler);
-
+            */
             if (btnInventory == null)
             {
                 btnInventory = new IbbButton(gv, 0.8f);
@@ -199,7 +200,7 @@ namespace IBbasic
             //btnInventory.btnState = buttonState.Normal;
             btnInventory.HotKey = "I";
             btnInventory.X = buttonPanelLocX + 0 * gv.uiSquareSize;
-            btnInventory.Y = buttonPanelLocY + 1 * gv.uiSquareSize;
+            btnInventory.Y = buttonPanelLocY + 0 * gv.uiSquareSize;
             btnInventory.Height = (int)(gv.ibbheight * gv.scaler);
             btnInventory.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -213,10 +214,24 @@ namespace IBbasic
             btnSkipTurn.btnState = buttonState.Normal;
             btnSkipTurn.HotKey = "S";
             btnSkipTurn.X = buttonPanelLocX + 0 * gv.uiSquareSize;
-            btnSkipTurn.Y = buttonPanelLocY + 2 * gv.uiSquareSize;
+            btnSkipTurn.Y = buttonPanelLocY + 1 * gv.uiSquareSize;
             btnSkipTurn.Height = (int)(gv.ibbheight * gv.scaler);
             btnSkipTurn.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            if (btnUseTrait == null)
+            {
+                btnUseTrait = new IbbButton(gv, 0.8f);
+            }
+            btnUseTrait.Img = "btn_small";
+            btnUseTrait.Img2 = "btntrait";
+            btnUseTrait.Glow = "btn_small_glow";
+            btnUseTrait.btnState = buttonState.Normal;
+            btnUseTrait.HotKey = "T";
+            btnUseTrait.X = buttonPanelLocX + 0 * gv.uiSquareSize;
+            btnUseTrait.Y = buttonPanelLocY + 2 * gv.uiSquareSize;
+            btnUseTrait.Height = (int)(gv.ibbheight * gv.scaler);
+            btnUseTrait.Width = (int)(gv.ibbwidthR * gv.scaler);
+            
             if (btnCast == null)
             {
                 btnCast = new IbbButton(gv, 0.8f);
@@ -4191,9 +4206,10 @@ namespace IBbasic
                 tglKill.show = false;
                 tglHelp.show = true;
             }
-            btnSwitchWeapon.Draw();
+            //btnSwitchWeapon.Draw();
             btnInventory.Draw();
-            btnSkipTurn.Draw();            
+            btnSkipTurn.Draw();
+            btnUseTrait.Draw();
             btnCast.Draw();
             btnMove.Draw();
             btnAttack.Draw();
@@ -4577,7 +4593,7 @@ namespace IBbasic
                 if (showMoveOrder)
                 {
                     int mo = pc.moveOrder + 1;
-                    drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) - gv.fontHeight - 2, mo.ToString(), "wh");
+                    drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
                 }
                 
             }
@@ -4691,7 +4707,7 @@ namespace IBbasic
                 if (showMoveOrder)
                 {
                     int mo = crt.moveOrder + 1;
-                    drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) - gv.fontHeight - 2, mo.ToString(), "wh");
+                    drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
                 }
             }
         }
@@ -4967,7 +4983,7 @@ namespace IBbasic
         {
             if ((showSP) && (!animationsOn))
             {
-                int txtH = gv.fontHeight + 2;
+                int txtH = gv.fontHeight;
                 foreach (Creature crt in gv.mod.currentEncounter.encounterCreatureList)
                 {
                     if (!IsInVisibleCombatWindow(crt.combatLocX, crt.combatLocY))
@@ -5080,14 +5096,14 @@ namespace IBbasic
         {
             int txtH = (int)gv.fontHeight;
             int xLoc = gv.uiSquareSize + (2 * gv.scaler);
-            int yLoc = 7 * gv.uiSquareSize - gv.fontHeight - gv.fontHeight;
+            int yLoc = 7 * gv.uiSquareSize - gv.fontHeight;
             Player pc = gv.mod.playerList[currentPlayerIndex];
             float movesLeft = pc.moveDistance - currentMoves;
             if (movesLeft < 0) { movesLeft = 0; }
 
             if (showTogglePanel)
             {
-                yLoc = (6 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
+                yLoc = (6 * gv.uiSquareSize) - gv.fontHeight;
             }
             for (int x = 0; x <= 2; x++)
             {
@@ -5304,9 +5320,10 @@ namespace IBbasic
             btnArrowDownLeft.glowOn = false;
             btnArrowDown.glowOn = false;
             btnArrowDownRight.glowOn = false;
-            btnSwitchWeapon.glowOn = false;
+            //btnSwitchWeapon.glowOn = false;
             btnInventory.glowOn = false;
             btnSkipTurn.glowOn = false;
+            btnUseTrait.glowOn = false;
             btnCast.glowOn = false;
             btnMove.glowOn = false;
             btnAttack.glowOn = false;
@@ -5367,10 +5384,10 @@ namespace IBbasic
                     {
                         btnArrowDownRight.glowOn = true;
                     }
-                    else if (btnSwitchWeapon.getImpact(x, y))
+                    /*else if (btnSwitchWeapon.getImpact(x, y))
                     {
                         btnSwitchWeapon.glowOn = true;
-                    }
+                    }*/
                     else if (btnInventory.getImpact(x, y))
                     {
                         btnInventory.glowOn = true;
@@ -5378,6 +5395,10 @@ namespace IBbasic
                     else if (btnSkipTurn.getImpact(x, y))
                     {
                         btnSkipTurn.glowOn = true;
+                    }
+                    else if (btnUseTrait.getImpact(x, y))
+                    {
+                        btnUseTrait.glowOn = true;
                     }
                     else if (btnCast.getImpact(x, y))
                     {
@@ -5498,9 +5519,10 @@ namespace IBbasic
                     btnArrowDownLeft.glowOn = false;
                     btnArrowDown.glowOn = false;
                     btnArrowDownRight.glowOn = false;
-                    btnSwitchWeapon.glowOn = false;
+                    //btnSwitchWeapon.glowOn = false;
                     btnInventory.glowOn = false;
                     btnSkipTurn.glowOn = false;
+                    btnUseTrait.glowOn = false;
                     btnCast.glowOn = false;
                     btnMove.glowOn = false;
                     btnAttack.glowOn = false;
@@ -5739,7 +5761,7 @@ namespace IBbasic
                             MoveTargetHighlight(1);
                         }
                     }
-                    else if (btnSwitchWeapon.getImpact(x, y))
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 0) && (btnPort0.getImpact(x, y)))
                     {
                         if (currentPlayerIndex > gv.mod.playerList.Count - 1)
                         {
@@ -5749,6 +5771,66 @@ namespace IBbasic
                         gv.screenParty.resetPartyScreen();
                         gv.screenType = "combatParty";
                     }
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 1) && (btnPort1.getImpact(x, y)))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 2) && (btnPort2.getImpact(x, y)))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 3) && (btnPort3.getImpact(x, y)))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 4) && (btnPort4.getImpact(x, y)))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }
+                    else if ((tglPortraits.toggleOn) && (gv.mod.playerList.Count > 5) && (btnPort5.getImpact(x, y)))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }
+                    /*else if (btnSwitchWeapon.getImpact(x, y))
+                    {
+                        if (currentPlayerIndex > gv.mod.playerList.Count - 1)
+                        {
+                            return;
+                        }
+                        gv.cc.partyScreenPcIndex = currentPlayerIndex;
+                        gv.screenParty.resetPartyScreen();
+                        gv.screenType = "combatParty";
+                    }*/
                     else if (btnMove.getImpact(x, y))
                     {
                         if (canMove)
@@ -5781,6 +5863,21 @@ namespace IBbasic
                         }
                         gv.screenType = "combat";
                         setTargetHighlightStartLocation(pc);
+                    }
+                    else if (btnUseTrait.getImpact(x, y))
+                    {
+                        if (pc.knownTraitsTags.Count > 0)
+                        {
+                            currentCombatMode = "traitUseSelector";
+                            gv.screenType = "combatTraitUse";
+                            gv.screenTraitUseSelector.traitUsingPlayerIndex = currentPlayerIndex;
+                            traitUseSelectorIndex = 0;
+                            setTargetHighlightStartLocation(pc);
+                        }
+                        else
+                        {
+                            //TODO Toast.makeText(gv.gameContext, "PC has no Spells", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else if (btnCast.getImpact(x, y))
                     {
