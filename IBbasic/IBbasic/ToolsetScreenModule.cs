@@ -45,7 +45,7 @@ namespace IBbasic
             btnModuleName.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnModuleName.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnModuleName.X = 0 * gv.uiSquareSize;
-            btnModuleName.Y = 0 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnModuleName.Y = (int)(0 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnModuleName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -56,7 +56,7 @@ namespace IBbasic
             btnModuleLabelName.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnModuleLabelName.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnModuleLabelName.X = 0 * gv.uiSquareSize;
-            btnModuleLabelName.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnModuleLabelName.Y = (int)(1 * gv.uiSquareSize + gv.scaler);
             btnModuleLabelName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleLabelName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -67,7 +67,7 @@ namespace IBbasic
             btnModuleDescription.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnModuleDescription.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnModuleDescription.X = 0 * gv.uiSquareSize;
-            btnModuleDescription.Y = 1 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnModuleDescription.Y = (int)(1 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnModuleDescription.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleDescription.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -78,7 +78,7 @@ namespace IBbasic
             btnModuleCredits.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
             btnModuleCredits.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnModuleCredits.X = 0 * gv.uiSquareSize;
-            btnModuleCredits.Y = 2 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnModuleCredits.Y = (int)(2 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnModuleCredits.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleCredits.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -89,7 +89,7 @@ namespace IBbasic
             btnModuleVersion.ImgOn = "mtgl_edit_btn";
             btnModuleVersion.ImgOff = "mtgl_edit_btn";
             btnModuleVersion.X = 0 * gv.uiSquareSize;
-            btnModuleVersion.Y = 3 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnModuleVersion.Y = (int)(3 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnModuleVersion.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleVersion.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -100,7 +100,7 @@ namespace IBbasic
             btnStartingArea.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingArea.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingArea.X = 0 * gv.uiSquareSize;
-            btnStartingArea.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnStartingArea.Y = (int)(4 * gv.uiSquareSize + gv.scaler);
             btnStartingArea.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingArea.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -111,7 +111,7 @@ namespace IBbasic
             btnStartingLocX.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingLocX.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingLocX.X = 0 * gv.uiSquareSize;
-            btnStartingLocX.Y = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnStartingLocX.Y = (int)(4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnStartingLocX.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocX.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -122,7 +122,7 @@ namespace IBbasic
             btnStartingLocY.ImgOn = "mtgl_edit_btn";
             btnStartingLocY.ImgOff = "mtgl_edit_btn";
             btnStartingLocY.X = 0 * gv.uiSquareSize;
-            btnStartingLocY.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnStartingLocY.Y = (int)(5 * gv.uiSquareSize + gv.scaler);
             btnStartingLocY.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocY.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -133,7 +133,7 @@ namespace IBbasic
             btnStartingGold.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             btnStartingGold.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             btnStartingGold.X = 0 * gv.uiSquareSize;
-            btnStartingGold.Y = 5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnStartingGold.Y = (int)(5 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
             btnStartingGold.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingGold.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -144,10 +144,11 @@ namespace IBbasic
             btnModuleTitleImage.ImgOn = "mtgl_edit_btn";
             btnModuleTitleImage.ImgOff = "mtgl_edit_btn";
             btnModuleTitleImage.X = 1 * gv.uiSquareSize;
-            btnModuleTitleImage.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnModuleTitleImage.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
             btnModuleTitleImage.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleTitleImage.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
-            
+
+
             if (btnHelp == null)
             {
                 btnHelp = new IbbButton(gv, 0.8f);
@@ -157,7 +158,7 @@ namespace IBbasic
             btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnHelp.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
@@ -180,7 +181,7 @@ namespace IBbasic
             btnModuleDescription.Draw();
             //Description
             int yLoc = btnModuleDescription.Y;
-            description.tbXloc = btnModuleDescription.X + btnModuleDescription.Width + gv.scaler;
+            description.tbXloc = (int)(btnModuleDescription.X + btnModuleDescription.Width + gv.scaler);
             description.tbYloc = yLoc;
             description.tbWidth = 11 * gv.uiSquareSize;
             description.tbHeight = 1 * gv.uiSquareSize;
@@ -194,7 +195,7 @@ namespace IBbasic
             btnModuleCredits.Draw();
             //credits
             yLoc = btnModuleCredits.Y;
-            description.tbXloc = btnModuleCredits.X + btnModuleCredits.Width + gv.scaler;
+            description.tbXloc = (int)(btnModuleCredits.X + btnModuleCredits.Width + gv.scaler);
             description.tbYloc = yLoc;
             description.tbWidth = 11 * gv.uiSquareSize;
             description.tbHeight = 1 * gv.uiSquareSize;

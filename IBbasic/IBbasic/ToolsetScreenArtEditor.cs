@@ -80,7 +80,7 @@ namespace IBbasic
             btnNew.Glow = "btn_small_glow";
             //btnNew.Text = "NEW";
             btnNew.X = 0 * gv.uiSquareSize;
-            btnNew.Y = 0 * gv.uiSquareSize + gv.scaler;
+            btnNew.Y = 0 * gv.uiSquareSize + (int)(gv.scaler);
             btnNew.Height = (int)(gv.ibbheight * gv.scaler);
             btnNew.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -93,7 +93,7 @@ namespace IBbasic
             btnOpen.Glow = "btn_small_glow";
             //btnOpen.Text = "OPEN";
             btnOpen.X = 0 * gv.uiSquareSize;
-            btnOpen.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnOpen.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
             btnOpen.Height = (int)(gv.ibbheight * gv.scaler);
             btnOpen.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -106,7 +106,7 @@ namespace IBbasic
             btnSave.Glow = "btn_small_glow";
             //btnSave.Text = "SAVE";
             btnSave.X = 0 * gv.uiSquareSize;
-            btnSave.Y = 2 * gv.uiSquareSize + gv.scaler;
+            btnSave.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
             btnSave.Height = (int)(gv.ibbheight * gv.scaler);
             btnSave.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -119,7 +119,7 @@ namespace IBbasic
             btnSaveAs.Glow = "btn_small_glow";
             //btnSaveAs.Text = "SAVEAS";
             btnSaveAs.X = 0 * gv.uiSquareSize;
-            btnSaveAs.Y = 3 * gv.uiSquareSize + gv.scaler;
+            btnSaveAs.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
             btnSaveAs.Height = (int)(gv.ibbheight * gv.scaler);
             btnSaveAs.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -132,7 +132,7 @@ namespace IBbasic
             btnUndo.Glow = "btn_small_glow";
             //btnUndo.Text = "UNDO";
             btnUndo.X = 10 * gv.uiSquareSize;
-            btnUndo.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnUndo.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
             btnUndo.Height = (int)(gv.ibbheight * gv.scaler);
             btnUndo.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -145,7 +145,7 @@ namespace IBbasic
             btnRedo.Glow = "btn_small_glow";
             //btnRedo.Text = "REDO";
             btnRedo.X = 10 * gv.uiSquareSize;
-            btnRedo.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnRedo.Y = 5 * gv.uiSquareSize + (int)(gv.scaler);
             btnRedo.Height = (int)(gv.ibbheight * gv.scaler);
             btnRedo.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -158,7 +158,7 @@ namespace IBbasic
             btnAlphaAdjust.Glow = "btn_small_glow";
             //btnAlphaAdjust.Text = "ALPHASET";
             btnAlphaAdjust.X = 0 * gv.uiSquareSize;
-            btnAlphaAdjust.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnAlphaAdjust.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
             btnAlphaAdjust.Height = (int)(gv.ibbheight * gv.scaler);
             btnAlphaAdjust.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -171,7 +171,7 @@ namespace IBbasic
             btnPreviewBackground.Glow = "btn_small_glow";
             //btnPreviewBackground.Text = "PREVIEW";
             btnPreviewBackground.X = 10 * gv.uiSquareSize;
-            btnPreviewBackground.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnPreviewBackground.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
             btnPreviewBackground.Height = (int)(gv.ibbheight * gv.scaler);
             btnPreviewBackground.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -184,7 +184,7 @@ namespace IBbasic
             btnCanvasBackground.Glow = "btn_small_glow";
             //btnCanvasBackground.Text = "CANVAS";
             btnCanvasBackground.X = 0 * gv.uiSquareSize;
-            btnCanvasBackground.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnCanvasBackground.Y = 5 * gv.uiSquareSize + (int)(gv.scaler);
             btnCanvasBackground.Height = (int)(gv.ibbheight * gv.scaler);
             btnCanvasBackground.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -195,7 +195,7 @@ namespace IBbasic
             }
             btnToggleLayer.Glow = "btn_small_glow";
             btnToggleLayer.X = 10 * gv.uiSquareSize;
-            btnToggleLayer.Y = 2 * gv.uiSquareSize + gv.scaler;
+            btnToggleLayer.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
             btnToggleLayer.Height = (int)(gv.ibbheight * gv.scaler);
             btnToggleLayer.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -208,7 +208,7 @@ namespace IBbasic
             tglPencil.Img2 = "btnpencil";
             tglPencil.Glow = "btn_small_glow";
             tglPencil.X = 10 * gv.uiSquareSize;
-            tglPencil.Y = 3 * gv.uiSquareSize + gv.scaler;
+            tglPencil.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
             tglPencil.Height = (int)(gv.ibbheight * gv.scaler);
             tglPencil.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -221,7 +221,7 @@ namespace IBbasic
             btnEraser.Glow = "btn_small_glow";
             //btnEraser.Text = "Eraser";
             btnEraser.X = 10 * gv.uiSquareSize;
-            btnEraser.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnEraser.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
             btnEraser.Height = (int)(gv.ibbheight * gv.scaler);
             btnEraser.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -235,7 +235,7 @@ namespace IBbasic
             btnGetColor.Glow = "btn_small_glow";
             //btnGetColor.Text = "GetColor";
             btnGetColor.X = 10 * gv.uiSquareSize;
-            btnGetColor.Y = 0 * gv.uiSquareSize + gv.scaler;
+            btnGetColor.Y = 0 * gv.uiSquareSize + (int)(gv.scaler);
             btnGetColor.Height = (int)(gv.ibbheight * gv.scaler);
             btnGetColor.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -244,9 +244,9 @@ namespace IBbasic
                 palette = new IbPalette(gv);
             }
             palette.Img = "color_palette";
-            palette.X = (1 * gv.uiSquareSize) + (10 * gv.squareSize * gv.scaler);
+            palette.X = (1 * gv.uiSquareSize) + (int)((10 * gv.squareSize * gv.scaler));
             palette.Y = 0 * gv.uiSquareSize;
-            palette.Width = (int)(2 * gv.uiSquareSize) - (gv.scaler * 2);
+            palette.Width = (int)(2 * gv.uiSquareSize) - (int)((gv.scaler * 2));
             palette.Height = (int)(palette.Width * 20f / 9f);
 
             if (tglZoom == null)
@@ -257,10 +257,9 @@ namespace IBbasic
             tglZoom.Img = "tgl_zoom_off";
             tglZoom.Glow = "btn_small_glow";
             tglZoom.X = 10 * gv.uiSquareSize;
-            tglZoom.Y = 6 * gv.uiSquareSize + gv.scaler;
+            tglZoom.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
             tglZoom.Height = (int)(gv.ibbheight * gv.scaler);
             tglZoom.Width = (int)(gv.ibbwidthR * gv.scaler);
-
         }
         //public void updateBitmapDX()
         //{
@@ -759,7 +758,7 @@ namespace IBbasic
             {
                 pixelSize = (int)(drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
             }
-            int gridSqrSize = gv.squareSize * gv.scaler * pencilSize;
+            int gridSqrSize = (int)(gv.squareSize * gv.scaler * pencilSize);
             if (zoomScaler > 4) { gridSqrSize = gridSqrSize * 2 * pencilSize; }
             for (int x = 0; x < myBitmapGDI.Width; x++)
             {
@@ -774,7 +773,7 @@ namespace IBbasic
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             src = new IbRect(0, 0, width2, height2);
-            dst = new IbRect(0 - (176 * gv.scaler), 0 - (106 * gv.scaler), (width2 * gv.scaler) + (gv.scaler * 16), (height2 * gv.scaler) + (gv.scaler * 10));
+            dst = new IbRect(0 - (int)((176 * gv.scaler)), 0 - (int)((106 * gv.scaler)), (int)((width2 * gv.scaler) + (gv.scaler * 16)), (int)((height2 * gv.scaler) + (gv.scaler * 10)));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src, dst);
 
             //Page Title

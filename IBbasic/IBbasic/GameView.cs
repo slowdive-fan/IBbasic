@@ -28,7 +28,7 @@ namespace IBbasic
         public int standardTokenSize = 48;
         public int squareSize = 24; //in dp (squareSizeInPixels * screenDensity)
         public int uiSquareSize = 34;
-        public int scaler;
+        public float scaler;
         public int pS; // = squareSize / 10 ... used for small UI and text location adjustments based on squaresize
         public int squaresInWidth = 16; //19 or 11
         public int squaresInHeight = 10; //11 or 7
@@ -193,46 +193,102 @@ namespace IBbasic
 
             if (screenWidth > screenHeight)
             {
-                scaler = screenWidth / defaultScreenDesignWidth;
+                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
             }
             else
             {
-                scaler = screenHeight / defaultScreenDesignHeight;
+                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
             }
 
             float sqrW = (float)screenWidth / (float)(uiSquaresInWidth);
             float sqrH = (float)screenHeight / (float)(uiSquaresInHeight);
             if (sqrW > sqrH)
             {
-                scaler = screenHeight / defaultScreenDesignHeight;
+                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
             }
             else
             {
-                scaler = screenWidth / defaultScreenDesignWidth;
+                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
             }
-                        
-            if ((squareSize >= 96) && (squareSize < 102))
+
+            if ((scaler > 1.4f) && (scaler <= 1.9f)) //336-456
             {
-                squareSize = 96;
+                scaler = 1.5f;
             }
-            else if ((squareSize >= 72) && (squareSize < 76))
+            else if ((scaler > 1.9f) && (scaler <= 2.6f)) //457-624
             {
-                squareSize = 72;
+                scaler = 2f;
             }
-            else if ((squareSize >= 48) && (squareSize < 52))
+            else if ((scaler > 2.6f) && (scaler <= 2.9f)) //625-696  iphone SE, 5S 640
             {
-                squareSize = 48;
+                scaler = 2.5f;
+            }
+            else if ((scaler > 2.9f) && (scaler <= 3.6f)) //697-864 720 phones, iPhones 750, 768 iPad mini, tabs 800
+            {
+                scaler = 3f;
+            }
+            else if ((scaler > 3.6f) && (scaler <= 3.9f)) //865-936 
+            {
+                scaler = 3.5f;
+            }
+            else if ((scaler > 3.9f) && (scaler <= 4.7f)) //937-1128 iPhones+ 1080, iPhoneX 1125
+            {
+                scaler = 4f;
+            }
+            else if ((scaler > 4.7f) && (scaler <= 4.9f)) //1129-1176
+            {
+                scaler = 4.5f;
+            }
+            else if ((scaler > 4.9f) && (scaler <= 5.6f)) //1177-1344 nexus 7 tab 1200
+            {
+                scaler = 5f;
+            }
+            else if ((scaler > 5.6f) && (scaler <= 5.9f)) //1344-1416
+            {
+                scaler = 5.5f;
+            }
+            else if ((scaler > 5.9f) && (scaler <= 6.6f)) //1417-1584 iPad 1536, lots of androids 1440
+            {
+                scaler = 6f;
+            }
+            else if ((scaler > 6.6f) && (scaler <= 6.9f)) //1585-1656
+            {
+                scaler = 6.5f;
+            }
+            else if ((scaler > 6.9f) && (scaler <= 7.6f)) //1657-1824
+            {
+                scaler = 7f;
+            }
+            else if ((scaler > 7.6f) && (scaler <= 7.9f)) //1825-1896
+            {
+                scaler = 7.5f;
+            }
+            else if ((scaler > 7.9f) && (scaler <= 8.6f)) //1897-2064  2048 iPad Pro
+            {
+                scaler = 8f;
+            }
+            else if ((scaler > 8.6f) && (scaler <= 8.9f)) //2065-2136
+            {
+                scaler = 8.5f;
+            }
+            else if ((scaler > 8.9f) && (scaler <= 9.6f)) //2137-2304
+            {
+                scaler = 9f;
+            }
+            else
+            {
+                scaler = (int)scaler;
             }
 
             squareSize = 24;
 
-            uiSquareSize = uiSquareSize * scaler;
-            
+            uiSquareSize = (int)(uiSquareSize * scaler);
+
             screenDensity = (float)squareSize / (float)squareSizeInPixels;
             //oXshift = (screenWidth - (squareSize * squaresInWidth)) / 2;
             //oYshift = (screenHeight - (squareSize * squaresInHeight)) / 2;
-            oXshift = (screenWidth - (scaler * defaultScreenDesignWidth)) / 2;
-            oYshift = (screenHeight - (scaler * defaultScreenDesignHeight)) / 2;
+            oXshift = (int)((screenWidth - (scaler * defaultScreenDesignWidth)) / 2);
+            oYshift = (int)((screenHeight - (scaler * defaultScreenDesignHeight)) / 2);
 
             pS = squareSize / 10; //used for small UI and text location adjustments based on squaresize for consistent look on all devices/screen resolutions
 
@@ -243,7 +299,7 @@ namespace IBbasic
             //TODO animationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
 
             log = new IB2HtmlLogBox(this);
-            log.tbXloc = (8 * uiSquareSize) + (8 * scaler);
+            log.tbXloc = (8 * uiSquareSize) + (int)(8 * scaler);
             log.tbYloc = 2;
             log.tbWidth = 3 * uiSquareSize; //add one char because the word wrap calculates word length plus one space at end
             log.tbHeight = 4 * uiSquareSize;
@@ -316,10 +372,10 @@ namespace IBbasic
             //fontWidth = 6;
             //fontHeight = 9;
             fillCharList();
-            fontWidth = fontWidth * scaler;
-            fontHeight = fontHeight * scaler;
-            fontCharSpacing = 0 * scaler;
-            fontLineSpacing = 0 * scaler;
+            fontWidth = (int)(fontWidth * scaler);
+            fontHeight = (int)(fontHeight * scaler);
+            fontCharSpacing = (int)(0 * scaler);
+            fontLineSpacing = (int)(0 * scaler);
         }
         public void changeFontColor(SKBitmap b, byte R, byte G, byte B)
         {            

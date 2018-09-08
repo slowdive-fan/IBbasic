@@ -782,7 +782,7 @@ namespace IBbasic
             }
             else
             {
-                portraitPanelLocY = (-2 * gv.uiSquareSize) - gv.oYshift + (2 * gv.scaler);
+                portraitPanelLocY = (-2 * gv.uiSquareSize) - gv.oYshift + (int)((2 * gv.scaler));
             }
 
             if (btnPort0 == null)
@@ -972,7 +972,7 @@ namespace IBbasic
         }
         public void createArrowsPanel()
         {
-            arrowPanelLocX = (8 * gv.uiSquareSize) + (6 * gv.scaler);
+            arrowPanelLocX = (8 * gv.uiSquareSize) + (int)((6 * gv.scaler));
             arrowPanelLocY = (4 * gv.uiSquareSize);
 
             if (btnArrowUpLeft == null)
@@ -4128,13 +4128,13 @@ namespace IBbasic
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
-            IbRect dst2 = new IbRect(0 - (170 * gv.scaler), 0 - (102 * gv.scaler), width2 * gv.scaler, height2 * gv.scaler);
+            IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
 
             int width = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Width;
             int height = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Height;
             IbRect src = new IbRect(0, 0, width, height);
-            IbRect dst = new IbRect(gv.log.tbXloc - (2 * gv.scaler), gv.log.tbYloc, width * gv.scaler, height * gv.scaler);
+            IbRect dst = new IbRect(gv.log.tbXloc - (int)((2 * gv.scaler)), gv.log.tbYloc, (int)(width * gv.scaler), (int)(height * gv.scaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
 
             
@@ -5095,7 +5095,7 @@ namespace IBbasic
         public void drawMovesLeftText()
         {
             int txtH = (int)gv.fontHeight;
-            int xLoc = gv.uiSquareSize + (2 * gv.scaler);
+            int xLoc = gv.uiSquareSize + (int)((2 * gv.scaler));
             int yLoc = 7 * gv.uiSquareSize - gv.fontHeight;
             Player pc = gv.mod.playerList[currentPlayerIndex];
             float movesLeft = pc.moveDistance - currentMoves;

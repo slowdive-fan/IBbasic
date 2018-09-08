@@ -155,7 +155,7 @@ namespace IBbasic
             btnInfo.Glow = "btn_small_glow";
             //btnInfo.Text = "INFO";
             btnInfo.X = 0 * gv.uiSquareSize;
-            btnInfo.Y = 0 * gv.uiSquareSize + gv.scaler;
+            btnInfo.Y = 0 * gv.uiSquareSize + (int)(gv.scaler);
             btnInfo.Height = (int)(gv.ibbheight * gv.scaler);
             btnInfo.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -168,7 +168,7 @@ namespace IBbasic
             btnTiles.Glow = "btn_small_glow";
             //btnTiles.Text = "TILES";
             btnTiles.X = 0 * gv.uiSquareSize;
-            btnTiles.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnTiles.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
             btnTiles.Height = (int)(gv.ibbheight * gv.scaler);
             btnTiles.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -181,7 +181,7 @@ namespace IBbasic
             btnTriggers.Glow = "btn_small_glow";
             //btnTriggers.Text = "TRIGR";
             btnTriggers.X = 0 * gv.uiSquareSize;
-            btnTriggers.Y = 2 * gv.uiSquareSize + gv.scaler;
+            btnTriggers.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
             btnTriggers.Height = (int)(gv.ibbheight * gv.scaler);
             btnTriggers.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -194,7 +194,7 @@ namespace IBbasic
             btnWalkLoS.Img = "btn_small";
             btnWalkLoS.Glow = "btn_small_glow";
             btnWalkLoS.X = 0 * gv.uiSquareSize;
-            btnWalkLoS.Y = 3 * gv.uiSquareSize + gv.scaler;
+            btnWalkLoS.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
             btnWalkLoS.Height = (int)(gv.ibbheight * gv.scaler);
             btnWalkLoS.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -207,7 +207,7 @@ namespace IBbasic
             btnCrt.Img2 = "btncreature";
             btnCrt.Glow = "btn_small_glow";
             btnCrt.X = 0 * gv.uiSquareSize;
-            btnCrt.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnCrt.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
             btnCrt.Height = (int)(gv.ibbheight * gv.scaler);
             btnCrt.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -220,7 +220,7 @@ namespace IBbasic
             btnSettings.Img2 = "btnsettings2";
             btnSettings.Glow = "btn_small_glow";
             btnSettings.X = 0 * gv.uiSquareSize;
-            btnSettings.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnSettings.Y = 5 * gv.uiSquareSize + (int)(gv.scaler);
             btnSettings.Height = (int)(gv.ibbheight * gv.scaler);
             btnSettings.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -233,13 +233,13 @@ namespace IBbasic
             btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnHelp.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setupInfoPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (int)((2 * gv.scaler));
             panelTopLocation = 0;
 
             //TILES PANEL            
@@ -256,7 +256,7 @@ namespace IBbasic
         }
         public void setupTilesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (int)((2 * gv.scaler));
             panelTopLocation = 0;
 
             //TILES PANEL
@@ -364,7 +364,7 @@ namespace IBbasic
         }
         public void setupCrtPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //TILES PANEL
@@ -405,7 +405,7 @@ namespace IBbasic
         }
         public void setupSettingsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //TILES PANEL
@@ -499,7 +499,7 @@ namespace IBbasic
         }
         public void setupWalkLoSPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //WALK-LoS PANEL           
@@ -549,7 +549,7 @@ namespace IBbasic
         }
         public void setupTriggerPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //Trigger Panel           
@@ -853,7 +853,7 @@ namespace IBbasic
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
-            IbRect dst2 = new IbRect(0 - (170 * gv.scaler), 0 - (102 * gv.scaler), width2 * gv.scaler, height2 * gv.scaler);
+            IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
 
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
@@ -920,10 +920,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentEncounter.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentEncounter.Layer1Filename[y * gv.mod.currentEncounter.MapSizeX + x];
-                        int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (int)(x * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int tlY = (int)(y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
 
                         try
                         {
@@ -944,10 +944,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentEncounter.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentEncounter.Layer2Filename[y * gv.mod.currentEncounter.MapSizeX + x];
-                        int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (int)(x * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int tlY = (int)(y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
 
                         try
                         {
@@ -970,10 +970,10 @@ namespace IBbasic
                         for (int y = 0; y <= gv.mod.currentEncounter.MapSizeY - 1; y++)
                         {
                             string tile = gv.mod.currentEncounter.Layer3Filename[y * gv.mod.currentEncounter.MapSizeX + x];
-                            int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                            int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                            int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                            int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                            int tlX = (int)(x * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                            int tlY = (int)(y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                            int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                            int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
 
                             try
                             {
@@ -994,8 +994,8 @@ namespace IBbasic
             {
                 foreach (Coordinate p in t.TriggerSquaresList)
                 {
-                    int dx = (p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels;
-                    int dy = p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                    int dx = (int)((p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels);
+                    int dy = (int)(p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
                     //Pen pen = new Pen(Color.Orange, 2);
                     SKColor clr = SKColors.Orange;
                     if ((t.Event1Type.Equals("encounter")) || (t.Event2Type.Equals("encounter")) || (t.Event3Type.Equals("encounter")))
@@ -1018,15 +1018,15 @@ namespace IBbasic
                     {
                         clr = SKColors.Magenta;
                     }
-                    IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / mapSquareSizeScaler * gv.scaler - 6, gv.squareSize / mapSquareSizeScaler * gv.scaler - 6);
+                    IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / (int)(mapSquareSizeScaler * gv.scaler) - 6, gv.squareSize / (int)(mapSquareSizeScaler * gv.scaler) - 6);
                     gv.DrawRectangle(rect, clr, 2);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
-                        int tlX = p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int tlY = p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                        int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                        int tlX = (int)(p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int tlY = (int)(p.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                        int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                         gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
@@ -1054,8 +1054,8 @@ namespace IBbasic
             int cnt = 0;
             foreach (Coordinate PCpoint in gv.mod.currentEncounter.encounterPcStartLocations)
             {
-                int cspx = PCpoint.X * gv.squareSize / mapSquareSizeScaler * gv.scaler + mapStartLocXinPixels;
-                int cspy = PCpoint.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler + (int)(1.5 * gv.fontHeight);
+                int cspx = (int)(PCpoint.X * gv.squareSize / mapSquareSizeScaler * gv.scaler + mapStartLocXinPixels);
+                int cspy = (int)(PCpoint.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler + (int)(1.5 * gv.fontHeight));
                 gv.DrawText("PC" + (cnt + 1).ToString(), cspx + 5, cspy, "yl");
                 cnt++;
             }
@@ -1066,10 +1066,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= gv.mod.currentEncounter.MapSizeY - 1; y++)
                 {
-                    int tlX = x * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                    int tlY = y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                    int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-                    int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+                    int tlX = (int)(x * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int tlY = (int)(y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
                     src = new IbRect(0, 0, gv.cc.walkBlocked.Width, gv.cc.walkBlocked.Height);
                     dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                     if (gv.mod.currentEncounter.LoSBlocked[y * gv.mod.currentEncounter.MapSizeX + x] == 1)
@@ -1146,10 +1146,10 @@ namespace IBbasic
             }
 
             //draw selected info tile highlight
-            int tlX = selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int tlY = selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlX = (int)(selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int tlY = (int)(selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
@@ -1168,10 +1168,10 @@ namespace IBbasic
                     {
                         tile = tilesList[cnt + (tilesPageIndex * tileSlotsPerPage)];
                     }
-                    int tlX = x * gv.squareSize * gv.scaler;
-                    int tlY = y * gv.squareSize * gv.scaler;
-                    int brX = gv.squareSize * gv.scaler;
-                    int brY = gv.squareSize * gv.scaler;
+                    int tlX = (int)(x * gv.squareSize * gv.scaler);
+                    int tlY = (int)(y * gv.squareSize * gv.scaler);
+                    int brX = (int)(gv.squareSize * gv.scaler);
+                    int brY = (int)(gv.squareSize * gv.scaler);
 
                     try
                     {
@@ -1186,10 +1186,10 @@ namespace IBbasic
 
             int slotX = tileSlotIndex / (tileSlotsPerPage / 4);
             int slotY = tileSlotIndex - slotX * (tileSlotsPerPage / 4);
-            int tlX2 = slotX * gv.squareSize * gv.scaler;
-            int tlY2 = slotY * gv.squareSize * gv.scaler;
-            int brX2 = gv.squareSize * gv.scaler;
-            int brY2 = gv.squareSize * gv.scaler;
+            int tlX2 = (int)(slotX * gv.squareSize * gv.scaler);
+            int tlY2 = (int)(slotY * gv.squareSize * gv.scaler);
+            int brX2 = (int)(gv.squareSize * gv.scaler);
+            int brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
@@ -1199,10 +1199,10 @@ namespace IBbasic
 
             btnTilesLeft.Draw();
             btnTilesPageIndex.Draw();
-            tlX2 = btnTilesPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2);
-            tlY2 = btnTilesPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2);
-            brX2 = gv.squareSize * gv.scaler;
-            brY2 = gv.squareSize * gv.scaler;
+            tlX2 = (int)(btnTilesPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
+            tlY2 = (int)(btnTilesPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
+            brX2 = (int)(gv.squareSize * gv.scaler);
+            brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(currentTile).Width, gv.cc.GetFromTileBitmapList(currentTile).Height);
             dst = new IbRect(tlX2, tlY2, brX2, brY2);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentTile), src, dst);
@@ -1501,10 +1501,10 @@ namespace IBbasic
             }
 
             //draw selected info tile highlight
-            int tlX = selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int tlY = selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int brX = gv.squareSize / mapSquareSizeScaler * gv.scaler;
-            int brY = gv.squareSize / mapSquareSizeScaler * gv.scaler;
+            int tlX = (int)(selectedSquare.X * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int tlY = (int)(selectedSquare.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+            int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
@@ -1619,10 +1619,10 @@ namespace IBbasic
                     {
                         crt = gv.cc.allCreaturesList[cnt + (crtPageIndex * crtSlotsPerPage)].cr_tokenFilename;
                     }
-                    int tlX = x * gv.squareSize * gv.scaler;
-                    int tlY = y * gv.squareSize * gv.scaler;
-                    int brX = gv.squareSize * gv.scaler;
-                    int brY = gv.squareSize * gv.scaler;
+                    int tlX = (int)(x * gv.squareSize * gv.scaler);
+                    int tlY = (int)(y * gv.squareSize * gv.scaler);
+                    int brX = (int)(gv.squareSize * gv.scaler);
+                    int brY = (int)(gv.squareSize * gv.scaler);
 
                     try
                     {
@@ -1637,10 +1637,10 @@ namespace IBbasic
 
             int slotX = crtSlotIndex / (crtSlotsPerPage / 4);
             int slotY = crtSlotIndex - slotX * (crtSlotsPerPage / 4);
-            int tlX2 = slotX * gv.squareSize * gv.scaler;
-            int tlY2 = slotY * gv.squareSize * gv.scaler;
-            int brX2 = gv.squareSize * gv.scaler;
-            int brY2 = gv.squareSize * gv.scaler;
+            int tlX2 = (int)(slotX * gv.squareSize * gv.scaler);
+            int tlY2 = (int)(slotY * gv.squareSize * gv.scaler);
+            int brX2 = (int)(gv.squareSize * gv.scaler);
+            int brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
@@ -1652,10 +1652,10 @@ namespace IBbasic
             btnCrtPageIndex.Draw();
             if (currentCrt != null)
             {
-                tlX2 = btnCrtPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2);
-                tlY2 = btnCrtPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2);
-                brX2 = gv.squareSize * gv.scaler;
-                brY2 = gv.squareSize * gv.scaler;
+                tlX2 = (int)(btnCrtPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
+                tlY2 = (int)(btnCrtPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
+                brX2 = (int)(gv.squareSize * gv.scaler);
+                brY2 = (int)(gv.squareSize * gv.scaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename).Width, gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename).Width);
                 dst = new IbRect(tlX2, tlY2, brX2, brY2);
                 gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename), src, dst);
@@ -1904,8 +1904,8 @@ namespace IBbasic
                         if ((y > (panelTopLocation)) && (y < (panelTopLocation + ((tileSlotsPerPage / 4) * gv.squareSize * gv.scaler))))
                         {
                             //inside the palette area so determine which slot index tapped on
-                            int xloc = (x - panelLeftLocation) / (gv.squareSize * gv.scaler);
-                            int yloc = (y - panelTopLocation) / (gv.squareSize * gv.scaler);
+                            int xloc = (int)((x - panelLeftLocation) / (gv.squareSize * gv.scaler));
+                            int yloc = (int)((y - panelTopLocation) / (gv.squareSize * gv.scaler));
 
                             if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesList.Count)
                             {
@@ -2597,8 +2597,8 @@ namespace IBbasic
                         if ((y > (panelTopLocation)) && (y < (panelTopLocation + ((crtSlotsPerPage / 4) * gv.squareSize * gv.scaler))))
                         {
                             //inside the palette area so determine which slot index tapped on
-                            int xloc = (x - panelLeftLocation) / (gv.squareSize * gv.scaler);
-                            int yloc = (y - panelTopLocation) / (gv.squareSize * gv.scaler);
+                            int xloc = (int)((x - panelLeftLocation) / (gv.squareSize * gv.scaler));
+                            int yloc = (int)((y - panelTopLocation) / (gv.squareSize * gv.scaler));
 
                             if ((((xloc * (crtSlotsPerPage / 4)) + yloc) + (crtPageIndex) * crtSlotsPerPage) < gv.cc.allCreaturesList.Count)
                             {
@@ -2698,8 +2698,8 @@ namespace IBbasic
         }
         public bool tapInMiniMapViewport(int x, int y)
         {
-            int width = gv.mod.currentEncounter.MapSizeX * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
-            int height = gv.mod.currentEncounter.MapSizeY * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler;
+            int width = (int)(gv.mod.currentEncounter.MapSizeX * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+            int height = (int)(gv.mod.currentEncounter.MapSizeY * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
             int shiftY = panelTopLocation + gv.fontHeight + gv.fontLineSpacing;
             int shiftX = panelLeftLocation - (gv.squareSize / 1);
             if (x < shiftX) { return false; }

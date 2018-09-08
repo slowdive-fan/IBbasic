@@ -386,7 +386,7 @@ namespace IBbasic
             //LOCATE STATS INFO BUTTONS
             //locY += spacing;
 
-            int bottomLocY = (gv.ibbheight * gv.scaler) + (int)(pH * 4) + (6 * (gv.fontHeight + gv.fontLineSpacing));
+            int bottomLocY = (int)((gv.ibbheight * gv.scaler) + (int)(pH * 4) + (6 * (gv.fontHeight + gv.fontLineSpacing)));
             //btnSpells.Y = bottomLocY;
             //btnTraits.Y = bottomLocY;
             //btnEffects.Y = bottomLocY;

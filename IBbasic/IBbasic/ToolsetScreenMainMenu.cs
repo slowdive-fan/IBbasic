@@ -43,7 +43,7 @@ namespace IBbasic
         public void createLeftPanel()
         {
             leftPanelLocX = 0;
-            leftPanelLocY = 0 + 1 * gv.scaler;
+            leftPanelLocY = (int)(0 + 1 * gv.scaler);
 
             if (btnAreaEditor == null)
             {
@@ -144,7 +144,7 @@ namespace IBbasic
         public void createBottomPanel()
         {
             bottomPanelLocX = (1 * gv.uiSquareSize);
-            bottomPanelLocY = (6 * gv.uiSquareSize) + 1 * gv.scaler;
+            bottomPanelLocY = (int)((6 * gv.uiSquareSize) + 1 * gv.scaler);
 
             if (btnSave == null)
             {

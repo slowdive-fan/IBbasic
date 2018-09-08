@@ -31,7 +31,7 @@ namespace IBbasic
             btnConatinerTag.ImgOn = "mtgl_edit_btn";
             btnConatinerTag.ImgOff = "mtgl_edit_btn";
             btnConatinerTag.X = 4 * gv.uiSquareSize;
-            btnConatinerTag.Y = 0 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler;
+            btnConatinerTag.Y = 0 * gv.uiSquareSize + (gv.uiSquareSize / 2) + (int)(gv.scaler);
             btnConatinerTag.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnConatinerTag.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -96,7 +96,7 @@ namespace IBbasic
             btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnHelp.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }

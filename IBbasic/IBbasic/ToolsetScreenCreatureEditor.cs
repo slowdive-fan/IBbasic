@@ -891,8 +891,8 @@ namespace IBbasic
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
             btnCrtTokenFilename.Draw();
             string token = gv.cc.allCreaturesList[creatureListIndex].cr_tokenFilename;
-            int brX = gv.squareSize * gv.scaler;
-            int brY = gv.squareSize * gv.scaler;
+            int brX = (int)(gv.squareSize * gv.scaler);
+            int brY = (int)(gv.squareSize * gv.scaler);
             gv.DrawText("TOKEN FILENAME: " + token, btnCrtTokenFilename.X + btnCrtTokenFilename.Width + gv.scaler, btnCrtTokenFilename.Y + shiftForFont, "wh");
             //top frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);
@@ -909,8 +909,8 @@ namespace IBbasic
             btnCrtSpriteProjectileFilename.Draw();
             gv.DrawText("PROJECTILE IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename, btnCrtSpriteProjectileFilename.X + btnCrtSpriteProjectileFilename.Width + gv.scaler, btnCrtSpriteProjectileFilename.Y + shiftForFont, "wh");
             token = gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename;
-            brX = gv.squareSize * gv.scaler * 4;
-            brY = gv.squareSize * gv.scaler;
+            brX = (int)(gv.squareSize * gv.scaler * 4);
+            brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnCrtSpriteProjectileFilename.X, btnCrtSpriteProjectileFilename.Y + (gv.uiSquareSize / 2), brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
@@ -918,8 +918,8 @@ namespace IBbasic
             btnCrtSpriteEndingFilename.Draw();
             gv.DrawText("PROJECTILE ENDING IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename, btnCrtSpriteEndingFilename.X + btnCrtSpriteEndingFilename.Width + gv.scaler, btnCrtSpriteEndingFilename.Y + shiftForFont, "wh");
             token = gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename;
-            brX = gv.squareSize * gv.scaler * 4;
-            brY = gv.squareSize * gv.scaler;
+            brX = (int)(gv.squareSize * gv.scaler * 4);
+            brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnCrtSpriteEndingFilename.X, btnCrtSpriteEndingFilename.Y + (gv.uiSquareSize / 2), brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);

@@ -36,10 +36,10 @@ namespace IBbasic
 		    setControlsStart();
             int pH = (int)((float)gv.screenHeight / 100.0f);
             description = new IBminiTextBox(gv);
-            description.tbXloc = 0 * gv.squareSize * gv.scaler;
-            description.tbYloc = 6 * gv.squareSize * gv.scaler;
-            description.tbWidth = 16 * gv.squareSize * gv.scaler;
-            description.tbHeight = 6 * gv.squareSize * gv.scaler;
+            description.tbXloc = (int)(0 * gv.squareSize * gv.scaler);
+            description.tbYloc = (int)(6 * gv.squareSize * gv.scaler);
+            description.tbWidth = (int)(16 * gv.squareSize * gv.scaler);
+            description.tbHeight = (int)(6 * gv.squareSize * gv.scaler);
             description.showBoxBorder = false;
 	    }
 	

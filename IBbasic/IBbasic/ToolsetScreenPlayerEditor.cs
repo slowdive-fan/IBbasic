@@ -720,8 +720,8 @@ namespace IBbasic
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
             btnPcTokenFilename.Draw();
             string token = gv.mod.companionPlayerList[playerListIndex].tokenFilename;
-            int brX = gv.squareSize * gv.scaler;
-            int brY = gv.squareSize * gv.scaler;
+            int brX = (int)(gv.squareSize * gv.scaler);
+            int brY = (int)(gv.squareSize * gv.scaler);
             gv.DrawText("TOKEN FILENAME: " + token, btnPcTokenFilename.X + btnPcTokenFilename.Width + gv.scaler, btnPcTokenFilename.Y + shiftForFont, "wh");
             //top frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);

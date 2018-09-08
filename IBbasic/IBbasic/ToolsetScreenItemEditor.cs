@@ -1333,8 +1333,8 @@ namespace IBbasic
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
             btnItImage.Draw();
             string token = gv.cc.allItemsList[itemListIndex].itemImage;
-            int brX = gv.squareSize * gv.scaler;
-            int brY = gv.squareSize * gv.scaler;
+            int brX = (int)(gv.squareSize * gv.scaler);
+            int brY = (int)(gv.squareSize * gv.scaler);
             gv.DrawText("IMAGE FILENAME: " + token, btnItImage.X + btnItImage.Width + gv.scaler, btnItImage.Y + shiftForFont, "wh");
             //only frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
@@ -1344,8 +1344,8 @@ namespace IBbasic
             btnItSpriteProjectileFilename.Draw();
             gv.DrawText("PROJECTILE IMAGE: " + gv.cc.allItemsList[itemListIndex].projectileSpriteFilename, btnItSpriteProjectileFilename.X + btnItSpriteProjectileFilename.Width + gv.scaler, btnItSpriteProjectileFilename.Y + shiftForFont, "wh");
             token = gv.cc.allItemsList[itemListIndex].projectileSpriteFilename;
-            brX = gv.squareSize * gv.scaler * 4;
-            brY = gv.squareSize * gv.scaler;
+            brX = (int)(gv.squareSize * gv.scaler * 4);
+            brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnItSpriteProjectileFilename.X, btnItSpriteProjectileFilename.Y + (gv.uiSquareSize / 2), brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
@@ -1353,8 +1353,8 @@ namespace IBbasic
             btnItSpriteEndingFilename.Draw();
             gv.DrawText("PROJECTILE ENDING IMAGE: " + gv.cc.allItemsList[itemListIndex].spriteEndingFilename, btnItSpriteEndingFilename.X + btnItSpriteEndingFilename.Width + gv.scaler, btnItSpriteEndingFilename.Y + shiftForFont, "wh");
             token = gv.cc.allItemsList[itemListIndex].spriteEndingFilename;
-            brX = gv.squareSize * gv.scaler * 4;
-            brY = gv.squareSize * gv.scaler;
+            brX = (int)(gv.squareSize * gv.scaler * 4);
+            brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnItSpriteEndingFilename.X, btnItSpriteEndingFilename.Y + (gv.uiSquareSize / 2), brX, brY);
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);

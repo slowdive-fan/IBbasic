@@ -127,10 +127,10 @@ namespace IBbasic
             setupNodeActionsPanelControls();
             
             description = new IBminiTextBox(gv);
-            description.tbXloc = mapStartLocXinPixels + (gv.scaler * 4);
-            description.tbYloc = 10 * gv.squareSize * gv.scaler - (gv.scaler * 4);
-            description.tbWidth = 10 * gv.squareSize * gv.scaler;
-            description.tbHeight = 5 * gv.squareSize * gv.scaler;
+            description.tbXloc = (int)(mapStartLocXinPixels + (gv.scaler * 4));
+            description.tbYloc = (int)(10 * gv.squareSize * gv.scaler - (gv.scaler * 4));
+            description.tbWidth = (int)(10 * gv.squareSize * gv.scaler);
+            description.tbHeight = (int)(5 * gv.squareSize * gv.scaler);
             description.showBoxBorder = false;
         }
         public void resetAllParentIds()
@@ -166,7 +166,7 @@ namespace IBbasic
             btnNode.Glow = "btn_small_glow";
             //btnNode.Text = "NODE";
             btnNode.X = 0 * gv.uiSquareSize;
-            btnNode.Y = 0 * gv.uiSquareSize + gv.scaler;
+            btnNode.Y = 0 * gv.uiSquareSize + (int)(gv.scaler);
             btnNode.Height = (int)(gv.ibbheight * gv.scaler);
             btnNode.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -179,7 +179,7 @@ namespace IBbasic
             btnConditionals.Glow = "btn_small_glow";
             //btnConditionals.Text = "COND";
             btnConditionals.X = 0 * gv.uiSquareSize;
-            btnConditionals.Y = 1 * gv.uiSquareSize + gv.scaler;
+            btnConditionals.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
             btnConditionals.Height = (int)(gv.ibbheight * gv.scaler);
             btnConditionals.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -192,7 +192,7 @@ namespace IBbasic
             btnActions.Glow = "btn_small_glow";
             //btnActions.Text = "ACTN";
             btnActions.X = 0 * gv.uiSquareSize;
-            btnActions.Y = 2 * gv.uiSquareSize + gv.scaler;
+            btnActions.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
             btnActions.Height = (int)(gv.ibbheight * gv.scaler);
             btnActions.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -205,7 +205,7 @@ namespace IBbasic
             btnExpandAllNodes.Img2 = "btnexpand";
             btnExpandAllNodes.Glow = "btn_small_glow";
             btnExpandAllNodes.X = 0 * gv.uiSquareSize;
-            btnExpandAllNodes.Y = 3 * gv.uiSquareSize + gv.scaler;
+            btnExpandAllNodes.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
             btnExpandAllNodes.Height = (int)(gv.ibbheight * gv.scaler);
             btnExpandAllNodes.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -218,7 +218,7 @@ namespace IBbasic
             btnCollapseAllNodes.Img2 = "btncollapse";
             btnCollapseAllNodes.Glow = "btn_small_glow";
             btnCollapseAllNodes.X = 0 * gv.uiSquareSize;
-            btnCollapseAllNodes.Y = 4 * gv.uiSquareSize + gv.scaler;
+            btnCollapseAllNodes.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
             btnCollapseAllNodes.Height = (int)(gv.ibbheight * gv.scaler);
             btnCollapseAllNodes.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -231,7 +231,7 @@ namespace IBbasic
             btnSettings.Img2 = "btnsettings2";
             btnSettings.Glow = "btn_small_glow";
             btnSettings.X = 0 * gv.uiSquareSize;
-            btnSettings.Y = 5 * gv.uiSquareSize + gv.scaler;
+            btnSettings.Y = 5 * gv.uiSquareSize + (int)(gv.scaler);
             btnSettings.Height = (int)(gv.ibbheight * gv.scaler);
             btnSettings.Width = (int)(gv.ibbwidthR * gv.scaler);
 
@@ -244,18 +244,18 @@ namespace IBbasic
             btnHelp.Img2 = "btnhelp";
             btnHelp.Glow = "btn_small_glow";
             btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize + gv.scaler;
+            btnHelp.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
             btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setupConvoNodeControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (8 * gv.uiSquareSize) + (int)((2 * gv.scaler));
             panelTopLocation = 0;
 
-            int xLoc = 1 * gv.uiSquareSize + 2 * gv.scaler;
+            int xLoc = (int)(1 * gv.uiSquareSize + 2 * gv.scaler);
             int xIndent = gv.uiSquareSize / 2;
-            int yLoc = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
+            int yLoc = (int)(2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing);
             int yAdder = gv.fontHeight + gv.fontLineSpacing;
             string cnvNodeImg = "cnv_normal.png";
 
@@ -317,7 +317,7 @@ namespace IBbasic
         }
         public void setupNodePropertiesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //SETTINGS PANEL
@@ -471,7 +471,7 @@ namespace IBbasic
         }
         public void setupConvoPropertiesPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //SETTINGS PANEL
@@ -543,7 +543,7 @@ namespace IBbasic
         }
         public void setupNodeConditionalsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //CONDITIONALS PANEL
@@ -729,7 +729,7 @@ namespace IBbasic
         }
         public void setupNodeActionsPanelControls()
         {
-            panelLeftLocation = (8 * gv.uiSquareSize) + (2 * gv.scaler);
+            panelLeftLocation = (int)((8 * gv.uiSquareSize) + (2 * gv.scaler));
             panelTopLocation = 0;
 
             //CONDITIONALS PANEL
@@ -919,10 +919,10 @@ namespace IBbasic
             setControlsStart();
             setupConvoNodeControls();
 
-            int convoPanelLeftLocation = 1 * gv.uiSquareSize + 2 * gv.scaler;
-            int convoPanelTopLocation = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
+            int convoPanelLeftLocation = (int)(1 * gv.uiSquareSize + 2 * gv.scaler);
+            int convoPanelTopLocation = (int)(2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
-            int shiftForFont = (gv.ibbMiniTglHeight * gv.scaler / 2) - (gv.fontHeight / 2);
+            int shiftForFont = (int)((gv.ibbMiniTglHeight * gv.scaler / 2) - (gv.fontHeight / 2));
 
             //Page Title
             string convoToEdit = "none";
@@ -944,7 +944,7 @@ namespace IBbasic
                     else { nodeColor = "bu"; }
                     if (n.linkTo != 0) { nodeColor = "gy"; }
                     if (editNode == n) { nodeColor = "gn"; }
-                    int tlX = convoPanelLeftLocation + (gv.ibbMiniTglWidth / 2 * gv.scaler * n.indentMultiplier);
+                    int tlX = convoPanelLeftLocation + (int)(gv.ibbMiniTglWidth / (2 * gv.scaler * n.indentMultiplier));
                     int tlY = convoPanelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * cnt);
                     if (n.subNodes.Count > 0)
                     {
@@ -1030,14 +1030,14 @@ namespace IBbasic
                 description.linesList.Clear();
                 description.AddFormattedTextToTextBox(editNode.conversationText);
                 int raise = description.linesList.Count;
-                description.tbYloc = 10 * gv.squareSize * gv.scaler - (gv.scaler * 4) - (raise * (gv.fontHeight + gv.fontLineSpacing));
+                description.tbYloc = (int)(10 * gv.squareSize * gv.scaler - (gv.scaler * 4) - (raise * (gv.fontHeight + gv.fontLineSpacing)));
                 description.onDrawTextBox();
             }
 
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
-            IbRect dst2 = new IbRect(0 - (170 * gv.scaler), 0 - (102 * gv.scaler), width2 * gv.scaler, height2 * gv.scaler);
+            IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
             
             if (currentMode.Equals("Node"))
@@ -1522,11 +1522,11 @@ namespace IBbasic
                         //figure out if tapped on a map square
                         if ((tapInMapViewport(x, y)))
                         {
-                            int convoPanelLeftLocation = 1 * gv.uiSquareSize + 2 * gv.scaler;
-                            int convoPanelTopLocation = 2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing;
-                            //int tlX = panelLeftLocation + (gv.ibbMiniTglWidth / 2 * gv.scaler * n.indentMultiplier);
-                            //int tlY = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * cnt);
-                            int lineIndex = (y - convoPanelTopLocation) / (gv.fontHeight + gv.fontLineSpacing) + currentTopLineIndex;
+                        int convoPanelLeftLocation = (int)(1 * gv.uiSquareSize + 2 * gv.scaler);
+                        int convoPanelTopLocation = (int)(2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing);
+                        //int tlX = panelLeftLocation + (gv.ibbMiniTglWidth / 2 * gv.scaler * n.indentMultiplier);
+                        //int tlY = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * cnt);
+                        int lineIndex = (y - convoPanelTopLocation) / (gv.fontHeight + gv.fontLineSpacing) + currentTopLineIndex;
                             if (lineIndex < nodeList.Count)
                             {
                                 tglCond1Radio.toggleOn = true;
@@ -1539,8 +1539,8 @@ namespace IBbasic
                                 tglAction4Radio.toggleOn = false;
 
                                 editNode = nodeList[lineIndex];
-                                int tlX = convoPanelLeftLocation + ((gv.ibbMiniTglWidth / 2) * gv.scaler * editNode.indentMultiplier);
-                                if ((x > tlX) && (x < tlX + (gv.ibbMiniTglWidth / 2) * gv.scaler))
+                            int tlX = (int)(convoPanelLeftLocation + ((gv.ibbMiniTglWidth / 2) * gv.scaler * editNode.indentMultiplier));
+                            if ((x > tlX) && (x < tlX + (gv.ibbMiniTglWidth / 2) * gv.scaler))
                                 {
                                     editNode.IsExpanded = !editNode.IsExpanded;
                                     ResetTreeView();

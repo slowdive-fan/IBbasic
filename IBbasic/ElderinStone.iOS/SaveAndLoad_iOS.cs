@@ -18,7 +18,7 @@ namespace ElderinStone.iOS
 {
     public class SaveAndLoad_iOS : ISaveAndLoad
     {
-        public string TrackingId = "UA-60615839-14";
+        public string TrackingId = "UA-60615839-15";
         public ITracker Tracker;
         const string AllowTrackingKey = "AllowTracking";
         int numOfTrackerEventHitsInThisSession = 0;
