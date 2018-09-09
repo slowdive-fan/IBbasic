@@ -53,15 +53,15 @@ namespace IBbasic
             if (btnReturn == null)
             {
                 btnReturn = new IbbButton(gv, 1.0f);
-                btnReturn.Img = "btn_large";
-                btnReturn.Glow = "btn_large_glow";
-                btnReturn.Text = "Return";
-                btnReturn.Height = (int)(gv.ibbheight * gv.scaler);
-                btnReturn.Width = (int)(gv.ibbwidthL * gv.scaler);
-                btnReturn.X = (int)(currentLocX * gv.scaler) + (int)((Width * gv.scaler) / 2) - (int)((gv.ibbwidthL * gv.scaler) / 2);
-                btnReturn.Y = (int)(currentLocY * gv.scaler) + (int)(Height * gv.scaler) - (int)(gv.ibbheight * gv.scaler) - (int)((gv.ibbheight / 4) * gv.scaler);                
-            }            
-        }
+            }
+            btnReturn.Img = "btn_large";
+            btnReturn.Glow = "btn_large_glow";
+            btnReturn.Text = "Return";
+            btnReturn.Height = (int)(gv.ibbheight * gv.scaler);
+            btnReturn.Width = (int)(gv.ibbwidthL * gv.scaler);
+            btnReturn.X = (int)(currentLocX * gv.scaler) + (int)((Width * gv.scaler) / 2) - (int)((gv.ibbwidthL * gv.scaler) / 2);
+            btnReturn.Y = (int)(currentLocY * gv.scaler) + (int)(Height * gv.scaler) - (int)(gv.ibbheight * gv.scaler) - (int)((gv.ibbheight / 4) * gv.scaler);                
+         }
 
         public void DrawString(string text, float x, float y, string fontColor)
         {
@@ -98,6 +98,7 @@ namespace IBbasic
         }
         public void onDrawLogBox()
         {
+            setControlsStart();
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_log").Width, gv.cc.GetFromBitmapList("ui_bg_log").Height);
             IbRect dst = new IbRect((int)(currentLocX * gv.scaler), (int)(currentLocY * gv.scaler), (int)(Width * gv.scaler), (int)(Height * gv.scaler));
             gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_log"), src, dst);

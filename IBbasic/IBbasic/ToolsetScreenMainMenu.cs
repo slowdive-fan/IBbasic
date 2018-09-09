@@ -32,6 +32,7 @@ namespace IBbasic
         public IbbButton btnItem = null;
         public IbbButton btnPlayer = null;
         public IbbButton btnArt = null;
+        public IbbToggle tglZoom = null;
         public IbbButton btnExit = null;
 
         public ToolsetScreenMainMenu(GameView g)
@@ -242,6 +243,17 @@ namespace IBbasic
             btnArt.Height = (int)(gv.ibbheight * gv.scaler);
             btnArt.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            if (tglZoom == null)
+            {
+                tglZoom = new IbbToggle(gv);
+            }
+            tglZoom.ImgOn = "tgl_zoom_on";
+            tglZoom.ImgOff = "tgl_zoom_off";
+            tglZoom.X = bottomPanelLocX + 7 * gv.uiSquareSize;
+            tglZoom.Y = bottomPanelLocY + 0 * gv.uiSquareSize;
+            tglZoom.Height = (int)(gv.ibbheight * gv.scaler);
+            tglZoom.Width = (int)(gv.ibbwidthR * gv.scaler);
+
             if (btnExit == null)
             {
                 btnExit = new IbbButton(gv, 0.8f);
@@ -278,6 +290,7 @@ namespace IBbasic
                 btnItem.Draw();
                 btnPlayer.Draw();
                 btnArt.Draw();
+                tglZoom.Draw();
                 btnExit.Draw();
             }    
         }
@@ -476,6 +489,19 @@ namespace IBbasic
                             showMainMenuPanels = false;
                             tglMainMenu.toggleOn = false;
                             return true;
+                        }
+                        else if (tglZoom.getImpact(x, y))
+                        {
+                            if (tglZoom.toggleOn)
+                            {
+                                tglZoom.toggleOn = false;
+                                gv.resetScaler(true, false);
+                            }
+                            else
+                            {
+                                tglZoom.toggleOn = true;
+                                gv.resetScaler(false, false);
+                            }
                         }
                         else if (btnExit.getImpact(x, y))
                         {

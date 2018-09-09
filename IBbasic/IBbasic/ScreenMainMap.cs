@@ -67,6 +67,7 @@ namespace IBbasic
         public IbbToggle tglFullParty = null;
         public IbbToggle tglGrid = null;
         public IbbToggle tglClock = null;
+        public IbbToggle tglZoom = null;
         public IbbToggle tglDebugMode = null;
         //PORTRAITS PANEL
         public IbbPortrait btnPort0 = null;
@@ -495,6 +496,17 @@ namespace IBbasic
             tglClock.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglClock.Height = (int)(gv.ibbheight * gv.scaler);
             tglClock.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (tglZoom == null)
+            {
+                tglZoom = new IbbToggle(gv);
+            }
+            tglZoom.ImgOn = "tgl_zoom_on";
+            tglZoom.ImgOff = "tgl_zoom_off";
+            tglZoom.X = togglePanelLocX + 4 * gv.uiSquareSize;
+            tglZoom.Y = togglePanelLocY + 0 * gv.uiSquareSize;
+            tglZoom.Height = (int)(gv.ibbheight * gv.scaler);
+            tglZoom.Width = (int)(gv.ibbwidthR * gv.scaler);
             
             if (tglDebugMode == null)
             {
@@ -504,7 +516,7 @@ namespace IBbasic
             }
             tglDebugMode.ImgOn = "tgl_debugmode_on";
             tglDebugMode.ImgOff = "tgl_debugmode_off";
-            tglDebugMode.X = togglePanelLocX + 4 * gv.uiSquareSize;
+            tglDebugMode.X = togglePanelLocX + 5 * gv.uiSquareSize;
             tglDebugMode.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglDebugMode.Height = (int)(gv.ibbheight * gv.scaler);
             tglDebugMode.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -2842,19 +2854,19 @@ namespace IBbasic
             if (gv.mod.PlayerFacingDirection == 3) { direction = "W"; }
 
             int txtH = (int)gv.fontHeight;
-            int xLoc = 1 * gv.uiSquareSize + (int)((2 * gv.scaler));
+            int xLoc = 1 * gv.uiSquareSize + (gv.uiSquareSize / 4);
             if (gv.mod.currentArea.Is3dArea)
             {
                 xLoc = 2 * gv.uiSquareSize;
             }
-            int yLoc = (7 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
+            int yLoc = (7 * gv.uiSquareSize) - gv.fontHeight;
             if (gv.mod.currentArea.Is3dArea)
             {
                 yLoc = (6 * gv.uiSquareSize) - (2 * gv.fontHeight);
             }
             if (showTogglePanel)
             {
-                yLoc = (6 * gv.uiSquareSize) - gv.fontHeight - gv.fontHeight;
+                yLoc = (6 * gv.uiSquareSize) - gv.fontHeight;
                 if (gv.mod.currentArea.Is3dArea)
                 {
                     yLoc = (6 * gv.uiSquareSize) - (2 * gv.fontHeight);
@@ -3055,6 +3067,7 @@ namespace IBbasic
             tglGrid.Draw();
             tglClock.Draw();
             tglDebugMode.Draw();
+            tglZoom.Draw();
 
             createPortraitsPanel();
             //SET PORTRAITS
@@ -3445,6 +3458,24 @@ namespace IBbasic
                             gv.mod.debugMode = true;
                             gv.toggleSettings.debugMode = gv.mod.debugMode;
                             gv.cc.addLogText("lime", "DebugMode On");
+                        }
+                    }
+                    if (tglZoom.getImpact(x, y))
+                    {
+                        if (tglZoom.toggleOn)
+                        {
+                            tglZoom.toggleOn = false;
+                            gv.resetScaler(true, false);
+                            gv.cc.addLogText("lime", "Normal Scaling");
+                            gv.cc.addLogText("yellow", "Scaler: " + gv.scaler);
+                        }
+                        else
+                        {
+                            tglZoom.toggleOn = true;
+                            gv.resetScaler(false, false);
+                            gv.cc.addLogText("lime", "Max Scaling");
+                            gv.cc.addLogText("yellow", "Scaler: " + gv.scaler);
+                            gv.cc.addLogText("lime", "Use of Max Scaling may result in some graphical anomalies.");
                         }
                     }
                     if (tglFullParty.getImpact(x, y))

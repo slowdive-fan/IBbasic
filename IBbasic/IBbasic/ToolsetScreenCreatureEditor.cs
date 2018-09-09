@@ -614,18 +614,6 @@ namespace IBbasic
             btnCrtResistPoison.Y = 6 * gv.uiSquareSize;
             btnCrtResistPoison.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnCrtResistPoison.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
-
-            if (btnHelp == null)
-            {
-                btnHelp = new IbbButton(gv, 0.8f);
-            }
-            btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small";
-            btnHelp.Glow = "btn_small_glow";
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize;
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setBehaviorControlsStart()
         {

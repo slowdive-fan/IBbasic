@@ -28,6 +28,7 @@ namespace IBbasic
         public int standardTokenSize = 48;
         public int squareSize = 24; //in dp (squareSizeInPixels * screenDensity)
         public int uiSquareSize = 34;
+        public int uiSquareSizeDefault = 34;
         public float scaler;
         public int pS; // = squareSize / 10 ... used for small UI and text location adjustments based on squaresize
         public int squaresInWidth = 16; //19 or 11
@@ -154,150 +155,20 @@ namespace IBbasic
 
             versionNum = GetVersion();
             //this.MinimumSize = new Size(100, 100);
-
-            #region screen size selection
-            /*
-            using (Config itSel = new Config())
-            {
-                var ret = itSel.ShowDialog();
-
-                if (ret == DialogResult.OK)
-                {
-                    if (itSel.width == -1)
-                    {
-                        this.WindowState = FormWindowState.Maximized;
-                        this.Width = Screen.PrimaryScreen.Bounds.Width;
-                        this.Height = Screen.PrimaryScreen.Bounds.Height;
-                    }
-                    else
-                    {
-                        this.Width = itSel.width;
-                        this.Height = itSel.height;
-                    }
-                }
-            }
-            */
-            #endregion
-
-            //this is the standard way, comment out the next 3 lines if manually forcing a screen resolution for testing UI layouts
-            //this.WindowState = FormWindowState.Maximized;
-            //this.Width = Screen.PrimaryScreen.Bounds.Width;
-            //this.Height = Screen.PrimaryScreen.Bounds.Height;            
-            //for testing other screen sizes, manually enter a resolution here
-            //typical resolutions: 1366x768, 1920x1080, 1280x1024, 1280x800, 1024x768, 800x600, 1440x900, 1280x720, 640x360, 427x240, 1368x792, 912x528, 456x264, 960x540,
-            //this.Width = 785; //785
-            //this.Height = 480; //480
-
+            
             screenWidth = App.ScreenWidth;
             screenHeight = App.ScreenHeight;
 
-            if (screenWidth > screenHeight)
-            {
-                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
-            }
-            else
-            {
-                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
-            }
-
-            float sqrW = (float)screenWidth / (float)(uiSquaresInWidth);
-            float sqrH = (float)screenHeight / (float)(uiSquaresInHeight);
-            if (sqrW > sqrH)
-            {
-                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
-            }
-            else
-            {
-                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
-            }
-
-            if ((scaler > 1.4f) && (scaler <= 1.9f)) //336-456
-            {
-                scaler = 1.5f;
-            }
-            else if ((scaler > 1.9f) && (scaler <= 2.6f)) //457-624
-            {
-                scaler = 2f;
-            }
-            else if ((scaler > 2.6f) && (scaler <= 2.9f)) //625-696  iphone SE, 5S 640
-            {
-                scaler = 2.5f;
-            }
-            else if ((scaler > 2.9f) && (scaler <= 3.6f)) //697-864 720 phones, iPhones 750, 768 iPad mini, tabs 800
-            {
-                scaler = 3f;
-            }
-            else if ((scaler > 3.6f) && (scaler <= 3.9f)) //865-936 
-            {
-                scaler = 3.5f;
-            }
-            else if ((scaler > 3.9f) && (scaler <= 4.7f)) //937-1128 iPhones+ 1080, iPhoneX 1125
-            {
-                scaler = 4f;
-            }
-            else if ((scaler > 4.7f) && (scaler <= 4.9f)) //1129-1176
-            {
-                scaler = 4.5f;
-            }
-            else if ((scaler > 4.9f) && (scaler <= 5.6f)) //1177-1344 nexus 7 tab 1200
-            {
-                scaler = 5f;
-            }
-            else if ((scaler > 5.6f) && (scaler <= 5.9f)) //1344-1416
-            {
-                scaler = 5.5f;
-            }
-            else if ((scaler > 5.9f) && (scaler <= 6.6f)) //1417-1584 iPad 1536, lots of androids 1440
-            {
-                scaler = 6f;
-            }
-            else if ((scaler > 6.6f) && (scaler <= 6.9f)) //1585-1656
-            {
-                scaler = 6.5f;
-            }
-            else if ((scaler > 6.9f) && (scaler <= 7.6f)) //1657-1824
-            {
-                scaler = 7f;
-            }
-            else if ((scaler > 7.6f) && (scaler <= 7.9f)) //1825-1896
-            {
-                scaler = 7.5f;
-            }
-            else if ((scaler > 7.9f) && (scaler <= 8.6f)) //1897-2064  2048 iPad Pro
-            {
-                scaler = 8f;
-            }
-            else if ((scaler > 8.6f) && (scaler <= 8.9f)) //2065-2136
-            {
-                scaler = 8.5f;
-            }
-            else if ((scaler > 8.9f) && (scaler <= 9.6f)) //2137-2304
-            {
-                scaler = 9f;
-            }
-            else
-            {
-                scaler = (int)scaler;
-            }
-
             squareSize = 24;
 
-            uiSquareSize = (int)(uiSquareSize * scaler);
+            resetScaler(true, true);
 
             screenDensity = (float)squareSize / (float)squareSizeInPixels;
-            //oXshift = (screenWidth - (squareSize * squaresInWidth)) / 2;
-            //oYshift = (screenHeight - (squareSize * squaresInHeight)) / 2;
-            oXshift = (int)((screenWidth - (scaler * defaultScreenDesignWidth)) / 2);
-            oYshift = (int)((screenHeight - (scaler * defaultScreenDesignHeight)) / 2);
-
+                        
             pS = squareSize / 10; //used for small UI and text location adjustments based on squaresize for consistent look on all devices/screen resolutions
 
-            //InitializeRenderer(); //uncomment this for DIRECT2D ADDITIONS
-
             resetFonts();
-
-            //TODO animationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
-
+                        
             log = new IB2HtmlLogBox(this);
             log.tbXloc = (8 * uiSquareSize) + (int)(8 * scaler);
             log.tbYloc = 2;
@@ -339,11 +210,118 @@ namespace IBbasic
                 screenType = "title";
             }
 
-            //gameTimer.Interval = 60; //~15 fps
-            //gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             gameTimerStopwatch.Start();
             previousTime = gameTimerStopwatch.ElapsedMilliseconds;
-            //gameTimer.Start();
+        }
+        public void resetScaler(bool useHalfAndFullValues, bool firstTimeThrough)
+        {
+            if (screenWidth > screenHeight)
+            {
+                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
+            }
+            else
+            {
+                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
+            }
+
+            float sqrW = (float)screenWidth / (float)(uiSquaresInWidth);
+            float sqrH = (float)screenHeight / (float)(uiSquaresInHeight);
+            if (sqrW > sqrH)
+            {
+                scaler = (float)(screenHeight) / (float)(defaultScreenDesignHeight);
+            }
+            else
+            {
+                scaler = (float)(screenWidth) / (float)(defaultScreenDesignWidth);
+            }
+
+            if (useHalfAndFullValues)
+            {
+                if ((scaler > 1.4f) && (scaler <= 1.9f)) //336-456
+                {
+                    scaler = 1.5f;
+                }
+                else if ((scaler > 1.9f) && (scaler <= 2.6f)) //457-624
+                {
+                    scaler = 2f;
+                }
+                else if ((scaler > 2.6f) && (scaler <= 2.9f)) //625-696  iphone SE, 5S 640
+                {
+                    scaler = 2.5f;
+                }
+                else if ((scaler > 2.9f) && (scaler <= 3.6f)) //697-864 720 phones, iPhones 750, 768 iPad mini, tabs 800
+                {
+                    scaler = 3f;
+                }
+                else if ((scaler > 3.6f) && (scaler <= 3.9f)) //865-936 
+                {
+                    scaler = 3.5f;
+                }
+                else if ((scaler > 3.9f) && (scaler <= 4.7f)) //937-1128 iPhones+ 1080, iPhoneX 1125
+                {
+                    scaler = 4f;
+                }
+                else if ((scaler > 4.7f) && (scaler <= 4.9f)) //1129-1176
+                {
+                    scaler = 4.5f;
+                }
+                else if ((scaler > 4.9f) && (scaler <= 5.6f)) //1177-1344 nexus 7 tab 1200
+                {
+                    scaler = 5f;
+                }
+                else if ((scaler > 5.6f) && (scaler <= 5.9f)) //1344-1416
+                {
+                    scaler = 5.5f;
+                }
+                else if ((scaler > 5.9f) && (scaler <= 6.6f)) //1417-1584 iPad 1536, lots of androids 1440
+                {
+                    scaler = 6f;
+                }
+                else if ((scaler > 6.6f) && (scaler <= 6.9f)) //1585-1656
+                {
+                    scaler = 6.5f;
+                }
+                else if ((scaler > 6.9f) && (scaler <= 7.6f)) //1657-1824
+                {
+                    scaler = 7f;
+                }
+                else if ((scaler > 7.6f) && (scaler <= 7.9f)) //1825-1896
+                {
+                    scaler = 7.5f;
+                }
+                else if ((scaler > 7.9f) && (scaler <= 8.6f)) //1897-2064  2048 iPad Pro
+                {
+                    scaler = 8f;
+                }
+                else if ((scaler > 8.6f) && (scaler <= 8.9f)) //2065-2136
+                {
+                    scaler = 8.5f;
+                }
+                else if ((scaler > 8.9f) && (scaler <= 9.6f)) //2137-2304
+                {
+                    scaler = 9f;
+                }
+                else
+                {
+                    scaler = (int)scaler;
+                }
+            }
+
+            uiSquareSize = (int)(uiSquareSizeDefault * scaler);
+
+            oXshift = (int)((screenWidth - (scaler * defaultScreenDesignWidth)) / 2);
+            oYshift = (int)((screenHeight - (scaler * defaultScreenDesignHeight)) / 2);
+
+            if (!firstTimeThrough)
+            {
+                resetFonts();
+
+                log.tbXloc = (8 * uiSquareSize) + (int)(8 * scaler);
+                log.tbYloc = 2;
+                log.tbWidth = 3 * uiSquareSize; //add one char because the word wrap calculates word length plus one space at end
+                log.tbHeight = 4 * uiSquareSize;
+                log.numberOfLinesToShow = 14;
+            }
         }
         public void resetFonts()
         {
@@ -1451,7 +1429,7 @@ namespace IBbasic
                     }
                     else if (screenType.Equals("tsConvoEditor"))
                     {
-                        //tsConvoEditor.onTouchSwipe(eX, eY, eventType);
+                        tsConvoEditor.onTouchSwipe(eX, eY, eventType);
                     }
 
                     //TOOLSET SCREENS
@@ -1507,7 +1485,7 @@ namespace IBbasic
                     else if (screenType.Equals("splash"))
                     {
                         screenSplash.onTouchSplash(eX, eY, eventType);
-        }
+                    }
                     else if (screenType.Equals("launcher"))
                     {
                         screenLauncher.onTouchLauncher(eX, eY, eventType);

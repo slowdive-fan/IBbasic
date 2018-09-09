@@ -2227,18 +2227,18 @@ namespace IBbasic
         }
         public async void changeItCategory()
         {
-
+            //weapon, armor, general, head, etc.
         }
         public async void changeItValue()
         {
             gv.touchEnabled = false;
-            int myinput = await gv.NumInputBox("Enter the creature's starting spell points", gv.cc.allItemsList[itemListIndex].value);
+            int myinput = await gv.NumInputBox("Enter the item's default value in gold pieces", gv.cc.allItemsList[itemListIndex].value);
             gv.cc.allItemsList[itemListIndex].value = myinput;
             gv.touchEnabled = true;
         }
         public async void changeItAmmoType()
         {
-
+            //arrow, stone, etc.
         }
         public async void changeItParentNodeName()
         {

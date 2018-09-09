@@ -1517,36 +1517,35 @@ namespace IBbasic
                         }
                         return;
                     }
-
                     
-                        //figure out if tapped on a map square
-                        if ((tapInMapViewport(x, y)))
-                        {
+                    //figure out if tapped on a map square
+                    if (tapInMapViewport(x, y))
+                    {
                         int convoPanelLeftLocation = (int)(1 * gv.uiSquareSize + 2 * gv.scaler);
                         int convoPanelTopLocation = (int)(2 * gv.scaler + gv.fontHeight + gv.fontLineSpacing);
                         //int tlX = panelLeftLocation + (gv.ibbMiniTglWidth / 2 * gv.scaler * n.indentMultiplier);
                         //int tlY = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * cnt);
                         int lineIndex = (y - convoPanelTopLocation) / (gv.fontHeight + gv.fontLineSpacing) + currentTopLineIndex;
-                            if (lineIndex < nodeList.Count)
-                            {
-                                tglCond1Radio.toggleOn = true;
-                                tglCond2Radio.toggleOn = false;
-                                tglCond3Radio.toggleOn = false;
-                                tglCond4Radio.toggleOn = false;
-                                tglAction1Radio.toggleOn = true;
-                                tglAction2Radio.toggleOn = false;
-                                tglAction3Radio.toggleOn = false;
-                                tglAction4Radio.toggleOn = false;
+                        if (lineIndex < nodeList.Count)
+                        {
+                            tglCond1Radio.toggleOn = true;
+                            tglCond2Radio.toggleOn = false;
+                            tglCond3Radio.toggleOn = false;
+                            tglCond4Radio.toggleOn = false;
+                            tglAction1Radio.toggleOn = true;
+                            tglAction2Radio.toggleOn = false;
+                            tglAction3Radio.toggleOn = false;
+                            tglAction4Radio.toggleOn = false;
 
-                                editNode = nodeList[lineIndex];
+                            editNode = nodeList[lineIndex];
                             int tlX = (int)(convoPanelLeftLocation + ((gv.ibbMiniTglWidth / 2) * gv.scaler * editNode.indentMultiplier));
                             if ((x > tlX) && (x < tlX + (gv.ibbMiniTglWidth / 2) * gv.scaler))
-                                {
-                                    editNode.IsExpanded = !editNode.IsExpanded;
-                                    ResetTreeView();
-                                }
+                            {
+                                editNode.IsExpanded = !editNode.IsExpanded;
+                                ResetTreeView();
                             }
                         }
+                    }
                     
 
                     if (btnNode.getImpact(x, y))
