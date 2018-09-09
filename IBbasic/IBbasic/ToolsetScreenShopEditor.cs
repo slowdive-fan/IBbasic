@@ -153,7 +153,7 @@ namespace IBbasic
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = 1 * gv.fontWidth;
             int startY = btnAddShop.Y + btnAddShop.Height - gv.fontHeight;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
             foreach (Shop c in gv.mod.moduleShopsList)
             {
@@ -187,7 +187,7 @@ namespace IBbasic
                 //list all containers (tap on a container in the list to show elements for editing)
                 startX = btnAddItem.X;
                 startY = btnAddItem.Y + btnAddItem.Height - gv.fontHeight;
-                incY = gv.fontWidth + gv.fontLineSpacing;
+                incY = gv.fontHeight + gv.fontLineSpacing;
                 cnt = 0;
                 int columncount = 0;
                 int longestline = 0;

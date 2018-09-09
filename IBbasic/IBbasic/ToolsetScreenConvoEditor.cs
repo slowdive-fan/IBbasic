@@ -944,12 +944,12 @@ namespace IBbasic
                     else { nodeColor = "bu"; }
                     if (n.linkTo != 0) { nodeColor = "gy"; }
                     if (editNode == n) { nodeColor = "gn"; }
-                    int tlX = convoPanelLeftLocation + (int)(gv.ibbMiniTglWidth / (2 * gv.scaler * n.indentMultiplier));
+                    int tlX = convoPanelLeftLocation + (int)((gv.ibbMiniTglWidth / 2) * gv.scaler * n.indentMultiplier);
                     int tlY = convoPanelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * cnt);
                     if (n.subNodes.Count > 0)
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Height);
-                        dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontWidth);
+                        dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
                         if (n.IsExpanded)
                         {
                             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
@@ -965,10 +965,10 @@ namespace IBbasic
                     else if (n.conditions.Count > 0) { cnvNodeImg = "cnv_conditional"; }
                     else if (n.actions.Count > 0) { cnvNodeImg = "cnv_action"; }
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("cnv_normal").Width, gv.cc.GetFromTileBitmapList("cnv_normal").Height);
-                    dst = new IbRect(tlX + gv.fontWidth + gv.fontCharSpacing, tlY, gv.fontHeight, gv.fontWidth);
+                    dst = new IbRect(tlX + gv.fontHeight + gv.fontCharSpacing, tlY, gv.fontHeight, gv.fontHeight);
                     gv.DrawBitmap(gv.cc.GetFromTileBitmapList(cnvNodeImg), src, dst);
 
-                    gv.DrawText(n.conversationText, tlX + ((gv.fontWidth + gv.fontCharSpacing) * 2), tlY, nodeColor);
+                    gv.DrawText(n.conversationText, tlX + ((gv.fontHeight + gv.fontCharSpacing) * 2), tlY, nodeColor);
                     cnt++;
                 }
                 nodeLineIndex++;

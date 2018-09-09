@@ -755,7 +755,7 @@ namespace IBbasic
                     //new category
                     lastCategory = crt.cr_parentNodeName;
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Height);
-                    dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontWidth);
+                    dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
                     if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
@@ -764,7 +764,7 @@ namespace IBbasic
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
                     }
-                    gv.DrawText(" " + crt.cr_parentNodeName, tlX, tlY, "bu");
+                    gv.DrawText("  " + crt.cr_parentNodeName, tlX, tlY, "bu");
                     cnt++;
                 }
                 if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
@@ -772,17 +772,17 @@ namespace IBbasic
                     tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                     if (crtCnt == creatureListIndex)
                     {
-                        gv.DrawText("  " + crt.cr_name, tlX, tlY, "gn");
+                        gv.DrawText("   " + crt.cr_name, tlX, tlY, "gn");
                     }
                     else
                     {
                         if (crt.moduleCreature)
                         {
-                            gv.DrawText("  " + crt.cr_name, tlX, tlY, "wh");
+                            gv.DrawText("   " + crt.cr_name, tlX, tlY, "wh");
                         }
                         else
                         {
-                            gv.DrawText("  " + crt.cr_name, tlX, tlY, "gy");
+                            gv.DrawText("   " + crt.cr_name, tlX, tlY, "gy");
                         }
                     }
                     cnt++;

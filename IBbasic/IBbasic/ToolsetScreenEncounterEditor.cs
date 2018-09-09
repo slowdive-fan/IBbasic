@@ -560,7 +560,7 @@ namespace IBbasic
             rbtnViewInfoTrigger.ImgOn = "mtgl_rbtn_on";
             rbtnViewInfoTrigger.ImgOff = "mtgl_rbtn_off";
             rbtnViewInfoTrigger.X = panelLeftLocation;
-            rbtnViewInfoTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 2);
+            rbtnViewInfoTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 1);
             rbtnViewInfoTrigger.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnViewInfoTrigger.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -571,7 +571,7 @@ namespace IBbasic
             rbtnPlaceNewTrigger.ImgOn = "mtgl_rbtn_on";
             rbtnPlaceNewTrigger.ImgOff = "mtgl_rbtn_off";
             rbtnPlaceNewTrigger.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
-            rbtnPlaceNewTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 2);
+            rbtnPlaceNewTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 1);
             rbtnPlaceNewTrigger.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnPlaceNewTrigger.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -582,7 +582,7 @@ namespace IBbasic
             rbtnEditTrigger.ImgOn = "mtgl_rbtn_on";
             rbtnEditTrigger.ImgOff = "mtgl_rbtn_off";
             rbtnEditTrigger.X = panelLeftLocation;
-            rbtnEditTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 4);
+            rbtnEditTrigger.Y = panelTopLocation + 0 * gv.uiSquareSize + ((gv.fontHeight + gv.fontLineSpacing) * 3);
             rbtnEditTrigger.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnEditTrigger.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -593,7 +593,7 @@ namespace IBbasic
             rbtnTriggerProperties.ImgOn = "mtgl_rbtn_on";
             rbtnTriggerProperties.ImgOff = "mtgl_rbtn_off";
             rbtnTriggerProperties.X = panelLeftLocation;
-            rbtnTriggerProperties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 7);
+            rbtnTriggerProperties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 6);
             rbtnTriggerProperties.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnTriggerProperties.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -604,7 +604,7 @@ namespace IBbasic
             rbtnEvent1Properties.ImgOn = "mtgl_rbtn_on";
             rbtnEvent1Properties.ImgOff = "mtgl_rbtn_off";
             rbtnEvent1Properties.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
-            rbtnEvent1Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 7);
+            rbtnEvent1Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 6);
             rbtnEvent1Properties.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnEvent1Properties.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -615,7 +615,7 @@ namespace IBbasic
             rbtnEvent2Properties.ImgOn = "mtgl_rbtn_on";
             rbtnEvent2Properties.ImgOff = "mtgl_rbtn_off";
             rbtnEvent2Properties.X = panelLeftLocation;
-            rbtnEvent2Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 9);
+            rbtnEvent2Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 8);
             rbtnEvent2Properties.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnEvent2Properties.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -626,7 +626,7 @@ namespace IBbasic
             rbtnEvent3Properties.ImgOn = "mtgl_rbtn_on";
             rbtnEvent3Properties.ImgOff = "mtgl_rbtn_off";
             rbtnEvent3Properties.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
-            rbtnEvent3Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 9);
+            rbtnEvent3Properties.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 8);
             rbtnEvent3Properties.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnEvent3Properties.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -638,7 +638,7 @@ namespace IBbasic
             tglTriggerTag.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             tglTriggerTag.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             tglTriggerTag.X = panelLeftLocation;
-            tglTriggerTag.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
+            tglTriggerTag.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 10);
             tglTriggerTag.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglTriggerTag.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -649,7 +649,7 @@ namespace IBbasic
             tglTriggerEnabled.ImgOn = "mtgl_rbtn_on";
             tglTriggerEnabled.ImgOff = "mtgl_rbtn_off";
             tglTriggerEnabled.X = panelLeftLocation;
-            tglTriggerEnabled.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
+            tglTriggerEnabled.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
             tglTriggerEnabled.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglTriggerEnabled.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -659,8 +659,8 @@ namespace IBbasic
             }
             tglTriggerDoOnce.ImgOn = "mtgl_rbtn_on";
             tglTriggerDoOnce.ImgOff = "mtgl_rbtn_off";
-            tglTriggerDoOnce.X = panelLeftLocation;
-            tglTriggerDoOnce.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
+            tglTriggerDoOnce.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
+            tglTriggerDoOnce.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
             tglTriggerDoOnce.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglTriggerDoOnce.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -671,7 +671,7 @@ namespace IBbasic
             tglImageFilename.ImgOn = "mtgl_edit_btn";
             tglImageFilename.ImgOff = "mtgl_edit_btn";
             tglImageFilename.X = panelLeftLocation;
-            tglImageFilename.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
+            tglImageFilename.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
             tglImageFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglImageFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -682,7 +682,7 @@ namespace IBbasic
             tglImageFacingLeft.ImgOn = "mtgl_rbtn_on";
             tglImageFacingLeft.ImgOff = "mtgl_rbtn_off";
             tglImageFacingLeft.X = panelLeftLocation;
-            tglImageFacingLeft.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
+            tglImageFacingLeft.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
             tglImageFacingLeft.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglImageFacingLeft.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -693,7 +693,7 @@ namespace IBbasic
             tglIsShown.ImgOn = "mtgl_rbtn_on";
             tglIsShown.ImgOff = "mtgl_rbtn_off";
             tglIsShown.X = panelLeftLocation + (1 * gv.uiSquareSize + (gv.uiSquareSize / 2));
-            tglIsShown.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
+            tglIsShown.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
             tglIsShown.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglIsShown.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -704,7 +704,7 @@ namespace IBbasic
             tglNumberOfScriptCallsRemaining.ImgOn = "mtgl_edit_btn";
             tglNumberOfScriptCallsRemaining.ImgOff = "mtgl_edit_btn";
             tglNumberOfScriptCallsRemaining.X = panelLeftLocation;
-            tglNumberOfScriptCallsRemaining.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 23);
+            tglNumberOfScriptCallsRemaining.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 21);
             tglNumberOfScriptCallsRemaining.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglNumberOfScriptCallsRemaining.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -715,7 +715,7 @@ namespace IBbasic
             tglCanBeTriggeredByPc.ImgOn = "mtgl_rbtn_on";
             tglCanBeTriggeredByPc.ImgOff = "mtgl_rbtn_off";
             tglCanBeTriggeredByPc.X = panelLeftLocation;
-            tglCanBeTriggeredByPc.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 25);
+            tglCanBeTriggeredByPc.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 23);
             tglCanBeTriggeredByPc.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglCanBeTriggeredByPc.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -726,7 +726,7 @@ namespace IBbasic
             tglCanBeTriggeredByCreature.ImgOn = "mtgl_rbtn_on";
             tglCanBeTriggeredByCreature.ImgOff = "mtgl_rbtn_off";
             tglCanBeTriggeredByCreature.X = panelLeftLocation;
-            tglCanBeTriggeredByCreature.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 27);
+            tglCanBeTriggeredByCreature.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 25);
             tglCanBeTriggeredByCreature.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglCanBeTriggeredByCreature.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -738,7 +738,7 @@ namespace IBbasic
             tglEnabledEvent.ImgOn = "mtgl_rbtn_on";
             tglEnabledEvent.ImgOff = "mtgl_rbtn_off";
             tglEnabledEvent.X = panelLeftLocation;
-            tglEnabledEvent.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
+            tglEnabledEvent.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 10);
             tglEnabledEvent.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEnabledEvent.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -749,7 +749,7 @@ namespace IBbasic
             tglDoOnceOnlyEvent.ImgOn = "mtgl_rbtn_on";
             tglDoOnceOnlyEvent.ImgOff = "mtgl_rbtn_off";
             tglDoOnceOnlyEvent.X = panelLeftLocation;
-            tglDoOnceOnlyEvent.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
+            tglDoOnceOnlyEvent.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
             tglDoOnceOnlyEvent.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglDoOnceOnlyEvent.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -760,7 +760,7 @@ namespace IBbasic
             tglEventType.ImgOn = "mtgl_edit_btn";
             tglEventType.ImgOff = "mtgl_edit_btn";
             tglEventType.X = panelLeftLocation;
-            tglEventType.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
+            tglEventType.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
             tglEventType.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventType.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -771,7 +771,7 @@ namespace IBbasic
             tglEventFilenameOrTag.ImgOn = "mtgl_edit_btn";
             tglEventFilenameOrTag.ImgOff = "mtgl_edit_btn";
             tglEventFilenameOrTag.X = panelLeftLocation;
-            tglEventFilenameOrTag.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
+            tglEventFilenameOrTag.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
             tglEventFilenameOrTag.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventFilenameOrTag.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -782,7 +782,7 @@ namespace IBbasic
             tglEventTransPointX.ImgOn = "mtgl_edit_btn";
             tglEventTransPointX.ImgOff = "mtgl_edit_btn";
             tglEventTransPointX.X = panelLeftLocation;
-            tglEventTransPointX.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
+            tglEventTransPointX.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
             tglEventTransPointX.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventTransPointX.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -793,7 +793,7 @@ namespace IBbasic
             tglEventTransPointY.ImgOn = "mtgl_edit_btn";
             tglEventTransPointY.ImgOff = "mtgl_edit_btn";
             tglEventTransPointY.X = panelLeftLocation;
-            tglEventTransPointY.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 22);
+            tglEventTransPointY.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
             tglEventTransPointY.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventTransPointY.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -804,7 +804,7 @@ namespace IBbasic
             tglEventParm1.ImgOn = "mtgl_edit_btn";
             tglEventParm1.ImgOff = "mtgl_edit_btn";
             tglEventParm1.X = panelLeftLocation;
-            tglEventParm1.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
+            tglEventParm1.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
             tglEventParm1.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventParm1.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -815,7 +815,7 @@ namespace IBbasic
             tglEventParm2.ImgOn = "mtgl_edit_btn";
             tglEventParm2.ImgOff = "mtgl_edit_btn";
             tglEventParm2.X = panelLeftLocation;
-            tglEventParm2.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 22);
+            tglEventParm2.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 20);
             tglEventParm2.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventParm2.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -826,7 +826,7 @@ namespace IBbasic
             tglEventParm3.ImgOn = "mtgl_edit_btn";
             tglEventParm3.ImgOff = "mtgl_edit_btn";
             tglEventParm3.X = panelLeftLocation;
-            tglEventParm3.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 24);
+            tglEventParm3.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 22);
             tglEventParm3.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventParm3.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -837,7 +837,7 @@ namespace IBbasic
             tglEventParm4.ImgOn = "mtgl_edit_btn";
             tglEventParm4.ImgOff = "mtgl_edit_btn";
             tglEventParm4.X = panelLeftLocation;
-            tglEventParm4.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 26);
+            tglEventParm4.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 24);
             tglEventParm4.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglEventParm4.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
@@ -863,7 +863,7 @@ namespace IBbasic
             {
                 encToEdit = gv.mod.currentEncounter.encounterName;
             }
-            gv.DrawText("ENCOUNTER EDITOR: " + encToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
+            gv.DrawText("ENCOUNTER EDITOR: " + encToEdit, 1 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
             if (currentMode.Equals("Info"))
             {
@@ -1228,7 +1228,7 @@ namespace IBbasic
         public void drawTriggersPanel()
         {
             //Description     
-            gv.DrawText("TRIGGERS", panelLeftLocation, panelTopLocation + gv.fontHeight + gv.fontLineSpacing, "gn");
+            gv.DrawText("TRIGGERS", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
             rbtnViewInfoTrigger.Draw();
             gv.DrawText("View", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y, "wh");
@@ -1663,13 +1663,13 @@ namespace IBbasic
             btnCrtRight.Draw();
             if (currentCrt != null)
             {
-                gv.DrawText("CREATURE INFO", panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-                gv.DrawText("Name:", panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-                gv.DrawText(currentCrt.cr_name, panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("AC: " + currentCrt.AC.ToString(), panelLeftLocation, panelTopLocation + (26 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("HP: " + currentCrt.hp.ToString(), panelLeftLocation, panelTopLocation + (27 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("Attack BAB: " + currentCrt.cr_att.ToString(), panelLeftLocation, panelTopLocation + (28 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("Attack Range: " + currentCrt.cr_attRange.ToString(), panelLeftLocation, panelTopLocation + (29 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("CREATURE INFO", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+                gv.DrawText("Name:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+                gv.DrawText(currentCrt.cr_name, panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("AC: " + currentCrt.AC.ToString(), panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("HP: " + currentCrt.hp.ToString(), panelLeftLocation + (7 * gv.fontWidth), panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("Attack BAB: " + currentCrt.cr_att.ToString(), panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText("Attack Range: " + currentCrt.cr_attRange.ToString(), panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
         }
 

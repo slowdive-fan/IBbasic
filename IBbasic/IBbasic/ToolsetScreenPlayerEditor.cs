@@ -599,7 +599,7 @@ namespace IBbasic
             numberOfLinesToShow = 23;
             int cnt = 0;
             int startX = 1 * gv.fontWidth;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int startY = btnAddPlayer.Y + btnAddPlayer.Height - incY;
 
 
@@ -766,7 +766,7 @@ namespace IBbasic
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownTrait.X;
             int startY = btnAddKnownTrait.Y + btnAddKnownTrait.Height - gv.fontHeight;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
             foreach (string c in gv.mod.companionPlayerList[playerListIndex].knownTraitsTags)
             {
@@ -791,7 +791,7 @@ namespace IBbasic
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownSpell.X;
             int startY = btnAddKnownSpell.Y + btnAddKnownSpell.Height - gv.fontHeight;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
             foreach (string c in gv.mod.companionPlayerList[playerListIndex].knownSpellsTags)
             {

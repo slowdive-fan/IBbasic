@@ -1068,7 +1068,7 @@ namespace IBbasic
                     //new category
                     lastCategory = it.ItemCategoryName;
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_off").Height);
-                    dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontWidth);
+                    dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
                     if ((categoryList.ContainsKey(it.ItemCategoryName)) && (categoryList[it.ItemCategoryName]))
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
@@ -1077,7 +1077,7 @@ namespace IBbasic
                     {
                         gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
                     }
-                    gv.DrawText(" " + it.ItemCategoryName, tlX, tlY, "bu");
+                    gv.DrawText("  " + it.ItemCategoryName, tlX, tlY, "bu");
                     cnt++;
                 }
                 if ((categoryList.ContainsKey(it.ItemCategoryName)) && (categoryList[it.ItemCategoryName]))
@@ -1085,17 +1085,17 @@ namespace IBbasic
                     tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                     if (crtCnt == itemListIndex)
                     {
-                        gv.DrawText("  " + it.name, tlX, tlY, "gn");
+                        gv.DrawText("   " + it.name, tlX, tlY, "gn");
                     }
                     else
                     {
                         if (it.moduleItem)
                         {
-                            gv.DrawText("  " + it.name, tlX, tlY, "wh");
+                            gv.DrawText("   " + it.name, tlX, tlY, "wh");
                         }
                         else
                         {
-                            gv.DrawText("  " + it.name, tlX, tlY, "gy");
+                            gv.DrawText("   " + it.name, tlX, tlY, "gy");
                         }
                     }
                     cnt++;
