@@ -14,7 +14,8 @@ namespace IBbasic
 	    private IbbButton btnLoadSavedGame = null;
 	    private IbbButton btnPlayerGuide = null;
 	    private IbbButton btnBeginnerGuide = null;
-	    private IbbButton btnAbout = null;        
+	    private IbbButton btnAbout = null;
+        private IbbButton btnRate = null;
 
         public ScreenTitle(Module m, GameView g)
 	    {
@@ -85,9 +86,20 @@ namespace IBbasic
                 btnAbout.X = (gv.uiSquareSize * gv.uiSquaresInWidth / 2) - (int)(gv.ibbwidthL * gv.scaler / 2.0f);
                 btnAbout.Y = (5 * gv.uiSquareSize) + (10 * pH) - (gv.uiSquareSize / 2);
                 btnAbout.Height = (int)(gv.ibbheight * gv.scaler);
-                btnAbout.Width = (int)(gv.ibbwidthL * gv.scaler);			
-		    
-	    }
+                btnAbout.Width = (int)(gv.ibbwidthL * gv.scaler);
+
+            if (btnRate == null)
+            {
+                btnRate = new IbbButton(gv, 0.8f);
+            }
+            btnRate.Text = "RATE";
+            btnRate.Img = "btn_small"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
+            btnRate.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
+            btnRate.X = 10 * gv.uiSquareSize;
+            btnRate.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
+            btnRate.Height = (int)(gv.ibbheight * gv.scaler);
+            btnRate.Width = (int)(gv.ibbwidthR * gv.scaler);
+        }
 
 	    //TITLE SCREEN  
         public void redrawTitle()
@@ -132,6 +144,10 @@ namespace IBbasic
 		    btnPlayerGuide.Draw();
 		    btnBeginnerGuide.Draw();           
 		    btnAbout.Draw();
+            if (!gv.fixedModule.Equals(""))
+            {
+                btnRate.Draw();
+            }
 	    }
         public void onTouchTitle(int eX, int eY, MouseEventType.EventType eventType)
 	    {
@@ -140,6 +156,8 @@ namespace IBbasic
 		    btnPlayerGuide.glowOn = false;
 		    btnBeginnerGuide.glowOn = false;				
 		    btnAbout.glowOn = false;
+            btnRate.glowOn = false;
+
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -156,6 +174,7 @@ namespace IBbasic
 			    btnAbout.glowOn = false;
 			    btnPlayerGuide.glowOn = false;
 			    btnBeginnerGuide.glowOn = false;
+                btnRate.glowOn = false;
                 if (gv.showMessageBox)
                 {
                     gv.messageBox.btnReturn.glowOn = false;
@@ -222,6 +241,14 @@ namespace IBbasic
                         gv.showMessageBox = true;
                         gv.cc.doAboutDialog();
                     }
+                    else if (btnRate.getImpact(x, y))
+                    {
+                        if (!gv.fixedModule.Equals(""))
+                        {
+                            //call rate
+                            gv.RateApp();
+                        }
+                    }
                 }					
 			    break;
 
@@ -259,6 +286,10 @@ namespace IBbasic
                     else if (btnBeginnerGuide.getImpact(x, y))
                     {
                         btnBeginnerGuide.glowOn = true;
+                    }
+                    else if (btnRate.getImpact(x, y))
+                    {
+                        btnRate.glowOn = true;
                     }
                 }
 			    break;		

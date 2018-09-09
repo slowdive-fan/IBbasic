@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0.03" package="com.iceblinkengine.ibb.ibbraventhal" android:installLocation="auto" android:versionCode="3">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0.04" package="com.iceblinkengine.ibb.ibbraventhal" android:installLocation="auto" android:versionCode="4">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
 	<application android:label="Raventhal.Android"></application>
 </manifest>

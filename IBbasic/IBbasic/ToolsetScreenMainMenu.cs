@@ -522,7 +522,7 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                gv.tsAreaEditor.mapSquareSizeScaler = 1;
+                gv.tsAreaEditor.resetAllPreview();
                 gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 2D 20x20 Area"))
@@ -538,7 +538,7 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                gv.tsAreaEditor.mapSquareSizeScaler = 2;
+                gv.tsAreaEditor.resetAllPreview();
                 gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 3D 10x10 Area"))
@@ -554,7 +554,7 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                gv.tsAreaEditor.mapSquareSizeScaler = 1;
+                gv.tsAreaEditor.resetAllPreview();
                 gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else if (selectedArea.Equals("New 3D 20x20 Area"))
@@ -570,7 +570,7 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                gv.tsAreaEditor.mapSquareSizeScaler = 2;
+                gv.tsAreaEditor.resetAllPreview();
                 gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + newArea.Filename + ":", "none", false);
             }
             else
@@ -584,22 +584,7 @@ namespace IBbasic
                 gv.screenType = "tsAreaEditor";
                 showMainMenuPanels = false;
                 tglMainMenu.toggleOn = false;
-                if ((gv.mod.currentArea.MapSizeX > 40) || (gv.mod.currentArea.MapSizeY > 40))
-                {
-                    gv.tsAreaEditor.mapSquareSizeScaler = 8;
-                }
-                else if ((gv.mod.currentArea.MapSizeX > 20) || (gv.mod.currentArea.MapSizeY > 20))
-                {
-                    gv.tsAreaEditor.mapSquareSizeScaler = 4;
-                }
-                else if ((gv.mod.currentArea.MapSizeX > 10) || (gv.mod.currentArea.MapSizeY > 10))
-                {
-                    gv.tsAreaEditor.mapSquareSizeScaler = 2;
-                }
-                else
-                {
-                    gv.tsAreaEditor.mapSquareSizeScaler = 1;
-                }
+                gv.tsAreaEditor.resetAllPreview();
                 gv.TrackerSendEvent(":TOOLSET:" + gv.mod.moduleName + ":AREA:" + gv.mod.currentArea.Filename + ":", "none", false);
             }
         }

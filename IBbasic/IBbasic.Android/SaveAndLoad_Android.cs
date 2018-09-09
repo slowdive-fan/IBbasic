@@ -89,6 +89,12 @@ namespace IBbasic.Droid
             return info.VersionName;
         }
 
+        public void RateApp()
+        {
+            //string urlStore = "https://play.google.com/store/apps/details?id=com.iceblinkengine.ibb.ibbraventhal";
+            //Device.OpenUri(new Uri(urlStore));
+        }
+
         public void CreateUserFolders()
         {
             /*

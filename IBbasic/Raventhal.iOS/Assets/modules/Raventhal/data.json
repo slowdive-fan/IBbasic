@@ -1,0 +1,685 @@
+{
+  "dataPlayerClassList": [
+    {
+      "name": "Claw Fighter",
+      "tag": "clawFighter",
+      "UsableByPlayer": false,
+      "description": "Not meant for Players, only for NPCs.",
+      "startingHP": 12,
+      "startingSP": 7,
+      "modifierFromSPRelevantAttribute": "intelligence",
+      "hpPerLevelUp": 10,
+      "spPerLevelUp": 7,
+      "hpRegenTimeNeeded": 0,
+      "spRegenTimeNeeded": 0,
+      "spellLabelSingular": "Spell",
+      "spellLabelPlural": "Spells",
+      "baseFortitudeAtLevel": [
+        0,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      "baseWillAtLevel": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "baseReflexAtLevel": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "babTable": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "xpTable": [
+        0,
+        200,
+        400,
+        800,
+        1600,
+        3200,
+        6500,
+        12500,
+        25000,
+        50000
+      ],
+      "spellsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "traitsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "itemsAllowed": [
+        "campingKit",
+		"healingPotion",
+		"healingPotionExtra",
+		"spPotion",
+		"silvc1",
+		"goldenClaws",
+		"diamondClaws",
+		"stoneArmour",
+		"lavaArmour",
+      ],
+      "traitsAllowed": [
+        {
+          "name": "Cleave",
+          "tag": "cleave",
+          "atWhatLevelIsAvailable": 2,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Two Attacks",
+          "tag": "twoAttack",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Intimidate (L2)",
+          "tag": "intimidate2",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Intimidate (L1)",
+          "tag": "intimidate",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        }
+      ],
+      "spellsAllowed": [
+        {
+          "name": "Breathe Fire",
+          "tag": "breatheFire",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Explosive Fireball",
+          "tag": "explosiveFireball",
+          "atWhatLevelIsAvailable": 5,
+          "automaticallyLearned": false,
+          "allow": true
+        }
+      ]
+    },
+    {
+      "name": "Faery Thrower",
+      "tag": "faeryThrower",
+      "UsableByPlayer": false,
+      "description": "Not meant for Players, only for NPCs.",
+      "startingHP": 6,
+      "startingSP": 5,
+      "modifierFromSPRelevantAttribute": "intelligence",
+      "hpPerLevelUp": 6,
+      "spPerLevelUp": 5,
+      "hpRegenTimeNeeded": 0,
+      "spRegenTimeNeeded": 0,
+      "spellLabelSingular": "Spell",
+      "spellLabelPlural": "Spells",
+      "baseFortitudeAtLevel": [
+        0,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      "baseWillAtLevel": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "baseReflexAtLevel": [
+        0,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      "babTable": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "xpTable": [
+        0,
+        125,
+        250,
+        500,
+        1000,
+        2000,
+        4000,
+        7000,
+        11000,
+        16000
+      ],
+      "spellsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "traitsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "itemsAllowed": [
+	      "healingPotion",
+		  "healingPotionExtra",
+		  "spPotion",
+		  "stone",
+		  "stonefire",
+		  "faerieSling",
+		  "hqFaerieSling",
+		  "dhFaerieSling",
+		  "faerieLarmour",
+		  "faerieChainmail",
+		  "tinyKnife",		  
+      ],
+      "traitsAllowed": [
+        {
+          "name": "Evasion",
+          "tag": "evasion",
+          "atWhatLevelIsAvailable": 2,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Bluff (L1)",
+          "tag": "bluff",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Bluff (L2)",
+          "tag": "bluff2",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Diplomacy (L1)",
+          "tag": "diplomacy",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Diplomacy (L2)",
+          "tag": "diplomacy2",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Spot (L1)",
+          "tag": "spot",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        },
+        {
+          "name": "Spot (L2)",
+          "tag": "spot2",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Stealth (L1)",
+          "tag": "stealth",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        },
+        {
+          "name": "Stealth (L2)",
+          "tag": "stealth2",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Disable Device (L1)",
+          "tag": "disabledevice",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        },
+        {
+          "name": "Disable Device (L2)",
+          "tag": "disabledevice2",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Point Blank Shot",
+          "tag": "pointblankshot",
+          "atWhatLevelIsAvailable": 2,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Precise Shot (L1)",
+          "tag": "preciseshot",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Rapid Shot (L1)",
+          "tag": "rapidshot",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        }
+      ],
+      "spellsAllowed": []
+    },
+    {
+      "name": "Bounty Hunter",
+      "tag": "bountyHunter",
+      "UsableByPlayer": false,
+      "description": "Quick and deadly.",
+      "startingHP": 6,
+      "startingSP": 0,
+      "modifierFromSPRelevantAttribute": "intelligence",
+      "hpPerLevelUp": 6,
+      "spPerLevelUp": 0,
+      "hpRegenTimeNeeded": 0,
+      "spRegenTimeNeeded": 0,
+      "spellLabelSingular": "Spell",
+      "spellLabelPlural": "Spells",
+      "baseFortitudeAtLevel": [
+        0,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      "baseWillAtLevel": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "baseReflexAtLevel": [
+        0,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6
+      ],
+      "babTable": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "xpTable": [
+        0,
+        125,
+        250,
+        500,
+        1000,
+        2000,
+        4000,
+        7000,
+        11000,
+        16000
+      ],
+      "spellsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "traitsToLearnAtLevelTable": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "itemsAllowed": [
+        "chainmail",
+		"larmor1",
+		"studdedLeather",
+		"robes",
+		"campingKit",
+		"ringOfProtection",
+		"ringOfFireResist",
+		"healingPotion",
+		"healingPotionExtra",
+		"spPotion",
+		"crossbow",
+		"dagger01",
+		"elvishshortsword",
+		"fireDagger",
+		"handaxe",
+		"mace",
+		"shortBow",
+		"ssword01",
+		"sling",
+		"fireSling",
+		"arrow",
+		"stone",
+		"stonefire",
+		"bolt",
+		"branchclub",
+		"crueldagger",
+		"katana",
+		"blesslong",
+		"idris",
+      ],
+      "traitsAllowed": [
+        {
+          "name": "Sneak Attack",
+          "tag": "sneakattack",
+          "atWhatLevelIsAvailable": 2,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Critical Strike",
+          "tag": "criticalstrike",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Evasion",
+          "tag": "evasion",
+          "atWhatLevelIsAvailable": 2,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Bluff (L1)",
+          "tag": "bluff",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Bluff (L2)",
+          "tag": "bluff2",
+          "atWhatLevelIsAvailable": 4,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Spot (L1)",
+          "tag": "spot",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        },
+        {
+          "name": "Spot (L2)",
+          "tag": "spot2",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        },
+        {
+          "name": "Stealth (L1)",
+          "tag": "stealth",
+          "atWhatLevelIsAvailable": 1,
+          "automaticallyLearned": true,
+          "allow": true
+        },
+        {
+          "name": "Stealth (L2)",
+          "tag": "stealth2",
+          "atWhatLevelIsAvailable": 3,
+          "automaticallyLearned": false,
+          "allow": true
+        }
+      ],
+      "spellsAllowed": []
+    }
+  ],
+  "dataRacesList": [
+    {
+      "name": "PseudoDragon",
+      "tag": "pseudoDragon",
+      "UsableByPlayer": false,
+      "description": "Not meant for Players. Used for NPCs",
+      "MoveDistanceLightArmor": 3,
+      "MoveDistanceMediumHeavyArmor": 2,
+      "strMod": 2,
+      "dexMod": -2,
+      "intMod": 0,
+      "chaMod": 0,
+      "conMod": 0,
+      "wisMod": 0,
+      "damageTypeResistanceValuePoison": 10,
+      "damageTypeResistanceValueMagic": 10,
+      "damageTypeResistanceValueNormal": 0,
+      "damageTypeResistanceValueAcid": 0,
+      "damageTypeResistanceValueCold": 10,
+      "damageTypeResistanceValueElectricity": 0,
+      "damageTypeResistanceValueFire": 0,
+      "classesAllowed": [
+        "clawFighter"
+      ],
+      "traitsAllowed": []
+    },
+    {
+      "name": "Forest Faery",
+      "tag": "forestFaery",
+      "UsableByPlayer": false,
+      "description": "Not meant for Players. Used for NPCs",
+      "MoveDistanceLightArmor": 3,
+      "MoveDistanceMediumHeavyArmor": 2,
+      "strMod": -2,
+      "dexMod": 4,
+      "intMod": -2,
+      "chaMod": 2,
+      "conMod": 0,
+      "wisMod": 0,
+      "damageTypeResistanceValuePoison": 0,
+      "damageTypeResistanceValueMagic": 40,
+      "damageTypeResistanceValueNormal": 0,
+      "damageTypeResistanceValueAcid": 0,
+      "damageTypeResistanceValueCold": 0,
+      "damageTypeResistanceValueElectricity": 0,
+      "damageTypeResistanceValueFire": 0,
+      "classesAllowed": [
+        "faeryThrower"
+      ],
+      "traitsAllowed": []
+    },
+    {
+      "name": "Homunklus",
+      "tag": "homunklus",
+      "UsableByPlayer": false,
+      "description": "Not meant for Players. Used for NPCs",
+      "MoveDistanceLightArmor": 3,
+      "MoveDistanceMediumHeavyArmor": 2,
+      "strMod": 2,
+      "dexMod": 0,
+      "intMod": -2,
+      "chaMod": -2,
+      "conMod": 0,
+      "wisMod": 0,
+      "damageTypeResistanceValuePoison": 0,
+      "damageTypeResistanceValueMagic": 0,
+      "damageTypeResistanceValueNormal": 0,
+      "damageTypeResistanceValueAcid": 0,
+      "damageTypeResistanceValueCold": 0,
+      "damageTypeResistanceValueElectricity": 0,
+      "damageTypeResistanceValueFire": 0,
+      "classesAllowed": [
+        "fighter"
+      ],
+      "traitsAllowed": []
+    }
+  ],
+  "dataSpellsList": [
+    {
+      "name": "Breathe Fire",
+      "tag": "breatheFire",
+      "spellImage": "sp_blastoflight",
+      "description": "The Pseudragon spits a ball of flame that automatically hits all targets in the area of effect for 2d6 points of damage.",
+      "useableInSituation": "InCombat",
+      "spriteFilename": "fx_fireball",
+      "spriteEndingFilename": "fx_fireball3x3end",
+      "spellStartSound": "fireballstart",
+      "spellEndSound": "fireballend",
+      "costSP": 15,
+      "spellTargetType": "PointLocation",
+      "isUsedForCombatSquareEffect": false,
+      "spellEffectType": "Damage",
+      "aoeShape": "Circle",
+      "aoeRadius": 1,
+      "range": 2,
+      "spellScript": "none",
+      "spellEffectTag": "blastoflight",
+      "spellEffectTagList": [],
+      "removeEffectTagList": []
+    },
+    {
+      "name": "Explosive Fireball",
+      "tag": "explosiveFireball",
+      "spellImage": "sp_fireball",
+      "description": "The Pseudodragon spits an explosive fireball that automatically hits all targets in the area of effect for 1d6 points of damage per level of the dragon.",
+      "useableInSituation": "InCombat",
+      "spriteFilename": "fx_fireball",
+      "spriteEndingFilename": "fx_fireball3x3end",
+      "spellStartSound": "fireballstart",
+      "spellEndSound": "fireballend",
+      "costSP": 20,
+      "spellTargetType": "PointLocation",
+      "isUsedForCombatSquareEffect": false,
+      "spellEffectType": "Damage",
+      "aoeShape": "Circle",
+      "aoeRadius": 1,
+      "range": 3,
+      "spellScript": "none",
+      "spellEffectTag": "fireball",
+      "spellEffectTagList": [],
+      "removeEffectTagList": []
+    }
+  ],
+  "dataTraitsList": [],
+  "dataEffectsList": []
+}

@@ -16,6 +16,7 @@ namespace IBbasic
     public interface ISaveAndLoad
     {
         string GetVersion();
+        void RateApp();
 
         bool AllowReadWriteExternal();
         void CreateUserFolders();

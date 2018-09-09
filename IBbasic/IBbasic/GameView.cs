@@ -1894,6 +1894,10 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetVersion();
         }
+        public void RateApp()
+        {
+            DependencyService.Get<ISaveAndLoad>().RateApp();
+        }
         public bool AllowReadWriteExternal()
         {
             return DependencyService.Get<ISaveAndLoad>().AllowReadWriteExternal();

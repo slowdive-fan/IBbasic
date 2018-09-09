@@ -43,6 +43,11 @@ namespace IBbasic.iOS
             return NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleShortVersionString").ToString();
         }
 
+        public void RateApp()
+        {
+
+        }
+
         public bool AllowReadWriteExternal()
         {
             return true;

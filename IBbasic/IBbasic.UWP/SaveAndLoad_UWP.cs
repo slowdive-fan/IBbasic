@@ -27,6 +27,11 @@ namespace IBbasic.UWP
             return typeof(App).GetTypeInfo().Assembly.GetName().Version.ToString();
         }
 
+        public void RateApp()
+        {
+
+        }
+
         public string ConvertFullPath(string fullPath, string replaceWith)
         {
             string convertedFullPath = "";
