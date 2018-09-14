@@ -8,6 +8,8 @@ using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+//using Plugin.SimpleAudioPlayer;
+using System.Reflection;
 
 namespace IBbasic
 {
@@ -128,6 +130,7 @@ namespace IBbasic
         //public System.Media.SoundPlayer playerButtonClick = new System.Media.SoundPlayer();
 
         //TODOpublic Timer gameTimer = new Timer();
+
         public Stopwatch gameTimerStopwatch = new Stopwatch();
         public long previousTime = 0;
         public bool stillProcessingGameLoop = false;
@@ -161,7 +164,7 @@ namespace IBbasic
 
             squareSize = 24;
 
-            resetScaler(true, true);
+            resetScaler(false, true);
 
             screenDensity = (float)squareSize / (float)squareSizeInPixels;
                         
@@ -757,32 +760,7 @@ namespace IBbasic
                 oSoundStreams.Add(Path.GetFileNameWithoutExtension(f), File.OpenRead(Path.GetFullPath(f)));
             }
 	    }*/
-        public void PlaySound(string filenameNoExtension)
-	    {            
-            /*if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!mod.playSoundFx))
-            {
-                //play nothing
-                return;
-            }
-            else
-            {
-                try
-                {
-                    soundPlayer.Stream = oSoundStreams[filenameNoExtension];
-                    soundPlayer.Play();
-                }
-                catch (Exception ex)
-                {
-                    errorLog(ex.ToString());
-                    if (mod.debugMode) //SD_20131102
-                    {
-                        cc.addLogText("<yl>failed to play sound" + filenameNoExtension + "</yl><BR>");
-                    }
-                    initializeSounds();
-                }
-            }*/            
-	    }
-
+                
         //Animation Timer Stuff
         public void postDelayed(string type, int delay)
         {
@@ -2073,25 +2051,33 @@ namespace IBbasic
             }
         }
 
+        public void PlaySound(string filenameNoExtension)
+        {
+            DependencyService.Get<ISaveAndLoad>().PlaySound(this, filenameNoExtension);
+        }
         public void CreateAreaMusicPlayer()
         {
-            DependencyService.Get<ISaveAndLoad>().CreateAreaMusicPlayer();
+            //DependencyService.Get<ISaveAndLoad>().CreateAreaMusicPlayer();
         }
         public void LoadAreaMusicFile(string fileName)
         {
-            DependencyService.Get<ISaveAndLoad>().LoadAreaMusicFile(fileName);
+            //DependencyService.Get<ISaveAndLoad>().LoadAreaMusicFile(fileName);
         }
-        public void PlayAreaMusic()
+        public void PlayAreaMusic(string filenameNoExtension)
         {
-            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
+            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic(this, filenameNoExtension);
+        }
+        public void PlayAreaAmbientSounds(string filenameNoExtension)
+        {
+            DependencyService.Get<ISaveAndLoad>().PlayAreaAmbientSounds(this, filenameNoExtension);
         }
         public void StopAreaMusic()
         {
-            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
+            DependencyService.Get<ISaveAndLoad>().StopAreaMusic();
         }
         public void PauseAreaMusic()
         {
-            DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
+            //DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
         }
 
 

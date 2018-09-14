@@ -2826,6 +2826,11 @@ namespace IBbasic
                     {
                         //IBMessageBox.Show(game, "Party is wiped out...game over");
                     }
+
+                    if (gv.mod.playSoundFx)
+                    {
+                        gv.PlayAreaMusic(gv.mod.currentEncounter.AreaMusic);
+                    }
                 }
                 else
                 {
@@ -2854,6 +2859,35 @@ namespace IBbasic
                 doOnEnterAreaUpdate = true;
                 doOnEnterAreaUpdate = false;
                 gv.triggerIndex = 0;
+
+                bool changeMusic = true;
+                bool changeAmbient = true;
+                foreach (Area a in gv.mod.moduleAreasObjects)
+                {
+                    if (a.Filename == areaFilename)
+                    {
+                        if (a.AreaMusic == gv.mod.currentArea.AreaMusic)
+                        {
+                            changeMusic = false;
+                        }
+                        if (a.AreaAmbientSounds == gv.mod.currentArea.AreaAmbientSounds)
+                        {
+                            changeAmbient = false;
+                        }
+                    }
+                }
+                if (gv.mod.playSoundFx)
+                {
+                    if (changeMusic)
+                    {
+                        gv.PlayAreaMusic(gv.mod.currentArea.AreaMusic);
+                    }
+                    if (changeAmbient)
+                    {
+                        gv.PlayAreaAmbientSounds(gv.mod.currentArea.AreaAmbientSounds);
+                    }
+                }
+                
                 doTrigger();                
             }
             catch (Exception ex)

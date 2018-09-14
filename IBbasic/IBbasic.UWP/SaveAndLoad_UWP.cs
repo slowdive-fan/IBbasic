@@ -16,7 +16,7 @@ using Xamarin.Forms;
 namespace IBbasic.UWP
 {    
     public class SaveAndLoad_UWP : ISaveAndLoad
-    {
+    {        
         public bool AllowReadWriteExternal()
         {
             return true;
@@ -452,64 +452,124 @@ namespace IBbasic.UWP
 
         }
 
-        MediaPlayer playerAreaMusic;
-        public void CreateAreaMusicPlayer()
+        Stream GetStreamFromFile(GameView gv, string filename)
         {
-            playerAreaMusic = new MediaPlayer();
-            playerAreaMusic.IsLoopingEnabled = true;
-            playerAreaMusic.AutoPlay = false;
-            playerAreaMusic.Volume = 0.5;
-        }
-        public void LoadAreaMusicFile(string fullPath)
-        {
-            string filename = Path.GetFileName(fullPath);
-            if (filename != "none")
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            var stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename);
+            if (stream == null)
             {
-                //check in module folder first
-                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
-                string convertedFullPathUri = ConvertFullPath(fullPath, "/");
-                if (File.Exists(convertedFullPath))
-                {
-                    playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appdata:///local" + convertedFullPathUri));
-                }
-                else if (File.Exists(convertedFullPath + ".mp3"))
-                {
-                    playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appdata:///local" + convertedFullPathUri + ".mp3"));
-                }
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
             }
-            if (playerAreaMusic != null)
+            if (stream == null)
             {
-                //playerAreaMusic.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/" + fileName));
-                //playerAreaMusic.MediaEnded += OnPlaybackEnded;
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
             }
-        }
-        public void PlayAreaMusic()
-        {
-            if (playerAreaMusic == null || playerAreaMusic.Source == null)
+            if (stream == null)
             {
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename);
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".wav");
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".mp3");
+            }
+            return stream;
+        }
+        public void PlaySound(GameView gv, string filenameNoExtension)
+        {
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            {
+                //play nothing
                 return;
-            }
-
-            if (playerAreaMusic.PlaybackSession.PlaybackState == MediaPlaybackState.Playing)
-            {
-                playerAreaMusic.Pause();
-                playerAreaMusic.PlaybackSession.Position = TimeSpan.FromSeconds(0);
-                playerAreaMusic.Play();
             }
             else
             {
-                playerAreaMusic.Play();
+                /*if (soundPlayer == null)
+                {
+                    soundPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    soundPlayer.Loop = false;
+                    soundPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    soundPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play sound" + filenameNoExtension + "</yl><BR>");
+                    }
+                }*/
+            }
+        }
+        public void PlayAreaMusic(GameView gv, string filenameNoExtension)
+        {
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            {
+                //play nothing
+                return;
+            }
+            else
+            {
+                /*if (areaMusicPlayer == null)
+                {
+                    areaMusicPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    areaMusicPlayer.Loop = true;
+                    areaMusicPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    areaMusicPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
+                    }
+                }*/
+            }
+        }
+        public void PlayAreaAmbientSounds(GameView gv, string filenameNoExtension)
+        {
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            {
+                //play nothing
+                return;
+            }
+            else
+            {
+                /*if (areaAmbientSoundsPlayer == null)
+                {
+                    areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    areaAmbientSoundsPlayer.Loop = true;
+                    areaAmbientSoundsPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    areaAmbientSoundsPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
+                    }
+                }*/
             }
         }
         public void StopAreaMusic()
         {
-            playerAreaMusic.Pause();
-            playerAreaMusic.PlaybackSession.Position = TimeSpan.FromSeconds(0);
+            //playerAreaMusic.Pause();
+            //playerAreaMusic.SeekTo(0);
         }
         public void PauseAreaMusic()
         {
-            playerAreaMusic.Pause();
+            //playerAreaMusic.Pause();
         }
     }
 }

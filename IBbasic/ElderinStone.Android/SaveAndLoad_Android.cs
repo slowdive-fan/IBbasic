@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using IBbasic;
+using Plugin.SimpleAudioPlayer;
 
 [assembly: Dependency(typeof(SaveAndLoad_Android))]
 namespace ElderinStone.Droid
@@ -27,6 +28,9 @@ namespace ElderinStone.Droid
         private static Tracker GATracker;
         public Context thisContext;
         int numOfTrackerEventHitsInThisSession = 0;
+        public ISimpleAudioPlayer soundPlayer;
+        public ISimpleAudioPlayer areaMusicPlayer;
+        public ISimpleAudioPlayer areaAmbientSoundsPlayer;
 
         #region Instantiation ...
         private static SaveAndLoad_Android thisRef;
@@ -468,53 +472,105 @@ namespace ElderinStone.Droid
             catch { }
         }
 
-        Android.Media.MediaPlayer playerAreaMusic;
-        public void CreateAreaMusicPlayer()
+        Stream GetStreamFromFile(GameView gv, string filename)
         {
-            playerAreaMusic = new Android.Media.MediaPlayer();
-            playerAreaMusic.Looping = true;
-            playerAreaMusic.SetVolume(0.5f, 0.5f);
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            var stream = assembly.GetManifestResourceStream("DrumPad." + filename);
+
+            return stream;
         }
-        public void LoadAreaMusicFile(string fullPath)
+        public void PlaySound(GameView gv, string filenameNoExtension)
         {
-            playerAreaMusic.Reset();
-            string filename = Path.GetFileNameWithoutExtension(fullPath);
-            if (filename != "none")
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
-                //check in module folder first
-                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                //string filePath = sdCard.AbsolutePath + "/IBx" + ConvertFullPath(fullPath, "/");
-                if (File.Exists(sdCard.AbsolutePath + "/ElderinStone" + ConvertFullPath(fullPath, "/")))
-                {
-                    playerAreaMusic.SetDataSource(sdCard.AbsolutePath + "/ElderinStone" + ConvertFullPath(fullPath, "/"));
-                }
-                else if (File.Exists(sdCard.AbsolutePath + "/ElderinStone" + ConvertFullPath(fullPath, "/") + ".mp3"))
-                {
-                    playerAreaMusic.SetDataSource(sdCard.AbsolutePath + "/ElderinStone" + ConvertFullPath(fullPath, "/") + ".mp3");
-                }
-            }
-        }
-        public void PlayAreaMusic()
-        {
-            if (playerAreaMusic == null)
-            {
+                //play nothing
                 return;
             }
-            if (playerAreaMusic.IsPlaying)
+            else
             {
-                playerAreaMusic.Pause();
-                playerAreaMusic.SeekTo(0);
+                if (soundPlayer == null)
+                {
+                    soundPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    soundPlayer.Loop = false;
+                    soundPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    soundPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play sound" + filenameNoExtension + "</yl><BR>");
+                    }
+                }
             }
-            playerAreaMusic.Start();
+        }
+        public void PlayAreaMusic(GameView gv, string filenameNoExtension)
+        {
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            {
+                //play nothing
+                return;
+            }
+            else
+            {
+                if (areaMusicPlayer == null)
+                {
+                    areaMusicPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    areaMusicPlayer.Loop = true;
+                    areaMusicPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    areaMusicPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
+                    }
+                }
+            }
+        }
+        public void PlayAreaAmbientSounds(GameView gv, string filenameNoExtension)
+        {
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            {
+                //play nothing
+                return;
+            }
+            else
+            {
+                if (areaAmbientSoundsPlayer == null)
+                {
+                    areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.Current;
+                }
+                try
+                {
+                    areaAmbientSoundsPlayer.Loop = true;
+                    areaAmbientSoundsPlayer.Load(GetStreamFromFile(gv, filenameNoExtension));
+                    areaAmbientSoundsPlayer.Play();
+                }
+                catch (Exception ex)
+                {
+                    if (gv.mod.debugMode) //SD_20131102
+                    {
+                        gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
+                    }
+                }
+            }
         }
         public void StopAreaMusic()
         {
-            playerAreaMusic.Pause();
-            playerAreaMusic.SeekTo(0);
+            //playerAreaMusic.Pause();
+            //playerAreaMusic.SeekTo(0);
         }
         public void PauseAreaMusic()
         {
-            playerAreaMusic.Pause();
+            //playerAreaMusic.Pause();
         }
     }
 }

@@ -69,6 +69,7 @@ namespace IBbasic
         public IbbToggle tglClock = null;
         public IbbToggle tglZoom = null;
         public IbbToggle tglDebugMode = null;
+        public IbbToggle tglSound = null;
         //PORTRAITS PANEL
         public IbbPortrait btnPort0 = null;
         public IbbPortrait btnPort1 = null;
@@ -435,7 +436,7 @@ namespace IBbasic
         }
         public void createTogglesPanel()
         {
-            togglePanelLocX = (1 * gv.uiSquareSize) + (gv.uiSquareSize / 2);
+            togglePanelLocX = (1 * gv.uiSquareSize);
             if (showTogglePanel)
             {
                 togglePanelLocY = (6 * gv.uiSquareSize);
@@ -500,14 +501,28 @@ namespace IBbasic
             if (tglZoom == null)
             {
                 tglZoom = new IbbToggle(gv);
+                tglZoom.toggleOn = true;
             }
             tglZoom.ImgOn = "tgl_zoom_on";
             tglZoom.ImgOff = "tgl_zoom_off";
-            tglZoom.X = togglePanelLocX + 4 * gv.uiSquareSize;
+            tglZoom.X = togglePanelLocX + 5 * gv.uiSquareSize;
             tglZoom.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglZoom.Height = (int)(gv.ibbheight * gv.scaler);
             tglZoom.Width = (int)(gv.ibbwidthR * gv.scaler);
-            
+
+            if (tglSound == null)
+            {
+                tglSound = new IbbToggle(gv);
+                tglSound.toggleOn = false;
+                gv.mod.playSoundFx = false;
+            }
+            tglSound.ImgOn = "tgl_sound_on";
+            tglSound.ImgOff = "tgl_sound_off";
+            tglSound.X = togglePanelLocX + 4 * gv.uiSquareSize;
+            tglSound.Y = togglePanelLocY + 0 * gv.uiSquareSize;
+            tglSound.Height = (int)(gv.ibbheight * gv.scaler);
+            tglSound.Width = (int)(gv.ibbwidthR * gv.scaler);
+
             if (tglDebugMode == null)
             {
                 tglDebugMode = new IbbToggle(gv);
@@ -516,7 +531,7 @@ namespace IBbasic
             }
             tglDebugMode.ImgOn = "tgl_debugmode_on";
             tglDebugMode.ImgOff = "tgl_debugmode_off";
-            tglDebugMode.X = togglePanelLocX + 5 * gv.uiSquareSize;
+            tglDebugMode.X = togglePanelLocX + 6 * gv.uiSquareSize;
             tglDebugMode.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglDebugMode.Height = (int)(gv.ibbheight * gv.scaler);
             tglDebugMode.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -3068,6 +3083,7 @@ namespace IBbasic
             tglClock.Draw();
             tglDebugMode.Draw();
             tglZoom.Draw();
+            tglSound.Draw();
 
             createPortraitsPanel();
             //SET PORTRAITS
@@ -3460,6 +3476,25 @@ namespace IBbasic
                             gv.cc.addLogText("lime", "DebugMode On");
                         }
                     }
+                    if (tglSound.getImpact(x, y))
+                    {
+                        if (tglSound.toggleOn)
+                        {
+                            tglSound.toggleOn = false;
+                            gv.mod.playSoundFx = false;
+                            gv.toggleSettings.playSoundFx = gv.mod.playSoundFx;
+                            gv.cc.addLogText("lime", "Audio Off");
+                            gv.StopAreaMusic();
+                        }
+                        else
+                        {
+                            tglSound.toggleOn = true;
+                            gv.mod.playSoundFx = true;
+                            gv.toggleSettings.playSoundFx = gv.mod.playSoundFx;
+                            gv.cc.addLogText("lime", "Audio On");
+                            gv.PlayAreaMusic(gv.mod.currentArea.AreaMusic);
+                        }
+                    }
                     if (tglZoom.getImpact(x, y))
                     {
                         if (tglZoom.toggleOn)
@@ -3526,6 +3561,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY--;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3547,6 +3583,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = false;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3561,6 +3598,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY++;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3581,6 +3619,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = true;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3597,6 +3636,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY--;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3618,6 +3658,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = false;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3632,6 +3673,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY++;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3652,6 +3694,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = true;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3668,6 +3711,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY--;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3689,6 +3733,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = false;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3703,6 +3748,7 @@ namespace IBbasic
                                         gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                         gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                         gv.mod.PlayerLocationY++;
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3723,6 +3769,7 @@ namespace IBbasic
                                                 pc.combatFacingLeft = true;
                                             }
                                         }
+                                        gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                         gv.cc.doUpdate();
                                     }
                                 }
@@ -3758,6 +3805,7 @@ namespace IBbasic
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                     gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                     gv.mod.PlayerLocationY--;
+                                    gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                     gv.cc.doUpdate();
                                 }
                             }
@@ -3776,6 +3824,7 @@ namespace IBbasic
                                     gv.mod.PlayerLastLocationX = gv.mod.PlayerLocationX;
                                     gv.mod.PlayerLastLocationY = gv.mod.PlayerLocationY;
                                     gv.mod.PlayerLocationY++;
+                                    gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                     gv.cc.doUpdate();
                                 }
                             }
@@ -3799,6 +3848,7 @@ namespace IBbasic
                                             pc.combatFacingLeft = true;
                                         }
                                     }
+                                    gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                     gv.cc.doUpdate();
                                 }
                             }
@@ -3823,6 +3873,7 @@ namespace IBbasic
                                             pc.combatFacingLeft = false;
                                         }
                                     }
+                                    gv.PlaySound(gv.mod.currentArea.AreaStepSound);
                                     gv.cc.doUpdate();
                                 }
                             }

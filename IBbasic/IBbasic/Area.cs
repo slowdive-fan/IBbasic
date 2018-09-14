@@ -7,6 +7,9 @@ namespace IBbasic
     {
         public bool Is3dArea = false;
         public string Filename = "newArea";
+        public string AreaMusic = "none";
+        public string AreaAmbientSounds = "none";
+        public string AreaStepSound = "defaultstep";
         public int AreaVisibleDistance = 4;
         public bool RestingAllowed = false;
         public bool smallMap = false;

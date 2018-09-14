@@ -1484,15 +1484,15 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\data\MessageSpellLevelUp.txt" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\data\MessageTraitLevelUp.txt" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\data\MessageTraitUseSelector.txt" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\bow.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\btn_click.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\btn_hover.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\buffer.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\fireballend.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\fireballstart.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\punch.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\punchbig.wav" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\sounds\sword.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\bow.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\btn_click.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\btn_hover.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\buffer.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\fireballend.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\fireballstart.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\punch.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\punchbig.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\sword.wav" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btnattack.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btndisk.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btneffect.png" />
@@ -1654,5 +1654,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaultstep.wav" />
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@ namespace IBbasic
         //Area Settings Panel
         public IbbToggle tglSettingAreaName = null;
         public IbbToggle tglSettingInGameAreaName = null;
+        public IbbToggle tglAreaMusic = null;
         public IbbToggle tglSettingAreaVisibleDistance = null;
         public IbbToggle tglSettingTimePerSquare = null;
         public IbbToggle tglSettingIs3dArea = null;
@@ -441,6 +442,17 @@ namespace IBbasic
             tglSettingInGameAreaName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingInGameAreaName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
+            if (tglAreaMusic == null)
+            {
+                tglAreaMusic = new IbbToggle(gv);
+            }
+            tglAreaMusic.ImgOn = "mtgl_edit_btn";
+            tglAreaMusic.ImgOff = "mtgl_edit_btn";
+            tglAreaMusic.X = panelLeftLocation + 0 * gv.uiSquareSize;
+            tglAreaMusic.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 6);
+            tglAreaMusic.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            tglAreaMusic.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
             if (tglSettingAreaVisibleDistance == null)
             {
                 tglSettingAreaVisibleDistance = new IbbToggle(gv);
@@ -448,7 +460,7 @@ namespace IBbasic
             tglSettingAreaVisibleDistance.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             tglSettingAreaVisibleDistance.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             tglSettingAreaVisibleDistance.X = panelLeftLocation + 0 * gv.uiSquareSize;
-            tglSettingAreaVisibleDistance.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 6);
+            tglSettingAreaVisibleDistance.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 8);
             tglSettingAreaVisibleDistance.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingAreaVisibleDistance.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -459,7 +471,7 @@ namespace IBbasic
             tglSettingTimePerSquare.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
             tglSettingTimePerSquare.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
             tglSettingTimePerSquare.X = panelLeftLocation + 0 * gv.uiSquareSize;
-            tglSettingTimePerSquare.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 8);
+            tglSettingTimePerSquare.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 10);
             tglSettingTimePerSquare.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingTimePerSquare.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -470,7 +482,7 @@ namespace IBbasic
             tglSettingIs3dArea.ImgOn = "mtgl_rbtn_on";
             tglSettingIs3dArea.ImgOff = "mtgl_rbtn_off";
             tglSettingIs3dArea.X = panelLeftLocation;
-            tglSettingIs3dArea.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 10);
+            tglSettingIs3dArea.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
             tglSettingIs3dArea.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingIs3dArea.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -481,7 +493,7 @@ namespace IBbasic
             tglSettingRestingAllowed.ImgOn = "mtgl_rbtn_on";
             tglSettingRestingAllowed.ImgOff = "mtgl_rbtn_off";
             tglSettingRestingAllowed.X = panelLeftLocation;
-            tglSettingRestingAllowed.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 12);
+            tglSettingRestingAllowed.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
             tglSettingRestingAllowed.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingRestingAllowed.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -492,7 +504,7 @@ namespace IBbasic
             tglSettingUseMiniMapFogOfWar.ImgOn = "mtgl_rbtn_on";
             tglSettingUseMiniMapFogOfWar.ImgOff = "mtgl_rbtn_off";
             tglSettingUseMiniMapFogOfWar.X = panelLeftLocation;
-            tglSettingUseMiniMapFogOfWar.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 14);
+            tglSettingUseMiniMapFogOfWar.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
             tglSettingUseMiniMapFogOfWar.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingUseMiniMapFogOfWar.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -503,7 +515,7 @@ namespace IBbasic
             tglSettingUseDayNightCycle.ImgOn = "mtgl_rbtn_on";
             tglSettingUseDayNightCycle.ImgOff = "mtgl_rbtn_off";
             tglSettingUseDayNightCycle.X = panelLeftLocation;
-            tglSettingUseDayNightCycle.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 16);
+            tglSettingUseDayNightCycle.Y = panelTopLocation + ((gv.fontHeight + gv.fontLineSpacing) * 18);
             tglSettingUseDayNightCycle.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             tglSettingUseDayNightCycle.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
@@ -2111,39 +2123,39 @@ namespace IBbasic
             {
                 foreach (Coordinate p in t.TriggerSquaresList)
                 {
-                    int dx = (int)(((p.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels);
-                    int dy = (int)((p.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler);
-                    //Pen pen = new Pen(Color.Orange, 2);
+                    string TrigColor = "highlight_yellowTrig";
                     SKColor clr = SKColors.Orange;
                     if ((t.Event1Type.Equals("encounter")) || (t.Event2Type.Equals("encounter")) || (t.Event3Type.Equals("encounter")))
                     {
-                        clr = SKColors.Red;
+                        TrigColor = "highlight_redTrig";
                     }
                     else if (t.Event1Type.Equals("conversation"))
                     {
-                        clr = SKColors.Yellow;
+                        TrigColor = "highlight_yellowTrig";
                     }
                     else if (t.Event1Type.Equals("script"))
                     {
-                        clr = SKColors.Blue;
+                        TrigColor = "highlight_blueTrig";
                     }
                     else if (t.Event1Type.Equals("transition"))
                     {
-                        clr = SKColors.Lime;
+                        TrigColor = "highlight_greenTrig";
                     }
                     else if (t.Event1Type.Equals("container"))
                     {
-                        clr = SKColors.Magenta;
+                        TrigColor = "highlight_magentaTrig";
                     }
-                    IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / (int)(mapSquareSizeScaler * gv.scaler) - 6, gv.squareSize / (int)(mapSquareSizeScaler * gv.scaler) - 6);
-                    gv.DrawRectangle(rect, clr, 2);
+
+                    int tlX = (int)((p.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int tlY = (int)((p.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
+                    src = new IbRect(0, 0, gv.cc.GetFromBitmapList(TrigColor).Width, gv.cc.GetFromBitmapList(TrigColor).Height);
+                    dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
+                    gv.DrawBitmap(gv.cc.GetFromBitmapList(TrigColor), src, dst, !t.ImageFacingLeft);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
-                        int tlX = (int)((p.X - upperSquareX) * gv.squareSize / mapSquareSizeScaler * gv.scaler);
-                        int tlY = (int)((p.Y - upperSquareY) * gv.squareSize / mapSquareSizeScaler * gv.scaler);
-                        int brX = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
-                        int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                         gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
@@ -2894,11 +2906,15 @@ namespace IBbasic
 
             int shiftForFont = (tglSettingAreaName.Height / 2) - (gv.fontHeight / 2);
             tglSettingAreaName.Draw();
-            gv.DrawText("Area Name:", tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y, "wh");
+            gv.DrawText("Area Name:", tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y, "yl");
             gv.DrawText(gv.mod.currentArea.Filename, tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             tglSettingInGameAreaName.Draw();
-            gv.DrawText("In-Game Area", tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y, "wh");
-            gv.DrawText("Name: " + gv.mod.currentArea.inGameAreaName, tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            gv.DrawText("In-Game Name:", tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y, "yl");
+            gv.DrawText(gv.mod.currentArea.inGameAreaName, tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglAreaMusic.Draw();
+            gv.DrawText("Area Music:", tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y, "yl");
+            gv.DrawText(gv.mod.currentArea.AreaMusic, tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+
             tglSettingAreaVisibleDistance.Draw();
             gv.DrawText("Visible", tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y, "wh");
             gv.DrawText("Distance: " + gv.mod.currentArea.AreaVisibleDistance, tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
@@ -3348,6 +3364,10 @@ namespace IBbasic
                     else if (tglSettingInGameAreaName.getImpact(x, y))
                     {
                         changeAreaInGameName();
+                    }
+                    else if (tglAreaMusic.getImpact(x, y))
+                    {
+                        changeAreaMusic();
                     }
                     else if (tglSettingAreaVisibleDistance.getImpact(x, y))
                     {
@@ -4178,6 +4198,32 @@ namespace IBbasic
                     }
                 }
             }*/
+        }
+        public async void changeAreaMusic()
+        {
+            List<string> items = GetAreaMusicList();
+            items.Insert(0, "none");
+            items.Insert(0, "cancel");
+
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select music for this area:");
+            if (selected != "cancel")
+            {
+                gv.mod.currentArea.AreaMusic = selected;
+            }
+            gv.touchEnabled = true;
+        }
+        public List<string> GetAreaMusicList()
+        {
+            List<string> musicList = new List<string>();
+            //MODULE SPECIFIC
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\sounds", "\\modules\\" + gv.mod.moduleName, ".mp3");
+            foreach (string f in files)
+            {
+                string filenameNoExt = Path.GetFileNameWithoutExtension(f);
+                musicList.Add(filenameNoExt);
+            }
+            return musicList;
         }
         public async void changeAreaVisibleDistance()
         {

@@ -13,7 +13,8 @@ namespace IBbasic
     public class Encounter 
     {
 	    public string encounterName = "newEncounter";
-	    public bool UseDayNightCycle = false;
+        public string AreaMusic = "none";
+        public bool UseDayNightCycle = false;
         public int MapSizeX = 11;
         public int MapSizeY = 11;
         public List<string> Layer1Filename = new List<string>();

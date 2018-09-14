@@ -41,9 +41,9 @@ namespace IBbasic
 
         void TrackAppEvent(string Category, string EventAction, string EventLabel);
 
-        void CreateAreaMusicPlayer();
-        void LoadAreaMusicFile(string fileName);
-        void PlayAreaMusic();
+        void PlaySound(GameView gv, string fileName);
+        void PlayAreaMusic(GameView gv, string fileName);
+        void PlayAreaAmbientSounds(GameView gv, string fileName);
         void StopAreaMusic();
         void PauseAreaMusic();
     }

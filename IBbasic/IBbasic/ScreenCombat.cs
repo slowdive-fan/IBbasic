@@ -3829,6 +3829,10 @@ namespace IBbasic
                         trg.isShown = false;
                     }
                 }
+                if (gv.mod.playSoundFx)
+                {
+                    gv.PlayAreaMusic(gv.mod.currentArea.AreaMusic);                    
+                }
                 //do END ENCOUNTER IBScript
                 //gv.cc.doIBScriptBasedOnFilename(gv.mod.currentEncounter.OnEndCombatIBScript, gv.mod.currentEncounter.OnEndCombatIBScriptParms);
                 if (gv.cc.calledEncounterFromProp)
@@ -5538,7 +5542,7 @@ namespace IBbasic
                     {
                         if (gv.messageBox.btnReturn.getImpact(x, y))
                         {
-                            gv.PlaySound("btn_click");
+                            //gv.PlaySound("btn_click");
                             gv.showMessageBox = false;
                         }
                         return;

@@ -246,6 +246,7 @@ namespace IBbasic
             if (tglZoom == null)
             {
                 tglZoom = new IbbToggle(gv);
+                tglZoom.toggleOn = true;
             }
             tglZoom.ImgOn = "tgl_zoom_on";
             tglZoom.ImgOff = "tgl_zoom_off";
