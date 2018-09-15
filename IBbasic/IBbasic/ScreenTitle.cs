@@ -226,18 +226,21 @@ namespace IBbasic
                     else if (btnPlayerGuide.getImpact(x, y))
                     {
                         gv.PlaySound("btn_click");
+                        gv.TrackerSendEvent(":READ_PLAYER_GUIDE:", "none", true);
                         gv.showMessageBox = true;
                         gv.cc.tutorialPlayersGuide();
                     }
                     else if (btnBeginnerGuide.getImpact(x, y))
                     {
                         gv.PlaySound("btn_click");
+                        gv.TrackerSendEvent(":READ_BEGINNER_GUIDE:", "none", true);
                         gv.showMessageBox = true;
                         gv.cc.tutorialBeginnersGuide();
                     }
                     else if (btnAbout.getImpact(x, y))
                     {
                         gv.PlaySound("btn_click");
+                        gv.TrackerSendEvent(":READ_ABOUT:", "none", true);
                         gv.showMessageBox = true;
                         gv.cc.doAboutDialog();
                     }
@@ -246,6 +249,7 @@ namespace IBbasic
                         if (!gv.fixedModule.Equals(""))
                         {
                             //call rate
+                            gv.TrackerSendEvent(":RATE_CLICKED:", "none", true);
                             gv.RateApp();
                         }
                     }

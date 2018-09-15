@@ -473,11 +473,30 @@ namespace ElderinStone.Droid
         }
 
         Stream GetStreamFromFile(GameView gv, string filename)
-        {
+        {            
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            var stream = assembly.GetManifestResourceStream("DrumPad." + filename);
-
-            return stream;
+            var stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.modules." + gv.mod.moduleName + "." + filename);
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.sounds." + filename);
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.sounds." + filename + ".wav");
+            }
+            if (stream == null)
+            {
+                stream = assembly.GetManifestResourceStream("ElderinStone.Droid.Assets.sounds." + filename + ".mp3");
+            }
+            return stream;            
         }
         public void PlaySound(GameView gv, string filenameNoExtension)
         {

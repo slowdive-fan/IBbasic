@@ -1654,6 +1654,24 @@ namespace IBbasic
             }
             return 0;
         }
+        public string GetTriggerImageAtSquare2D(int x, int y)
+        {
+            string filename = "none";
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    if ((p.X == x) && (p.Y == y))
+                    {
+                        if (t.isShown)
+                        {
+                            return t.ImageFileName;
+                        }
+                    }
+                }
+            }
+            return filename;
+        }
         public string GetTriggerImageAtSquare(int col, int row)
         {
             string filename = "none";
@@ -2149,22 +2167,8 @@ namespace IBbasic
         }
         public void drawWorldMap()
         {
-            /*
-            int minX = gv.mod.PlayerLocationX - gv.playerOffset - 2; //using -2 in case a large tile (3x3) needs to start off the visible map space to be seen
-            if (minX < 0) { minX = 0; }
-            int minY = gv.mod.PlayerLocationY - gv.playerOffset - 2; //usin g -2 in case a large tile (3x3) needs to start off the visible map space to be seen
-            if (minY < 0) { minY = 0; }
-
-            int maxX = gv.mod.PlayerLocationX + gv.playerOffset + 1;
-            if (maxX > this.gv.mod.currentArea.MapSizeX) { maxX = this.gv.mod.currentArea.MapSizeX; }
-            int maxY = gv.mod.PlayerLocationY + gv.playerOffset + 1; // use 2 so that extends down to bottom of screen
-            if (maxY > this.gv.mod.currentArea.MapSizeY) { maxY = this.gv.mod.currentArea.MapSizeY; }
-            */
             int offset = gv.playerOffset;
-            /*if (use11x11)
-            {
-                offset = gv.playerOffsetZoom;
-            }*/
+
             #region Draw Layer 1
             for (int x = gv.mod.PlayerLocationX - offset; x <= gv.mod.PlayerLocationX + offset - 1; x++)
             {
@@ -2260,6 +2264,36 @@ namespace IBbasic
                 }
             }
             #endregion
+            #region Draw Trigger Images
+            for (int x = gv.mod.PlayerLocationX - offset; x <= gv.mod.PlayerLocationX + offset - 1; x++)
+            {
+                for (int y = gv.mod.PlayerLocationY - offset; y <= gv.mod.PlayerLocationY + offset - 1; y++)
+                {
+                    //check if valid map location
+                    if (x < 0) { continue; }
+                    if (y < 0) { continue; }
+                    if (x > this.gv.mod.currentArea.MapSizeX - 1) { continue; }
+                    if (y > this.gv.mod.currentArea.MapSizeY - 1) { continue; }
+
+                    string trigImage = GetTriggerImageAtSquare2D(x, y);
+                    if (!trigImage.Equals("none"))
+                    {
+                        int tlX = (x - gv.mod.PlayerLocationX + offset) * (int)(gv.squareSize * gv.scaler);
+                        int tlY = (y - gv.mod.PlayerLocationY + offset) * (int)(gv.squareSize * gv.scaler);
+                        int brX = (int)((int)(gv.squareSize * gv.scaler));
+                        int brY = (int)((int)(gv.squareSize * gv.scaler));
+
+                        try
+                        {
+                            IbRect src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(trigImage).Width, gv.cc.GetFromTileBitmapList(trigImage).Height);
+                            IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
+                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        }
+                        catch { }
+                    }
+                }
+            }
+            #endregion
         }
         /*public void drawProps()
         {
@@ -2292,7 +2326,7 @@ namespace IBbasic
                     }
                 }
             }
-        }*/        
+        }*/
         public void drawMiniMap()
         {
             if (showMiniMap)
@@ -3503,6 +3537,7 @@ namespace IBbasic
                             gv.resetScaler(true, false);
                             gv.cc.addLogText("lime", "Normal Scaling");
                             gv.cc.addLogText("yellow", "Scaler: " + gv.scaler);
+                            gv.TrackerSendEvent(":TURN_SCALER_OFF:" + gv.scaler + ":", "none", true);
                         }
                         else
                         {
@@ -3511,6 +3546,7 @@ namespace IBbasic
                             gv.cc.addLogText("lime", "Max Scaling");
                             gv.cc.addLogText("yellow", "Scaler: " + gv.scaler);
                             gv.cc.addLogText("lime", "Use of Max Scaling may result in some graphical anomalies.");
+                            gv.TrackerSendEvent(":TURN_SCALER_ON:" + gv.scaler + ":", "none", true);
                         }
                     }
                     if (tglFullParty.getImpact(x, y))

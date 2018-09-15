@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FBCBF6F5-B0CD-4B7B-AAE5-A7B736BE589D}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>LanternaExile.Droid</RootNamespace>
+    <AssemblyName>LanternaExile.Android</AssemblyName>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>1.60.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Analytics">
+      <Version>60.1142.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndLoad_Android.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\adela.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\andy.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\badger.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\battle.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\bearAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\bearCave.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\beetleAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\beetleMound.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\belin.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\C_guard.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\captive.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\captive2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castle.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleAttack1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleAttack2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleAttack3.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\castleEnc3.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\cave_camp.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveAttackEnc1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveAttackEnc3.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveAttackEnc4.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveEnc3.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveEnc4.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caves.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\caveSpiderAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\cavestoforestcave.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\charn.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\charn_battle.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerDC15.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerDC20.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerDC25.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerTrapDC15.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerTrapDC20.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\containerTrapDC25.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\dalin.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\dolia.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\door02.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\doorDC15.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\doorDC20.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\doorDC25.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\dungeon.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\earawen.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\elos.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\falls.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\falls_convo.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\fallsNar.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\fifur.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\find_sister.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forCaveEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forCaveEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forCaveEnc3.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forCaveEnc4.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forCaveEnc5.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forest.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forest_camp.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestcave.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestCaveEnc1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestCaveEnc2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestcavetocaves.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc3.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc4.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc5.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\forestEnc6.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\galdor.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\Jaden.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\jail_door.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\jena.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\jena_door.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\koboldDoor.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\koboldEncConvo1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\koboldEncConvo2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\lily.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\Marissa2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\melia.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\mero.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\nord.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\randel.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\randel_town.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\sandur.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\secretPass.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\sildor.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\sildor_falls.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\skeleContainerConvo.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\slave.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\stag.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\tindra.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\tomb_sign.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\tombAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\tombEnc.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\tree_sign.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\valley.are" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\valleyAttackEnc1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\valleyAttackEnc2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\valleyEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\valleyEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\veloria.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\verto.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\vertoEnc.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\volt_chest.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\voltAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\voltEnc.enc" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\wolfAttack.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\zorn.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\zornForestAttack1.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\zornForestAttack2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Lanterna\zornForestAttack3.dlg" />
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.axml" />
+    <AndroidResource Include="Resources\layout\Toolbar.axml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\drawable\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_ibmini.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_ibmini.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\Lanterna.mod" />
+  </ItemGroup>
+  <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>
