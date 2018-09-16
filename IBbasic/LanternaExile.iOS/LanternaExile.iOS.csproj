@@ -702,6 +702,9 @@
     <EmbeddedResource Include="Assets\modules\Lanterna\forest.mp3" />
     <EmbeddedResource Include="Assets\modules\Lanterna\house.mp3" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_charntree.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
 </Project>

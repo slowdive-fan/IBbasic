@@ -136,6 +136,7 @@ namespace IBbasic
         public bool stillProcessingGameLoop = false;
         public float fps = 0;
         public int reportFPScount = 0;
+        public int checkAudioPlayBack = 0;
         public bool animationTimerOn = false;
         public long animationStartTime = 0;
         public int animationDelayTime = 0;
@@ -810,6 +811,15 @@ namespace IBbasic
                         fps = 1000 / denom;
                     }
                 }
+                if (checkAudioPlayBack >= 10)
+                {
+                    checkAudioPlayBack = 0;
+                    if (mod.playSoundFx)
+                    {
+                        RestartAreaMusicIfEnded();
+                    }
+                }
+                checkAudioPlayBack++;
                 reportFPScount++;
                 previousTime = current; //remember the current time at the beginning of this tick call for the next time through the game loop to calculate elapsed time
                 stillProcessingGameLoop = false; //finished game loop so okay to let the next tick call enter the game loop      
@@ -827,7 +837,7 @@ namespace IBbasic
                 screenCombat.Update(elapsed);
             }
         }
-
+        
         //DRAW ROUTINES
         public void DrawText(string text, float xLoc, float yLoc, string color)
         {
@@ -2055,6 +2065,10 @@ namespace IBbasic
             }
         }
 
+        public void RestartAreaMusicIfEnded()
+        {
+            DependencyService.Get<ISaveAndLoad>().RestartAreaMusicIfEnded(this);
+        }
         public void PlaySound(string filenameNoExtension)
         {
             DependencyService.Get<ISaveAndLoad>().PlaySound(this, filenameNoExtension);

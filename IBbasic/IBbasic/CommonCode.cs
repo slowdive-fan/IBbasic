@@ -480,6 +480,16 @@ namespace IBbasic
 
             newScript = null;
             newScript = new ScriptObject();
+            newScript.name = "gaDisableTriggerHideImage";
+            newScript.description = "Disables a trigger and hides the trigger image as well";
+            newScript.parmType1 = parmType.strg;
+            newScript.parmDescription1 = "(string) the tag of the trigger";
+            newScript.parmType2 = parmType.area_list;
+            newScript.parmDescription2 = "(string) area name (as seen in area list)";
+            scriptList.Add(newScript);
+            
+            newScript = null;
+            newScript = new ScriptObject();
             newScript.name = "gaShowTriggerImage";
             newScript.description = "Shows or Hides a Trigger's Image";
             newScript.parmType1 = parmType.strg;

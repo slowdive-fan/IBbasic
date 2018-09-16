@@ -366,6 +366,10 @@ namespace IBbasic
                     {
                         EnableDisableTrigger(p1, p2, p3);
                     }
+                    else if (filename.Equals("gaDisableTriggerHideImage.cs"))
+                    {
+                        DisableTriggerHideImage(p1, p2);
+                    }
                     else if (filename.Equals("gaShowTriggerImage.cs"))
                     {
                         ShowTriggerImage(p1, p2, p3);
@@ -2369,6 +2373,87 @@ namespace IBbasic
                                 if (trig != null)
                                 {
                                     trig.Enabled = enable;
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (mod.debugMode) //SD_20131102
+                {
+                    gv.cc.addLogText("<font color='yellow'>" + "can't find designated trigger tag in area: " + areaName + ".are</font><BR>");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (mod.debugMode) //SD_20131102
+                {
+                    gv.cc.addLogText("<font color='yellow'>" + "failed to find trigger due to exception error" + "</font>" +
+                            "<BR>");
+                }
+                gv.errorLog(ex.ToString());
+            }
+        }
+        public void DisableTriggerHideImage(string tag, string areaName)
+        {
+            try
+            {
+                foreach (Area ar in mod.moduleAreasObjects)
+                {
+                    Trigger trig = ar.getTriggerByTag(tag);
+                    if (trig != null)
+                    {
+                        trig.Enabled = false;
+                        trig.isShown = false;
+                        return;
+                    }
+                }
+                string s = gv.LoadStringFromEitherFolder("\\modules\\" + gv.mod.moduleName + "\\" + areaName + ".are", "\\modules\\" + gv.mod.moduleName + "\\" + areaName + ".are");
+                if (!s.Equals(""))
+                {
+                    using (StringReader sr = new StringReader(s))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        Area are = (Area)serializer.Deserialize(sr, typeof(Area));
+                        if (are != null)
+                        {
+                            if (gv.cc.saveMod != null)
+                            {
+                                foreach (AreaSave sar in gv.cc.saveMod.moduleAreasObjects)
+                                {
+                                    if (sar.Filename.Equals(are.Filename)) //sar is saved game, ar is new game from toolset version
+                                    {
+                                        //tiles
+                                        for (int index = 0; index < are.Visible.Count; index++)
+                                        {
+                                            are.Visible[index] = sar.Visible[index];
+                                        }
+                                        //triggers
+                                        foreach (Trigger tr in are.Triggers)
+                                        {
+                                            foreach (TriggerSave str in sar.Triggers)
+                                            {
+                                                if (tr.TriggerTag.Equals(str.TriggerTag))
+                                                {
+                                                    tr.Enabled = str.Enabled;
+                                                    tr.EnabledEvent1 = str.EnabledEvent1;
+                                                    tr.EnabledEvent2 = str.EnabledEvent2;
+                                                    tr.EnabledEvent3 = str.EnabledEvent3;
+                                                    //may want to copy the trigger's squares list from the save game if builders can modify the list with scripts
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            gv.mod.moduleAreasObjects.Add(are);
+                            foreach (Area ar in mod.moduleAreasObjects)
+                            {
+                                Trigger trig = ar.getTriggerByTag(tag);
+                                if (trig != null)
+                                {
+                                    trig.Enabled = false;
+                                    trig.isShown = false;
                                     return;
                                 }
                             }

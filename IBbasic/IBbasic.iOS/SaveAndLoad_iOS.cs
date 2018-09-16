@@ -645,7 +645,7 @@ namespace IBbasic.iOS
             {
                 if (soundPlayer == null)
                 {
-                    soundPlayer = CrossSimpleAudioPlayer.Current;
+                    soundPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
                 try
                 {
@@ -673,7 +673,7 @@ namespace IBbasic.iOS
             {
                 if (areaMusicPlayer == null)
                 {
-                    areaMusicPlayer = CrossSimpleAudioPlayer.Current;
+                    areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
                 try
                 {
@@ -701,7 +701,7 @@ namespace IBbasic.iOS
             {
                 if (areaAmbientSoundsPlayer == null)
                 {
-                    areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.Current;
+                    areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
                 try
                 {
@@ -718,10 +718,73 @@ namespace IBbasic.iOS
                 }
             }
         }
+        public void RestartAreaMusicIfEnded(GameView gv)
+        {
+            //restart area music
+            if (areaMusicPlayer == null)
+            {
+                areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            }
+            try
+            {
+                if ((!areaMusicPlayer.IsPlaying) && (gv.mod.playSoundFx))
+                {
+                    try
+                    {
+                        areaMusicPlayer.Play();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            //restart area ambient sounds
+            if (areaAmbientSoundsPlayer == null)
+            {
+                areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            }
+            try
+            {
+                if ((!areaAmbientSoundsPlayer.IsPlaying) && (gv.mod.playSoundFx))
+                {
+                    try
+                    {
+                        areaAmbientSoundsPlayer.Play();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public void StopAreaMusic()
         {
-            //playerAreaMusic.Pause();
-            //playerAreaMusic.SeekTo(0);
+            if (areaMusicPlayer == null)
+            {
+                areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            }
+            try
+            {
+                if (areaMusicPlayer.IsPlaying)
+                {
+                    areaMusicPlayer.Stop();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public void PauseAreaMusic()
         {
