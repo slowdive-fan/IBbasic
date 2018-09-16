@@ -197,14 +197,417 @@
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\drawable\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_ibmini.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\nar_blob.png" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\modules\Lanterna\Lanterna.mod" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\nar_cave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\nar_forest_bear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\nar_forest_beetle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\nar_forest_nar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_adela.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_andy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_badger.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_belin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_campfireoff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_captive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_dalin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_dolia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_doorh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_doorv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_earawen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_elos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_fifur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_galdor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_jaden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_jena.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_lily.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_lizardfighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_marissa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_melia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_mero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_nord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_orc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_sandur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_sildor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_skeleton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_stag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_tindra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_treasure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_veloria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_verto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_wmtrans.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\prp_zorn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_adela.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_andy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_belin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_captive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_dalin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_dolia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_earawen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_elos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_fifur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_galdor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_jena.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_lily.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_melia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_mero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_nord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_randel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_sandur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_sildor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_slave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_tindra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_veloria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_verto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\ptr_zorn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_acid_beetle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_alec.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_brown_bear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_dalin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_dd_boltman.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_dd_fighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_fire_beetle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_fire_beetle_giant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_galdor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gangarcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gangcleric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gangcook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gangfighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gangwizard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_giant_rat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gnoll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gnollcleric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_gnollleader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_kobold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_kobold_archer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_kobold_archer_elite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_kobold_champion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_kobold_giant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lily.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizardgiant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizardqueen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizmenarcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizmencleric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizmenfighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_lizmenleader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_ogre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_orc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_orcarcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_orccleric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_orcleader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_randel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_sildor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_spider.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_spider_giant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_tom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_veloria.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_verto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_volt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_wolf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_wyvern.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_zorn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_zorn_fighter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_zorn_mage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\tkn_zorn_thief.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima147.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima148.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima149.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima156.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima157.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima165.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima171.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima172.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima173.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_n_bloodskulls.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_w_japan2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_w_japan3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_w_japan4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima132.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima142.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\t_m_ultima145.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\graphics\lanterna_title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\battle.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\cave.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\forest.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Lanterna\house.mp3" />
   </ItemGroup>
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

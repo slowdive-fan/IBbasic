@@ -804,7 +804,11 @@ namespace IBbasic
                 if (reportFPScount >= 10)
                 {
                     reportFPScount = 0;
-                    fps = 1000 / (current - previousTime);
+                    long denom = current - previousTime;
+                    if (denom != 0)
+                    {
+                        fps = 1000 / denom;
+                    }
                 }
                 reportFPScount++;
                 previousTime = current; //remember the current time at the beginning of this tick call for the next time through the game loop to calculate elapsed time

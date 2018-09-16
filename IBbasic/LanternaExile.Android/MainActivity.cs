@@ -10,7 +10,7 @@ using IBbasic;
 
 namespace LanternaExile.Droid
 {
-    [Activity(Label = "LanternaExile", Icon = "@drawable/ic_ibmini", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "LanternaExile", Icon = "@drawable/ic_icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -19,6 +19,10 @@ namespace LanternaExile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            this.RequestedOrientation = ScreenOrientation.Landscape;
+            this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+            
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 			
 			SaveAndLoad_Android.GetGASInstance().Initialize_NativeGAS(this);

@@ -503,7 +503,7 @@ namespace LanternaExile.iOS
         }
         public void PlaySound(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
@@ -531,7 +531,7 @@ namespace LanternaExile.iOS
         }
         public void PlayAreaMusic(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
@@ -559,7 +559,7 @@ namespace LanternaExile.iOS
         }
         public void PlayAreaAmbientSounds(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;

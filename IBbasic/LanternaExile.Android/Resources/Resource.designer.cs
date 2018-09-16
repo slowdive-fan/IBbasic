@@ -2604,7 +2604,7 @@ namespace LanternaExile.Droid
 			public const int ic_group_expand_15 = 2130837651;
 			
 			// aapt resource value: 0x7f020094
-			public const int ic_ibmini = 2130837652;
+			public const int ic_icon = 2130837652;
 			
 			// aapt resource value: 0x7f020095
 			public const int ic_media_pause_dark = 2130837653;

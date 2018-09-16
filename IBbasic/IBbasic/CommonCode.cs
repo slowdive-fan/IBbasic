@@ -474,6 +474,20 @@ namespace IBbasic
             newScript.parmDescription1 = "(string) the tag of the trigger";
             newScript.parmType2 = parmType.boolean;
             newScript.parmDescription2 = "(bool) true = enable, false = disable";
+            newScript.parmType3 = parmType.area_list;
+            newScript.parmDescription3 = "(string) area name (as seen in area list)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "gaShowTriggerImage";
+            newScript.description = "Shows or Hides a Trigger's Image";
+            newScript.parmType1 = parmType.strg;
+            newScript.parmDescription1 = "(string) the tag of the trigger";
+            newScript.parmType2 = parmType.boolean;
+            newScript.parmDescription2 = "(bool) true = show image, false = hide image";
+            newScript.parmType3 = parmType.area_list;
+            newScript.parmDescription3 = "(string) area name (as seen in area list)";
             scriptList.Add(newScript);
 
             newScript = null;
@@ -494,6 +508,8 @@ namespace IBbasic
             newScript.parmDescription2 = "(int) event number to enable/disable";
             newScript.parmType3 = parmType.boolean;
             newScript.parmDescription3 = "(bool) true = enable, false = disable";
+            newScript.parmType4 = parmType.area_list;
+            newScript.parmDescription4 = "(string) area name (as seen in area list)";
             scriptList.Add(newScript);
 
             newScript = null;

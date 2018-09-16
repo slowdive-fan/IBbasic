@@ -19,6 +19,10 @@ namespace ElderinStone.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            this.RequestedOrientation = ScreenOrientation.Landscape;
+            this.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             
 			SaveAndLoad_Android.GetGASInstance().Initialize_NativeGAS(this);
