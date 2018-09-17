@@ -4926,18 +4926,28 @@ namespace IBbasic
         {
             int txtH = (int)gv.fontHeight;
 
+            int yLoc = gv.cc.floatyTextLoc.Y - (gv.squareSize / 2);
+            if (yLoc < (gv.oYshift + (gv.squareSize * gv.scaler)) * 2)
+            {
+                yLoc = (int)((gv.cc.floatyTextLoc.Y - (gv.squareSize / 2)) + (gv.squareSize * gv.scaler));
+            }
+            else
+            {
+                yLoc = (int)((gv.cc.floatyTextLoc.Y - (gv.squareSize / 2)) - (gv.squareSize * gv.scaler));
+            }
+
             for (int x = -2; x <= 2; x++)
             {
                 for (int y = -2; y <= 2; y++)
                 {
-                    gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X + x, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + txtH + y, "bk");
-                    gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X + x, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + (txtH * 2) + y, "bk");
-                    gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X + x, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + (txtH * 3) + y, "bk");
+                    gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X + x, yLoc + txtH + y, "bk");
+                    gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 2) + y, "bk");
+                    gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 3) + y, "bk");
                 }
             }
-            gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + txtH, "yl");
-            gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + txtH * 2, "yl");
-            gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X, gv.cc.floatyTextLoc.Y - (gv.squareSize / 2) + txtH * 3, "yl");
+            gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X, yLoc + txtH, "yl");
+            gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X, yLoc + txtH * 2, "yl");
+            gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X, yLoc + txtH * 3, "yl");
         }
         public void drawHPText()
         {

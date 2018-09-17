@@ -296,18 +296,18 @@ namespace IBbasic
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
 		    btnPageIndex.Draw();
 		    btnInventoryLeft.Draw();
-		    btnInventoryRight.Draw();		
-		
-		    //DRAW TEXT		
-		    locY = (3 * gv.uiSquareSize) + (pH * 3);
-		    gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "gy");
+		    btnInventoryRight.Draw();
+
+            //DRAW TEXT		
+            locY = (3 * gv.uiSquareSize);
+            gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "gy");
             gv.DrawText("Inventory", locX + gv.uiSquareSize * 4, locY += spacing, "gy");
-		    locY = (int)(3.5 * gv.uiSquareSize) + (pH * 2);
-		    gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "yl");
+            locY = (int)(3.5 * gv.uiSquareSize);
+            gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "yl");
             gv.DrawText(gv.mod.goldLabelPlural + ": " + gv.mod.partyGold, locX + gv.uiSquareSize * 4, locY += spacing, "yl");
-		
-		    //DRAW ALL PARTY INVENTORY SLOTS		
-		    cntSlot = 0;
+
+            //DRAW ALL PARTY INVENTORY SLOTS		
+            cntSlot = 0;
 		    foreach (IbbButton btn in btnInventorySlot)
 		    {
 			    if (cntSlot == inventorySlotIndex) {btn.glowOn = true;}
