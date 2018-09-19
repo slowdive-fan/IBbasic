@@ -12990,7 +12990,7 @@
       "tagOfSender": "senderTag",
       "classLevelOfSender": 0,
       "description": "A swarm of biting insects! In addition to immediate damage, this causes penalties to attack and defence for 4 rounds.",
-      "spriteFilename": "held",
+      "spriteFilename": "fx_held",
       "durationInUnits": 18,
       "currentDurationInUnits": 0,
       "startingTimeInUnits": 0,

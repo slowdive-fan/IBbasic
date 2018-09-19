@@ -50,8 +50,8 @@ namespace LanternaExile.iOS
 
         public void RateApp()
         {
-            //string urlStore = "https://itunes.apple.com/us/app/the-raventhal-ibbasic-rpg/id1434796255?action=write-review";
-            //Device.OpenUri(new Uri(urlStore));
+            string urlStore = "https://itunes.apple.com/us/app/lanterna-the-exile-ibbasic/id1436560912?action=write-review";
+            Device.OpenUri(new Uri(urlStore));
         }
 
         public bool AllowReadWriteExternal()
