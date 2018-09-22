@@ -27,6 +27,10 @@ namespace IBbasic
         private IbbButton btnTilesLeft = null;
         private IbbButton btnTilesRight = null;
         private IbbButton btnTilesPageIndex = null;
+        public IbbToggle tglMiscTiles = null;
+        public IbbToggle tglWallFloorTiles = null;
+        public IbbToggle tglPropTiles = null;
+        public IbbToggle tglUserTiles = null;
         public IbbToggle rbtnShowLayer1 = null;
         public IbbToggle rbtnShowLayer2 = null;
         public IbbToggle rbtnShowLayer3 = null;
@@ -36,7 +40,7 @@ namespace IBbasic
         public string currentTile = "none";
         private int tilesPageIndex = 0;
         private int tileSlotIndex = 0;
-        private int tileSlotsPerPage = 24;
+        private int tileSlotsPerPage = 20;
 
         //Place Creatures Panel
         private IbbButton btnCrtLeft = null;
@@ -104,7 +108,10 @@ namespace IBbasic
         public string currentMode = "Info"; //Info, Tiles, Triggers, WalkLoS, Crt, Settings
         public int mapStartLocXinPixels;
 
-        List<string> tilesList = new List<string>();
+        List<string> tilesWallFloorList = new List<string>();
+        List<string> tilesPropList = new List<string>();
+        List<string> tilesMiscList = new List<string>();
+        List<string> tilesUserList = new List<string>();
 
         public ToolsetScreenEncounterEditor(GameView g)
         {
@@ -117,6 +124,10 @@ namespace IBbasic
             setupWalkLoSPanelControls();
             setupTriggerPanelControls();
             setupCrtPanelControls();
+            tglMiscTiles.toggleOn = true;
+            tglWallFloorTiles.toggleOn = false;
+            tglPropTiles.toggleOn = false;
+            tglUserTiles.toggleOn = false;
             rbtnEditLayer1.toggleOn = true;
             rbtnEditLayer2.toggleOn = false;
             rbtnEditLayer3.toggleOn = false;
@@ -134,13 +145,32 @@ namespace IBbasic
             description.tbHeight = 6 * gv.squareSize;
             description.showBoxBorder = false;
 
-            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\tiles", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+            //from module user folder first
+            List<string> files = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
             foreach (string f in files)
             {
                 string filenameNoExt = Path.GetFileNameWithoutExtension(f);
                 if (filenameNoExt.StartsWith("t_"))
                 {
-                    tilesList.Add(filenameNoExt);
+                    tilesUserList.Add(filenameNoExt);
+                }
+            }
+            //from engine assets
+            List<string> files2 = gv.GetAllFilesWithExtensionFromBothFolders("\\tiles", "none", ".png");
+            foreach (string f in files2)
+            {
+                string filenameNoExt = Path.GetFileNameWithoutExtension(f);
+                if ((filenameNoExt.StartsWith("t_f_")) || (filenameNoExt.StartsWith("t_fc_")) || (filenameNoExt.StartsWith("t_w_")))
+                {
+                    tilesWallFloorList.Add(filenameNoExt);
+                }
+                else if ((filenameNoExt.StartsWith("t_m_")) || (filenameNoExt.StartsWith("t_n_")))
+                {
+                    tilesPropList.Add(filenameNoExt);
+                }
+                else if (filenameNoExt.StartsWith("t_"))
+                {
+                    tilesMiscList.Add(filenameNoExt);
                 }
             }
         }
@@ -296,6 +326,55 @@ namespace IBbasic
             btnTilesRight.Y = panelTopLocation + (4 * gv.uiSquareSize) + (gv.uiSquareSize / 4);
             btnTilesRight.Height = (int)(gv.ibbheight * gv.scaler);
             btnTilesRight.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (tglMiscTiles == null)
+            {
+                tglMiscTiles = new IbbToggle(gv);
+                tglMiscTiles.toggleOn = true;
+            }
+            tglMiscTiles.ImgOn = "tgl_misc_on";
+            tglMiscTiles.ImgOff = "tgl_misc_off";
+            tglMiscTiles.X = panelLeftLocation + (int)(0 * gv.squareSize * gv.scaler);
+            tglMiscTiles.Y = panelTopLocation + (int)(5 * gv.squareSize * gv.scaler);
+            tglMiscTiles.Height = (int)(gv.squareSize * gv.scaler);
+            tglMiscTiles.Width = (int)(gv.squareSize * gv.scaler);
+
+            if (tglWallFloorTiles == null)
+            {
+                tglWallFloorTiles = new IbbToggle(gv);
+                tglWallFloorTiles.toggleOn = true;
+            }
+            tglWallFloorTiles.ImgOn = "tgl_wallfloor_on";
+            tglWallFloorTiles.ImgOff = "tgl_wallfloor_off";
+            tglWallFloorTiles.X = panelLeftLocation + (int)(1 * gv.squareSize * gv.scaler);
+            tglWallFloorTiles.Y = panelTopLocation + (int)(5 * gv.squareSize * gv.scaler);
+            tglWallFloorTiles.Height = (int)(gv.squareSize * gv.scaler);
+            tglWallFloorTiles.Width = (int)(gv.squareSize * gv.scaler);
+
+            if (tglPropTiles == null)
+            {
+                tglPropTiles = new IbbToggle(gv);
+                tglPropTiles.toggleOn = true;
+            }
+            tglPropTiles.ImgOn = "tgl_prop_on";
+            tglPropTiles.ImgOff = "tgl_prop_off";
+            tglPropTiles.X = panelLeftLocation + (int)(2 * gv.squareSize * gv.scaler);
+            tglPropTiles.Y = panelTopLocation + (int)(5 * gv.squareSize * gv.scaler);
+            tglPropTiles.Height = (int)(gv.squareSize * gv.scaler);
+            tglPropTiles.Width = (int)(gv.squareSize * gv.scaler);
+
+            if (tglUserTiles == null)
+            {
+                tglUserTiles = new IbbToggle(gv);
+                tglUserTiles.toggleOn = true;
+            }
+            tglUserTiles.ImgOn = "tgl_user_on";
+            tglUserTiles.ImgOff = "tgl_user_off";
+            tglUserTiles.X = panelLeftLocation + (int)(3 * gv.squareSize * gv.scaler);
+            tglUserTiles.Y = panelTopLocation + (int)(5 * gv.squareSize * gv.scaler);
+            tglUserTiles.Height = (int)(gv.squareSize * gv.scaler);
+            tglUserTiles.Width = (int)(gv.squareSize * gv.scaler);
+
 
             if (rbtnShowLayer1 == null)
             {
@@ -1216,9 +1295,33 @@ namespace IBbasic
                 for (int y = 0; y < (tileSlotsPerPage / 4); y++)
                 {
                     string tile = "none";
-                    if ((cnt + (tilesPageIndex * tileSlotsPerPage)) < tilesList.Count)
+                    if (tglMiscTiles.toggleOn)
                     {
-                        tile = tilesList[cnt + (tilesPageIndex * tileSlotsPerPage)];
+                        if ((cnt + (tilesPageIndex * tileSlotsPerPage)) < tilesMiscList.Count)
+                        {
+                            tile = tilesMiscList[cnt + (tilesPageIndex * tileSlotsPerPage)];
+                        }
+                    }
+                    else if (tglWallFloorTiles.toggleOn)
+                    {
+                        if ((cnt + (tilesPageIndex * tileSlotsPerPage)) < tilesWallFloorList.Count)
+                        {
+                            tile = tilesWallFloorList[cnt + (tilesPageIndex * tileSlotsPerPage)];
+                        }
+                    }
+                    else if (tglPropTiles.toggleOn)
+                    {
+                        if ((cnt + (tilesPageIndex * tileSlotsPerPage)) < tilesPropList.Count)
+                        {
+                            tile = tilesPropList[cnt + (tilesPageIndex * tileSlotsPerPage)];
+                        }
+                    }
+                    else if (tglUserTiles.toggleOn)
+                    {
+                        if ((cnt + (tilesPageIndex * tileSlotsPerPage)) < tilesUserList.Count)
+                        {
+                            tile = tilesUserList[cnt + (tilesPageIndex * tileSlotsPerPage)];
+                        }
                     }
                     int tlX = (int)(x * gv.squareSize * gv.scaler);
                     int tlY = (int)(y * gv.squareSize * gv.scaler);
@@ -1248,6 +1351,11 @@ namespace IBbasic
 
             //Description     
             gv.DrawText("PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
+
+            tglMiscTiles.Draw();
+            tglWallFloorTiles.Draw();
+            tglPropTiles.Draw();
+            tglUserTiles.Draw();
 
             btnTilesLeft.Draw();
             btnTilesPageIndex.Draw();
@@ -1963,10 +2071,37 @@ namespace IBbasic
                             int xloc = (int)((x - panelLeftLocation) / (gv.squareSize * gv.scaler));
                             int yloc = (int)((y - panelTopLocation) / (gv.squareSize * gv.scaler));
 
-                            if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesList.Count)
+                            if (tglMiscTiles.toggleOn)
                             {
-                                tileSlotIndex = (xloc * (tileSlotsPerPage / 4)) + yloc;
-                                currentTile = tilesList[((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage];
+                                if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesMiscList.Count)
+                                {
+                                    tileSlotIndex = (xloc * (tileSlotsPerPage / 4)) + yloc;
+                                    currentTile = tilesMiscList[((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage];
+                                }
+                            }
+                            else if (tglWallFloorTiles.toggleOn)
+                            {
+                                if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesWallFloorList.Count)
+                                {
+                                    tileSlotIndex = (xloc * (tileSlotsPerPage / 4)) + yloc;
+                                    currentTile = tilesWallFloorList[((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage];
+                                }
+                            }
+                            else if (tglPropTiles.toggleOn)
+                            {
+                                if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesPropList.Count)
+                                {
+                                    tileSlotIndex = (xloc * (tileSlotsPerPage / 4)) + yloc;
+                                    currentTile = tilesPropList[((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage];
+                                }
+                            }
+                            else if (tglUserTiles.toggleOn)
+                            {
+                                if ((((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage) < tilesUserList.Count)
+                                {
+                                    tileSlotIndex = (xloc * (tileSlotsPerPage / 4)) + yloc;
+                                    currentTile = tilesUserList[((xloc * (tileSlotsPerPage / 4)) + yloc) + (tilesPageIndex) * tileSlotsPerPage];
+                                }
                             }
                         }
                     }
@@ -1982,14 +2117,79 @@ namespace IBbasic
                     }
                     else if (btnTilesRight.getImpact(x, y))
                     {
-
-                        if (tilesPageIndex <= (tilesList.Count / tileSlotsPerPage) - 1)
+                        if (tglMiscTiles.toggleOn)
                         {
-                            tilesPageIndex++;
-                            btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
+                            if (tilesPageIndex <= (tilesMiscList.Count / tileSlotsPerPage) - 1)
+                            {
+                                tilesPageIndex++;
+                                btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
+                            }
                         }
-
+                        else if (tglWallFloorTiles.toggleOn)
+                        {
+                            if (tilesPageIndex <= (tilesWallFloorList.Count / tileSlotsPerPage) - 1)
+                            {
+                                tilesPageIndex++;
+                                btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
+                            }
+                        }
+                        else if (tglPropTiles.toggleOn)
+                        {
+                            if (tilesPageIndex <= (tilesPropList.Count / tileSlotsPerPage) - 1)
+                            {
+                                tilesPageIndex++;
+                                btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
+                            }
+                        }
+                        else if (tglUserTiles.toggleOn)
+                        {
+                            if (tilesPageIndex <= (tilesUserList.Count / tileSlotsPerPage) - 1)
+                            {
+                                tilesPageIndex++;
+                                btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";
+                            }
+                        }
                         return true;
+                    }
+                    else if (tglMiscTiles.getImpact(x, y))
+                    {                        
+                        tglMiscTiles.toggleOn = true;
+                        tglWallFloorTiles.toggleOn = false;
+                        tglPropTiles.toggleOn = false;
+                        tglUserTiles.toggleOn = false;
+                        tilesPageIndex = 0;
+                        tileSlotIndex = 0;
+                        btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";                        
+                    }
+                    else if (tglWallFloorTiles.getImpact(x, y))
+                    {                        
+                        tglMiscTiles.toggleOn = false;
+                        tglWallFloorTiles.toggleOn = true;
+                        tglPropTiles.toggleOn = false;
+                        tglUserTiles.toggleOn = false;
+                        tilesPageIndex = 0;
+                        tileSlotIndex = 0;
+                        btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";                        
+                    }
+                    else if (tglPropTiles.getImpact(x, y))
+                    {                        
+                        tglMiscTiles.toggleOn = false;
+                        tglWallFloorTiles.toggleOn = false;
+                        tglPropTiles.toggleOn = true;
+                        tglUserTiles.toggleOn = false;
+                        tilesPageIndex = 0;
+                        tileSlotIndex = 0;
+                        btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";                        
+                    }
+                    else if (tglUserTiles.getImpact(x, y))
+                    {                        
+                        tglMiscTiles.toggleOn = false;
+                        tglWallFloorTiles.toggleOn = false;
+                        tglPropTiles.toggleOn = false;
+                        tglUserTiles.toggleOn = true;
+                        tilesPageIndex = 0;
+                        tileSlotIndex = 0;
+                        btnTilesPageIndex.Text = (tilesPageIndex + 1) + "";                        
                     }
                     else if (rbtnShowLayer1.getImpact(x, y))
                     {

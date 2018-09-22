@@ -539,14 +539,7 @@
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fencetop.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_field.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01both.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01corner.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01edge.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01end.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wall.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wallcentre.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01wallcorner.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floor01walledge.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorcobbles.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorgrass.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstone.png" />
@@ -554,9 +547,6 @@
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstone2hole.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorstonegap.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwater.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwatercorner.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwateredge.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_floorwaterstraight.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_flooryellowplanks.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_foresttree.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_fountain1.png" />
@@ -572,10 +562,6 @@
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_K.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01corner.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01end.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01side.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_L7floor01stright.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_library.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_libraryweb.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_marks.png" />
@@ -595,7 +581,6 @@
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picture7.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_picwall.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_planks.png" />
-    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_planksend.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_poisongas.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal1.png" />
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_portal2.png" />
@@ -733,6 +718,15 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Icon-60%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_sideshadow2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_carpetend2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_shadowcorner2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />

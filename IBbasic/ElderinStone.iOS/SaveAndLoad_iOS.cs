@@ -478,32 +478,32 @@ namespace ElderinStone.iOS
         Stream GetStreamFromFile(GameView gv, string filename)
         {
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            var stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename);
+            var stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.modules." + gv.mod.moduleName + "." + filename);
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
+                stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
+                stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename);
+                stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.sounds." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".wav");
+                stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.sounds." + filename + ".wav");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".mp3");
+                stream = assembly.GetManifestResourceStream("ElderinStone.iOS.Assets.sounds." + filename + ".mp3");
             }
             return stream;
         }
         public void PlaySound(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
@@ -531,7 +531,7 @@ namespace ElderinStone.iOS
         }
         public void PlayAreaMusic(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
@@ -559,7 +559,7 @@ namespace ElderinStone.iOS
         }
         public void PlayAreaAmbientSounds(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;

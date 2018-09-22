@@ -4,10 +4,11 @@
   "titleImageName": "tes_title",
   "moduleVersion": 7,
   "saveName": "empty",
+  "uniqueSessionIdNumberTag": "",
   "defaultPlayerFilename": "none",
   "defaultPlayerFilenameList": [
     {
-      "stringValue": "Odren"
+      "stringValue": "Odren.json"
     },
     {
       "stringValue": "Kangath"
@@ -1865,6 +1866,7 @@
       ]
     }
   ],
+  "moduleVariablesList": [],
   "moduleItemsList": [
     {
       "moduleItem": true,

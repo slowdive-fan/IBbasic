@@ -123,6 +123,7 @@ namespace IBbasic
         public ToolsetScreenItemEditor tsItemEditor;
         public ToolsetScreenPlayerEditor tsPlayerEditor;
         public ToolsetScreenArtEditor tsArtEditor;
+        public ToolsetScreenDataCheck tsDataCheck;
 
         //public SoundPlayer soundPlayer = new SoundPlayer();
         //public Dictionary<string, Stream> oSoundStreams = new Dictionary<string, Stream>();
@@ -410,6 +411,7 @@ namespace IBbasic
             tsItemEditor = new ToolsetScreenItemEditor(this);
             tsPlayerEditor = new ToolsetScreenPlayerEditor(this);
             tsArtEditor = new ToolsetScreenArtEditor(this);
+            tsDataCheck = new ToolsetScreenDataCheck(this);
 
         }
         public void LoadStandardImages()
@@ -1097,6 +1099,10 @@ namespace IBbasic
             {
                 tsModule.redrawTsModule();
             }
+            else if (screenType.Equals("tsDataCheck"))
+            {
+                tsDataCheck.redrawTsDataCheck();
+            }
             else if (screenType.Equals("tsAreaEditor"))
             {
                 tsAreaEditor.redrawTsAreaEditor();
@@ -1428,6 +1434,10 @@ namespace IBbasic
                     if (screenType.Equals("tsModule"))
                     {
                         tsModule.onTouchTsModule(eX, eY, eventType);	
+                    }
+                    else if (screenType.Equals("tsDataCheck"))
+                    {
+                        tsDataCheck.onTouchTsDataCheck(eX, eY, eventType);
                     }
                     else if (screenType.Equals("tsAreaEditor"))
                     {

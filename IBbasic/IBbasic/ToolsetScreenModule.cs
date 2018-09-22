@@ -322,8 +322,9 @@ namespace IBbasic
                     }
                     else if (btnHelp.getImpact(x, y))
                     {
+                        gv.screenType = "tsDataCheck";
                         //incrementalSaveModule();
-                    }                    
+                    }
                     break;
             }
         }
