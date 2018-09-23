@@ -121,6 +121,7 @@ namespace IBbasic
         //LOAD SCRIPTS
         public void LoadAllScripts()
         {
+            #region CONDITIONALS
             //CONDITIONAL SCRIPTS
             ScriptObject newScript = new ScriptObject();
             newScript.name = "gcCheckGlobalInt";
@@ -300,7 +301,9 @@ namespace IBbasic
             newScript.parmType1 = parmType.large_int;
             newScript.parmDescription1 = "(int) max number of roll";
             scriptList.Add(newScript);
+            #endregion
 
+            #region ACTIONS
             //SET SCRIPTS
             newScript = null;
             newScript = new ScriptObject();
@@ -695,6 +698,122 @@ namespace IBbasic
             newScript.parmType3 = parmType.large_int;
             newScript.parmDescription3 = "(int) y location of the added creature on the combat map (will be automatically adjusted to nearest location if the spot is already occupied or non-walkable)";
             scriptList.Add(newScript);
+            #endregion
+            
+            #region SET OBJECT
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerHp";
+            newScript.description = "Set the HP of a given PC. for example, to add 20 hp to Drin (Drin,,+,20). To set the first PC's hp to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the HP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerHp";
+            newScript.description = "Set the SP of a given PC. for example, to add 20 sp to Drin (Drin,,+,20). To set the first PC's sp to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseStr";
+            newScript.description = "Set the Player's STR Attribute Base to a new value permanently. for example, to add 1 to Drin's STR (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseDex";
+            newScript.description = "Set the Player's DEX Attribute Base to a new value permanently. for example, to add 1 to Drin's DEX (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseCon";
+            newScript.description = "Set the Player's CON Attribute Base to a new value permanently. for example, to add 1 to Drin's CON (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseInt";
+            newScript.description = "Set the Player's INT Attribute Base to a new value permanently. for example, to add 1 to Drin's INT (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseWis";
+            newScript.description = "Set the Player's WIS Attribute Base to a new value permanently. for example, to add 1 to Drin's WIS (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+
+            newScript = null;
+            newScript = new ScriptObject();
+            newScript.name = "osSetPlayerBaseCha";
+            newScript.description = "Set the Player's CHA Attribute Base to a new value permanently. for example, to add 1 to Drin's CHA (Drin,,+,1). To set the first PC's strength to something between 10 and 15 [ ,0,=,rand(10-15)]";
+            newScript.parmType1 = parmType.pc_filename;
+            newScript.parmDescription1 = "(string) name/tag of the player (leave blank to use index instead)";
+            newScript.parmType2 = parmType.player_index;
+            newScript.parmDescription2 = "(int) index of the PC in the playerList (0 is first PC, -1 is the current party leader, leave blank to use name/tag instead)";
+            newScript.parmType3 = parmType.full_oper;
+            newScript.parmDescription3 = "(string) operator for adjusting the SP (=, +, -. /, *)";
+            newScript.parmType4 = parmType.strg;
+            newScript.parmDescription4 = "(int) value to use with the operator (can be a variable, rand(minInt-maxInt), or just type in a number)";
+            scriptList.Add(newScript);
+            #endregion
+
         }
         public void ResetAllVariablesUsedList()
         {

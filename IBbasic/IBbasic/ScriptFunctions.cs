@@ -950,6 +950,14 @@ namespace IBbasic
                     {
                         SetPlayerBaseAtt(prm1, p2, prm3, p4, "cha");
                     }
+                    else if (filename.Equals("osSetPlayerBaseWis.cs"))
+                    {
+                        SetPlayerBaseAtt(prm1, p2, prm3, p4, "wis");
+                    }
+                    else if (filename.Equals("osSetPlayerBaseCon.cs"))
+                    {
+                        SetPlayerBaseAtt(prm1, p2, prm3, p4, "con");
+                    }
                     else if (filename.Equals("osSetCreatureSp.cs"))
                     {
                         SetCreatureSp(prm1, p2, prm3, p4);
@@ -2904,6 +2912,14 @@ namespace IBbasic
                 {
                     pc.baseCha += Convert.ToInt32(value);
                 }
+                else if (att.Equals("wis"))
+                {
+                    pc.baseCha += Convert.ToInt32(value);
+                }
+                else if (att.Equals("con"))
+                {
+                    pc.baseCha += Convert.ToInt32(value);
+                }
             }
             else if (opertr.Equals("-"))
             {
@@ -2920,6 +2936,14 @@ namespace IBbasic
                     pc.baseInt -= Convert.ToInt32(value);
                 }
                 else if (att.Equals("cha"))
+                {
+                    pc.baseCha -= Convert.ToInt32(value);
+                }
+                else if (att.Equals("wis"))
+                {
+                    pc.baseCha -= Convert.ToInt32(value);
+                }
+                else if (att.Equals("con"))
                 {
                     pc.baseCha -= Convert.ToInt32(value);
                 }
@@ -2942,6 +2966,14 @@ namespace IBbasic
                 {
                     pc.baseCha /= Convert.ToInt32(value);
                 }
+                else if (att.Equals("wis"))
+                {
+                    pc.baseCha /= Convert.ToInt32(value);
+                }
+                else if (att.Equals("con"))
+                {
+                    pc.baseCha /= Convert.ToInt32(value);
+                }
             }
             else if (opertr.Equals("*"))
             {
@@ -2961,6 +2993,14 @@ namespace IBbasic
                 {
                     pc.baseCha *= Convert.ToInt32(value);
                 }
+                else if (att.Equals("wis"))
+                {
+                    pc.baseCha *= Convert.ToInt32(value);
+                }
+                else if (att.Equals("con"))
+                {
+                    pc.baseCha *= Convert.ToInt32(value);
+                }
             }
             else
             {
@@ -2977,6 +3017,14 @@ namespace IBbasic
                     pc.baseInt = Convert.ToInt32(value);
                 }
                 else if (att.Equals("cha"))
+                {
+                    pc.baseCha = Convert.ToInt32(value);
+                }
+                else if (att.Equals("wis"))
+                {
+                    pc.baseCha = Convert.ToInt32(value);
+                }
+                else if (att.Equals("con"))
                 {
                     pc.baseCha = Convert.ToInt32(value);
                 }

@@ -337,6 +337,14 @@ namespace IBbasic
                                     {
                                         foundOne = true;
                                     }
+                                    if (a.a_script.Equals("gaGiveItem.cs"))
+                                    {
+                                        Item it = gv.cc.getItemByResRef(a.a_parameter_1);
+                                        if (it == null)
+                                        {
+                                            logText("CONVOR ERROR: gaGiveItem - " + a.a_parameter_1 + " does not exist in the module's or default items list");
+                                        }
+                                    }
                                 }
                                 if (!foundOne)
                                 {
@@ -385,6 +393,14 @@ namespace IBbasic
                         if (a.a_script.Contains(so.name))
                         {
                             foundOne = true;
+                        }
+                        if (a.a_script.Equals("gaGiveItem.cs"))
+                        {
+                            Item it = gv.cc.getItemByResRef(a.a_parameter_1);
+                            if (it == null)
+                            {
+                                logText("CONVOR ERROR: gaGiveItem - " + a.a_parameter_1 + " does not exist in the module's or default items list");
+                            }
                         }
                     }
                     if (!foundOne)
@@ -444,6 +460,24 @@ namespace IBbasic
                         if ((chkEnc.MapSizeX != 10) && (chkEnc.MapSizeY != 10))
                         {
                             logText("ENCOUNTER ERROR: " + chkEnc.encounterName + " is not a 10x10 size map...it is " + chkEnc.MapSizeX + "x" + chkEnc.MapSizeY);
+                        }
+                        //check to see if has any non-valid drop items
+                        foreach (ItemRefs ir in chkEnc.encounterInventoryRefsList)
+                        {
+                            Item it = gv.cc.getItemByResRef(ir.resref);
+                            if (it == null)
+                            {
+                                logText("ENCOUNTER ERROR: " + chkEnc.encounterName + " has an item " + ir.name + " that does not exist in the module's or default items list");
+                            }
+                        }
+                        //check to see if has any non-valid creatures
+                        foreach (CreatureRefs cr in chkEnc.encounterCreatureRefsList)
+                        {
+                            Creature crt = gv.cc.getCreatureByResRef(cr.creatureResRef);
+                            if (crt == null)
+                            {
+                                logText("ENCOUNTER ERROR: " + chkEnc.encounterName + " has a creature " + cr.creatureTag + " that does not exist in the module's or default creature list");
+                            }
                         }
                         //check to see if any tiles are non-walkable
                         int foundOne = 0;

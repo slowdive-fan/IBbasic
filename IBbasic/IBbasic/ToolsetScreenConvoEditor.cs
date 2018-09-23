@@ -2258,7 +2258,7 @@ namespace IBbasic
             types.Add("none");
             foreach (ScriptObject s in gv.cc.scriptList)
             {
-                if (s.name.StartsWith("ga"))
+                if ((s.name.StartsWith("ga")) || (s.name.StartsWith("os")))
                 {
                     types.Add(s.name);
                 }
