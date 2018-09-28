@@ -3320,6 +3320,7 @@ namespace IBbasic
                     pc.charStatus = "Dead";
                 }
             }
+            gv.screenMainMap.addFloatyText(gv.mod.PlayerLocationX + 2, gv.mod.PlayerLocationY - 2, dam.ToString(), "red", 4000);
         }
         public void riddle()
         {

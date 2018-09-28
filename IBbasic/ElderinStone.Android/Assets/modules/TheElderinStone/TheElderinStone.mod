@@ -1943,7 +1943,14 @@
       "moduleItem": true,
       "name": "Amulet of Defence +2",
       "itemImage": "it_amuletCon",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_9fdf",
       "resref": "AmDef2",
@@ -2009,7 +2016,14 @@
       "moduleItem": true,
       "name": "Amulet of Intelligence +2",
       "itemImage": "it_amuletCon",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_8055",
       "resref": "AmInt2",
@@ -2075,7 +2089,11 @@
       "moduleItem": true,
       "name": "Chainmail +2",
       "itemImage": "it_chainmail",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin"
+      ],
       "ArmorWeightType": "Light",
       "tag": "CMail2",
       "resref": "CMail2",
@@ -2561,7 +2579,14 @@
       "moduleItem": true,
       "name": "Ring of Magic Resistance",
       "itemImage": "it_ringgold",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_5922",
       "resref": "Ring Magic",
@@ -2627,7 +2652,14 @@
       "moduleItem": true,
       "name": "Ring of Poison Resistance",
       "itemImage": "it_ringpoison",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_5139",
       "resref": "RingPoison",
@@ -2693,7 +2725,14 @@
       "moduleItem": true,
       "name": "Ring of Protection +2",
       "itemImage": "it_ringgold",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_7131",
       "resref": "ringOfProtection2",
@@ -2759,7 +2798,14 @@
       "moduleItem": true,
       "name": "Ring of Protection +3",
       "itemImage": "it_ringgold",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_8184",
       "resref": "ringOfProtection3",
@@ -4440,7 +4486,12 @@
       "moduleItem": true,
       "name": "Elvish Short Sword +1",
       "itemImage": "it_sword",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief"
+      ],
       "ArmorWeightType": "Light",
       "tag": "elvishshortsword",
       "resref": "elvishshortsword",
@@ -4650,7 +4701,11 @@
       "moduleItem": true,
       "name": "Halberd +1",
       "itemImage": "it_halberd",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "fighter",
+        "paladin",
+        "ranger"
+      ],
       "ArmorWeightType": "Light",
       "tag": "newTag_4875",
       "resref": "Halb1",
@@ -4929,7 +4984,14 @@
       "moduleItem": true,
       "name": "Sling of Fire",
       "itemImage": "it_slingfire",
-      "classesAllowed": [],
+      "classesAllowed": [
+        "cleric",
+        "fighter",
+        "paladin",
+        "ranger",
+        "thief",
+        "wizard"
+      ],
       "ArmorWeightType": "Light",
       "tag": "fireSling",
       "resref": "fireSling",
@@ -6316,7 +6378,7 @@
     },
     {
       "moduleCreature": true,
-      "cr_tokenFilename": "tkn_Ettin1",
+      "cr_tokenFilename": "tkn_ettin1",
       "combatFacing": 4,
       "combatLocX": 0,
       "combatLocY": 0,
@@ -6750,7 +6812,7 @@
     },
     {
       "moduleCreature": true,
-      "cr_tokenFilename": "tkn_Ettin2",
+      "cr_tokenFilename": "tkn_ettin2",
       "combatFacing": 4,
       "combatLocX": 0,
       "combatLocY": 0,
