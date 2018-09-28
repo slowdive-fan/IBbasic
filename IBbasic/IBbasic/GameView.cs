@@ -336,7 +336,7 @@ namespace IBbasic
             cc.fontBu = cc.LoadBitmap("font");
             changeFontColor(cc.fontBu, 0, 127, 255);
             cc.fontGn = cc.LoadBitmap("font");
-            changeFontColor(cc.fontGn, 53, 147, 37);
+            changeFontColor(cc.fontGn, 0, 255, 0);
             cc.fontGy = cc.LoadBitmap("font");
             changeFontColor(cc.fontGy, 155, 155, 155);
             cc.fontMa = cc.LoadBitmap("font");

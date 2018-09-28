@@ -3518,6 +3518,7 @@ namespace IBbasic
                             gv.mod.playSoundFx = false;
                             gv.toggleSettings.playSoundFx = gv.mod.playSoundFx;
                             gv.cc.addLogText("lime", "Audio Off");
+                            gv.TrackerSendEvent(":TURN_AUDIO_OFF:" + gv.scaler + ":", "none", true);
                             gv.StopAreaMusic();
                         }
                         else
@@ -3526,6 +3527,7 @@ namespace IBbasic
                             gv.mod.playSoundFx = true;
                             gv.toggleSettings.playSoundFx = gv.mod.playSoundFx;
                             gv.cc.addLogText("lime", "Audio On");
+                            gv.TrackerSendEvent(":TURN_AUDIO_ON:" + gv.scaler + ":", "none", true);
                             gv.PlayAreaMusic(gv.mod.currentArea.AreaMusic);
                         }
                     }

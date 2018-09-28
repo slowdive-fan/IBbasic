@@ -1457,6 +1457,7 @@ namespace IBbasic
                     str.EnabledEvent1 = tr.EnabledEvent1;
                     str.EnabledEvent2 = tr.EnabledEvent2;
                     str.EnabledEvent3 = tr.EnabledEvent3;
+                    tr.isShown = str.isShown;
                     sar.Triggers.Add(str);
                 }
                 saveMod.moduleAreasObjects.Add(sar);
@@ -1798,6 +1799,7 @@ namespace IBbasic
                                     tr.EnabledEvent1 = str.EnabledEvent1;
                                     tr.EnabledEvent2 = str.EnabledEvent2;
                                     tr.EnabledEvent3 = str.EnabledEvent3;
+                                    tr.isShown = str.isShown;
                                     //may want to copy the trigger's squares list from the save game if builders can modify the list with scripts
                                 }
                             }

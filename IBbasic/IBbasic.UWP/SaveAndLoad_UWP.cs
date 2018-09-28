@@ -1,5 +1,6 @@
 ﻿using IBbasic.UWP;
 using Newtonsoft.Json;
+using Plugin.SimpleAudioPlayer;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,11 @@ using Xamarin.Forms;
 namespace IBbasic.UWP
 {    
     public class SaveAndLoad_UWP : ISaveAndLoad
-    {        
+    {
+        public ISimpleAudioPlayer soundPlayer;
+        public ISimpleAudioPlayer areaMusicPlayer;
+        public ISimpleAudioPlayer areaAmbientSoundsPlayer;
+
         public bool AllowReadWriteExternal()
         {
             return true;
@@ -134,6 +139,17 @@ namespace IBbasic.UWP
         public string LoadStringFromUserFolder(string fullPath)
         {
             string text = "";
+            //check in assets module folder
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(fullPath, "."));
+            if (stream != null)
+            {
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    text = reader.ReadToEnd();
+                    return text;
+                }
+            }
             //check in module folder first
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             string convertedFullPath = storageFolder.Path + ConvertFullPath(fullPath, "\\");
@@ -149,13 +165,13 @@ namespace IBbasic.UWP
             string text = "";
             //check in Assests folder last
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            foreach (var res in assembly.GetManifestResourceNames())
+            /*foreach (var res in assembly.GetManifestResourceNames())
             {
                 if (res.EndsWith(".json"))
                 {
                     int x3 = 0;
                 }
-            }
+            }*/
             Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets" + ConvertFullPath(fullPath, "."));
             if (stream != null)
             {
@@ -250,19 +266,7 @@ namespace IBbasic.UWP
             try
             {
                 StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-                if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\tiles\\" + filename);
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".png"))
+                if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".png"))
                 {
                     bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename + ".png");
                 }
@@ -277,43 +281,7 @@ namespace IBbasic.UWP
                 else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename))
                 {
                     bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\graphics\\" + filename);
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\ui\\" + filename);
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\pctokens\\" + filename);
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".png"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".png");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".PNG"))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename + ".PNG");
-                }
-                else if (File.Exists(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename))
-                {
-                    bm = SKBitmap.Decode(storageFolder.Path + "\\modules\\" + mdl.moduleName + "\\portraits\\" + filename);
-                }
+                }                
                 //STOP here if already found bitmap
                 if (bm != null)
                 {
@@ -321,7 +289,11 @@ namespace IBbasic.UWP
                 }
                 //If not found then try in Asset folder
                 Assembly assembly = GetType().GetTypeInfo().Assembly;
-                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename);
+                Stream stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + mdl.moduleName + ".graphics." + filename);
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + mdl.moduleName + ".graphics." + filename + ".png");
+                }
                 if (stream == null)
                 {
                     stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".png");
@@ -329,6 +301,10 @@ namespace IBbasic.UWP
                 if (stream == null)
                 {
                     stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename + ".jpg");
+                }
+                if (stream == null)
+                {
+                    stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.graphics." + filename);
                 }
                 if (stream == null)
                 {
@@ -373,11 +349,28 @@ namespace IBbasic.UWP
         public List<string> GetAllFilesWithExtensionFromUserFolder(string folderpath, string extension)
         {
             List<string> list = new List<string>();
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(folderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
-            foreach (string file in files)
+
+            //FROM ASSETS
+            Assembly assembly = GetType().GetTypeInfo().Assembly;
+            foreach (var res in assembly.GetManifestResourceNames())
             {
-                list.Add(Path.GetFileNameWithoutExtension(file));
+                if ((res.Contains(ConvertFullPath(folderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+
+            //FROM USER FOLDER
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+
+            if (Directory.Exists(storageFolder.Path + ConvertFullPath(folderpath, "\\")))
+            {
+                string[] files = Directory.GetFiles(storageFolder.Path + ConvertFullPath(folderpath, "\\"), "*" + extension, SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    list.Add(Path.GetFileNameWithoutExtension(file));
+                }
             }
             return list;
         }
@@ -398,6 +391,8 @@ namespace IBbasic.UWP
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
             List<string> list = new List<string>();
+
+            //FROM USER FOLDER
             StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
             if (Directory.Exists(storageFolder.Path + ConvertFullPath(userFolderpath, "\\")))
             {
@@ -407,10 +402,21 @@ namespace IBbasic.UWP
                     list.Add(Path.GetFileNameWithoutExtension(file));
                 }
             }
+
+            //FROM ASSETS
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             foreach (var res in assembly.GetManifestResourceNames())
             {
-                if ((res.Contains(ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
+                if ((res.Contains("IBbasic.UWP.Assets" + ConvertFullPath(userFolderpath, "."))) && (res.EndsWith(extension)))
+                {
+                    string[] split = res.Split('.');
+                    list.Add(split[split.Length - 2]);
+                }
+            }
+
+            foreach (var res in assembly.GetManifestResourceNames())
+            {
+                if ((res.Contains("IBbasic.UWP.Assets" + ConvertFullPath(assetFolderpath, "."))) && (res.EndsWith(extension)))
                 {
                     string[] split = res.Split('.');
                     list.Add(split[split.Length - 2]);
@@ -455,39 +461,39 @@ namespace IBbasic.UWP
         Stream GetStreamFromFile(GameView gv, string filename)
         {
             Assembly assembly = GetType().GetTypeInfo().Assembly;
-            var stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename);
+            var stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + gv.mod.moduleName + "." + filename);
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
+                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + gv.mod.moduleName + "." + filename + ".wav");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
+                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.modules." + gv.mod.moduleName + "." + filename + ".mp3");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename);
+                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.sounds." + filename);
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".wav");
+                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.sounds." + filename + ".wav");
             }
             if (stream == null)
             {
-                stream = assembly.GetManifestResourceStream("Raventhal.iOS.Assets.sounds." + filename + ".mp3");
+                stream = assembly.GetManifestResourceStream("IBbasic.UWP.Assets.sounds." + filename + ".mp3");
             }
             return stream;
         }
         public void PlaySound(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
             }
             else
             {
-                /*if (soundPlayer == null)
+                if (soundPlayer == null)
                 {
                     soundPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
@@ -503,19 +509,19 @@ namespace IBbasic.UWP
                     {
                         gv.cc.addLogText("<yl>failed to play sound" + filenameNoExtension + "</yl><BR>");
                     }
-                }*/
+                }
             }
         }
         public void PlayAreaMusic(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
             }
             else
             {
-                /*if (areaMusicPlayer == null)
+                if (areaMusicPlayer == null)
                 {
                     areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
@@ -531,19 +537,19 @@ namespace IBbasic.UWP
                     {
                         gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
                     }
-                }*/
+                }
             }
         }
         public void PlayAreaAmbientSounds(GameView gv, string filenameNoExtension)
         {
-            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (gv.mod.playSoundFx))
+            if ((filenameNoExtension.Equals("none")) || (filenameNoExtension.Equals("")) || (!gv.mod.playSoundFx))
             {
                 //play nothing
                 return;
             }
             else
             {
-                /*if (areaAmbientSoundsPlayer == null)
+                if (areaAmbientSoundsPlayer == null)
                 {
                     areaAmbientSoundsPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
                 }
@@ -559,13 +565,13 @@ namespace IBbasic.UWP
                     {
                         gv.cc.addLogText("<yl>failed to play area music" + filenameNoExtension + "</yl><BR>");
                     }
-                }*/
+                }
             }
         }
         public void RestartAreaMusicIfEnded(GameView gv)
         {
             //restart area music
-            /*if (areaMusicPlayer == null)
+            if (areaMusicPlayer == null)
             {
                 areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
             }
@@ -610,12 +616,25 @@ namespace IBbasic.UWP
             catch (Exception ex)
             {
 
-            }*/
+            }
         }
         public void StopAreaMusic()
         {
-            //playerAreaMusic.Pause();
-            //playerAreaMusic.SeekTo(0);
+            if (areaMusicPlayer == null)
+            {
+                areaMusicPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            }
+            try
+            {
+                if (areaMusicPlayer.IsPlaying)
+                {
+                    areaMusicPlayer.Stop();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public void PauseAreaMusic()
         {

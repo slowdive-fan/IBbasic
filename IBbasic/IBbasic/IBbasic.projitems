@@ -1538,4 +1538,9 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_wallfloor_off.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_wallfloor_on.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaultdeath.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaulthit.wav" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaultmiss.wav" />
+  </ItemGroup>
 </Project>

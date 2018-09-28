@@ -22,8 +22,9 @@ namespace IBbasic.UWP
         {
             this.InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(770, 482);
+            ApplicationView.PreferredLaunchViewSize = new Size(770, 481);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            //ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
             LoadApplication(new IBbasic.App());
         }

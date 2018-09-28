@@ -70,6 +70,7 @@ namespace IBbasic
         public int attackAnimationLengthInMilliseconds = 250;
         public int triggerIndexCombat = 0;
         public bool didTriggerEvent = false;
+        public bool canPlayDeathSound = true;
 
         //UI PANELS
         public int buttonPanelLocX = 0;
@@ -1855,6 +1856,7 @@ namespace IBbasic
         }
         public void afterEachMoveCalls()
         {
+            gv.PlaySound("defaultstep");
             triggerIndexCombat = 0;
             doPropTriggers();
         }
@@ -2354,6 +2356,14 @@ namespace IBbasic
                                 AnimationStackGroup newGroup = new AnimationStackGroup();
                                 animationSeqStack[0].AnimationSeq.Add(newGroup);
                                 addHitAnimation(newGroup);
+                                Item itChk1 = gv.cc.getItemByResRefForInfo(pc.MainHandRefs.resref);
+                                if (itChk1 != null)
+                                {
+                                    if (itChk1.itemOnUseSound.Equals("none"))
+                                    {
+                                        gv.PlaySound("defaulthit");
+                                    }
+                                }
                             }
                             else
                             {
@@ -3499,6 +3509,10 @@ namespace IBbasic
                 AnimationStackGroup newGroup = new AnimationStackGroup();
                 animationSeqStack[0].AnimationSeq.Add(newGroup);
                 addHitAnimation(newGroup);
+                if (crt.cr_attackSound.Equals("none"))
+                {
+                    gv.PlaySound("defaulthit");
+                }
             }
             else
             {
@@ -3964,10 +3978,32 @@ namespace IBbasic
                             }
                         }
                     }
+
+                    //play death sound when applicable
+                    foreach (AnimationSequence seq in animationSeqStack)
+                    {
+                        if (seq.AnimationSeq.Count == 1)
+                        {
+                            foreach (Sprite spr in seq.AnimationSeq[0].SpriteGroup)
+                            {
+                                //just update the group at the top of the stack, first in first
+                                if (spr.bitmap.Equals("death_fx"))
+                                {
+                                    if (canPlayDeathSound)
+                                    {
+                                        canPlayDeathSound = false;
+                                        gv.PlaySound("defaultdeath");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     //if all animation sequences are done, end this turn
                     if (animationSeqStack.Count == 0)
                     {
                         animationsOn = false;
+                        canPlayDeathSound = true;
                         deathAnimationLocations.Clear();
 
                         //remove any dead creatures                        
@@ -6059,6 +6095,7 @@ namespace IBbasic
                         LeaveThreatenedCheck(pc, pc.combatLocX, pc.combatLocY - 1);
                         doPlayerCombatFacing(pc, pc.combatLocX, pc.combatLocY - 1);
                         pc.combatLocY--;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6094,6 +6131,7 @@ namespace IBbasic
                             pc.combatFacingLeft = false;
                         }
                         moveCost = gv.mod.diagonalMoveCost;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6129,6 +6167,7 @@ namespace IBbasic
                             pc.combatFacingLeft = true;
                         }
                         moveCost = gv.mod.diagonalMoveCost;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6158,6 +6197,7 @@ namespace IBbasic
                         LeaveThreatenedCheck(pc, pc.combatLocX, pc.combatLocY + 1);
                         doPlayerCombatFacing(pc, pc.combatLocX, pc.combatLocY + 1);
                         pc.combatLocY++;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6193,6 +6233,7 @@ namespace IBbasic
                             pc.combatFacingLeft = false;
                         }
                         moveCost = gv.mod.diagonalMoveCost;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6228,6 +6269,7 @@ namespace IBbasic
                             pc.combatFacingLeft = true;
                         }
                         moveCost = gv.mod.diagonalMoveCost;
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6261,6 +6303,7 @@ namespace IBbasic
                         {
                             pc.combatFacingLeft = false;
                         }
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6294,6 +6337,7 @@ namespace IBbasic
                         {
                             pc.combatFacingLeft = true;
                         }
+                        gv.PlaySound("defaultstep");
                         doUpdate(pc);
                     }
                     if (isPlayerTurn)
@@ -6535,12 +6579,14 @@ namespace IBbasic
             int ttl = 8 * gv.mod.combatAnimationSpeed;
             Sprite spr = new Sprite(gv, "miss_symbol", hitAnimationLocation.X, hitAnimationLocation.Y, 0, 0, 0, 0, 1.0f, ttl, false, ttl / 4);
             group.SpriteGroup.Add(spr);
+            gv.PlaySound("defaultmiss");
         }
         public void addDeathAnimation(AnimationStackGroup group, Coordinate Loc)
         {
             int ttl = 16 * gv.mod.combatAnimationSpeed;
             Sprite spr = new Sprite(gv, "death_fx", Loc.X, Loc.Y, 0, 0, 0, 0, 1.0f, ttl, false, ttl / 4);
             group.SpriteGroup.Add(spr);
+            //gv.PlaySound("defaultdeath");
         }
         public void addEndingAnimation(AnimationStackGroup group, Coordinate Loc, string filename)
         {            

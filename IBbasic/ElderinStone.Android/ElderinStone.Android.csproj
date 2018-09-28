@@ -268,14 +268,6 @@
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\drawable\icon.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\ic_ibmini.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\ic_ibmini.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\modules\TheElderinStone\TheElderinStone.mod" />
@@ -1284,6 +1276,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_shadowcorner2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_icon.png" />
   </ItemGroup>
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

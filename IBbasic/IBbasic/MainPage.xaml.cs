@@ -36,6 +36,7 @@ namespace IBbasic
 
             gv = new GameView(this);
 
+            //SizeChanged += OnSizeChanged;
             //SetUpBitmap();
 
             Device.StartTimer(TimeSpan.FromSeconds(1f / 30), () =>
@@ -47,6 +48,11 @@ namespace IBbasic
             gameTimerStopwatch.Start();
             previousTime = gameTimerStopwatch.ElapsedMilliseconds;
         }
+
+        /*public void OnSizeChanged(object sender, EventArgs e)
+        {
+            gv.resetScaler(false, false);
+        }*/
 
         private void canvasView_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {

@@ -91,6 +91,7 @@ namespace IBbasic
         public bool EnabledEvent1 = true;
         public bool EnabledEvent2 = true;
         public bool EnabledEvent3 = true;
+        public bool isShown = true;
 
         public TriggerSave()
         {
