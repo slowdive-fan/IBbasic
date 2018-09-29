@@ -31,7 +31,7 @@
   "MaxPartySize": 6,
   "moduleDescription": "A 3-4hr dungeon crawl for up to six level one characters. ",
   "moduleCredits": "<rd>The Elderin Stone</rd>\r\nModule design and tile art by <bu>Pongo.</bu> \r\nCoding and art by <yl>slowdive_fan</yl>\r\nCreature and Player tokens from the Neverwinter Nights Vault\r\nSound effects purchased from<yl>Audiojungle.net</yl> and used under licence.\r\nThanks to <yl>slowdive_fan, youngneil1</yl>, and <yl>Dorateen</yl> for encouragement and general problem solving. And for generally being all round good eggs.\r\nVisit the forums for more info:\r\n<gn>www.iceblinkengine.com/forums</gn> \r\n<yl>What's New</yl>\r\nv4 - fixed cleave, two attack, critical strike...needs testing\r\nv6 - converted to IB Basic",
-  "nextIdNumber": 41054,
+  "nextIdNumber": 41055,
   "WorldTime": 420,
   "TimePerRound": 6,
   "debugMode": false,
@@ -1866,7 +1866,9 @@
       ]
     }
   ],
-  "moduleVariablesList": [],
+  "moduleVariablesList": [
+    "savedruids"
+  ],
   "moduleItemsList": [
     {
       "moduleItem": true,

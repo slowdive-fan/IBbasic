@@ -1457,7 +1457,7 @@ namespace IBbasic
                     str.EnabledEvent1 = tr.EnabledEvent1;
                     str.EnabledEvent2 = tr.EnabledEvent2;
                     str.EnabledEvent3 = tr.EnabledEvent3;
-                    tr.isShown = str.isShown;
+                    str.isShown = tr.isShown;
                     sar.Triggers.Add(str);
                 }
                 saveMod.moduleAreasObjects.Add(sar);

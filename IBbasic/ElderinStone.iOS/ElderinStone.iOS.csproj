@@ -728,6 +728,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\t_es_shadowcorner2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\it_asserin.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
 </Project>

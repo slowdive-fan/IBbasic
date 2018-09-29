@@ -1543,4 +1543,7 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaulthit.wav" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaultmiss.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\teleport.wav" />
+  </ItemGroup>
 </Project>

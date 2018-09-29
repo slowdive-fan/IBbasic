@@ -699,7 +699,6 @@
     <EmbeddedResource Include="Assets\modules\Lanterna\graphics\lanterna_title.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\modules\Lanterna\battle.mp3" />
     <EmbeddedResource Include="Assets\modules\Lanterna\cave.mp3" />
     <EmbeddedResource Include="Assets\modules\Lanterna\forest.mp3" />
     <EmbeddedResource Include="Assets\modules\Lanterna\house.mp3" />

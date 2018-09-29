@@ -1289,6 +1289,9 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\TheElderinStone\graphics\it_asserin.png" />
+  </ItemGroup>
   <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
