@@ -75,7 +75,7 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>
     </CodesignEntitlements>
-    <CodesignProvision>IBbasic Distribution Profile</CodesignProvision>
+    <CodesignProvision>IBbasicAppStore</CodesignProvision>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <BuildIpa>true</BuildIpa>

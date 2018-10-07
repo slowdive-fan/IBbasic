@@ -172,11 +172,11 @@ namespace IBbasic
             htmltext.tbXloc = startX;
             htmltext.tbYloc = startY;
             htmltext.tbWidth = width;
-            htmltext.tbHeight = pH * 50;
             htmltext.linesList.Clear();
             htmltext.AddFormattedTextToTextBox(textToSpan);
-            htmltext.onDrawTextBox();
             int totalHeight = htmltext.linesList.Count * (gv.fontHeight + gv.fontLineSpacing);
+            htmltext.tbHeight = totalHeight;
+            htmltext.onDrawTextBox();
             /*foreach (FormattedLine fl in htmltext.logLinesList)
             {
                 totalHeight += fl.lineHeight;

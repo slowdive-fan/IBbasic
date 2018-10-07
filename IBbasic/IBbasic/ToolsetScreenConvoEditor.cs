@@ -1412,6 +1412,8 @@ namespace IBbasic
                 gv.messageBox.btnReturn.glowOn = false;
             }
 
+            gv.showTooltip = false;
+
             bool ret = gv.tsMainMenu.onTouchTsMainMenu(eX, eY, eventType);
             if (ret) { return; } //did some action on the main menu so do nothing here
 
@@ -1671,41 +1673,57 @@ namespace IBbasic
                     if (btnNodeAdd.getImpact(x, y))
                     {
                         btnNodeAdd.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Add Node</yl><br>Adds a child node to the currently selected node.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodeMoveUp.getImpact(x, y))
                     {
                         btnNodeMoveUp.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Move Node Up</yl><br>Moves the selected node up in the list of child nodes.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodeMoveDown.getImpact(x, y))
                     {
                         btnNodeMoveDown.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Move Node Down</yl><br>Moves the selected node down in the list of child nodes.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodeRemove.getImpact(x, y))
                     {
                         btnNodeRemove.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Remove Node</yl><br>Removes the selected node.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodeCopy.getImpact(x, y))
                     {
                         btnNodeCopy.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Copy Node</yl><br>Copies the selected node (and subnodes if any) to the clipboard for pasting/moving/linking later.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodePaste.getImpact(x, y))
                     {
                         btnNodePaste.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Paste Node</yl><br>Pastes the previously copied node (and subnodes if any) as a child of the currently selected node.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodePasteAsLink.getImpact(x, y))
                     {
                         btnNodePasteAsLink.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Paste as Link Node</yl><br>Pastes a link only of the previously copied node to the currently selected node as a child.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnNodeRelocateCopiedNodes.getImpact(x, y))
                     {
                         btnNodeRelocateCopiedNodes.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Relocate Node</yl><br>Moves the previously copied node (and subnodes if any) to the currently selected node as a child.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     else if (btnHelp.getImpact(x, y))
@@ -1819,31 +1837,43 @@ namespace IBbasic
                         if (btnCondAdd.getImpact(x, y))
                         {
                             btnCondAdd.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Add Conditional</yl><br>Adds a conditional to the currently selected node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnCondMoveUp.getImpact(x, y))
                         {
                             btnCondMoveUp.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Move Up Conditional</yl><br>Moves the currently selected conditional up one spot in the list of conditionals on this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnCondMoveDown.getImpact(x, y))
                         {
                             btnCondMoveDown.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Move Down Conditional</yl><br>Moves the currently selected conditional down one spot in the list of conditionals on this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnCondRemove.getImpact(x, y))
                         {
                             btnCondRemove.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Remove Conditional</yl><br>Removes the currently selected conditional.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnCondCopy.getImpact(x, y))
                         {
                             btnCondCopy.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Copy Conditional</yl><br>Adds the currently selected conditional to the clipboard for pasting later.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnCondPaste.getImpact(x, y))
                         {
                             btnCondPaste.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Paste Conditional</yl><br>Pastes the previously copied conditional from the clipboard to this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                     }
@@ -1960,31 +1990,43 @@ namespace IBbasic
                         if (btnActionAdd.getImpact(x, y))
                         {
                             btnActionAdd.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Add Action</yl><br>Adds an action to the currently selected node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnActionMoveUp.getImpact(x, y))
                         {
                             btnActionMoveUp.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Move Up Action</yl><br>Moves the currently selected action up one spot in the list of conditionals on this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnActionMoveDown.getImpact(x, y))
                         {
                             btnActionMoveDown.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Move Down Action</yl><br>Moves the currently selected action down one spot in the list of conditionals on this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnActionRemove.getImpact(x, y))
                         {
                             btnActionRemove.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Remove Action</yl><br>Removes the currently selected action.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnActionCopy.getImpact(x, y))
                         {
                             btnActionCopy.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Copy Action</yl><br>Adds the currently selected action to the clipboard for pasting later.");
+                            gv.showTooltip = true;
                             return true;
                         }
                         else if (btnActionPaste.getImpact(x, y))
                         {
                             btnActionPaste.glowOn = true;
+                            gv.tooltip.AddHtmlTextToLog("<yl>Paste Action</yl><br>Pastes the previously copied action from the clipboard to this node.");
+                            gv.showTooltip = true;
                             return true;
                         }
                     }

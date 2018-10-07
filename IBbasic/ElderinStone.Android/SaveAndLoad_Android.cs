@@ -71,8 +71,8 @@ namespace ElderinStone.Droid
 
         public void RateApp()
         {
-            //string urlStore = "https://play.google.com/store/apps/details?id=com.iceblinkengine.ibb.ibbraventhal";
-            //Device.OpenUri(new Uri(urlStore));
+            string urlStore = "https://play.google.com/store/apps/details?id=com.iceblinkengine.ibb.ibbelderinstone";
+            Device.OpenUri(new Uri(urlStore));
         }
 
         public string ConvertFullPath(string fullPath, string replaceWith)

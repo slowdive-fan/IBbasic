@@ -79,6 +79,8 @@ namespace IBbasic
         public int triggerPropIndex = 0;
         public BitmapStringConversion bsc;
 
+        public IBbasicToolTip tooltip;
+        public bool showTooltip = false;
         public IB2HtmlLogBox log;
         public IBminiMessageBox messageBox;
         public bool showMessageBox = false;
@@ -191,6 +193,9 @@ namespace IBbasic
             messageBox.Height = 220;
             messageBox.tbHeight = 212;
             messageBox.setupIBminiMessageBox();
+
+            //setup tooltip
+            tooltip = new IBbasicToolTip(this);
 
             //setup itemListSelector defaults   
             itemListSelector = new IBminiItemListSelector();
@@ -1267,6 +1272,10 @@ namespace IBbasic
             if (itemListSelector.showIBminiItemListSelector)
             {
                 itemListSelector.drawItemListSelection();
+            }
+            if (showTooltip)
+            {
+                tooltip.onDrawLogBox();
             }
             //EndDraw(); //uncomment this for DIRECT2D ADDITIONS
         }

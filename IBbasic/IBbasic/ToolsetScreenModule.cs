@@ -20,7 +20,7 @@ namespace IBbasic
         private IbbToggle btnStartingLocX = null;
         private IbbToggle btnStartingLocY = null;
         private IbbToggle btnStartingGold = null;
-        private IbbButton btnHelp = null;
+        private IbbButton btnDataChk = null;
 
         private IBminiTextBox description;
 
@@ -149,18 +149,17 @@ namespace IBbasic
             btnModuleTitleImage.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
 
-            if (btnHelp == null)
+            if (btnDataChk == null)
             {
-                btnHelp = new IbbButton(gv, 0.8f);
+                btnDataChk = new IbbButton(gv, 0.8f);
             }
-            //btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
-            btnHelp.Img2 = "btnhelp";
-            btnHelp.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
+            btnDataChk.Text = "DATA?";
+            btnDataChk.Img = "btn_small"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
+            btnDataChk.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
+            btnDataChk.X = 10 * gv.uiSquareSize;
+            btnDataChk.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
+            btnDataChk.Height = (int)(gv.ibbheight * gv.scaler);
+            btnDataChk.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
         public void redrawTsModule()
@@ -216,9 +215,10 @@ namespace IBbasic
             gv.DrawText(" Starting Location Y: " + gv.mod.startingPlayerPositionY, btnStartingLocY.X + btnStartingLocY.Width + gv.scaler, btnStartingLocY.Y + shiftForFont, "wh");
             btnStartingGold.Draw();
             gv.DrawText(" Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
-            btnHelp.Draw();
             btnModuleTitleImage.Draw();
             gv.DrawText(" Title Image: " + gv.mod.titleImageName, btnModuleTitleImage.X + btnModuleTitleImage.Width + gv.scaler, btnModuleTitleImage.Y + shiftForFont, "wh");
+
+            btnDataChk.Draw();
 
             gv.tsMainMenu.redrawTsMainMenu();
 
@@ -229,8 +229,8 @@ namespace IBbasic
         }
         public void onTouchTsModule(int eX, int eY, MouseEventType.EventType eventType)
         {
-            btnHelp.glowOn = false;
-            
+            btnDataChk.glowOn = false;
+
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -255,9 +255,9 @@ namespace IBbasic
                         return;
                     }
 
-                    if (btnHelp.getImpact(x, y))
+                    if (btnDataChk.getImpact(x, y))
                     {
-                        btnHelp.glowOn = true;
+                        btnDataChk.glowOn = true;
                     }
                     break;
 
@@ -265,7 +265,7 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
+                    btnDataChk.glowOn = false;
 
                     if (gv.showMessageBox)
                     {
@@ -320,10 +320,9 @@ namespace IBbasic
                     {
                         changeTitleImage();
                     }
-                    else if (btnHelp.getImpact(x, y))
+                    else if (btnDataChk.getImpact(x, y))
                     {
                         gv.screenType = "tsDataCheck";
-                        //incrementalSaveModule();
                     }
                     break;
             }

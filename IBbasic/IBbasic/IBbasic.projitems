@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalInt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IB2HtmlLogBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IBbasicToolTip.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbbButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbbHtmlTextBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbbPortrait.cs" />
@@ -1545,5 +1546,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\teleport.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_bg_tooltip.png" />
   </ItemGroup>
 </Project>
