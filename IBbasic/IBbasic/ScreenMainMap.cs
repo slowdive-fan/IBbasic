@@ -973,7 +973,7 @@ namespace IBbasic
         }
         public void draw3dView()
         {
-            map3DViewStartLocXinPixels = 2 * gv.squareSize - 10;
+            map3DViewStartLocXinPixels = gv.uiSquareSize / 2;
             int scaler = (int)(gv.scaler * 2);
 
             //draw backdrop

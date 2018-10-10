@@ -1550,4 +1550,8 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_bg_tooltip.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_traildark.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\w_w_nford0.png" />
+  </ItemGroup>
 </Project>
