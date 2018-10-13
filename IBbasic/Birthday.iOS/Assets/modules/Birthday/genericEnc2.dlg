@@ -1,0 +1,93 @@
+{
+  "ConvoFileName": "genericEnc2",
+  "Narration": true,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "nar_blob.png",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "You come upon a group of enemies. You have not been detected as of yet.",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 2,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Attack]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            },
+            {
+              "idNum": 3,
+              "orderNum": 1,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Run Away]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [
+                {
+                  "a_script": "gaMovePartyToLastLocation.cs",
+                  "a_parameter_1": null,
+                  "a_parameter_2": null,
+                  "a_parameter_3": null,
+                  "a_parameter_4": null
+                }
+              ],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 3
+}

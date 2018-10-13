@@ -1,0 +1,349 @@
+{
+  "ConvoFileName": "child_con",
+  "Narration": false,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "prp_child3",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Hey!  You're the birthday <boy/girl>!  You're so lucky.",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 9,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "7",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 2,
+          "orderNum": 1,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Mama says that the Wooden Crone watches over Schafberg.  Is the Wooden Crone scary?",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 11,
+              "orderNum": 0,
+              "parentIdNum": 2,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "6",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 3,
+          "orderNum": 2,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Mama says that I'm not old enough to go to your birthday party.",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 12,
+              "orderNum": 0,
+              "parentIdNum": 3,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "5",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 4,
+          "orderNum": 3,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "We're telling each <gy>ghost</gy> stories.  Boo!",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 13,
+              "orderNum": 0,
+              "parentIdNum": 4,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "4",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 5,
+          "orderNum": 4,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Da says that the sheep are getting sick this year.  It's so sad!",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 14,
+              "orderNum": 0,
+              "parentIdNum": 5,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "3",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 6,
+          "orderNum": 5,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "You're the most powerfulest person in Schafberg.  Everyone says so.",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 15,
+              "orderNum": 0,
+              "parentIdNum": 6,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "2",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 7,
+          "orderNum": 6,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Da says that Matron Holz protects the town, but I think she's scary!",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 10,
+              "orderNum": 0,
+              "parentIdNum": 7,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 15
+}

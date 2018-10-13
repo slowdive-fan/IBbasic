@@ -1,0 +1,67 @@
+{
+  "ConvoFileName": "genericEnc",
+  "Narration": true,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "nar_blob.png",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "You are attacked by enemies...",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 2,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Battle Begins]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 2
+}

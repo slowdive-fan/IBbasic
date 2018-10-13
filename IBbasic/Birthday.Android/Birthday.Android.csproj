@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E01D477-1009-4D69-8935-9E33354A3170}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Birthday.Droid</RootNamespace>
+    <AssemblyName>Birthday.Android</AssemblyName>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>1.60.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer">
+      <Version>1.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Analytics">
+      <Version>60.1142.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndLoad_Android.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\axe_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\baker_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\bear_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\book_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\castorp_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\child_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\child2_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\containerDC20.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\door_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\door01.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\door02.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\doorLocked.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\final_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\fourmusiciansinn.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\genericEnc.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\genericEnc2.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\goathouse.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\goatHouseEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\goatHouseEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\goathouseold.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\intro_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\intro_screen.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\karl_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\klaus_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\matron_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\portal_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\rapunzel_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\schafberg.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\schafbergold.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\sevenkids_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\sieben_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\siebenfinal_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\thewoods.are" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc1.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc2.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc3.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc4.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc5.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEnc6.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\TheWoodsEncBear.enc" />
+    <EmbeddedResource Include="Assets\modules\Birthday\trap01.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\villager_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\villager2_con.dlg" />
+    <EmbeddedResource Include="Assets\modules\Birthday\villager3_con.dlg" />
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.axml" />
+    <AndroidResource Include="Resources\layout\Toolbar.axml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\drawable\ic_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable-xxxhdpi\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\Birthday.mod" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\birthday_title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_amulet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_bag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_boots.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_crook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_goldshears.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_heart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_meat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_potionblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_potionbluedark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_potiongreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_potionpurple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_potionred.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_redhood.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_ringgold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\it_weeds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_axe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_blob.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_book.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_portal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\nar_ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\npc_eumaeus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\npc_sarda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\pc_m_fig1_pc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_axeprop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_bear3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_bookprop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_castorp3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_chest3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_chestdark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_child23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_child3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_karl3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_klaus3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_kuchen3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_matron3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_mothergoat3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_portal3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_ringprop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_sieben3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_treasure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_unseeliebeloved3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_unseeliecavalier3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_villager23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_villager3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\prp_villager33.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_brown_bear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_mothergoat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_nibelung.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_redcap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_unseeliebeloved.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\modules\Birthday\graphics\tkn_unseeliecavalier.png" />
+  </ItemGroup>
+  <Import Project="..\IBbasic\IBbasic.projitems" Label="Shared" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>

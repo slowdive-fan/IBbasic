@@ -1,0 +1,177 @@
+{
+  "ConvoFileName": "axe_con",
+  "Narration": true,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "nar_axe.png",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": true,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "[<gy>An old axe sticks out of the ground among the weeds and ruined foundation.</gy>]",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 2,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Take the axe.]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [
+                {
+                  "a_script": "gaGiveItem.cs",
+                  "a_parameter_1": "woodcutter_axe",
+                  "a_parameter_2": "1",
+                  "a_parameter_3": null,
+                  "a_parameter_4": null
+                },
+                {
+                  "a_script": "gaEnableDisableTrigger.cs",
+                  "a_parameter_1": "axeTrig",
+                  "a_parameter_2": "false",
+                  "a_parameter_3": null,
+                  "a_parameter_4": null
+                },
+                {
+                  "a_script": "gaShowTriggerImage",
+                  "a_parameter_1": "axeTrig",
+                  "a_parameter_2": "false",
+                  "a_parameter_3": "thewoods",
+                  "a_parameter_4": null
+                }
+              ],
+              "conditions": [],
+              "isLink": false
+            },
+            {
+              "idNum": 3,
+              "orderNum": 1,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Leave it.]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [
+            {
+              "a_script": "gaSetGlobalInt.cs",
+              "a_parameter_1": "treasure_hunt",
+              "a_parameter_2": "++",
+              "a_parameter_3": null,
+              "a_parameter_4": null
+            },
+            {
+              "a_script": "gaGiveXP.cs",
+              "a_parameter_1": "10",
+              "a_parameter_2": null,
+              "a_parameter_3": null,
+              "a_parameter_4": null
+            }
+          ],
+          "conditions": [],
+          "isLink": false
+        },
+        {
+          "idNum": 4,
+          "orderNum": 1,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "[<gy>The axe still protrudes from the forest floor.</gy>]",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 99999,
+              "orderNum": 0,
+              "parentIdNum": 4,
+              "pcNode": true,
+              "linkTo": 2,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Take the axe.]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": true
+            },
+            {
+              "idNum": 100000,
+              "orderNum": 1,
+              "parentIdNum": 4,
+              "pcNode": true,
+              "linkTo": 3,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "[Leave it.]",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": true
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 5
+}

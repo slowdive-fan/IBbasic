@@ -1,0 +1,678 @@
+{
+  "ConvoFileName": "villager3_con",
+  "Narration": false,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "prp_villager33",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Happy birthday, <FirstName>!",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 16,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "14",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 2,
+          "orderNum": 1,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "It is good to have tonight's festival to look forward to.  I've been working so hard lately.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 18,
+              "orderNum": 0,
+              "parentIdNum": 2,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "13",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 3,
+          "orderNum": 2,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The dwarven merchant says he's from Gottingen.  It is good for Schafberg to trade, but it's strange to have outsiders in our midst on a festival day.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 19,
+              "orderNum": 0,
+              "parentIdNum": 3,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "12",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 4,
+          "orderNum": 3,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "I wish you could tell me what Matron Holz wants you to do, <FirstName>!",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 20,
+              "orderNum": 0,
+              "parentIdNum": 4,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "11",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 5,
+          "orderNum": 4,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Malicious fairies hide their treasure in the woods where Mother Goat lives, guarding it with their lives.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 21,
+              "orderNum": 0,
+              "parentIdNum": 5,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "10",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 6,
+          "orderNum": 5,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "It is said that Mother Goat has given birth to seven unseelie fairies.  How horrible!",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 22,
+              "orderNum": 0,
+              "parentIdNum": 6,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "9",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 7,
+          "orderNum": 6,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Kuchen's pastries are delicious.  I've heard that he's preparing something extra special for your festival tonight.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 23,
+              "orderNum": 0,
+              "parentIdNum": 7,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "8",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 8,
+          "orderNum": 7,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The birthday errand is traditional for all those who grow up in Schafberg.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 24,
+              "orderNum": 0,
+              "parentIdNum": 8,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "7",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 9,
+          "orderNum": 8,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The Wooden Crone, goddess of childbirth and magic, lives in the Roots of the World and blesses Schafberg.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 25,
+              "orderNum": 0,
+              "parentIdNum": 9,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "6",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 10,
+          "orderNum": 9,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The Birch Mother is goddess of woods and streams.  Most of us do not worship her.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 26,
+              "orderNum": 0,
+              "parentIdNum": 10,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "5",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 11,
+          "orderNum": 10,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The Oak Father is god of strength and virtue, but he is not worshipped widely among the folk of Schafberg.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 27,
+              "orderNum": 0,
+              "parentIdNum": 11,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "4",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 12,
+          "orderNum": 11,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "You are blessed by the Wooden Crone, <FirstName>.  Do not forget that.",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 29,
+              "orderNum": 0,
+              "parentIdNum": 12,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "3",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 13,
+          "orderNum": 12,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The Wooden Crone walks behind you, <FirstName>.  Do not forget that. ",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 28,
+              "orderNum": 0,
+              "parentIdNum": 13,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [
+            {
+              "c_script": "gcRand1of.cs",
+              "c_and": true,
+              "c_not": false,
+              "c_parameter_1": "2",
+              "c_parameter_2": null,
+              "c_parameter_3": null,
+              "c_parameter_4": null
+            }
+          ],
+          "isLink": false
+        },
+        {
+          "idNum": 14,
+          "orderNum": 13,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "The Golden Shears ensure that our sheep are healthy and the shearing days fast--but this year has been different.  Perhaps their magic is fading?",
+          "IsExpanded": false,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 17,
+              "orderNum": 0,
+              "parentIdNum": 14,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "End Dialog",
+              "IsExpanded": true,
+              "indentMultiplier": 0,
+              "subNodes": [],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 29
+}

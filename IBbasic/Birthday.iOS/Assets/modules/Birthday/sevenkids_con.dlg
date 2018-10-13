@@ -1,0 +1,341 @@
+{
+  "ConvoFileName": "sevenkids_con",
+  "Narration": false,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "prp_unseeliebeloved3",
+  "DefaultNpcName": "",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 20,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "And so the wolf arrives.",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 21,
+              "orderNum": 0,
+              "parentIdNum": 20,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "Continue",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [
+                {
+                  "idNum": 22,
+                  "orderNum": 0,
+                  "parentIdNum": 21,
+                  "pcNode": false,
+                  "linkTo": 0,
+                  "ShowOnlyOnce": false,
+                  "NodeIsActive": true,
+                  "NodePortraitBitmap": "prp_unseeliecavalier3",
+                  "NodeNpcName": "",
+                  "conversationText": "Mincemeat in its pockets!",
+                  "IsExpanded": true,
+                  "indentMultiplier": 3,
+                  "subNodes": [
+                    {
+                      "idNum": 23,
+                      "orderNum": 0,
+                      "parentIdNum": 22,
+                      "pcNode": true,
+                      "linkTo": 0,
+                      "ShowOnlyOnce": false,
+                      "NodeIsActive": true,
+                      "NodePortraitBitmap": "",
+                      "NodeNpcName": "",
+                      "conversationText": "Continue",
+                      "IsExpanded": true,
+                      "indentMultiplier": 4,
+                      "subNodes": [
+                        {
+                          "idNum": 24,
+                          "orderNum": 0,
+                          "parentIdNum": 23,
+                          "pcNode": false,
+                          "linkTo": 0,
+                          "ShowOnlyOnce": false,
+                          "NodeIsActive": true,
+                          "NodePortraitBitmap": "prp_unseeliebeloved3",
+                          "NodeNpcName": "",
+                          "conversationText": "Aye, seven pies for seven pies.",
+                          "IsExpanded": true,
+                          "indentMultiplier": 5,
+                          "subNodes": [
+                            {
+                              "idNum": 25,
+                              "orderNum": 0,
+                              "parentIdNum": 24,
+                              "pcNode": true,
+                              "linkTo": 0,
+                              "ShowOnlyOnce": false,
+                              "NodeIsActive": true,
+                              "NodePortraitBitmap": "",
+                              "NodeNpcName": "",
+                              "conversationText": "Continue",
+                              "IsExpanded": true,
+                              "indentMultiplier": 6,
+                              "subNodes": [
+                                {
+                                  "idNum": 26,
+                                  "orderNum": 0,
+                                  "parentIdNum": 25,
+                                  "pcNode": false,
+                                  "linkTo": 0,
+                                  "ShowOnlyOnce": false,
+                                  "NodeIsActive": true,
+                                  "NodePortraitBitmap": "prp_unseeliecavalier3",
+                                  "NodeNpcName": "",
+                                  "conversationText": "Nay!  Seven pies for seven <gy>lies</gy>.",
+                                  "IsExpanded": true,
+                                  "indentMultiplier": 7,
+                                  "subNodes": [
+                                    {
+                                      "idNum": 27,
+                                      "orderNum": 0,
+                                      "parentIdNum": 26,
+                                      "pcNode": true,
+                                      "linkTo": 0,
+                                      "ShowOnlyOnce": false,
+                                      "NodeIsActive": true,
+                                      "NodePortraitBitmap": "",
+                                      "NodeNpcName": "",
+                                      "conversationText": "Continue",
+                                      "IsExpanded": true,
+                                      "indentMultiplier": 8,
+                                      "subNodes": [
+                                        {
+                                          "idNum": 28,
+                                          "orderNum": 0,
+                                          "parentIdNum": 27,
+                                          "pcNode": false,
+                                          "linkTo": 0,
+                                          "ShowOnlyOnce": false,
+                                          "NodeIsActive": true,
+                                          "NodePortraitBitmap": "prp_unseeliebeloved3",
+                                          "NodeNpcName": "",
+                                          "conversationText": "Either word can fill <him/her> up.",
+                                          "IsExpanded": true,
+                                          "indentMultiplier": 9,
+                                          "subNodes": [
+                                            {
+                                              "idNum": 29,
+                                              "orderNum": 0,
+                                              "parentIdNum": 28,
+                                              "pcNode": true,
+                                              "linkTo": 0,
+                                              "ShowOnlyOnce": false,
+                                              "NodeIsActive": true,
+                                              "NodePortraitBitmap": "",
+                                              "NodeNpcName": "",
+                                              "conversationText": "Continue",
+                                              "IsExpanded": true,
+                                              "indentMultiplier": 10,
+                                              "subNodes": [
+                                                {
+                                                  "idNum": 30,
+                                                  "orderNum": 0,
+                                                  "parentIdNum": 29,
+                                                  "pcNode": false,
+                                                  "linkTo": 0,
+                                                  "ShowOnlyOnce": false,
+                                                  "NodeIsActive": true,
+                                                  "NodePortraitBitmap": "prp_unseeliecavalier3",
+                                                  "NodeNpcName": "",
+                                                  "conversationText": "Unless we feed on <him/her> before <he/she> can feed on us.",
+                                                  "IsExpanded": true,
+                                                  "indentMultiplier": 11,
+                                                  "subNodes": [
+                                                    {
+                                                      "idNum": 31,
+                                                      "orderNum": 0,
+                                                      "parentIdNum": 30,
+                                                      "pcNode": true,
+                                                      "linkTo": 0,
+                                                      "ShowOnlyOnce": false,
+                                                      "NodeIsActive": true,
+                                                      "NodePortraitBitmap": "",
+                                                      "NodeNpcName": "",
+                                                      "conversationText": "Continue",
+                                                      "IsExpanded": true,
+                                                      "indentMultiplier": 12,
+                                                      "subNodes": [
+                                                        {
+                                                          "idNum": 32,
+                                                          "orderNum": 0,
+                                                          "parentIdNum": 31,
+                                                          "pcNode": false,
+                                                          "linkTo": 0,
+                                                          "ShowOnlyOnce": false,
+                                                          "NodeIsActive": true,
+                                                          "NodePortraitBitmap": "prp_unseeliebeloved3",
+                                                          "NodeNpcName": "",
+                                                          "conversationText": "This too is true, my siblings.  Catch us if you can, Wolf.",
+                                                          "IsExpanded": true,
+                                                          "indentMultiplier": 13,
+                                                          "subNodes": [
+                                                            {
+                                                              "idNum": 33,
+                                                              "orderNum": 0,
+                                                              "parentIdNum": 32,
+                                                              "pcNode": true,
+                                                              "linkTo": 0,
+                                                              "ShowOnlyOnce": false,
+                                                              "NodeIsActive": true,
+                                                              "NodePortraitBitmap": "",
+                                                              "NodeNpcName": "",
+                                                              "conversationText": "Continue",
+                                                              "IsExpanded": true,
+                                                              "indentMultiplier": 14,
+                                                              "subNodes": [
+                                                                {
+                                                                  "idNum": 34,
+                                                                  "orderNum": 0,
+                                                                  "parentIdNum": 33,
+                                                                  "pcNode": false,
+                                                                  "linkTo": 0,
+                                                                  "ShowOnlyOnce": false,
+                                                                  "NodeIsActive": true,
+                                                                  "NodePortraitBitmap": "blob_portrait.png",
+                                                                  "NodeNpcName": "",
+                                                                  "conversationText": "[<gy>The fairies suddenly vanish.</gy>]",
+                                                                  "IsExpanded": true,
+                                                                  "indentMultiplier": 15,
+                                                                  "subNodes": [
+                                                                    {
+                                                                      "idNum": 35,
+                                                                      "orderNum": 0,
+                                                                      "parentIdNum": 34,
+                                                                      "pcNode": true,
+                                                                      "linkTo": 0,
+                                                                      "ShowOnlyOnce": false,
+                                                                      "NodeIsActive": true,
+                                                                      "NodePortraitBitmap": "",
+                                                                      "NodeNpcName": "",
+                                                                      "conversationText": "End Dialog",
+                                                                      "IsExpanded": true,
+                                                                      "indentMultiplier": 16,
+                                                                      "subNodes": [],
+                                                                      "actions": [],
+                                                                      "conditions": [],
+                                                                      "isLink": false
+                                                                    }
+                                                                  ],
+                                                                  "actions": [],
+                                                                  "conditions": [],
+                                                                  "isLink": false
+                                                                }
+                                                              ],
+                                                              "actions": [],
+                                                              "conditions": [],
+                                                              "isLink": false
+                                                            }
+                                                          ],
+                                                          "actions": [],
+                                                          "conditions": [],
+                                                          "isLink": false
+                                                        }
+                                                      ],
+                                                      "actions": [],
+                                                      "conditions": [],
+                                                      "isLink": false
+                                                    }
+                                                  ],
+                                                  "actions": [],
+                                                  "conditions": [],
+                                                  "isLink": false
+                                                }
+                                              ],
+                                              "actions": [],
+                                              "conditions": [],
+                                              "isLink": false
+                                            }
+                                          ],
+                                          "actions": [],
+                                          "conditions": [],
+                                          "isLink": false
+                                        }
+                                      ],
+                                      "actions": [],
+                                      "conditions": [],
+                                      "isLink": false
+                                    }
+                                  ],
+                                  "actions": [],
+                                  "conditions": [],
+                                  "isLink": false
+                                }
+                              ],
+                              "actions": [],
+                              "conditions": [],
+                              "isLink": false
+                            }
+                          ],
+                          "actions": [],
+                          "conditions": [],
+                          "isLink": false
+                        }
+                      ],
+                      "actions": [],
+                      "conditions": [],
+                      "isLink": false
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "a_script": "gaTakeItem.cs",
+                      "a_parameter_1": "mincemeat_pies",
+                      "a_parameter_2": "1",
+                      "a_parameter_3": null,
+                      "a_parameter_4": null
+                    }
+                  ],
+                  "conditions": [],
+                  "isLink": false
+                }
+              ],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 35
+}

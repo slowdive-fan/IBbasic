@@ -187,7 +187,11 @@ namespace IBbasic
 
             int leftNum = journalScreenEntryIndex + 1;
             string leftNumStrg = leftNum.ToString();
-            string rightNum = gv.mod.partyJournalQuests[journalScreenQuestIndex].Entries.Count.ToString();
+            string rightNum = "1";
+            if (gv.mod.partyJournalQuests.Count > 0)
+            {
+                rightNum = gv.mod.partyJournalQuests[journalScreenQuestIndex].Entries.Count.ToString();
+            }
             btnPageIndex.Text = leftNumStrg + "/" + rightNum;
 
             //DRAW ALL CONTROLS

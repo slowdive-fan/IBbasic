@@ -2591,6 +2591,7 @@ namespace IBbasic
             if (gv.sf.ActionToTake == null)
             {
                 endCreatureTurn();
+                return;
             }
             if (gv.sf.ActionToTake.Equals("Attack"))
             {
@@ -3374,6 +3375,11 @@ namespace IBbasic
         public void BasicAttacker(Creature crt)
         {
             Player pc = targetClosestPC(crt);
+            if (pc == null)
+            {
+                gv.sf.ActionToTake = null;
+                return;
+            }
             gv.sf.CombatTarget = pc;
             gv.sf.ActionToTake = "Attack";
         }
@@ -3386,6 +3392,11 @@ namespace IBbasic
             {
                 //don't cast this round, instead try and attack or move
                 Player pc = targetClosestPC(crt);
+                if (pc == null)
+                {
+                    gv.sf.ActionToTake = null;
+                    return;
+                }
                 gv.sf.CombatTarget = pc;
                 gv.sf.ActionToTake = "Attack";
                 return;
@@ -3405,6 +3416,11 @@ namespace IBbasic
                         if (gv.sf.SpellToCast.spellTargetType.Equals("Enemy"))
                         {
                             Player pc = targetClosestPC(crt);
+                            if (pc == null)
+                            {
+                                gv.sf.ActionToTake = null;
+                                return;
+                            }
                             gv.sf.CombatTarget = pc;
                             gv.sf.ActionToTake = "Cast";
                             break;
@@ -3416,6 +3432,11 @@ namespace IBbasic
                             {
                                 //didn't find a target so use closest PC
                                 Player pc = targetClosestPC(crt);
+                                if (pc == null)
+                                {
+                                    gv.sf.ActionToTake = null;
+                                    return;
+                                }
                                 gv.sf.CombatTarget = new Coordinate(pc.combatLocX, pc.combatLocY);
                             }
                             else
@@ -3462,6 +3483,11 @@ namespace IBbasic
             if (gv.sf.SpellToCast == null) //didn't find a spell that matched the criteria so use attack instead
             {
                 Player pc = targetClosestPC(crt);
+                if (pc == null)
+                {
+                    gv.sf.ActionToTake = null;
+                    return;
+                }
                 gv.sf.CombatTarget = pc;
                 gv.sf.ActionToTake = "Attack";
             }

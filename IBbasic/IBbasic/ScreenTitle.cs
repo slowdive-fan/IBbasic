@@ -195,7 +195,7 @@ namespace IBbasic
                     {
                         gv.PlaySound("btn_click");
                         gv.mod.uniqueSessionIdNumberTag = gv.sf.RandInt(1000000) + "";
-                        gv.TrackerSendEvent(":NEWGAME:" + gv.mod.moduleName, "none", false);
+                        gv.TrackerSendEvent(":RES:" + gv.screenWidth + "x" + gv.screenHeight + ":NEWGAME:" + gv.mod.moduleName, "none", false);
                         if (gv.mod.mustUsePreMadePC)
                         {
                             //no spell selection offered

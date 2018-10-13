@@ -1,0 +1,434 @@
+{
+  "ConvoFileName": "siebenfinal_con",
+  "Narration": false,
+  "PartyChat": false,
+  "SpeakToMainPcOnly": false,
+  "NpcPortraitBitmap": "prp_sieben3",
+  "DefaultNpcName": "Sieben",
+  "subNodes": [
+    {
+      "idNum": 0,
+      "orderNum": 0,
+      "parentIdNum": -1,
+      "pcNode": true,
+      "linkTo": 0,
+      "ShowOnlyOnce": false,
+      "NodeIsActive": true,
+      "NodePortraitBitmap": "",
+      "NodeNpcName": "",
+      "conversationText": "root",
+      "IsExpanded": true,
+      "indentMultiplier": 0,
+      "subNodes": [
+        {
+          "idNum": 1,
+          "orderNum": 0,
+          "parentIdNum": 0,
+          "pcNode": false,
+          "linkTo": 0,
+          "ShowOnlyOnce": false,
+          "NodeIsActive": true,
+          "NodePortraitBitmap": "",
+          "NodeNpcName": "",
+          "conversationText": "Happy birthday, <FirstName>!",
+          "IsExpanded": true,
+          "indentMultiplier": 1,
+          "subNodes": [
+            {
+              "idNum": 2,
+              "orderNum": 0,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "Sieben!  By the Deity, my heart has never known such gratitude.",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [
+                {
+                  "idNum": 3,
+                  "orderNum": 0,
+                  "parentIdNum": 2,
+                  "pcNode": false,
+                  "linkTo": 0,
+                  "ShowOnlyOnce": false,
+                  "NodeIsActive": true,
+                  "NodePortraitBitmap": "",
+                  "NodeNpcName": "",
+                  "conversationText": "I discovered Mother Goat's plan shortly after you departed. I could not let her kill you, though she will surely kill me if you cannot defeat her now.",
+                  "IsExpanded": true,
+                  "indentMultiplier": 3,
+                  "subNodes": [
+                    {
+                      "idNum": 4,
+                      "orderNum": 0,
+                      "parentIdNum": 3,
+                      "pcNode": true,
+                      "linkTo": 0,
+                      "ShowOnlyOnce": false,
+                      "NodeIsActive": true,
+                      "NodePortraitBitmap": "",
+                      "NodeNpcName": "",
+                      "conversationText": "Continue",
+                      "IsExpanded": true,
+                      "indentMultiplier": 4,
+                      "subNodes": [
+                        {
+                          "idNum": 5,
+                          "orderNum": 0,
+                          "parentIdNum": 4,
+                          "pcNode": false,
+                          "linkTo": 0,
+                          "ShowOnlyOnce": false,
+                          "NodeIsActive": true,
+                          "NodePortraitBitmap": "",
+                          "NodeNpcName": "",
+                          "conversationText": "I have brought you as far into Faerylond as I can with my magic, <FirstName>. We cannot go any further as long as Mother Goat holds sway over this place.",
+                          "IsExpanded": true,
+                          "indentMultiplier": 5,
+                          "subNodes": [
+                            {
+                              "idNum": 6,
+                              "orderNum": 0,
+                              "parentIdNum": 5,
+                              "pcNode": true,
+                              "linkTo": 0,
+                              "ShowOnlyOnce": false,
+                              "NodeIsActive": true,
+                              "NodePortraitBitmap": "",
+                              "NodeNpcName": "",
+                              "conversationText": "If this is so, then I will fight her.",
+                              "IsExpanded": true,
+                              "indentMultiplier": 6,
+                              "subNodes": [
+                                {
+                                  "idNum": 7,
+                                  "orderNum": 0,
+                                  "parentIdNum": 6,
+                                  "pcNode": false,
+                                  "linkTo": 0,
+                                  "ShowOnlyOnce": false,
+                                  "NodeIsActive": true,
+                                  "NodePortraitBitmap": "",
+                                  "NodeNpcName": "",
+                                  "conversationText": "Indeed, you have no choice in the matter. She can come here at will--Even now I can sense her approach--",
+                                  "IsExpanded": true,
+                                  "indentMultiplier": 7,
+                                  "subNodes": [
+                                    {
+                                      "idNum": 8,
+                                      "orderNum": 0,
+                                      "parentIdNum": 7,
+                                      "pcNode": true,
+                                      "linkTo": 0,
+                                      "ShowOnlyOnce": false,
+                                      "NodeIsActive": true,
+                                      "NodePortraitBitmap": "",
+                                      "NodeNpcName": "",
+                                      "conversationText": "Continue",
+                                      "IsExpanded": true,
+                                      "indentMultiplier": 8,
+                                      "subNodes": [
+                                        {
+                                          "idNum": 9,
+                                          "orderNum": 0,
+                                          "parentIdNum": 8,
+                                          "pcNode": false,
+                                          "linkTo": 0,
+                                          "ShowOnlyOnce": false,
+                                          "NodeIsActive": true,
+                                          "NodePortraitBitmap": "",
+                                          "NodeNpcName": "",
+                                          "conversationText": "I can feel it! She stands at the portal. If--<gy>when</gy>--you defeat her, the portal will open into Faerylond, where I will be waiting. Go!",
+                                          "IsExpanded": true,
+                                          "indentMultiplier": 9,
+                                          "subNodes": [
+                                            {
+                                              "idNum": 10,
+                                              "orderNum": 0,
+                                              "parentIdNum": 9,
+                                              "pcNode": true,
+                                              "linkTo": 0,
+                                              "ShowOnlyOnce": false,
+                                              "NodeIsActive": true,
+                                              "NodePortraitBitmap": "",
+                                              "NodeNpcName": "",
+                                              "conversationText": "End Dialog",
+                                              "IsExpanded": true,
+                                              "indentMultiplier": 10,
+                                              "subNodes": [],
+                                              "actions": [
+                                                {
+                                                  "a_script": "gaEnableDisableTrigger.cs",
+                                                  "a_parameter_1": "motherTrig",
+                                                  "a_parameter_2": "true",
+                                                  "a_parameter_3": "goathouse",
+                                                  "a_parameter_4": null
+                                                },
+                                                {
+                                                  "a_script": "gaEnableDisableTrigger.cs",
+                                                  "a_parameter_1": "siebenTrig",
+                                                  "a_parameter_2": "false",
+                                                  "a_parameter_3": "goathouse",
+                                                  "a_parameter_4": null
+                                                },
+                                                {
+                                                  "a_script": "gaEnableDisableTrigger.cs",
+                                                  "a_parameter_1": "siebenFinalTrig",
+                                                  "a_parameter_2": "false",
+                                                  "a_parameter_3": "goathouse",
+                                                  "a_parameter_4": null
+                                                },
+                                                {
+                                                  "a_script": "gaShowTriggerImage",
+                                                  "a_parameter_1": "siebenTrig",
+                                                  "a_parameter_2": "false",
+                                                  "a_parameter_3": "goathouse",
+                                                  "a_parameter_4": null
+                                                }
+                                              ],
+                                              "conditions": [],
+                                              "isLink": false
+                                            }
+                                          ],
+                                          "actions": [],
+                                          "conditions": [],
+                                          "isLink": false
+                                        }
+                                      ],
+                                      "actions": [],
+                                      "conditions": [],
+                                      "isLink": false
+                                    }
+                                  ],
+                                  "actions": [],
+                                  "conditions": [],
+                                  "isLink": false
+                                }
+                              ],
+                              "actions": [],
+                              "conditions": [],
+                              "isLink": false
+                            },
+                            {
+                              "idNum": 13,
+                              "orderNum": 1,
+                              "parentIdNum": 5,
+                              "pcNode": true,
+                              "linkTo": 0,
+                              "ShowOnlyOnce": false,
+                              "NodeIsActive": true,
+                              "NodePortraitBitmap": "",
+                              "NodeNpcName": "",
+                              "conversationText": "Can you help me in this fight, Sieben?",
+                              "IsExpanded": true,
+                              "indentMultiplier": 6,
+                              "subNodes": [
+                                {
+                                  "idNum": 14,
+                                  "orderNum": 0,
+                                  "parentIdNum": 13,
+                                  "pcNode": false,
+                                  "linkTo": 0,
+                                  "ShowOnlyOnce": false,
+                                  "NodeIsActive": true,
+                                  "NodePortraitBitmap": "",
+                                  "NodeNpcName": "",
+                                  "conversationText": "No--Mother Goat and I are both of the same blood, and the laws of Faerylond forbid such acts. You will have to face her on your own. She comes here at will--Even now I can feel her approach--",
+                                  "IsExpanded": true,
+                                  "indentMultiplier": 7,
+                                  "subNodes": [
+                                    {
+                                      "idNum": 15,
+                                      "orderNum": 0,
+                                      "parentIdNum": 14,
+                                      "pcNode": true,
+                                      "linkTo": 0,
+                                      "ShowOnlyOnce": false,
+                                      "NodeIsActive": true,
+                                      "NodePortraitBitmap": "",
+                                      "NodeNpcName": "",
+                                      "conversationText": "Continue",
+                                      "IsExpanded": true,
+                                      "indentMultiplier": 8,
+                                      "subNodes": [
+                                        {
+                                          "idNum": 100000,
+                                          "orderNum": 0,
+                                          "parentIdNum": 15,
+                                          "pcNode": false,
+                                          "linkTo": 9,
+                                          "ShowOnlyOnce": false,
+                                          "NodeIsActive": true,
+                                          "NodePortraitBitmap": "",
+                                          "NodeNpcName": "",
+                                          "conversationText": "I can feel it! She stands at the portal. If--<gy>when</gy>--you defeat her, the portal will open into Faerylond, where I will be waiting. Go!",
+                                          "IsExpanded": true,
+                                          "indentMultiplier": 9,
+                                          "subNodes": [],
+                                          "actions": [],
+                                          "conditions": [],
+                                          "isLink": true
+                                        }
+                                      ],
+                                      "actions": [],
+                                      "conditions": [],
+                                      "isLink": false
+                                    }
+                                  ],
+                                  "actions": [],
+                                  "conditions": [],
+                                  "isLink": false
+                                }
+                              ],
+                              "actions": [],
+                              "conditions": [],
+                              "isLink": false
+                            },
+                            {
+                              "idNum": 11,
+                              "orderNum": 2,
+                              "parentIdNum": 5,
+                              "pcNode": true,
+                              "linkTo": 0,
+                              "ShowOnlyOnce": false,
+                              "NodeIsActive": true,
+                              "NodePortraitBitmap": "",
+                              "NodeNpcName": "",
+                              "conversationText": "Am I to stand against Mother Goat herself, then?",
+                              "IsExpanded": true,
+                              "indentMultiplier": 6,
+                              "subNodes": [
+                                {
+                                  "idNum": 99999,
+                                  "orderNum": 0,
+                                  "parentIdNum": 11,
+                                  "pcNode": false,
+                                  "linkTo": 7,
+                                  "ShowOnlyOnce": false,
+                                  "NodeIsActive": true,
+                                  "NodePortraitBitmap": "",
+                                  "NodeNpcName": "",
+                                  "conversationText": "Indeed, you have no choice in the matter. She can come here at will--Even now I can sense her approach--",
+                                  "IsExpanded": true,
+                                  "indentMultiplier": 7,
+                                  "subNodes": [],
+                                  "actions": [],
+                                  "conditions": [],
+                                  "isLink": true
+                                }
+                              ],
+                              "actions": [],
+                              "conditions": [],
+                              "isLink": false
+                            }
+                          ],
+                          "actions": [],
+                          "conditions": [],
+                          "isLink": false
+                        }
+                      ],
+                      "actions": [],
+                      "conditions": [],
+                      "isLink": false
+                    }
+                  ],
+                  "actions": [],
+                  "conditions": [],
+                  "isLink": false
+                }
+              ],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            },
+            {
+              "idNum": 19,
+              "orderNum": 1,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "How did we come here, Sieben? How did you find me?",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [
+                {
+                  "idNum": 100002,
+                  "orderNum": 0,
+                  "parentIdNum": 19,
+                  "pcNode": false,
+                  "linkTo": 3,
+                  "ShowOnlyOnce": false,
+                  "NodeIsActive": true,
+                  "NodePortraitBitmap": "",
+                  "NodeNpcName": "",
+                  "conversationText": "I discovered Mother Goat's plan shortly after you departed. I could not let her kill you, though she will surely kill me if you cannot defeat her now.",
+                  "IsExpanded": true,
+                  "indentMultiplier": 3,
+                  "subNodes": [],
+                  "actions": [],
+                  "conditions": [],
+                  "isLink": true
+                }
+              ],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            },
+            {
+              "idNum": 17,
+              "orderNum": 2,
+              "parentIdNum": 1,
+              "pcNode": true,
+              "linkTo": 0,
+              "ShowOnlyOnce": false,
+              "NodeIsActive": true,
+              "NodePortraitBitmap": "",
+              "NodeNpcName": "",
+              "conversationText": "Thank you, Sieben. I was not expecting that.",
+              "IsExpanded": true,
+              "indentMultiplier": 2,
+              "subNodes": [
+                {
+                  "idNum": 100001,
+                  "orderNum": 0,
+                  "parentIdNum": 17,
+                  "pcNode": false,
+                  "linkTo": 3,
+                  "ShowOnlyOnce": false,
+                  "NodeIsActive": true,
+                  "NodePortraitBitmap": "",
+                  "NodeNpcName": "",
+                  "conversationText": "I discovered Mother Goat's plan shortly after you departed. I could not let her kill you, though she will surely kill me if you cannot defeat her now.",
+                  "IsExpanded": true,
+                  "indentMultiplier": 3,
+                  "subNodes": [],
+                  "actions": [],
+                  "conditions": [],
+                  "isLink": true
+                }
+              ],
+              "actions": [],
+              "conditions": [],
+              "isLink": false
+            }
+          ],
+          "actions": [],
+          "conditions": [],
+          "isLink": false
+        }
+      ],
+      "actions": [],
+      "conditions": [],
+      "isLink": false
+    }
+  ],
+  "NextIdNum": 20
+}
