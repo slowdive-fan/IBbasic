@@ -61,9 +61,9 @@
 	<key>XSAppIconAssets</key>
 	<string>Media.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.15</string>
+	<string>1.0.17</string>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>17</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 </dict>

@@ -21,10 +21,17 @@ namespace IBbasic
         public IbbToggle tglResistance = null;
         public IbbToggle tglBehavior = null;
         public IbbToggle tglSpells = null;
-        public Dictionary<string, bool> categoryList = new Dictionary<string, bool>();
+        //public Dictionary<string, bool> categoryList = new Dictionary<string, bool>();
+        public List<string> categoryNamesList = new List<string>();
+        public int currentTopLineIndex = 0;
         public int numberOfLinesToShow = 23;
         public List<int> indexList = new List<int>();
-        public Dictionary<int, string> categoryNameAtLine = new Dictionary<int, string>();
+        //public Dictionary<int, string> categoryNameAtLine = new Dictionary<int, string>();
+
+        //touch scrolling stuff
+        public bool touchIsDown = false;
+        public int touchMoveDeltaY = 0;
+        public int lastTouchMoveLocationY = 0;
 
         //MAIN
         private IbbToggle btnCrtName = null;
@@ -72,7 +79,7 @@ namespace IBbasic
         public IbbButton btnAddKnownSpell = null;
         public IbbButton btnRemoveKnownSpell = null;
 
-        private IbbButton btnHelp = null;
+        //private IbbButton btnHelp = null;
 
         public IbRect src = null;
         public IbRect dst = null;
@@ -93,9 +100,9 @@ namespace IBbasic
             //initialize categoryList
             foreach (Creature crt in gv.cc.allCreaturesList)
             {
-                if (!categoryList.ContainsKey(crt.cr_parentNodeName))
+                if (!categoryNamesList.Contains(crt.cr_parentNodeName))
                 {
-                    categoryList.Add(crt.cr_parentNodeName, true);
+                    categoryNamesList.Add(crt.cr_parentNodeName);
                 }
             }
 
@@ -110,10 +117,10 @@ namespace IBbasic
         public void resetIndexList()
         {
             int cnt = 0;
-            int lineIndx = 0;
+            //int lineIndx = 0;
             string lastCategory = "";
             indexList.Clear();
-            categoryNameAtLine.Clear();
+            //categoryNameAtLine.Clear();
             foreach (Creature crt in gv.cc.allCreaturesList)
             {
                 if (!crt.cr_parentNodeName.Equals(lastCategory))
@@ -121,15 +128,13 @@ namespace IBbasic
                     lastCategory = crt.cr_parentNodeName;
                     //new category so add -1 to index list
                     indexList.Add(-1);
-                    categoryNameAtLine.Add(lineIndx, crt.cr_parentNodeName);
-                    lineIndx++;
+                    //categoryNameAtLine.Add(lineIndx, crt.cr_parentNodeName);
+                    categoryNamesList.Add(crt.cr_parentNodeName);
+                    //lineIndx++;
                 }
-                if ((categoryList.ContainsKey(crt.cr_parentNodeName)) && (categoryList[crt.cr_parentNodeName]))
-                {
-                    //is expanded so add cnt to indexList
-                    indexList.Add(cnt);
-                    lineIndx++;
-                }
+                //is expanded so add cnt to indexList
+                indexList.Add(cnt);
+                //lineIndx++;                
                 cnt++;
             }
         }
@@ -342,18 +347,6 @@ namespace IBbasic
             btnCrtTokenFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnCrtTokenFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
-            if (btnHelp == null)
-            {
-                btnHelp = new IbbButton(gv, 0.8f);
-            }
-            //btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small";
-            btnHelp.Img2 = "btnhelp";
-            btnHelp.Glow = "btn_small_glow";
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize;
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setAttackControlsStart()
         {
@@ -728,12 +721,44 @@ namespace IBbasic
             btnRemoveCreature.Draw();
             btnCopyCreature.Draw();
 
-            string lastCategory = "";
-            numberOfLinesToShow = 23;
+            //string lastCategory = "";
+            numberOfLinesToShow = 16;
             int cnt = 0;
-            int crtCnt = 0;
+            int catCnt = 0;
             int startY = btnAddCreature.Y + btnAddCreature.Height;
-            foreach (Creature crt in gv.cc.allCreaturesList)
+            for (int idx = currentTopLineIndex; idx < indexList.Count; idx++)
+            {
+                if (idx > currentTopLineIndex + numberOfLinesToShow) { continue; }
+                int tlX = btnAddCreature.X;
+                int tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
+                //if -1 then grab the category of the next index
+                if (indexList[idx] == -1)
+                {
+                    gv.DrawText("" + gv.cc.allCreaturesList[indexList[idx + 1]].cr_parentNodeName, tlX, tlY, "bu");
+                    catCnt++;
+                }
+                else //if not -1, use index
+                {
+                    tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
+                    if (indexList[idx] == creatureListIndex)
+                    {
+                        gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gn");
+                    }
+                    else
+                    {
+                        if (gv.cc.allCreaturesList[indexList[idx]].moduleCreature)
+                        {
+                            gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "wh");
+                        }
+                        else
+                        {
+                            gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gy");
+                        }
+                    }
+                }
+                cnt++;
+            }
+            /*foreach (Creature crt in gv.cc.allCreaturesList)
             {
                 int tlX = btnAddCreature.X;
                 int tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
@@ -776,7 +801,7 @@ namespace IBbasic
                     cnt++;
                 }
                 crtCnt++;
-            }
+            }*/
 
             tglMain.Draw();
             gv.DrawText("MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
@@ -821,9 +846,6 @@ namespace IBbasic
                 setSpellsControlsStart();
                 drawSpells();
             }
-
-
-            btnHelp.Draw();
 
             gv.tsMainMenu.redrawTsMainMenu();
 
@@ -963,7 +985,7 @@ namespace IBbasic
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownSpell.X;
             int startY = btnAddKnownSpell.Y + btnAddKnownSpell.Height - gv.fontHeight;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
             foreach (string c in gv.cc.allCreaturesList[creatureListIndex].knownSpellsTags)
             {
@@ -981,7 +1003,6 @@ namespace IBbasic
 
         public void onTouchTsCreatureEditor(int eX, int eY, MouseEventType.EventType eventType)
         {
-            btnHelp.glowOn = false;
 
             if (gv.showMessageBox)
             {
@@ -1042,17 +1063,11 @@ namespace IBbasic
                         return;
                     }
 
-                    if (btnHelp.getImpact(x, y))
-                    {
-                        btnHelp.glowOn = true;
-                    }
                     break;
 
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
 
                     if (gv.showMessageBox)
                     {
@@ -1074,7 +1089,27 @@ namespace IBbasic
                         int PanelLeftLocation = btnAddCreature.X;
                         int PanelTopLocation = btnAddCreature.Y + btnAddCreature.Height;
                         int lineIndex = (y - PanelTopLocation) / (gv.fontHeight + gv.fontLineSpacing);
-                        if (lineIndex < numberOfLinesToShow)
+                        if (lineIndex <= numberOfLinesToShow)
+                        {
+                            int totCats = 0;
+                            int indexInList = 0;
+                            foreach (int idx in indexList)
+                            {
+                                if (idx == -1) { totCats++; }
+                                if (indexInList == currentTopLineIndex) { break; }
+                                indexInList++;
+                            }
+                            int lineIndexActual = lineIndex + indexInList;
+                            if (lineIndexActual > indexList.Count - 1) { return; }
+                            if (indexList[lineIndexActual] != -1)
+                            {
+                                creatureListIndex = indexList[lineIndexActual];
+                            }
+                            //creatureListIndex = indexList[lineIndexActual];  
+                            //if (creatureListIndex == -1) { creatureListIndex = 0; }
+                        }
+
+                        /*if (lineIndex < numberOfLinesToShow)
                         {
                             if (indexList[lineIndex] == -1)
                             {
@@ -1091,7 +1126,7 @@ namespace IBbasic
                             {
                                 creatureListIndex = indexList[lineIndex];
                             }
-                        }
+                        }*/
                     }
 
                     if (tglMain.getImpact(x, y))
@@ -1167,11 +1202,6 @@ namespace IBbasic
                         copyCreature();
                     }
 
-
-                    else if (btnHelp.getImpact(x, y))
-                    {
-                        //incrementalSaveModule();
-                    }
                     break;
             }
         }
@@ -1191,7 +1221,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (btnCrtName.getImpact(x, y))
                     {
@@ -1244,7 +1273,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (btnCrtAC.getImpact(x, y))
                     {
@@ -1301,7 +1329,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (btnCrtTokenFilename.getImpact(x, y))
                     {
@@ -1338,7 +1365,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (btnCrtReflex.getImpact(x, y))
                     {
@@ -1399,7 +1425,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (btnCrtAI.getImpact(x, y))
                     {
@@ -1444,7 +1469,6 @@ namespace IBbasic
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     //TODO check if tapped in the known spells list area
                     if ((x > btnAddKnownSpell.X) && (y > btnAddKnownSpell.Y + btnAddKnownSpell.Height))
@@ -1470,6 +1494,77 @@ namespace IBbasic
                     break;
             }
             return false;
+        }
+
+        public void SetCurrentTopLineIndex(int changeValue)
+        {
+            currentTopLineIndex += changeValue;
+            if (currentTopLineIndex > indexList.Count - numberOfLinesToShow)
+            {
+                currentTopLineIndex = indexList.Count - numberOfLinesToShow;
+            }
+            if (currentTopLineIndex < 0)
+            {
+                currentTopLineIndex = 0;
+            }
+        }
+        public void SetCurrentTopLineAbsoluteIndex(int absoluteValue)
+        {
+            currentTopLineIndex = absoluteValue;
+            if (currentTopLineIndex > indexList.Count - numberOfLinesToShow)
+            {
+                currentTopLineIndex = indexList.Count - numberOfLinesToShow;
+            }
+            if (currentTopLineIndex < 0)
+            {
+                currentTopLineIndex = 0;
+            }
+        }
+        private bool isMouseWithinTextBox(int x, int y)
+        {
+            if ((x > 0) && (x < tglMain.X) && (y > btnAddCreature.Y + btnAddCreature.Height))
+            {
+                return true;
+            }
+            return false;
+        }
+        public void onTouchSwipe(int eX, int eY, MouseEventType.EventType eventType)
+        {
+            if (isMouseWithinTextBox(eX, eY))
+            {
+                switch (eventType)
+                {
+                    case MouseEventType.EventType.MouseDown:
+
+                        touchIsDown = true;
+                        lastTouchMoveLocationY = eY;
+                        touchMoveDeltaY = 0;
+                        break;
+
+                    case MouseEventType.EventType.MouseMove:
+
+                        touchMoveDeltaY = lastTouchMoveLocationY - eY;
+                        if (touchMoveDeltaY > gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        else if (touchMoveDeltaY < -1 * gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(-1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        break;
+
+                    case MouseEventType.EventType.MouseUp:
+
+                        touchIsDown = false;
+                        touchMoveDeltaY = 0;
+                        break;
+                }
+            }
         }
 
         //CREATURE PANEL
@@ -1542,9 +1637,9 @@ namespace IBbasic
             gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName = myinput;
             gv.touchEnabled = true;
 
-            if (!categoryList.ContainsKey(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName))
+            if (!categoryNamesList.Contains(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName))
             {
-                categoryList.Add(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName, false);
+                categoryNamesList.Add(gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName);
             }
             sortCreatureList();
             resetIndexList();
@@ -1638,13 +1733,13 @@ namespace IBbasic
         public async void changeCrtAttackCategory()
         {
             List<string> items = new List<string>();
-            items.Add("none");
+            items.Add("cancel");
             items.Add("Melee");
             items.Add("Ranged");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an attack type from the list:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_category = selected;
             }
@@ -1653,7 +1748,7 @@ namespace IBbasic
         public async void changeCrtTypeOfDamage()
         {
             List<string> types = new List<string>(); //container, transition, conversation, encounter, script
-            types.Add("none");
+            types.Add("cancel");
             types.Add("Normal");
             types.Add("Acid");
             types.Add("Cold");
@@ -1664,7 +1759,7 @@ namespace IBbasic
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(types, "Select a type of damage from the list:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_typeOfDamage = selected;
             }
@@ -1676,10 +1771,11 @@ namespace IBbasic
         {
             List<string> items = GetCrtTokenList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image for the creature:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_tokenFilename = selected;
             }
@@ -1704,10 +1800,11 @@ namespace IBbasic
         {
             List<string> items = GetCrtSoundList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select a sound for this creature's default attack sound:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_attackSound = selected;
             }
@@ -1729,10 +1826,11 @@ namespace IBbasic
         {
             List<string> items = GetCrtProjectileImageList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image for the creature's ranged projectile attack if it has one:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename = selected;
             }
@@ -1757,10 +1855,11 @@ namespace IBbasic
         {
             List<string> items = GetCrtProjectileEndingImageList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image for the creature's ranged attack ending effect if it has one:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename = selected;
             }

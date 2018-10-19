@@ -15,7 +15,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.13";
+        public string versionNum = "1.0.16";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -1429,6 +1429,15 @@ namespace IBbasic
                     if (showMessageBox)
                     {
                         messageBox.onTouchSwipe(eX, eY, eventType);
+                        if (messageBox.btnReturn.getImpact(eX, eY))
+                        {
+                            if (eventType == MouseEventType.EventType.MouseUp)
+                            {
+                                showMessageBox = false;
+                                return;
+                            }
+                        }
+                        return;
                     }
                     else if ((screenType.Equals("main")) || (screenType.Equals("combat")))
                     {
@@ -1437,6 +1446,14 @@ namespace IBbasic
                     else if (screenType.Equals("tsConvoEditor"))
                     {
                         tsConvoEditor.onTouchSwipe(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsItemEditor"))
+                    {
+                        tsItemEditor.onTouchSwipe(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("tsCreatureEditor"))
+                    {
+                        tsCreatureEditor.onTouchSwipe(eX, eY, eventType);
                     }
 
                     //TOOLSET SCREENS

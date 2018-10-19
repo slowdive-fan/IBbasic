@@ -67,6 +67,14 @@ namespace IBbasic
         public IbbToggle rbtnWalkOpen = null;
         public IbbToggle rbtnSightBlocking = null;
         public IbbToggle rbtnSightOpen = null;
+        public IbbToggle btnPlusLeft = null;
+        public IbbToggle btnMinusLeft = null;
+        public IbbToggle btnPlusRight = null;
+        public IbbToggle btnMinusRight = null;
+        public IbbToggle btnPlusTop = null;
+        public IbbToggle btnMinusTop = null;
+        public IbbToggle btnPlusBottom = null;
+        public IbbToggle btnMinusBottom = null;
 
         //Triggers Panel
         public Trigger selectedTrigger = null;
@@ -658,6 +666,95 @@ namespace IBbasic
             rbtnSightOpen.Y = panelTopLocation + 2 * gv.uiSquareSize + (gv.uiSquareSize / 2);
             rbtnSightOpen.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             rbtnSightOpen.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnPlusLeft == null)
+            {
+                btnPlusLeft = new IbbToggle(gv);
+            }
+            btnPlusLeft.ImgOn = "mtgl_expand_on";
+            btnPlusLeft.ImgOff = "mtgl_expand_on";
+            btnPlusLeft.X = panelLeftLocation;
+            btnPlusLeft.Y = panelTopLocation + (4 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusLeft.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnPlusLeft.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnMinusLeft == null)
+            {
+                btnMinusLeft = new IbbToggle(gv);
+            }
+            btnMinusLeft.ImgOn = "mtgl_expand_off";
+            btnMinusLeft.ImgOff = "mtgl_expand_off";
+            btnMinusLeft.X = panelLeftLocation;
+            btnMinusLeft.Y = panelTopLocation + (4 * gv.uiSquareSize) + (2 * gv.uiSquareSize / 2);
+            btnMinusLeft.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMinusLeft.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnPlusRight == null)
+            {
+                btnPlusRight = new IbbToggle(gv);
+            }
+            btnPlusRight.ImgOn = "mtgl_expand_on";
+            btnPlusRight.ImgOff = "mtgl_expand_on";
+            btnPlusRight.X = panelLeftLocation + (1 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusRight.Y = panelTopLocation + (4 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusRight.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnPlusRight.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnMinusRight == null)
+            {
+                btnMinusRight = new IbbToggle(gv);
+            }
+            btnMinusRight.ImgOn = "mtgl_expand_off";
+            btnMinusRight.ImgOff = "mtgl_expand_off";
+            btnMinusRight.X = panelLeftLocation + (1 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnMinusRight.Y = panelTopLocation + (4 * gv.uiSquareSize) + (2 * gv.uiSquareSize / 2);
+            btnMinusRight.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMinusRight.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnPlusTop == null)
+            {
+                btnPlusTop = new IbbToggle(gv);
+            }
+            btnPlusTop.ImgOn = "mtgl_expand_on";
+            btnPlusTop.ImgOff = "mtgl_expand_on";
+            btnPlusTop.X = panelLeftLocation + (0 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusTop.Y = panelTopLocation + (4 * gv.uiSquareSize) + (0 * gv.uiSquareSize / 2);
+            btnPlusTop.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnPlusTop.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnMinusTop == null)
+            {
+                btnMinusTop = new IbbToggle(gv);
+            }
+            btnMinusTop.ImgOn = "mtgl_expand_off";
+            btnMinusTop.ImgOff = "mtgl_expand_off";
+            btnMinusTop.X = panelLeftLocation + (1 * gv.uiSquareSize) + (0 * gv.uiSquareSize / 2);
+            btnMinusTop.Y = panelTopLocation + (4 * gv.uiSquareSize) + (0 * gv.uiSquareSize / 2);
+            btnMinusTop.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMinusTop.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnPlusBottom == null)
+            {
+                btnPlusBottom = new IbbToggle(gv);
+            }
+            btnPlusBottom.ImgOn = "mtgl_expand_on";
+            btnPlusBottom.ImgOff = "mtgl_expand_on";
+            btnPlusBottom.X = panelLeftLocation + (0 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusBottom.Y = panelTopLocation + (5 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnPlusBottom.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnPlusBottom.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnMinusBottom == null)
+            {
+                btnMinusBottom = new IbbToggle(gv);
+            }
+            btnMinusBottom.ImgOn = "mtgl_expand_off";
+            btnMinusBottom.ImgOff = "mtgl_expand_off";
+            btnMinusBottom.X = panelLeftLocation + (1 * gv.uiSquareSize) + (0 * gv.uiSquareSize / 2);
+            btnMinusBottom.Y = panelTopLocation + (5 * gv.uiSquareSize) + (1 * gv.uiSquareSize / 2);
+            btnMinusBottom.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMinusBottom.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
         }
         public void setupTriggerPanelControls()
         {
@@ -2993,13 +3090,19 @@ namespace IBbasic
             gv.DrawText("Line-of-Sight", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y, "wh");
             gv.DrawText("Blocked", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            gv.DrawText("select one of", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("the above actions", panelLeftLocation, panelTopLocation + (15 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("then tap on a map", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("square to make", panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("the setting", panelLeftLocation, panelTopLocation + (18 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText("MAP SIZE (NO UNDO)", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            btnHelp.Draw();
+            btnPlusLeft.Draw();
+            gv.DrawText("X=" + gv.mod.currentArea.MapSizeX, btnPlusLeft.X + btnPlusLeft.Width + gv.scaler, btnPlusLeft.Y + btnPlusLeft.Height / 4, "yl");
+            btnMinusLeft.Draw();
+            gv.DrawText("Y=" + gv.mod.currentArea.MapSizeY, btnMinusLeft.X + btnMinusLeft.Width + gv.scaler, btnMinusLeft.Y + btnMinusLeft.Height / 4, "yl");
+            btnPlusRight.Draw();
+            btnMinusRight.Draw();
+            btnPlusTop.Draw();
+            btnMinusTop.Draw();
+            btnPlusBottom.Draw();
+            btnMinusBottom.Draw();
+
         }
         public void drawPropsPanel()
         {
@@ -3794,6 +3897,38 @@ namespace IBbasic
                         rbtnWalkBlocking.toggleOn = false;
                         rbtnSightOpen.toggleOn = false;
                         rbtnSightBlocking.toggleOn = true;
+                    }
+                    else if (btnPlusLeft.getImpact(x, y))
+                    {
+                        btnPlusLeftX_Click();
+                    }
+                    else if (btnMinusLeft.getImpact(x, y))
+                    {
+                        btnMinusLeftX_Click();
+                    }
+                    else if (btnPlusRight.getImpact(x, y))
+                    {
+                        btnPlusRightX_Click();
+                    }
+                    else if (btnMinusRight.getImpact(x, y))
+                    {
+                        btnMinusRightX_Click();
+                    }
+                    else if (btnPlusTop.getImpact(x, y))
+                    {
+                        btnPlusTopY_Click();
+                    }
+                    else if (btnMinusTop.getImpact(x, y))
+                    {
+                        btnMinusTopY_Click();
+                    }
+                    else if (btnPlusBottom.getImpact(x, y))
+                    {
+                        btnPlusBottomY_Click();
+                    }
+                    else if (btnMinusBottom.getImpact(x, y))
+                    {
+                        btnMinusBottomY_Click();
                     }
                     break;
             }
@@ -5003,6 +5138,172 @@ namespace IBbasic
                 selectedTrigger.Event3Parm4 = myinput;
                 gv.touchEnabled = true;
             }            
+        }
+
+        private void btnPlusLeftX_Click()
+        {
+            //y * area.MapSizeX + x
+            int oldX = gv.mod.currentArea.MapSizeX;
+            for (int i = gv.mod.currentArea.Layer1Filename.Count - oldX; i >= 0; i -= oldX)
+            {
+                //Tile newTile = new Tile();
+                //gv.mod.currentArea.Tiles.Insert(i, newTile);
+                gv.mod.currentArea.Layer1Filename.Insert(i, "t_f_grass");
+                gv.mod.currentArea.Layer2Filename.Insert(i, "t_a_blank");
+                gv.mod.currentArea.Layer3Filename.Insert(i, "t_a_blank");
+                gv.mod.currentArea.Walkable.Insert(i, 1);
+                gv.mod.currentArea.LoSBlocked.Insert(i, 0);
+                gv.mod.currentArea.Visible.Insert(i, 0);
+            }
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    p.X++;
+                }
+            }
+            gv.mod.currentArea.MapSizeX++;
+            //mapSizeChangeStuff();
+        }
+        private void btnMinusLeftX_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            int oldX = gv.mod.currentArea.MapSizeX;
+            for (int i = gv.mod.currentArea.Layer1Filename.Count - oldX; i >= 0; i -= oldX)
+            {
+                //gv.mod.currentArea.Tiles.RemoveAt(i);
+                gv.mod.currentArea.Layer1Filename.RemoveAt(i);
+                gv.mod.currentArea.Layer2Filename.RemoveAt(i);
+                gv.mod.currentArea.Layer3Filename.RemoveAt(i);
+                gv.mod.currentArea.Walkable.RemoveAt(i);
+                gv.mod.currentArea.LoSBlocked.RemoveAt(i);
+                gv.mod.currentArea.Visible.RemoveAt(i);
+            }
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    p.X--;
+                }
+            }
+            gv.mod.currentArea.MapSizeX--;
+            //mapSizeChangeStuff();
+        }
+        private void btnPlusRightX_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            int oldX = gv.mod.currentArea.MapSizeX;
+            for (int i = gv.mod.currentArea.Layer1Filename.Count - 1; i >= 0; i -= oldX)
+            {
+                //Tile newTile = new Tile();
+                //gv.mod.currentArea.Tiles.Insert(i + 1, newTile);
+                gv.mod.currentArea.Layer1Filename.Insert(i + 1, "t_f_grass");
+                gv.mod.currentArea.Layer2Filename.Insert(i + 1, "t_a_blank");
+                gv.mod.currentArea.Layer3Filename.Insert(i + 1, "t_a_blank");
+                gv.mod.currentArea.Walkable.Insert(i + 1, 1);
+                gv.mod.currentArea.LoSBlocked.Insert(i + 1, 0);
+                gv.mod.currentArea.Visible.Insert(i + 1, 0);
+            }
+            gv.mod.currentArea.MapSizeX++;
+            //mapSizeChangeStuff();
+        }
+        private void btnMinusRightX_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            int oldX = gv.mod.currentArea.MapSizeX;
+            for (int i = gv.mod.currentArea.Layer1Filename.Count - 1; i >= 0; i -= oldX)
+            {
+                //gv.mod.currentArea.Tiles.RemoveAt(i);
+                gv.mod.currentArea.Layer1Filename.RemoveAt(i);
+                gv.mod.currentArea.Layer2Filename.RemoveAt(i);
+                gv.mod.currentArea.Layer3Filename.RemoveAt(i);
+                gv.mod.currentArea.Walkable.RemoveAt(i);
+                gv.mod.currentArea.LoSBlocked.RemoveAt(i);
+                gv.mod.currentArea.Visible.RemoveAt(i);
+            }
+            gv.mod.currentArea.MapSizeX--;
+            //mapSizeChangeStuff();
+        }
+        private void btnPlusTopY_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            for (int i = 0; i < gv.mod.currentArea.MapSizeX; i++)
+            {
+                //Tile newTile = new Tile();
+                //gv.mod.currentArea.Tiles.Insert(0, newTile);
+                gv.mod.currentArea.Layer1Filename.Insert(0, "t_f_grass");
+                gv.mod.currentArea.Layer2Filename.Insert(0, "t_a_blank");
+                gv.mod.currentArea.Layer3Filename.Insert(0, "t_a_blank");
+                gv.mod.currentArea.Walkable.Insert(0, 1);
+                gv.mod.currentArea.LoSBlocked.Insert(0, 0);
+                gv.mod.currentArea.Visible.Insert(0, 0);
+            }
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    p.Y++;
+                }
+            }
+            gv.mod.currentArea.MapSizeY++;
+            //mapSizeChangeStuff();
+        }
+        private void btnMinusTopY_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            for (int i = 0; i < gv.mod.currentArea.MapSizeX; i++)
+            {
+                //gv.mod.currentArea.Tiles.RemoveAt(0);
+                gv.mod.currentArea.Layer1Filename.RemoveAt(0);
+                gv.mod.currentArea.Layer2Filename.RemoveAt(0);
+                gv.mod.currentArea.Layer3Filename.RemoveAt(0);
+                gv.mod.currentArea.Walkable.RemoveAt(0);
+                gv.mod.currentArea.LoSBlocked.RemoveAt(0);
+                gv.mod.currentArea.Visible.RemoveAt(0);
+            }
+            foreach (Trigger t in gv.mod.currentArea.Triggers)
+            {
+                foreach (Coordinate p in t.TriggerSquaresList)
+                {
+                    p.Y--;
+                }
+            }
+            gv.mod.currentArea.MapSizeY--;
+            //mapSizeChangeStuff();
+        }
+        private void btnPlusBottomY_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            for (int i = 0; i < gv.mod.currentArea.MapSizeX; i++)
+            {
+                //Tile newTile = new Tile();
+                //gv.mod.currentArea.Tiles.Add(newTile);
+                gv.mod.currentArea.Layer1Filename.Add("t_f_grass");
+                gv.mod.currentArea.Layer2Filename.Add("t_a_blank");
+                gv.mod.currentArea.Layer3Filename.Add("t_a_blank");
+                gv.mod.currentArea.Walkable.Add(1);
+                gv.mod.currentArea.LoSBlocked.Add(0);
+                gv.mod.currentArea.Visible.Add(0);
+            }
+            gv.mod.currentArea.MapSizeY++;
+            //mapSizeChangeStuff();
+        }
+        private void btnMinusBottomY_Click()
+        {
+            //y * gv.mod.currentArea.MapSizeX + x
+            for (int i = 0; i < gv.mod.currentArea.MapSizeX; i++)
+            {
+                //gv.mod.currentArea.Tiles.RemoveAt(gv.mod.currentArea.Tiles.Count - 1);
+                int total = gv.mod.currentArea.Visible.Count;
+                gv.mod.currentArea.Layer1Filename.RemoveAt(total - 1);
+                gv.mod.currentArea.Layer2Filename.RemoveAt(total - 1);
+                gv.mod.currentArea.Layer3Filename.RemoveAt(total - 1);
+                gv.mod.currentArea.Walkable.RemoveAt(total - 1);
+                gv.mod.currentArea.LoSBlocked.RemoveAt(total - 1);
+                gv.mod.currentArea.Visible.RemoveAt(total - 1);
+            }
+            gv.mod.currentArea.MapSizeY--;
+            //mapSizeChangeStuff();
         }
     }
 }

@@ -24,11 +24,18 @@ namespace IBbasic
         public IbbToggle tglImage = null;
         public IbbToggle tglBehavior = null;
         public IbbToggle tglClass = null;
-        public Dictionary<string, bool> categoryList = new Dictionary<string, bool>();
+        //public Dictionary<string, bool> categoryList = new Dictionary<string, bool>();
+        public List<string> categoryNamesList = new List<string>();
+        public int currentTopLineIndex = 0;
         public int numberOfLinesToShow = 23;
         public List<int> indexList = new List<int>();
-        public Dictionary<int, string> categoryNameAtLine = new Dictionary<int, string>();
+        //public Dictionary<int, string> categoryNameAtLine = new Dictionary<int, string>();
 
+        //touch scrolling stuff
+        public bool touchIsDown = false;
+        public int touchMoveDeltaY = 0;
+        public int lastTouchMoveLocationY = 0;
+        
         //MAIN (8)
         private IbbToggle btnItName = null;
         private IbbToggle btnItResRef = null;  //assign same name to tag      
@@ -105,7 +112,7 @@ namespace IBbasic
         public IbbButton btnAddClass = null;
         public IbbButton btnRemoveClass = null;
 
-        private IbbButton btnHelp = null;
+        //private IbbButton btnHelp = null;
 
         public IbRect src = null;
         public IbRect dst = null;
@@ -126,9 +133,9 @@ namespace IBbasic
             //initialize categoryList
             foreach (Item it in gv.cc.allItemsList)
             {
-                if (!categoryList.ContainsKey(it.ItemCategoryName))
+                if (!categoryNamesList.Contains(it.ItemCategoryName))
                 {
-                    categoryList.Add(it.ItemCategoryName, true);
+                    categoryNamesList.Add(it.ItemCategoryName);
                 }
             }
 
@@ -143,10 +150,10 @@ namespace IBbasic
         public void resetIndexList()
         {
             int cnt = 0;
-            int lineIndx = 0;
+            //int lineIndx = 0;
             string lastCategory = "";
             indexList.Clear();
-            categoryNameAtLine.Clear();
+            //categoryNameAtLine.Clear();
             foreach (Item it in gv.cc.allItemsList)
             {
                 if (!it.ItemCategoryName.Equals(lastCategory))
@@ -154,15 +161,12 @@ namespace IBbasic
                     lastCategory = it.ItemCategoryName;
                     //new category so add -1 to index list
                     indexList.Add(-1);
-                    categoryNameAtLine.Add(lineIndx, it.ItemCategoryName);
-                    lineIndx++;
+                    categoryNamesList.Add(it.ItemCategoryName);
+                    //lineIndx++;
                 }
-                if ((categoryList.ContainsKey(it.ItemCategoryName)) && (categoryList[it.ItemCategoryName]))
-                {
-                    //is expanded so add cnt to indexList
-                    indexList.Add(cnt);
-                    lineIndx++;
-                }
+                //is expanded so add cnt to indexList
+                indexList.Add(cnt);
+                //lineIndx++;                
                 cnt++;
             }
         }
@@ -399,18 +403,6 @@ namespace IBbasic
             btnItParentNodeName.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItParentNodeName.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
-            if (btnHelp == null)
-            {
-                btnHelp = new IbbButton(gv, 0.8f);
-            }
-            //btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small";
-            btnHelp.Img2 = "btnhelp";
-            btnHelp.Glow = "btn_small_glow";
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize;
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setAttackControlsStart()
         {
@@ -861,7 +853,6 @@ namespace IBbasic
 
         public void setImageControlsStart()
         {
-
             if (btnItImage == null)
             {
                 btnItImage = new IbbToggle(gv);
@@ -869,7 +860,7 @@ namespace IBbasic
             btnItImage.ImgOn = "mtgl_edit_btn";
             btnItImage.ImgOff = "mtgl_edit_btn";
             btnItImage.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2);
-            btnItImage.Y = 1 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            btnItImage.Y = 2 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
             btnItImage.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItImage.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -880,7 +871,7 @@ namespace IBbasic
             btnItSpriteProjectileFilename.ImgOn = "mtgl_edit_btn";
             btnItSpriteProjectileFilename.ImgOff = "mtgl_edit_btn";
             btnItSpriteProjectileFilename.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2);
-            btnItSpriteProjectileFilename.Y = 3 * gv.uiSquareSize + (gv.uiSquareSize / 2);
+            btnItSpriteProjectileFilename.Y = 3 * gv.uiSquareSize + (1 * gv.uiSquareSize / 4);
             btnItSpriteProjectileFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItSpriteProjectileFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -891,7 +882,7 @@ namespace IBbasic
             btnItSpriteEndingFilename.ImgOn = "mtgl_edit_btn";
             btnItSpriteEndingFilename.ImgOff = "mtgl_edit_btn";
             btnItSpriteEndingFilename.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2);
-            btnItSpriteEndingFilename.Y = 5 * gv.uiSquareSize;
+            btnItSpriteEndingFilename.Y = 4 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2);
             btnItSpriteEndingFilename.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItSpriteEndingFilename.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -902,7 +893,7 @@ namespace IBbasic
             btnItOnUseSound.ImgOn = "mtgl_edit_btn";
             btnItOnUseSound.ImgOff = "mtgl_edit_btn";
             btnItOnUseSound.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2);
-            btnItOnUseSound.Y = 3 * gv.uiSquareSize;
+            btnItOnUseSound.Y = 5 * gv.uiSquareSize + (3 * gv.uiSquareSize / 4);
             btnItOnUseSound.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItOnUseSound.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -913,7 +904,7 @@ namespace IBbasic
             btnItEndSound.ImgOn = "mtgl_edit_btn";
             btnItEndSound.ImgOff = "mtgl_edit_btn";
             btnItEndSound.X = 4 * gv.uiSquareSize + (gv.uiSquareSize / 2);
-            btnItEndSound.Y = 3 * gv.uiSquareSize;
+            btnItEndSound.Y = 6 * gv.uiSquareSize + (1 * gv.uiSquareSize / 4);
             btnItEndSound.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnItEndSound.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
@@ -1053,12 +1044,43 @@ namespace IBbasic
             btnRemoveItem.Draw();
             btnCopyItem.Draw();
 
-            string lastCategory = "";
-            numberOfLinesToShow = 23;
+            //string lastCategory = "";
+            numberOfLinesToShow = 16;
             int cnt = 0;
-            int crtCnt = 0;
-            int startY = btnAddItem.Y + btnAddItem.Height;
-            foreach (Item it in gv.cc.allItemsList)
+            int catCnt = 0;
+            int startY = btnAddItem.Y + btnAddItem.Height; for (int idx = currentTopLineIndex; idx < indexList.Count; idx++)
+            {
+                if (idx > currentTopLineIndex + numberOfLinesToShow) { continue; }
+                int tlX = btnAddItem.X;
+                int tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
+                //if -1 then grab the category of the next index
+                if (indexList[idx] == -1)
+                {
+                    gv.DrawText("" + gv.cc.allItemsList[indexList[idx + 1]].ItemCategoryName, tlX, tlY, "bu");
+                    catCnt++;
+                }
+                else //if not -1, use index
+                {
+                    tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
+                    if (indexList[idx] == itemListIndex)
+                    {
+                        gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gn");
+                    }
+                    else
+                    {
+                        if (gv.cc.allItemsList[indexList[idx]].moduleItem)
+                        {
+                            gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "wh");
+                        }
+                        else
+                        {
+                            gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gy");
+                        }
+                    }
+                }
+                cnt++;
+            }
+            /*foreach (Item it in gv.cc.allItemsList)
             {
                 int tlX = btnAddItem.X;
                 int tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
@@ -1101,7 +1123,7 @@ namespace IBbasic
                     cnt++;
                 }
                 crtCnt++;
-            }
+            }*/
 
             tglMain.Draw();
             gv.DrawText("MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
@@ -1170,9 +1192,7 @@ namespace IBbasic
                 drawClass();
             }
 
-
-            btnHelp.Draw();
-
+            
             gv.tsMainMenu.redrawTsMainMenu();
 
             if (gv.showMessageBox)
@@ -1411,7 +1431,7 @@ namespace IBbasic
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddClass.X;
             int startY = btnAddClass.Y + btnAddClass.Height - gv.fontHeight;
-            int incY = gv.fontWidth + gv.fontLineSpacing;
+            int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
             foreach (string c in gv.cc.allItemsList[itemListIndex].classesAllowed)
             {
@@ -1429,8 +1449,7 @@ namespace IBbasic
 
         public void onTouchTsItemEditor(int eX, int eY, MouseEventType.EventType eventType)
         {
-            btnHelp.glowOn = false;
-
+            
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -1505,17 +1524,12 @@ namespace IBbasic
                         return;
                     }
 
-                    if (btnHelp.getImpact(x, y))
-                    {
-                        btnHelp.glowOn = true;
-                    }
                     break;
 
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
 
-                    btnHelp.glowOn = false;
 
                     if (gv.showMessageBox)
                     {
@@ -1537,7 +1551,26 @@ namespace IBbasic
                         int PanelLeftLocation = btnAddItem.X;
                         int PanelTopLocation = btnAddItem.Y + btnAddItem.Height;
                         int lineIndex = (y - PanelTopLocation) / (gv.fontHeight + gv.fontLineSpacing);
-                        if (lineIndex < numberOfLinesToShow)
+                        if (lineIndex <= numberOfLinesToShow)
+                        {
+                            int totCats = 0;
+                            int indexInList = 0;
+                            foreach (int idx in indexList)
+                            {
+                                if (idx == -1) { totCats++; }
+                                if (indexInList == currentTopLineIndex) { break; }
+                                indexInList++;
+                            }
+                            int lineIndexActual = lineIndex + indexInList;
+                            if (lineIndexActual > indexList.Count - 1) { return; }
+                            if (indexList[lineIndexActual] != -1)
+                            {
+                                itemListIndex = indexList[lineIndexActual];
+                            }
+                            //creatureListIndex = indexList[lineIndexActual];  
+                            //if (creatureListIndex == -1) { creatureListIndex = 0; }
+                        }
+                        /*if (lineIndex < numberOfLinesToShow)
                         {
                             if (indexList[lineIndex] == -1)
                             {
@@ -1554,7 +1587,7 @@ namespace IBbasic
                             {
                                 itemListIndex = indexList[lineIndex];
                             }
-                        }
+                        }*/
                     }
 
                     if (tglMain.getImpact(x, y))
@@ -1687,11 +1720,6 @@ namespace IBbasic
                         copyItem();
                     }
 
-
-                    else if (btnHelp.getImpact(x, y))
-                    {
-                        //incrementalSaveModule();
-                    }
                     break;
             }
         }
@@ -1710,8 +1738,6 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
 
                     if (btnItName.getImpact(x, y))
                     {
@@ -1764,9 +1790,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItAttackBonus.getImpact(x, y))
                     {
                         changeItAttackBonus();
@@ -1817,9 +1841,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItCanNotBeUnequipped.getImpact(x, y))
                     {
                         changeItCanNotBeUnequipped();
@@ -1870,9 +1892,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItSpRegenPerRoundInCombat.getImpact(x, y))
                     {
                         changeItSpRegenPerRoundInCombat();
@@ -1923,9 +1943,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItAttributeBonusModifierStr.getImpact(x, y))
                     {
                         changeItAttributeBonusModifierStr();
@@ -1976,9 +1994,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItResistAcid.getImpact(x, y))
                     {
                         changeItResistAcid();
@@ -2025,9 +2041,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItOnUseSound.getImpact(x, y))
                     {
                         changeItOnUseSound();
@@ -2066,9 +2080,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     if (btnItAutomaticallyHitsTarget.getImpact(x, y))
                     {
                         changeItAutomaticallyHitsTarget();
@@ -2119,9 +2131,7 @@ namespace IBbasic
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
-
+                    
                     //TODO check if tapped in the known spells list area
                     if ((x > btnAddClass.X) && (y > btnAddClass.Y + btnAddClass.Height))
                     {
@@ -2146,6 +2156,77 @@ namespace IBbasic
                     break;
             }
             return false;
+        }
+
+        public void SetCurrentTopLineIndex(int changeValue)
+        {
+            currentTopLineIndex += changeValue;
+            if (currentTopLineIndex > indexList.Count - numberOfLinesToShow)
+            {
+                currentTopLineIndex = indexList.Count - numberOfLinesToShow;
+            }
+            if (currentTopLineIndex < 0)
+            {
+                currentTopLineIndex = 0;
+            }
+        }
+        public void SetCurrentTopLineAbsoluteIndex(int absoluteValue)
+        {
+            currentTopLineIndex = absoluteValue;
+            if (currentTopLineIndex > indexList.Count - numberOfLinesToShow)
+            {
+                currentTopLineIndex = indexList.Count - numberOfLinesToShow;
+            }
+            if (currentTopLineIndex < 0)
+            {
+                currentTopLineIndex = 0;
+            }
+        }
+        private bool isMouseWithinTextBox(int x, int y)
+        {
+            if ((x > 0) && (x < tglMain.X) && (y > btnAddItem.Y + btnAddItem.Height))
+            {
+                return true;
+            }
+            return false;
+        }
+        public void onTouchSwipe(int eX, int eY, MouseEventType.EventType eventType)
+        {
+            if (isMouseWithinTextBox(eX, eY))
+            {
+                switch (eventType)
+                {
+                    case MouseEventType.EventType.MouseDown:
+
+                        touchIsDown = true;
+                        lastTouchMoveLocationY = eY;
+                        touchMoveDeltaY = 0;
+                        break;
+
+                    case MouseEventType.EventType.MouseMove:
+
+                        touchMoveDeltaY = lastTouchMoveLocationY - eY;
+                        if (touchMoveDeltaY > gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        else if (touchMoveDeltaY < -1 * gv.fontHeight)
+                        {
+                            SetCurrentTopLineIndex(-1);
+                            touchMoveDeltaY = 0;
+                            lastTouchMoveLocationY = eY;
+                        }
+                        break;
+
+                    case MouseEventType.EventType.MouseUp:
+
+                        touchIsDown = false;
+                        touchMoveDeltaY = 0;
+                        break;
+                }
+            }
         }
 
         //CREATURE PANEL
@@ -2246,9 +2327,9 @@ namespace IBbasic
             string myinput = await gv.StringInputBox("Enter a category name for organizing items into groups for the items panel on the left.", gv.cc.allItemsList[itemListIndex].ItemCategoryName);
             gv.cc.allItemsList[itemListIndex].ItemCategoryName = myinput;
             gv.touchEnabled = true;                        
-            if (!categoryList.ContainsKey(gv.cc.allItemsList[itemListIndex].ItemCategoryName))
+            if (!categoryNamesList.Contains(gv.cc.allItemsList[itemListIndex].ItemCategoryName))
             {
-                categoryList.Add(gv.cc.allItemsList[itemListIndex].ItemCategoryName, false);
+                categoryNamesList.Add(gv.cc.allItemsList[itemListIndex].ItemCategoryName);
             }
             sortItemList();
             resetIndexList();
@@ -2560,112 +2641,53 @@ namespace IBbasic
         //IMAGES
         public async void changeItOnUseSound()
         {
-            List<string> items = GetCrtSoundList();
+            List<string> items = GetItemSoundList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
-            string selected = await gv.ListViewPage(items, "Select a sound for this creature's default attack sound:");
-            if (selected != "none")
+            string selected = await gv.ListViewPage(items, "Select a sound for this item's on use sound:");
+            if (selected != "cancel")
             {
                 gv.cc.allItemsList[itemListIndex].itemOnUseSound = selected;
             }
             gv.touchEnabled = true;
         }
-        public List<string> GetCrtSoundList()
+        public List<string> GetItemSoundList()
         {
-            List<string> crtTokenList = new List<string>();
+            List<string> itTokenList = new List<string>();
             //MODULE SPECIFIC
-
-            //DEFAULTS
-            try
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\sounds", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".wav");
+            foreach (string f in files)
             {
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\sounds"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\sounds", "*.wav");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                            if (!crtTokenList.Contains(fileNameWithOutExt))
-                            {
-                                crtTokenList.Add(fileNameWithOutExt);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
+                string filenameNoExt = Path.GetFileNameWithoutExtension(f);
+                itTokenList.Add(filenameNoExt);
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
-            return crtTokenList;
+            return itTokenList;
         }
         public async void changeItEndSound()
         {
-            List<string> items = GetCrtSoundList();
+            List<string> items = GetItemSoundList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select a sound for this creature's default attack sound:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allItemsList[itemListIndex].itemEndSound = selected;
             }
             gv.touchEnabled = true;
         }
-        public List<string> GetCrtEndSoundList()
-        {
-            List<string> crtTokenList = new List<string>();
-            //MODULE SPECIFIC
-
-            //DEFAULTS
-            try
-            {
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\sounds"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\sounds", "*.wav");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                            if (!crtTokenList.Contains(fileNameWithOutExt))
-                            {
-                                crtTokenList.Add(fileNameWithOutExt);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
-            return crtTokenList;
-        }
         public async void changeItImage()
         {
             List<string> items = GetItemTokenList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image for the item:");
-            if (selected != "none")
+            if (selected != "cancel")
             {
                 gv.cc.allItemsList[itemListIndex].itemImage = selected;
             }
@@ -2673,53 +2695,28 @@ namespace IBbasic
         }
         public List<string> GetItemTokenList()
         {
-            List<string> crtTokenList = new List<string>();
+            List<string> itTokenList = new List<string>();
             //MODULE SPECIFIC
-
-            //DEFAULTS
-            try
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+            foreach (string f in files)
             {
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                string filenameNoExt = Path.GetFileNameWithoutExtension(f);
+                if (filenameNoExt.StartsWith("it_"))
                 {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("it_"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!crtTokenList.Contains(fileNameWithOutExt))
-                                {
-                                    crtTokenList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
+                    itTokenList.Add(filenameNoExt);
                 }
             }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
-            return crtTokenList;
+            return itTokenList;
         }
         public async void changeItSpriteProjectileFilename()
         {
             List<string> items = GetCrtProjectileImageList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
-            string selected = await gv.ListViewPage(items, "Select an image for the creature's ranged projectile attack if it has one:");
-            if (selected != "none")
+            string selected = await gv.ListViewPage(items, "Select an image for the item's ranged projectile attack if it has one:");
+            if (selected != "cancel")
             {
                 gv.cc.allItemsList[itemListIndex].projectileSpriteFilename = selected;
             }
@@ -2729,98 +2726,32 @@ namespace IBbasic
         {
             List<string> crtTokenList = new List<string>();
             //MODULE SPECIFIC
-
-            //DEFAULTS
-            try
+            List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+            foreach (string f in files)
             {
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
+                string filenameNoExt = Path.GetFileNameWithoutExtension(f);
+                if (filenameNoExt.StartsWith("fx_"))
                 {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("fx_"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!crtTokenList.Contains(fileNameWithOutExt))
-                                {
-                                    crtTokenList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
+                    crtTokenList.Add(filenameNoExt);
                 }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.ToString());
-                gv.errorLog(ex.ToString());
             }
             return crtTokenList;
         }
         public async void changeItSpriteEndingFilename()
         {
-            List<string> items = GetCrtProjectileEndingImageList();
+            List<string> items = GetCrtProjectileImageList();
             items.Insert(0, "none");
+            items.Insert(0, "cancel");
 
             gv.touchEnabled = false;
-            string selected = await gv.ListViewPage(items, "Select an image for the creature's ranged attack ending effect if it has one:");
-            if (selected != "none")
+            string selected = await gv.ListViewPage(items, "Select an image for the item's ranged attack ending effect if it has one:");
+            if (selected != "cancel")
             {
                 gv.cc.allItemsList[itemListIndex].spriteEndingFilename = selected;
             }
             gv.touchEnabled = true;
         }
-        public List<string> GetCrtProjectileEndingImageList()
-        {
-            List<string> crtTokenList = new List<string>();
-            //MODULE SPECIFIC
-
-            //DEFAULTS
-            try
-            {
-                string[] files;
-                if (Directory.Exists(gv.mainDirectory + "\\default\\NewModule\\graphics"))
-                {
-                    files = Directory.GetFiles(gv.mainDirectory + "\\default\\NewModule\\graphics", "*.png");
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            string filename = Path.GetFileName(file);
-                            if (filename.StartsWith("fx_"))
-                            {
-                                string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
-                                if (!crtTokenList.Contains(fileNameWithOutExt))
-                                {
-                                    crtTokenList.Add(fileNameWithOutExt);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show(ex.ToString());
-                            gv.errorLog(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.ToString());
-                gv.errorLog(ex.ToString());
-            }
-            return crtTokenList;
-        }
-
+        
         //BEHAVIOR
         public void changeItAutomaticallyHitsTarget()
         {
