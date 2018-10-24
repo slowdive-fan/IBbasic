@@ -30,6 +30,7 @@ namespace IBbasic
         private IbbButton btnReturn = null;
         private IbbButton btnLevelUp = null;
         private IbbButton btnPartyRoster = null;
+        private IbbButton btnPartyCampaign = null;
         private IbbButton btnSpells = null;
         private IbbButton btnTraits = null;
         private IbbButton btnEffects = null;
@@ -121,10 +122,22 @@ namespace IBbasic
             btnPartyRoster.Text = "ROSTER";
             btnPartyRoster.Img = "btn_small"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small);
             btnPartyRoster.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
-            btnPartyRoster.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)((gv.ibbwidthL / 2) * gv.scaler) - (int)(gv.uiSquareSize * 1.5);
+            btnPartyRoster.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)((gv.ibbwidthL / 2) * gv.scaler) - (int)(gv.uiSquareSize * 1.1);
             btnPartyRoster.Y = 6 * gv.uiSquareSize - pH * 2;
             btnPartyRoster.Height = (int)(gv.ibbheight * gv.scaler);
             btnPartyRoster.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnPartyCampaign == null)
+            {
+                btnPartyCampaign = new IbbButton(gv, 0.6f);
+            }
+            btnPartyCampaign.Text = "EXPORT";
+            btnPartyCampaign.Img = "btn_small"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small);
+            btnPartyCampaign.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnPartyCampaign.X = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)((gv.ibbwidthL / 2) * gv.scaler) - (int)(gv.uiSquareSize * 2.2);
+            btnPartyCampaign.Y = 6 * gv.uiSquareSize - pH * 2;
+            btnPartyCampaign.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPartyCampaign.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnHelp == null)
             {
@@ -515,7 +528,11 @@ namespace IBbasic
             {
                 btnPartyRoster.Draw();
             }
-            
+            if (gv.fixedModule.Equals(""))
+            {
+                btnPartyCampaign.Draw();
+            }
+
             //DRAW DESCRIPTION BOX
             Item it = new Item();
             if (gv.cc.partyItemSlotIndex == 0) { it = gv.cc.getItemByResRefForInfo(pc.MainHandRefs.resref); }
@@ -690,6 +707,7 @@ namespace IBbasic
         {
             btnLevelUp.glowOn = false;
             btnPartyRoster.glowOn = false;
+            btnPartyCampaign.glowOn = false;
             //btnHelp.glowOn = false;
             btnInfo.glowOn = false;
             btnReturn.glowOn = false;
@@ -727,6 +745,10 @@ namespace IBbasic
                     {
                         btnPartyRoster.glowOn = true;
                     }
+                    else if (btnPartyCampaign.getImpact(x, y))
+                    {
+                        btnPartyCampaign.glowOn = true;
+                    }
                     /*else if (btnHelp.getImpact(x, y))
                     {
                         btnHelp.glowOn = true;
@@ -763,6 +785,7 @@ namespace IBbasic
 
                     btnLevelUp.glowOn = false;
                     btnPartyRoster.glowOn = false;
+                    btnPartyCampaign.glowOn = false;
                     //btnHelp.glowOn = false;
                     btnInfo.glowOn = false;
                     btnReturn.glowOn = false;
@@ -995,9 +1018,18 @@ namespace IBbasic
                     }
                     else if (btnPartyRoster.getImpact(x, y))
                     {
-                        if (!inCombat)
+                        if ((!inCombat) && (gv.mod.hideRoster == false))
                         {
                             gv.screenType = "partyRoster";
+                        }
+                    }
+                    else if (btnPartyCampaign.getImpact(x, y))
+                    {
+                        if ((!inCombat) && (gv.fixedModule.Equals("")))
+                        {
+                            gv.screenPartyCampaign.loadPartiesList();
+                            gv.screenPartyCampaign.sendingScreen = "party";
+                            gv.screenType = "partyCampaign";
                         }
                     }
                     if (!inCombat)

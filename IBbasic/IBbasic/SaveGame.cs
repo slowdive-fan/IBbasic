@@ -14,6 +14,7 @@ namespace IBbasic
         public List<Player> partyRosterList = new List<Player>();
         public List<JournalQuest> partyJournalQuests = new List<JournalQuest>();
         public List<ItemRefs> partyInventoryRefsList = new List<ItemRefs>();
+        public List<Item> partyNonStandardItemsList = new List<Item>();
         public List<Shop> moduleShopsList = new List<Shop>();
         public List<AreaSave> moduleAreasObjects = new List<AreaSave>(); //visible, props, triggers
         public string currentAreaFilename = ""; //store area name only

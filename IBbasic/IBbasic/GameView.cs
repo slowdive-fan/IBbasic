@@ -15,7 +15,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.16";
+        public string versionNum = "1.0.17";
         public int numOfTrackerEventHitsInThisSession = 0;
         //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
@@ -108,6 +108,7 @@ namespace IBbasic
         public ScreenCombat screenCombat;
         public ScreenMainMap screenMainMap;
         public ScreenPartyBuild screenPartyBuild;
+        public ScreenPartyCampaign screenPartyCampaign;
         public ScreenPartyRoster screenPartyRoster;
         public bool touchEnabled = true;
         public Settings toggleSettings;
@@ -401,6 +402,7 @@ namespace IBbasic
 		    screenTraitLevelUp = new ScreenTraitLevelUp(mod, this);		
 		    screenLauncher = new ScreenLauncher(mod, this);
 		    screenPartyBuild = new ScreenPartyBuild(mod, this);
+            screenPartyCampaign = new ScreenPartyCampaign(mod, this);
             screenPartyRoster = new ScreenPartyRoster(mod,this);
 
             //TOOLSET SCREENS
@@ -1253,6 +1255,10 @@ namespace IBbasic
             {
                 screenPartyBuild.redrawPartyBuild();
             }
+            else if (screenType.Equals("partyCampaign"))
+            {
+                screenPartyCampaign.redrawPartyCampaign();
+            }
             else if (screenType.Equals("partyRoster"))
             {
                 screenPartyRoster.redrawPartyRoster();
@@ -1609,6 +1615,10 @@ namespace IBbasic
                     else if (screenType.Equals("partyBuild"))
                     {
                         screenPartyBuild.onTouchPartyBuild(eX, eY, eventType);
+                    }
+                    else if (screenType.Equals("partyCampaign"))
+                    {
+                        screenPartyCampaign.onTouchPartyCampaign(eX, eY, eventType);
                     }
                     else if (screenType.Equals("partyRoster"))
                     {

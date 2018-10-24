@@ -174,6 +174,10 @@ namespace IBbasic
                             {
                                 gv.cc.doVerifyReturnToMain(selectedIndex);
                             }
+                            else if (currentSender.Equals("exportcheck"))
+                            {
+                                gv.screenPartyCampaign.doExportCheck(selectedIndex);
+                            }
                             return;
                         }
                         index++;

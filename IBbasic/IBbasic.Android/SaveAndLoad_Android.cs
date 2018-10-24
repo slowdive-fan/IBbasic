@@ -123,6 +123,9 @@ namespace IBbasic.Droid
                 convertedFullPath = sdCard.AbsolutePath + "/IBbasic/saves";
                 path = ConvertFullPath(convertedFullPath, "\\");
                 Directory.CreateDirectory(path);
+                convertedFullPath = sdCard.AbsolutePath + "/IBbasic/user";
+                path = ConvertFullPath(convertedFullPath, "\\");
+                Directory.CreateDirectory(path);
                 convertedFullPath = sdCard.AbsolutePath + "/IBbasic/module_backups";
                 path = ConvertFullPath(convertedFullPath, "\\");
                 Directory.CreateDirectory(path);

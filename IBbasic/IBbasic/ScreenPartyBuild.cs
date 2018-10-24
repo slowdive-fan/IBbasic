@@ -24,6 +24,7 @@ namespace IBbasic
         private IbbButton btnCreate = null;
         private IbbButton btnHelp = null;
         private IbbButton btnReturn = null;
+        private IbbButton btnImport = null;
         private bool dialogOpen = false;
         private int partyScreenPcIndex = 0;
         private int pcIndex = 0;
@@ -240,6 +241,19 @@ namespace IBbasic
                 btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
                 btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
 
+            if (btnImport == null)
+            {
+                btnImport = new IbbButton(gv, 0.8f);
+            }
+                btnImport.Text = "IMPORT";
+                btnImport.Img = "btn_small";
+                btnImport.Glow = "btn_small_glow";
+                btnImport.Y = 4 * gv.uiSquareSize - gv.uiSquareSize / 5;
+                btnImport.Height = (int)(gv.ibbheight * gv.scaler);
+                btnImport.Width = (int)(gv.ibbwidthR * gv.scaler);
+                btnImport.X = center - btnImport.Width - (gv.uiSquareSize * 3) - pW * 3;
+
+
             if (btnReturn == null)
             {
                 btnReturn = new IbbButton(gv, 1.0f);
@@ -319,6 +333,7 @@ namespace IBbasic
             btnCreate.Draw();
             btnHelp.Draw();
             btnReturn.Draw();
+            btnImport.Draw();
 
             if (pcList.Count > 0)
             {
@@ -348,7 +363,7 @@ namespace IBbasic
                 gv.DrawText("Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
                 gv.DrawText("Level: " + pc.classLevel, locX, locY += spacing, "wh");
                 gv.DrawText("XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
-                gv.DrawText("---------------", locX, locY += spacing, "wh");
+                //gv.DrawText("---------------", locX, locY += spacing, "wh");
 
                 //draw spells known list
                 string allSpells = "";
@@ -408,6 +423,7 @@ namespace IBbasic
             btnCreate.glowOn = false;
             btnHelp.glowOn = false;
             btnReturn.glowOn = false;
+            btnImport.glowOn = false;
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -457,6 +473,10 @@ namespace IBbasic
                     {
                         btnHelp.glowOn = true;
                     }
+                    else if (btnImport.getImpact(x, y))
+                    {
+                        btnImport.glowOn = true;
+                    }
                     else if (btnReturn.getImpact(x, y))
                     {
                         btnReturn.glowOn = true;
@@ -475,6 +495,7 @@ namespace IBbasic
                     btnCreate.glowOn = false;
                     btnHelp.glowOn = false;
                     btnReturn.glowOn = false;
+                    btnImport.glowOn = false;
 
                     if (gv.showMessageBox)
                     {
@@ -559,6 +580,16 @@ namespace IBbasic
                     {
                         gv.PlaySound("btn_click");
                         tutorialPartyBuild();
+                    }
+
+                    else if (btnImport.getImpact(x, y))
+                    {
+                        if (gv.fixedModule.Equals(""))
+                        {
+                            gv.screenPartyCampaign.loadPartiesList();
+                            gv.screenPartyCampaign.sendingScreen = "partyBuild";
+                            gv.screenType = "partyCampaign";
+                        }
                     }
 
                     else if (btnReturn.getImpact(x, y))

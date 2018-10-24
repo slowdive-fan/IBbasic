@@ -76,6 +76,7 @@
       <DependentUpon>NumericDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)PartyCampaign.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PathFinderEncounters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayerClass.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ScreenMainMap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenParty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenPartyBuild.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScreenPartyCampaign.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenPartyRoster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenPcCreation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenPcSelector.cs" />

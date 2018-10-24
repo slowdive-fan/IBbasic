@@ -1411,6 +1411,98 @@ namespace IBbasic
                 JournalQuest savJQ = jq.DeepCopy();
                 saveMod.partyJournalQuests.Add(savJQ);                
             }
+
+            //go through each item equipped and see if it is not a standard item
+            saveMod.partyNonStandardItemsList.Clear();
+            foreach (Player pc in gv.mod.playerList)
+            {
+                Item it = gv.cc.getItemByResRefForInfo(pc.BodyRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.MainHandRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.OffHandRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.RingRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.HeadRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.NeckRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.Ring2Refs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+                it = gv.cc.getItemByResRefForInfo(pc.FeetRefs.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+            }
+            //go through inventory and see if item is not a standard item
+            foreach (ItemRefs itref in gv.mod.partyInventoryRefsList)
+            {
+                Item it = gv.cc.getItemByResRefForInfo(itref.resref);
+                if (it != null)
+                {
+                    if ((it.moduleItem) || (it.campaignItem))
+                    {
+                        it.campaignItem = true;
+                        saveMod.partyNonStandardItemsList.Add(it);
+                    }
+                }
+            }
+
             saveMod.partyInventoryRefsList.Clear();
             foreach (ItemRefs s in gv.mod.partyInventoryRefsList)
             {
@@ -1602,6 +1694,24 @@ namespace IBbasic
                 }
             }
             //U  "partyInventoryTagList": [], (use all save) update Items later on down
+            //add campaign items to gv.cc.allitemslist
+            foreach (Item it in saveMod.partyNonStandardItemsList)
+            {
+                //check if resref already exists and increment this one if needed
+                bool foundOne = false;
+                foreach (Item itall in gv.cc.allItemsList)
+                {
+                    if (itall.resref.Equals(it.resref))
+                    {
+                        foundOne = true;
+                    }
+                }
+                if (!foundOne)
+                {
+                    it.campaignItem = true;
+                    gv.cc.allItemsList.Add(it.DeepCopy());
+                }
+            }
             gv.mod.partyInventoryRefsList.Clear();
             foreach (ItemRefs s in saveMod.partyInventoryRefsList)
             {

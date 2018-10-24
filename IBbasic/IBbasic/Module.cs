@@ -84,6 +84,9 @@ namespace IBbasic
         public List<JournalQuest> partyJournalQuests = new List<JournalQuest>();
         public List<JournalQuest> partyJournalCompleted = new List<JournalQuest>();
         public string partyJournalNotes = "";
+        public string partyName = "Party Name Goes Here";
+        public string partyNotes = "Any notes you want to add go here";
+        public string partyFilename = "party00";
         public int selectedPartyLeader = 0;
         [JsonIgnore]
         public bool returnCheck = false;

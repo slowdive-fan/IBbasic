@@ -14,6 +14,7 @@ namespace IBbasic
     public class Item 
     {
         public bool moduleItem = false;
+        public bool campaignItem = false;
         public string name = "none"; //item name  
         public string itemImage = "blank";
         public List<string> classesAllowed = new List<string>();

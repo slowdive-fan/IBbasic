@@ -64,6 +64,8 @@ namespace IBbasic.iOS
             Directory.CreateDirectory(directoryname);
             directoryname = Path.Combine(documents, "saves");
             Directory.CreateDirectory(directoryname);
+            directoryname = Path.Combine(documents, "user");
+            Directory.CreateDirectory(directoryname);
             directoryname = Path.Combine(documents, "module_backups");
             Directory.CreateDirectory(directoryname);
         }
