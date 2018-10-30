@@ -10,10 +10,13 @@ using Plugin.SimpleAudioPlayer;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -99,6 +102,28 @@ namespace IBbasic.Droid
             //Device.OpenUri(new Uri(urlStore));
         }
 
+        public bool DownloadFile(string url, string filename)
+        {
+            //string pathToNewFolder = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, folder);
+            //Directory.CreateDirectory(pathToNewFolder);
+            Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+            string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + filename;
+            string path = ConvertFullPath(convertedFullPath, "\\");
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.DownloadFile(url, path);
+                return true;
+                //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                //string pathToNewFile = Path.Combine(pathToNewFolder, Path.GetFileName(url));
+                //webClient.DownloadFileAsync(new Uri(url), path);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+                
         public void CreateUserFolders()
         {
             /*
@@ -171,7 +196,10 @@ namespace IBbasic.Droid
                 Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
                 string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename;
                 string path = ConvertFullPath(convertedFullPath, "\\");
-                ZipFile.CreateFromDirectory(path, path + ".zip");
+                //ZipFile.CreateFromDirectory(path, path + ".zip");
+                IbbFile ibbfile = new IbbFile();
+                ibbfile.WriteIbbFile(path);
+                ibbfile = null;
             }
             catch (Exception ex)
             {
@@ -184,13 +212,21 @@ namespace IBbasic.Droid
             try
             {
                 Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
-                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename + ".ibb";
                 string path = ConvertFullPath(convertedFullPath, "\\");
-                ZipFile.ExtractToDirectory(path + ".zip", path);
+                if (Directory.Exists(path))
+                {
+                    //CreateBackUpModuleFolder(modFilename);
+                    Directory.Delete(path, true);
+                }
+                //ZipFile.ExtractToDirectory(path + ".zip", path, true);
+                IbbFile ibbfile = new IbbFile();
+                ibbfile.ReadIbbFile(path);
+                ibbfile = null;
             }
             catch (Exception ex)
             {
-
+                
             }
         }
 
@@ -866,6 +902,228 @@ namespace IBbasic.Droid
         public void PauseAreaMusic()
         {
             //playerAreaMusic.Pause();
+        }
+    }
+
+    public class IbbFile
+    {
+        public byte[] fileBytes = new byte[0];
+        public byte[] resourceBytes = new byte[0];
+        public byte[] keyBytes = new byte[0];
+        public byte[] resourceListBytes = new byte[0];
+        public IbbHeader thisHeader = new IbbHeader();
+        public List<IbbKeyStruct> KeyList = new List<IbbKeyStruct>();
+        public List<IbbResourceStruct> ResourceList = new List<IbbResourceStruct>();
+
+        public IbbFile()
+        {
+        }
+        public void WriteIbbFile(string path)
+        {
+            fileBytes = new byte[0];
+            resourceBytes = new byte[0];
+            keyBytes = new byte[0];
+            resourceListBytes = new byte[0];
+
+            int numberOfEntries = 0;
+            //setup resource list
+            if (Directory.Exists(path))
+            {
+                string[] files = Directory.GetFiles(path);
+                foreach (string file in files)
+                {
+                    //read all bytes and store in resourceFileBytes
+                    byte[] newResArray = File.ReadAllBytes(file);
+                    keyBytes = Combine(keyBytes, BitConverter.GetBytes(Path.GetFileName(file).Length));
+                    keyBytes = Combine(keyBytes, Encoding.ASCII.GetBytes(Path.GetFileName(file)));
+                    keyBytes = Combine(keyBytes, BitConverter.GetBytes(false));
+                    resourceListBytes = Combine(resourceListBytes, BitConverter.GetBytes(resourceBytes.Length));
+                    resourceListBytes = Combine(resourceListBytes, BitConverter.GetBytes(newResArray.Length));
+                    resourceBytes = Combine(resourceBytes, newResArray);
+                    numberOfEntries++;
+                }
+            }
+            //go through module's graphics folder if exists
+            var pathGraphics = Path.Combine(path, "graphics");
+            if (Directory.Exists(pathGraphics))
+            {
+                string[] files = Directory.GetFiles(pathGraphics);
+                foreach (string file in files)
+                {
+                    //read all bytes and store in resourceFileBytes
+                    byte[] newResArray = File.ReadAllBytes(file);
+                    keyBytes = Combine(keyBytes, BitConverter.GetBytes(Path.GetFileName(file).Length));
+                    keyBytes = Combine(keyBytes, Encoding.ASCII.GetBytes(Path.GetFileName(file)));
+                    keyBytes = Combine(keyBytes, BitConverter.GetBytes(true));
+                    resourceListBytes = Combine(resourceListBytes, BitConverter.GetBytes(resourceBytes.Length));
+                    resourceListBytes = Combine(resourceListBytes, BitConverter.GetBytes(newResArray.Length));
+                    resourceBytes = Combine(resourceBytes, newResArray);
+                    numberOfEntries++;
+                }
+            }
+            //setup header info
+            fileBytes = Combine(fileBytes, BitConverter.GetBytes(numberOfEntries));
+            fileBytes = Combine(fileBytes, BitConverter.GetBytes(12));
+            fileBytes = Combine(fileBytes, BitConverter.GetBytes(12 + keyBytes.Length));
+            //combine all byte arrays
+            fileBytes = Combine(fileBytes, keyBytes);
+            fileBytes = Combine(fileBytes, resourceListBytes);
+            fileBytes = Combine(fileBytes, resourceBytes);
+            //write out all
+            File.WriteAllBytes(path + ".ibb", fileBytes);
+        }
+        public static byte[] Combine(byte[] first, byte[] second)
+        {
+            byte[] ret = new byte[first.Length + second.Length];
+            Buffer.BlockCopy(first, 0, ret, 0, first.Length);
+            Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
+            return ret;
+        }
+        public void ReadIbbFile(string path)
+        {
+            fileBytes = new byte[0];
+            resourceBytes = new byte[0];
+            keyBytes = new byte[0];
+            resourceListBytes = new byte[0];
+
+            fileBytes = File.ReadAllBytes(path);
+            ReadHeader();
+            LoadKeyList();
+            LoadResourceList();
+            string modulesfolder = Path.GetDirectoryName(path);
+            string modname = Path.GetFileNameWithoutExtension(path);
+            //var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //var modulesfolder = Path.Combine(documents, "modules");
+            var modfolder = Path.Combine(modulesfolder, modname);
+            var graphicsfolder = Path.Combine(modfolder, "graphics");
+            Directory.CreateDirectory(modfolder);
+            Directory.CreateDirectory(graphicsfolder);
+            //iterate through all files and add to modIBmini
+            int startToResources = thisHeader.OffsetToResourceList + (thisHeader.EntryCount * 8);
+            for (int i = 0; i < thisHeader.EntryCount; i++)
+            {
+                byte[] newArray = new byte[ResourceList[i].ResourceSize];
+                Array.Copy(fileBytes, ResourceList[i].OffsetToResource + startToResources, newArray, 0, ResourceList[i].ResourceSize);
+                try
+                {
+                    if (!KeyList[i].graphicsFolder)
+                    {
+                        var file = Path.Combine(modfolder, KeyList[i].filename);
+                        File.WriteAllBytes(file, newArray);
+                    }
+                    else
+                    {
+                        var file = Path.Combine(graphicsfolder, KeyList[i].filename);
+                        File.WriteAllBytes(file, newArray);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+        public void ReadHeader()
+        {
+            int i = 0;
+            thisHeader.EntryCount = readInt(fileBytes, i, 4); //32bits
+            thisHeader.OffsetToKeyList = readInt(fileBytes, i += 4, 4); //32bits
+            thisHeader.OffsetToResourceList = readInt(fileBytes, i += 4, 4); //32bits
+        }
+        public void LoadKeyList()
+        {
+            int offset = thisHeader.OffsetToKeyList - 1;
+            KeyList.Clear();
+            for (int i = 0; i < thisHeader.EntryCount; i++)
+            {
+                IbbKeyStruct newKeyStruct = new IbbKeyStruct();
+                newKeyStruct.filenameLength = readInt(fileBytes, offset += 1, 4);
+                newKeyStruct.filename = readString(fileBytes, offset += 4, newKeyStruct.filenameLength);
+                newKeyStruct.graphicsFolder = readBool(fileBytes, offset += newKeyStruct.filenameLength, 1);
+                KeyList.Add(newKeyStruct);
+            }
+        }
+        public void LoadResourceList()
+        {
+            int startToResources = thisHeader.OffsetToResourceList;
+            int offset = startToResources - 4;
+            ResourceList.Clear();
+            for (int i = 0; i < thisHeader.EntryCount; i++)
+            {
+                IbbResourceStruct newResStruct = new IbbResourceStruct();
+                newResStruct.OffsetToResource = readInt(fileBytes, offset += 4, 4);
+                newResStruct.ResourceSize = readInt(fileBytes, offset += 4, 4);
+                ResourceList.Add(newResStruct);
+            }
+        }
+
+        public string readString(byte[] array, int index, int length)
+        {
+            string val = "";
+            for (int i = index; i < index + length; i++)
+            {
+                char c = Convert.ToChar(array[i]);
+                if (c == '\0') { continue; }
+                val += Convert.ToChar(array[i]).ToString();
+            }
+            return val;
+        }
+        public int readInt(byte[] array, int index, int length)
+        {
+            byte[] newArray = new byte[length];
+            Array.Copy(array, index, newArray, 0, length);
+
+            int i = BitConverter.ToInt32(newArray, 0);
+            return i;
+        }
+        public ushort readShort(byte[] array, int index, int length)
+        {
+            byte[] newArray = new byte[length];
+            Array.Copy(array, index, newArray, 0, length);
+            ushort i = BitConverter.ToUInt16(newArray, 0);
+            return i;
+        }
+        public bool readBool(byte[] array, int index, int length)
+        {
+            byte[] newArray = new byte[length];
+            Array.Copy(array, index, newArray, 0, length);
+            bool i = BitConverter.ToBoolean(newArray, 0);
+            return i;
+        }
+    }
+
+    public class IbbHeader
+    {
+        public int EntryCount = 0; //32bits
+        public int OffsetToKeyList = 0; //32bits
+        public int OffsetToResourceList = 0; //32bits
+
+        public IbbHeader()
+        {
+
+        }
+    }
+
+    public class IbbKeyStruct
+    {
+        public int filenameLength = 0; //32bits
+        public string filename = ""; //48 bytes
+        public bool graphicsFolder = false; //1 bit
+
+        public IbbKeyStruct()
+        {
+
+        }
+    }
+
+    public class IbbResourceStruct
+    {
+        public int OffsetToResource = 0;
+        public int ResourceSize = 0;
+
+        public IbbResourceStruct()
+        {
+
         }
     }
 }

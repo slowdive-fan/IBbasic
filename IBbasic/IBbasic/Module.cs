@@ -16,6 +16,7 @@ namespace IBbasic
         public string moduleLabelName = "none";
         public string titleImageName = "title";
         public int moduleVersion = 1;
+        public string buttonText = "PLAY";
         public string saveName = "empty";
         public string uniqueSessionIdNumberTag = "";
         public string defaultPlayerFilename = "drin.json";

@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using IBbasic;
 using Plugin.SimpleAudioPlayer;
+using System.ComponentModel;
 
 [assembly: Dependency(typeof(SaveAndLoad_Android))]
 namespace LanternaExile.Droid
@@ -73,6 +74,11 @@ namespace LanternaExile.Droid
         {
             string urlStore = "https://play.google.com/store/apps/details?id=com.iceblinkengine.ibb.lanternaexile";
             Device.OpenUri(new Uri(urlStore));
+        }
+
+        public bool DownloadFile(string url, string folder)
+        {
+            return true;
         }
 
         public string ConvertFullPath(string fullPath, string replaceWith)

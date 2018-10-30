@@ -105,6 +105,10 @@ namespace IBbasic
 				    cntPCs++;
 			    }
 		    }
+            if (gv.showMessageBox)
+            {
+                gv.messageBox.onDrawLogBox();
+            }
         }
 	    public void drawPortrait()
 	    {
@@ -256,8 +260,17 @@ namespace IBbasic
 		    case MouseEventType.EventType.MouseMove:
 			    int x = (int) eX;
 			    int y = (int) eY;
-				
-			    int cnt = 1;
+
+                if (gv.showMessageBox)
+                {
+                    if (gv.messageBox.btnReturn.getImpact(x, y))
+                    {
+                        gv.messageBox.btnReturn.glowOn = true;
+                    }
+                    return;
+                }
+
+                int cnt = 1;
 			    foreach (IbRect r in currentPcNodeRectList)
 			    {
 				    if ((x >= r.Left) && (x <= r.Left + r.Width))
@@ -286,8 +299,21 @@ namespace IBbasic
 		    case MouseEventType.EventType.MouseUp:
 			    x = (int) eX;
 			    y = (int) eY;
-				
-			    pcNodeGlow = -1;
+
+                if (gv.showMessageBox)
+                {
+                    gv.messageBox.btnReturn.glowOn = false;
+                }
+                if (gv.showMessageBox)
+                {
+                    if (gv.messageBox.btnReturn.getImpact(x, y))
+                    {
+                        gv.showMessageBox = false;
+                    }
+                    return;
+                }
+
+                pcNodeGlow = -1;
 			
 			    cnt = 0;
 			    foreach (IbRect r in currentPcNodeRectList)

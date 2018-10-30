@@ -20,13 +20,14 @@ namespace IBbasic
 	    private IbbButton btnLeft = null;
 	    private IbbButton btnRight = null;
 	    private IbbButton btnModuleName = null;
-        //private IbbButton btnGetUpdates = null;
+        private IbbButton btnGetUpdates = null;
         private IBminiTextBox description;
 	    //private List<Module> moduleList = new List<Module>();
-        private List<Module> moduleInfoList = new List<Module>();
+        private List<ModuleInfo> moduleInfoList = new List<ModuleInfo>();
         public List<ModuleInfo> modsAvailableList = new List<ModuleInfo>();
         private List<SKBitmap> titleList = new List<SKBitmap>();
 	    private int moduleIndex = 0;
+        public string downloadText = "";
 	
 	
 	    public ScreenLauncher(Module m, GameView g) 
@@ -45,9 +46,14 @@ namespace IBbasic
 	
         //when click on "Get Updates"
         //download mod_available.json from server
-        /*public void downloadFile(string filename, string outFolder)
+        public async void downloadFile(string filename)
         {
-            using (WebClient webClient = new WebClient())
+            //downloadText = "Downloading...may take a few seconds...";            
+            bool result = await gv.DownloadResult("https://www.iceblinkengine.com/ibbasic_modules/" + filename, filename);
+            downloadText = "";
+            if (result) { downloadText = "download was successful."; }
+            else { downloadText = "failed to download the file...please check your connection."; }
+            /*using (WebClient webClient = new WebClient())
             {
                 try
                 {
@@ -58,26 +64,38 @@ namespace IBbasic
                 {
                     gv.sf.MessageBox("Error Downloading: " + ex.ToString());
                 }
-            }
-        }*/
+            }*/
+        }
         //convert to object
-        /*public void loadModsAvailableList()
+        public void loadModsAvailableList()
         {
+            if (modsAvailableList == null)
+            {
+                modsAvailableList = new List<ModuleInfo>();
+            }
             modsAvailableList.Clear();
             try
             {
-                // deserialize JSON directly from a file
-                using (StreamReader file = File.OpenText(gv.mainDirectory + "\\modules\\mods_available.json"))
+                string file = gv.LoadStringFromUserFolder("\\modules\\mods_available.json");
+                using (StringReader sr = new StringReader(file))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    modsAvailableList = (List<ModuleInfo>)serializer.Deserialize(file, typeof(List<ModuleInfo>));
+                    modsAvailableList = (List<ModuleInfo>)serializer.Deserialize(sr, typeof(List<ModuleInfo>));
                 }
+                // deserialize JSON directly from a file                
+                //JsonSerializer serializer = new JsonSerializer();
+                //modsAvailableList = (List<ModuleInfo>)serializer.Deserialize(file, typeof(List<ModuleInfo>));                
             }
-            catch { }
-        }*/
+            catch (Exception ex)
+            {
+
+            }
+        }
         //compare to moduleInfoList and add any that are not there and assign button name
-        /*public void setupModuleInfoListAndButtonText()
+        public void setupModuleInfoListAndButtonText(bool showMessageBox)
         {
+            string updateList = "";
+            string newModList = "";
             //go through all moduleInfoList items and set buttonText to PLAY
             foreach (ModuleInfo modInfo in moduleInfoList)
             {
@@ -96,6 +114,7 @@ namespace IBbasic
                         if (modAvail.moduleVersion > modInfo.moduleVersion)
                         {
                             modInfo.buttonText = "UPDATE";
+                            updateList += modAvail.moduleLabelName + "<br>";
                         }
                     }
                 }
@@ -104,10 +123,20 @@ namespace IBbasic
                     //if not there, add to list and set to DOWNLOAD
                     modAvail.buttonText = "DOWNLOAD";
                     moduleInfoList.Add(modAvail);
+                    newModList += modAvail.moduleLabelName + "<br>";
                 }
-            }            
-        }*/
-        
+            }
+            if (showMessageBox)
+            {
+                gv.showMessageBox = true;
+                string text = "<yl>New Modules:</yl><br>"
+                        + newModList
+                        + "<yl>Updated Modules:</yl><br>"
+                        + updateList;
+                gv.sf.MessageBoxHtml(text);
+            }
+        }
+
         /*public void loadModuleFiles()
         {
             string[] files;
@@ -137,17 +166,30 @@ namespace IBbasic
             List<string> modList = gv.GetAllModuleFiles(false);
             foreach (string file in modList)
             {
-                string s = gv.GetModuleFileString(file);
+                ModuleInfo modinfo = gv.cc.LoadModuleFileInfo(file);
+                Module modfile = gv.cc.LoadModule(file);
+                if ((modinfo == null) || (modfile == null))
+                {
+                    gv.sf.MessageBox("returned a null module");
+                }
+                else
+                {
+                    moduleInfoList.Add(modinfo);
+                    titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName, modfile));
+                }
+
+                /*string s = gv.GetModuleFileString(file);
                 using (StringReader sr = new StringReader(s))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    Module modinfo = (Module)serializer.Deserialize(sr, typeof(Module));
+                    ModuleInfo modinfo = (Module)serializer.Deserialize(sr, typeof(Module));
+                    Module modfile = gv.cc.LoadModule(fname + "\\" + fname + ".mod");
                     if (modinfo != null)
                     {
                         moduleInfoList.Add(modinfo);
                         titleList.Add(gv.cc.GetFromBitmapList(modinfo.titleImageName, modinfo));
                     }                    
-                }                                
+                }*/                                
             }
         }
 
@@ -197,7 +239,7 @@ namespace IBbasic
                 btnRight.Height = (int)(gv.ibbheight * gv.scaler);
                 btnRight.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            /*if (btnGetUpdates == null)
+            if (btnGetUpdates == null)
             {
                 btnGetUpdates = new IbbButton(gv, 1.0f);
             }
@@ -208,7 +250,7 @@ namespace IBbasic
                 btnGetUpdates.Y = (6 * gv.uiSquareSize) - (pH * 2);
                 btnGetUpdates.Height = (int)(gv.ibbheight * gv.scaler);
                 btnGetUpdates.Width = (int)(gv.ibbwidthL * gv.scaler);
-            */
+            
         }
         //TITLE SCREEN  
         public void redrawLauncher()
@@ -225,12 +267,12 @@ namespace IBbasic
                 gv.DrawBitmap(titleList[moduleIndex], src, dst);
 		    }
 
-            
+            gv.DrawText(downloadText, 0 * gv.uiSquareSize, 0 * gv.uiSquareSize, "yl");
 
             //DRAW DESCRIPTION BOX
             if ((moduleInfoList.Count > 0) && (moduleIndex < moduleInfoList.Count))
 		    {
-                btnModuleName.Text = "PLAY MODULE";
+                btnModuleName.Text = moduleInfoList[moduleIndex].buttonText + " MODULE";
                 drawLauncherControls();
 
                 string textToSpan = "<gn>" + moduleInfoList[moduleIndex].moduleLabelName + "</gn><br>";
@@ -243,22 +285,28 @@ namespace IBbasic
                 description.AddFormattedTextToTextBox(textToSpan);
                 description.onDrawTextBox();                	    	    
 		    }
+
+            if (gv.showMessageBox)
+            {
+                gv.messageBox.onDrawLogBox();
+            }
         }
         public void drawLauncherControls()
 	    {    	
 		    btnLeft.Draw();		
 		    btnRight.Draw();
 		    btnModuleName.Draw();
-            //btnGetUpdates.Draw();
+            btnGetUpdates.Draw();
 	    }
         public void onTouchLauncher(int eX, int eY, MouseEventType.EventType eventType)
 	    {
     	    btnLeft.glowOn = false;
     	    btnRight.glowOn = false;	
     	    btnModuleName.glowOn = false;
-            //btnGetUpdates.glowOn = false;
-		
-		    switch (eventType)
+            btnGetUpdates.glowOn = false;
+            downloadText = "";
+
+            switch (eventType)
 		    {
 		        case MouseEventType.EventType.MouseUp:
 			        int x = (int) eX;
@@ -267,7 +315,20 @@ namespace IBbasic
 			        btnLeft.glowOn = false;
 	    	        btnRight.glowOn = false;	
 	    	        btnModuleName.glowOn = false;
-                    //btnGetUpdates.glowOn = false;
+                    btnGetUpdates.glowOn = false;
+
+                    if (gv.showMessageBox)
+                    {
+                        gv.messageBox.btnReturn.glowOn = false;
+                    }
+                    if (gv.showMessageBox)
+                    {
+                        if (gv.messageBox.btnReturn.getImpact(x, y))
+                        {
+                            gv.showMessageBox = false;
+                        }
+                        return;
+                    }
 
                     if (btnLeft.getImpact(x, y))
 			        {
@@ -287,47 +348,62 @@ namespace IBbasic
 			        }	    	
 			        else if (btnModuleName.getImpact(x, y))
 			        {
-                        //if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
-                        //{
-                        //load the mod since we only have the ModuleInfo                            
-                        gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
-                        gv.resetGame();
-                        gv.cc.LoadSaveListItems();
-                        gv.screenType = "title";
-                        //}
-                        /*else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
+                        if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
+                        {
+                            //load the mod since we only have the ModuleInfo                            
+                            gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
+                            gv.resetGame();
+                            gv.cc.LoadSaveListItems();
+                            gv.screenType = "title";
+                        }
+                        else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
                         {
                             //download and replace existing file
-                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".mod", gv.mainDirectory + "\\modules");
+                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                            //delete old folder
+                            //DeleteFolder(moduleInfoList[moduleIndex].moduleName);
+                            //unzip file
+                            UnZipFile(moduleInfoList[moduleIndex].moduleName);
                             //once download is complete, do the "Get Updates" button stuff
                             loadModuleInfoFiles();
                             loadModsAvailableList();
-                            setupModuleInfoListAndButtonText();
+                            setupModuleInfoListAndButtonText(false);
                         }
                         else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
                         {
                             //download file
-                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".mod", gv.mainDirectory + "\\modules");
+                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                            //unzip file
+                            UnZipFile(moduleInfoList[moduleIndex].moduleName);
                             //once download is complete, do the "Get Updates" button stuff
                             loadModuleInfoFiles();
                             loadModsAvailableList();
-                            setupModuleInfoListAndButtonText();
-                        }*/
+                            setupModuleInfoListAndButtonText(false);
+                        }
                     }
-                    /*else if (btnGetUpdates.getImpact(x, y))
+                    else if (btnGetUpdates.getImpact(x, y))
                     {
-                        downloadFile("mods_available.json", gv.mainDirectory + "\\modules");
+                        downloadFile("mods_available.json");
                         loadModsAvailableList();
-                        setupModuleInfoListAndButtonText();
-                    }*/
+                        setupModuleInfoListAndButtonText(true);
+                    }
                     break;
 		
 		        case MouseEventType.EventType.MouseMove:
 		        case MouseEventType.EventType.MouseDown:
 			        x = (int) eX;
 			        y = (int) eY;
-				
-			        if (btnLeft.getImpact(x, y))
+
+                    if (gv.showMessageBox)
+                    {
+                        if (gv.messageBox.btnReturn.getImpact(x, y))
+                        {
+                            gv.messageBox.btnReturn.glowOn = true;
+                        }
+                        return;
+                    }
+
+                    if (btnLeft.getImpact(x, y))
 			        {
                         btnLeft.glowOn = true;
 			        }
@@ -338,13 +414,35 @@ namespace IBbasic
 			        else if (btnModuleName.getImpact(x, y))
 			        {
                         btnModuleName.glowOn = true;
+                        if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
+                        {
+                            downloadText = "Downloading update...may take a few seconds...";
+                        }
+                        else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
+                        {
+                            downloadText = "Downloading module...may take a few seconds...";
+                        }                        
 			        }
-                    /*else if (btnGetUpdates.getImpact(x, y))
+                    else if (btnGetUpdates.getImpact(x, y))
                     {
                         btnGetUpdates.glowOn = true;
-                    }*/
+                        downloadText = "Checking for updates or new modules...may take a few seconds...";
+                    }
                     break;		
 		    }
 	    }
+
+        public void UnZipFile(string filename)
+        {
+            try
+            {
+                gv.UnZipModule(filename);
+                //string modulePath = gv.mainDirectory + "\\modules\\" + filename;
+                //string zipPath = gv.mainDirectory + "\\modules\\" + filename + ".zip";
+                //ZipFile.ExtractToDirectory(zipPath, modulePath);
+                //MessageBox.Show("Extract file completed");
+            }
+            catch { }
+        }
     }
 }

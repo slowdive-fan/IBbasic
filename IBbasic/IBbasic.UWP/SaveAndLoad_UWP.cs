@@ -4,6 +4,7 @@ using Plugin.SimpleAudioPlayer;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -35,6 +36,11 @@ namespace IBbasic.UWP
         public void RateApp()
         {
 
+        }
+
+        public bool DownloadFile(string url, string folder)
+        {
+            return true;
         }
 
         public string ConvertFullPath(string fullPath, string replaceWith)

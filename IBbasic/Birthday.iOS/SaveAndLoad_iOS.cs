@@ -13,6 +13,7 @@ using System.IO.Compression;
 using Google.Analytics;
 using IBbasic;
 using Plugin.SimpleAudioPlayer;
+using System.ComponentModel;
 
 [assembly: Dependency(typeof(SaveAndLoad_iOS))]
 namespace Birthday.iOS
@@ -52,6 +53,11 @@ namespace Birthday.iOS
         {
             string urlStore = "https://itunes.apple.com/us/app/the-birthday-ibbasic-rpg/id1438938551?action=write-review";
             Device.OpenUri(new Uri(urlStore));
+        }
+
+        public bool DownloadFile(string url, string folder)
+        {
+            return true;
         }
 
         public bool AllowReadWriteExternal()

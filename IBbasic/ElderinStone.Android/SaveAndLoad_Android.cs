@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using IBbasic;
 using Plugin.SimpleAudioPlayer;
+using System.ComponentModel;
 
 [assembly: Dependency(typeof(SaveAndLoad_Android))]
 namespace ElderinStone.Droid
@@ -73,6 +74,11 @@ namespace ElderinStone.Droid
         {
             string urlStore = "https://play.google.com/store/apps/details?id=com.iceblinkengine.ibb.ibbelderinstone";
             Device.OpenUri(new Uri(urlStore));
+        }
+
+        public bool DownloadFile(string url, string folder)
+        {
+            return true;
         }
 
         public string ConvertFullPath(string fullPath, string replaceWith)

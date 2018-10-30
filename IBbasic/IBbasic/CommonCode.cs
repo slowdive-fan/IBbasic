@@ -2105,14 +2105,24 @@ namespace IBbasic
 
             return toReturn;
         }
-        public Module LoadModuleFileInfo(string file)
+        public ModuleInfo LoadModuleFileInfo(string file)
         {
-            Module toReturn = null;
+            ModuleInfo toReturn = null;
             string s = gv.GetModuleFileString(file);
             using (StringReader sr = new StringReader(s))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                toReturn = (Module)serializer.Deserialize(sr, typeof(Module));                
+                Module m = (Module)serializer.Deserialize(sr, typeof(Module));
+                if (m != null)
+                {
+                    toReturn = new ModuleInfo();
+                    toReturn.buttonText = m.buttonText;
+                    toReturn.moduleDescription = m.moduleDescription;
+                    toReturn.moduleLabelName = m.moduleLabelName;
+                    toReturn.moduleName = m.moduleName;
+                    toReturn.moduleVersion = m.moduleVersion;
+                    toReturn.titleImageName = m.titleImageName;
+                }
             }
             return toReturn;
         }

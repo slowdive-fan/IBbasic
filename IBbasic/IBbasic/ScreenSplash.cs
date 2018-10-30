@@ -382,7 +382,7 @@ namespace IBbasic
                     continue;
                 }
                 // Process each file
-                Module modinfo = gv.cc.LoadModuleFileInfo(file);
+                ModuleInfo modinfo = gv.cc.LoadModuleFileInfo(file);
                 if (modinfo == null)
                 {
                     gv.sf.MessageBox("returned a null module");
@@ -396,7 +396,7 @@ namespace IBbasic
         public List<string> loadZipFilesToList()
         {
             List<string> retList = new List<string>();
-            retList = gv.GetAllFilesWithExtensionFromBothFolders("\\modules", "\\modules", ".zip");            
+            retList = gv.GetAllFilesWithExtensionFromBothFolders("\\modules", "\\modules", ".ibb");            
             return retList;
         }
     }

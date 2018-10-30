@@ -17,7 +17,6 @@ namespace IBbasic
     {
         public string versionNum = "1.0.17";
         public int numOfTrackerEventHitsInThisSession = 0;
-        //public bool GoogleAnalyticsOn = true;
         public ContentPage cp;
         public SKCanvas canvas;
         public float screenDensity;
@@ -47,7 +46,6 @@ namespace IBbasic
         public int playerOffset = 5;
         public int playerOffsetX = 5;
         public int playerOffsetY = 5;
-        //public int playerOffsetZoom = 5;
         public int oXshift = 0;
         public int oYshift = 0;
         public string mainDirectory;
@@ -58,19 +56,7 @@ namespace IBbasic
         public int fontLineSpacing = 2;
         public SKRect srcRect = new SKRect();
         public SKRect dstRect = new SKRect();
-
-        //DIRECT2D STUFF
-        /*
-        public SharpDX.Direct3D11.Device _device;
-        public SwapChain _swapChain;
-        public Texture2D _backBuffer;
-        public RenderTargetView _backBufferView;
-        public SharpDX.Direct2D1.Factory factory2D;
-        public SharpDX.DirectWrite.Factory factoryDWrite;
-        public RenderTarget renderTarget2D;
-        public SolidColorBrush sceneColorBrush;
-        */
-
+                
         public string fixedModule = "";
         public Dictionary<char, SKRect> charList = new Dictionary<char, SKRect>();
         public string screenType = "splash"; //launcher, title, main, party, inventory, combatInventory, shop, journal, combat, combatCast, convo
@@ -127,14 +113,7 @@ namespace IBbasic
         public ToolsetScreenPlayerEditor tsPlayerEditor;
         public ToolsetScreenArtEditor tsArtEditor;
         public ToolsetScreenDataCheck tsDataCheck;
-
-        //public SoundPlayer soundPlayer = new SoundPlayer();
-        //public Dictionary<string, Stream> oSoundStreams = new Dictionary<string, Stream>();
-        //public System.Media.SoundPlayer playerButtonEnter = new System.Media.SoundPlayer();
-        //public System.Media.SoundPlayer playerButtonClick = new System.Media.SoundPlayer();
-
-        //TODOpublic Timer gameTimer = new Timer();
-
+                
         public Stopwatch gameTimerStopwatch = new Stopwatch();
         public long previousTime = 0;
         public bool stillProcessingGameLoop = false;
@@ -144,7 +123,6 @@ namespace IBbasic
         public bool animationTimerOn = false;
         public long animationStartTime = 0;
         public int animationDelayTime = 0;
-        //TODOpublic Timer animationTimer = new Timer();
 
         public GameView(ContentPage conPage)
         {
@@ -154,7 +132,7 @@ namespace IBbasic
             mod = new Module();
             bsc = new BitmapStringConversion();
             toggleSettings = new Settings();
-            
+
             //this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.GameView_MouseWheel);
             mainDirectory = Directory.GetCurrentDirectory();
             CreateUserFolders();
@@ -210,6 +188,7 @@ namespace IBbasic
             if (fixedModule.Equals("")) //this is the IceBlink Engine app
             {
                 //TODO make sure this works
+                sf = new ScriptFunctions(mod, this);
                 screenSplash = new ScreenSplash(mod, this);
                 screenType = "splash";
             }
@@ -759,18 +738,7 @@ namespace IBbasic
             //charList.Add('/', new SharpDX.SKRect(64, 64, 8, 12));
             charList.Add(' ', new SKRect(fontWidth * 12, fontHeight * 6, fontWidth * 12 + fontWidth, fontHeight * 6 + fontHeight));
         }
-
-        /*public void initializeSounds()
-	    {
-            oSoundStreams.Clear();
-            string jobDir = "";
-            jobDir = this.mainDirectory + "\\default\\NewModule\\sounds";
-            foreach (string f in Directory.GetFiles(jobDir, "*.*", SearchOption.AllDirectories))
-            {
-                oSoundStreams.Add(Path.GetFileNameWithoutExtension(f), File.OpenRead(Path.GetFullPath(f)));
-            }
-	    }*/
-                
+                                
         //Animation Timer Stuff
         public void postDelayed(string type, int delay)
         {
@@ -1001,95 +969,6 @@ namespace IBbasic
             canvas.Restore();
         }
 
-        //DIRECT2D STUFF
-        /*public void InitializeRenderer()
-        {
-            string state = "";
-            try
-            {                
-                // SwapChain description
-                state += "Creating Swap Chain:";
-                var desc = new SwapChainDescription()
-                {
-                    BufferCount = 1,
-                    ModeDescription =
-                        new ModeDescription(this.Width, this.Height,
-                                            new Rational(60, 1), Format.R8G8B8A8_UNorm),
-                    IsWindowed = true,
-                    OutputHandle = this.Handle,
-                    SampleDescription = new SampleDescription(1, 0),
-                    SwapEffect = SwapEffect.Discard,
-                    Usage = Usage.RenderTargetOutput
-                };
-
-                // Create Device and SwapChain                
-                state += "Get Highest Feature Level:";
-                var featureLvl = SharpDX.Direct3D11.Device.GetSupportedFeatureLevel();
-                state += " Highest Feature Level is: " + featureLvl.ToString() + " :Create Device:";
-                try
-                {
-                    SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.BgraSupport, new[] { featureLvl }, desc, out _device, out _swapChain);
-                }
-                catch (Exception ex)
-                {
-                    this.errorLog(state + "<--->" + ex.ToString());
-                    MessageBox.Show("Failed on Create Device using a feature level of " + featureLvl.ToString() + ". Will try using feature level 'Level_9_1' and DriverType.Software instead of DriverType.Hardware");
-                    SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Software, DeviceCreationFlags.BgraSupport, new[] { SharpDX.Direct3D.FeatureLevel.Level_9_1 }, desc, out _device, out _swapChain);                    
-                }
-
-                if (_device == null)
-                {
-                    MessageBox.Show("Failed to create a device, closing IceBlink 2. Please send us your 'IB2ErrorLog.txt' file for more debugging help.");
-                    Application.Exit();
-                }
-
-                // Ignore all windows events
-                state += "Create Factory:";
-                SharpDX.DXGI.Factory factory = _swapChain.GetParent<SharpDX.DXGI.Factory>();
-                factory.MakeWindowAssociation(this.Handle, WindowAssociationFlags.IgnoreAll);
-
-                // New RenderTargetView from the backbuffer
-                state += "Creating Back Buffer:";
-                _backBuffer = Texture2D.FromSwapChain<Texture2D>(_swapChain, 0);
-                
-                state += "Create RenderTargetView:";
-                _backBufferView = new RenderTargetView(_device, _backBuffer);
-                
-                factory2D = new SharpDX.Direct2D1.Factory();
-                using (var surface = _backBuffer.QueryInterface<Surface>())
-                {
-                    renderTarget2D = new RenderTarget(factory2D, surface, new RenderTargetProperties(new SharpDX.Direct2D1.PixelFormat(Format.Unknown, AlphaMode.Premultiplied)));
-                }
-                renderTarget2D.AntialiasMode = AntialiasMode.PerPrimitive;
-
-                //TEXT STUFF
-                state += "Creating Text Factory:";
-                factoryDWrite = new SharpDX.DirectWrite.Factory();
-                sceneColorBrush = new SolidColorBrush(renderTarget2D, SharpDX.Color.Blue);
-                renderTarget2D.TextAntialiasMode = TextAntialiasMode.Cleartype;
-            }
-            catch (SharpDXException ex)
-            {
-                MessageBox.Show("SharpDX error message appended to IB2ErrorLog.txt");
-                this.errorLog(state + "<--->" + ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("SharpDX error message appended to IB2ErrorLog.txt");
-                this.errorLog(state + "<--->" + ex.ToString());
-            }
-        }*/
-        /*public void BeginDraw()
-        {
-            _device.ImmediateContext.Rasterizer.SetViewport(new Viewport(0, 0, this.Width, this.Height));
-            _device.ImmediateContext.OutputMerger.SetTargets(_backBufferView);
-            renderTarget2D.BeginDraw();
-        }*/        
-        /*public void EndDraw()
-        {
-            renderTarget2D.EndDraw();
-            _swapChain.Present(1, PresentFlags.None);
-        }*/
         public void Render(SKCanvas c)
         {
             canvas = c;
@@ -1296,114 +1175,7 @@ namespace IBbasic
             catch
             { }
         }
-        /*public void DrawRectangle(SharpDX.RectangleF rect, SharpDX.Color penColor, int penWidth)
-        {
-            rect.X += oXshift;
-            using (SolidColorBrush scb = new SolidColorBrush(renderTarget2D, penColor))
-            {
-                renderTarget2D.DrawRectangle(rect, scb, penWidth);
-            }
-        }
-        public void DrawD2DBitmap(SharpDX.Direct2D1.Bitmap bitmap, SharpDX.RectangleF source, SharpDX.RectangleF target)
-        {
-            DrawD2DBitmap(bitmap, source, target, false);
-        }
-        public void DrawD2DBitmap(SharpDX.Direct2D1.Bitmap bitmap, SharpDX.RectangleF source, SharpDX.RectangleF target, bool mirror)
-        {
-            DrawD2DBitmap(bitmap, source, target, 0.0f, mirror, 1.0f , 0, 0, 0, 0, false);
-        }
-        public void DrawD2DBitmap(SharpDX.Direct2D1.Bitmap bitmap, SharpDX.RectangleF source, SharpDX.RectangleF target, int angleInDegrees, bool mirror)
-        {
-            //convert degrees to radians
-            float angleInRadians = (float)(Math.PI * 2 * (float)angleInDegrees / (float)360);
-            DrawD2DBitmap(bitmap, source, target, angleInRadians, mirror, 1.0f, 0, 0, 0, 0, false);
-        }
-        public void DrawD2DBitmap(SharpDX.Direct2D1.Bitmap bitmap, SharpDX.RectangleF source, SharpDX.RectangleF target, float angleInRadians, bool mirror, float opac, int Xshift, int Yshift, int Xscale, int Yscale, bool NearestNeighbourInterpolation)
-        {
-            int mir = 1;
-            if (mirror) { mir = -1; }
-            float xshf = (float)Xshift * 2 * scaler;
-            float yshf = (float)Yshift * 2 * scaler;
-            float xscl = 1f + (((float)Xscale * 2 * scaler) / squareSize);
-            float yscl = 1f + (((float)Yscale * 2 * scaler) / squareSize);
 
-            Vector2 center = new Vector2((target.Left + oXshift) + (target.Width / 2), (target.Top + oYshift) + (target.Height / 2));
-            renderTarget2D.Transform = SharpDX.Matrix.Transformation2D(center, 0, new Vector2(mir * xscl, yscl), center, angleInRadians, new Vector2(xshf, yshf));
-            SharpDX.RectangleF trg = new SharpDX.RectangleF(target.Left + oXshift, target.Top + oYshift, target.Width, target.Height);
-            SharpDX.RectangleF src = new SharpDX.RectangleF(source.Left, source.Top, source.Width, source.Height);
-
-            if (NearestNeighbourInterpolation)
-            {
-                renderTarget2D.DrawBitmap(bitmap, trg, opac, BitmapInterpolationMode.NearestNeighbor, src);
-            }
-            else
-            {
-                renderTarget2D.DrawBitmap(bitmap, trg, opac, BitmapInterpolationMode.NearestNeighbor, src);
-            }            
-            renderTarget2D.Transform = Matrix3x2.Identity;
-        }
-        */
-        //INPUT STUFF
-        //public bool formMoveable = false;
-        //public System.Drawing.Point currentPosition;
-        //public System.Drawing.Point startPosition;
-
-        /*private void GameView_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (showMessageBox)
-            {
-                messageBox.onMouseWheel(sender, e);
-            }
-            else if ((screenType.Equals("main")) || (screenType.Equals("combat")))
-            {
-                log.onMouseWheel(sender, e);
-            }
-            else if (screenType.Equals("tsConvoEditor"))
-            {
-                tsConvoEditor.onMouseWheel(sender, e);
-            }
-            onMouseEvent(sender, e, MouseEventType.EventType.MouseWheel);
-        }*/
-        /*private void GameView_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Y < 15)
-            {
-                Cursor.Current = Cursors.NoMove2D;
-                formMoveable = true;
-                startPosition.X = e.X;
-                startPosition.Y = e.Y;
-                return;
-            }
-            onMouseEvent(sender, e, MouseEventType.EventType.MouseDown);
-        }*/
-        /*private void GameView_MouseUp(object sender, MouseEventArgs e)
-        {
-            formMoveable = false;
-            Cursor.Current = Cursors.Default;
-            onMouseEvent(sender, e, MouseEventType.EventType.MouseUp);
-        }*/
-        /*private void GameView_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((e.Y < 15) || (formMoveable))
-            {
-                Cursor.Current = Cursors.NoMove2D;
-            }
-            if (formMoveable)
-            {
-                System.Drawing.Point newPosition = this.Location;
-                currentPosition.X = e.X;
-                currentPosition.Y = e.Y;
-                newPosition.X = newPosition.X - (startPosition.X - currentPosition.X); // .Offset(mouseOffset.X, mouseOffset.Y);                
-                newPosition.Y = newPosition.Y - (startPosition.Y - currentPosition.Y);
-                this.Location = newPosition;
-                return;
-            }
-            onMouseEvent(sender, e, MouseEventType.EventType.MouseMove);
-        }*/
-        /*private void GameView_MouseClick(object sender, MouseEventArgs e)
-        {
-            onMouseEvent(sender, e, MouseEventType.EventType.MouseClick);
-        }*/
         public void onMouseEvent(object sender, SKTouchEventArgs e)
         {
             MouseEventType.EventType eventType = MouseEventType.EventType.MouseMove;
@@ -1631,86 +1403,7 @@ namespace IBbasic
                 errorLog(ex.ToString());   		
             }		
         }
-
-        /*public void onKeyboardEvent(Keys keyData)
-        {
-            try
-            {
-                if (keyData == Keys.Escape)
-                {
-                    if (showMessageBox)
-                    {
-                        showMessageBox = false;
-                        return;
-                    }
-                    if (itemListSelector.showIBminiItemListSelector)
-                    {
-                        itemListSelector.showIBminiItemListSelector = false;
-                        return;
-                    }
-                    doVerifyClosingSetup();                    
-                }
-                if (touchEnabled)
-                {
-                    if (keyData == Keys.H)
-                    {
-                        if (showHotKeys) { showHotKeys = false; }
-                        else { showHotKeys = true; }
-                    }
-                    if (screenType.Equals("main"))
-                    {
-                        screenMainMap.onKeyUp(keyData);
-                    }
-                    else if (screenType.Equals("combat"))
-                    {
-                        screenCombat.onKeyUp(keyData);
-                    }
-                    else if (screenType.Equals("convo"))
-                    {
-                        screenConvo.onKeyUp(keyData);
-                    }
-                    else if (screenType.Equals("tsAreaEditor"))
-                    {
-                        tsAreaEditor.onKeyUp(keyData);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                errorLog(ex.ToString());
-            }
-        }  */      
-        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            onKeyboardEvent(keyData);
-                
-            return base.ProcessCmdKey(ref msg, keyData);
-        }*/
-
-        //ON FORM CLOSING
-        /*public void doVerifyClosingSetup()
-        {
-            List<string> actionList = new List<string> { "Yes, Exit", "No, Keep Playing" };
-            itemListSelector.setupIBminiItemListSelector(this, actionList, "Are you sure you wish to exit?", "verifyclosing");
-            itemListSelector.showIBminiItemListSelector = true;
-        }*/
-        /*public void doVerifyClosing(int selectedIndex)
-        {
-            if (selectedIndex == 0)
-            {
-                saveSettings();
-                this.Close();
-            }
-            if (selectedIndex == 1)
-            {
-                //keep playing
-            }
-        }*/
-        /*private void GameView_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }*/
-
+               
         //DIALOGS
         public string DialogReturnString(string headerText, string existingTextInputValue)
         {
@@ -1886,6 +1579,25 @@ namespace IBbasic
             // then proc returns the result
             return tcs.Task;
         }
+        public Task<bool> DownloadResult(string url, string folder)
+        {
+            // wait in this proc, until user did his input 
+            var tcs = new TaskCompletionSource<bool>();
+
+            // create and show page
+            bool rst = DownloadFile(url, folder);
+            if (rst)
+            {
+                tcs.SetResult(true);
+            }
+            else
+            {
+                tcs.SetResult(false);
+            }
+            // code is waiting her, until result is passed with tcs.SetResult() in btn-Clicked
+            // then proc returns the result
+            return tcs.Task;
+        }
         public int DialogReturnInteger(string headerText, int existingIntInputValue)
         {
             /*using (NumberSelectorDialog itSel = new NumberSelectorDialog(this, headerText, existingIntInputValue))
@@ -1958,10 +1670,6 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromUserFolder(folderpath, extension);
         }
-        /*public List<string> GetAllFilesWithExtensionFromAssetFolder(string folderpath, string extension)
-        {
-            return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromAssetFolder(folderpath, extension);
-        }*/
         public List<string> GetAllFilesWithExtensionFromBothFolders(string assetFolderpath, string userFolderpath, string extension)
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllFilesWithExtensionFromBothFolders(assetFolderpath, userFolderpath, extension);
@@ -1978,7 +1686,11 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().GetAllModuleFiles(userOnly);
         }
-
+        public bool DownloadFile(string url, string folder)
+        {
+            return DependencyService.Get<ISaveAndLoad>().DownloadFile(url, folder);
+        }
+               
         //ANALYTICS
         public void TrackerSendEvent(string action, string label, bool mustSend)
         {
@@ -2143,8 +1855,7 @@ namespace IBbasic
         {
             //DependencyService.Get<ISaveAndLoad>().PlayAreaMusic();
         }
-
-
+        
         public void errorLog(string text)
         {
             /*if (mainDirectory == null) 

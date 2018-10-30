@@ -18,6 +18,8 @@ namespace IBbasic
         string GetVersion();
         void RateApp();
 
+        bool DownloadFile(string url, string folder);
+
         bool AllowReadWriteExternal();
         void CreateUserFolders();
         void CreateBackUpModuleFolder(string modFilename);
@@ -47,5 +49,14 @@ namespace IBbasic
         void PlayAreaAmbientSounds(GameView gv, string fileName);
         void StopAreaMusic();
         void PauseAreaMusic();
+    }
+
+    public class DownloadEventArgs : EventArgs
+    {
+        public bool FileSaved = false;
+        public DownloadEventArgs(bool fileSaved)
+        {
+            FileSaved = fileSaved;
+        }
     }
 }
