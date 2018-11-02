@@ -959,6 +959,12 @@ namespace IBbasic
                             gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
                         }
                     }
+                    else
+                    {
+                        src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_none").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_none").Height);
+                        dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
+                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_none"), src, dst);
+                    }
 
                     string cnvNodeImg = "cnv_normal";
                     if ((n.conditions.Count > 0) && (n.actions.Count > 0)) { cnvNodeImg = "cnv_cond_act"; }
@@ -1152,7 +1158,8 @@ namespace IBbasic
 
                 gv.DrawText("Node Id#: " + editNode.idNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 3, "gy");
                 gv.DrawText("Order Index: " + editNode.orderNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 4, "gy");
-                gv.DrawText("Link To Id#: " + editNode.linkTo, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 5, "gy");                
+                gv.DrawText("Link To Id#: " + editNode.linkTo, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 5, "gy");
+                gv.DrawText("Parent Id#: " + editNode.parentIdNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 6, "gy");
             }
             btnNodeAdd.Draw();
             btnNodeMoveUp.Draw();
@@ -2902,6 +2909,7 @@ namespace IBbasic
                         ContentNode copy = duplicateNode(gv.mod.currentConvo.GetContentNodeById(copyToClipboardNode));
                         //ContentNode copy = f_convo.GetContentNodeById(copyToClipboardNode).Clone();
                         gv.mod.currentConvo.GetContentNodeById(pasteFromClipboardNode).subNodes.Add(copy);
+                        resetAllParentIds();
                         ResetTreeView();
                     }
                 }
@@ -2941,6 +2949,7 @@ namespace IBbasic
                         clipboardNodeParentNode.subNodes.Remove(clipboardNode);
                         //f_convo.GetContentNodeById(pasteFromClipboardNode).AddNodeToSubNode(copy);
                         //f_convo.GetContentNodeById(prnod).RemoveNodeFromSubNode(f_convo.GetContentNodeById(rnod));
+                        resetAllParentIds();
                         ResetTreeView();
                     }
                 }

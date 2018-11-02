@@ -329,63 +329,65 @@ namespace IBbasic
                         }
                         return;
                     }
-
-                    if (btnLeft.getImpact(x, y))
-			        {
-                        if (moduleIndex > 0)
-				        {
-					        moduleIndex--;
-					        btnModuleName.Text = moduleInfoList[moduleIndex].moduleName;
-				        }
-			        }
-			        else if (btnRight.getImpact(x, y))
-			        {
-                        if (moduleIndex < moduleInfoList.Count-1)
-				        {
-					        moduleIndex++;
-					        btnModuleName.Text = moduleInfoList[moduleIndex].moduleName;
-				        }
-			        }	    	
-			        else if (btnModuleName.getImpact(x, y))
-			        {
-                        if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
-                        {
-                            //load the mod since we only have the ModuleInfo                            
-                            gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
-                            gv.resetGame();
-                            gv.cc.LoadSaveListItems();
-                            gv.screenType = "title";
-                        }
-                        else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
-                        {
-                            //download and replace existing file
-                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
-                            //delete old folder
-                            //DeleteFolder(moduleInfoList[moduleIndex].moduleName);
-                            //unzip file
-                            UnZipFile(moduleInfoList[moduleIndex].moduleName);
-                            //once download is complete, do the "Get Updates" button stuff
-                            loadModuleInfoFiles();
-                            loadModsAvailableList();
-                            setupModuleInfoListAndButtonText(false);
-                        }
-                        else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
-                        {
-                            //download file
-                            downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
-                            //unzip file
-                            UnZipFile(moduleInfoList[moduleIndex].moduleName);
-                            //once download is complete, do the "Get Updates" button stuff
-                            loadModuleInfoFiles();
-                            loadModsAvailableList();
-                            setupModuleInfoListAndButtonText(false);
-                        }
-                    }
-                    else if (btnGetUpdates.getImpact(x, y))
+                    else
                     {
-                        downloadFile("mods_available.json");
-                        loadModsAvailableList();
-                        setupModuleInfoListAndButtonText(true);
+                        if (btnLeft.getImpact(x, y))
+                        {
+                            if (moduleIndex > 0)
+                            {
+                                moduleIndex--;
+                                btnModuleName.Text = moduleInfoList[moduleIndex].moduleName;
+                            }
+                        }
+                        else if (btnRight.getImpact(x, y))
+                        {
+                            if (moduleIndex < moduleInfoList.Count - 1)
+                            {
+                                moduleIndex++;
+                                btnModuleName.Text = moduleInfoList[moduleIndex].moduleName;
+                            }
+                        }
+                        else if (btnModuleName.getImpact(x, y))
+                        {
+                            if (moduleInfoList[moduleIndex].buttonText.Equals("PLAY"))
+                            {
+                                //load the mod since we only have the ModuleInfo                            
+                                gv.mod = gv.cc.LoadModule(moduleInfoList[moduleIndex].moduleName + ".mod");
+                                gv.resetGame();
+                                gv.cc.LoadSaveListItems();
+                                gv.screenType = "title";
+                            }
+                            else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
+                            {
+                                //download and replace existing file
+                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                //delete old folder
+                                //DeleteFolder(moduleInfoList[moduleIndex].moduleName);
+                                //unzip file
+                                UnZipFile(moduleInfoList[moduleIndex].moduleName);
+                                //once download is complete, do the "Get Updates" button stuff
+                                loadModuleInfoFiles();
+                                loadModsAvailableList();
+                                setupModuleInfoListAndButtonText(false);
+                            }
+                            else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
+                            {
+                                //download file
+                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                //unzip file
+                                UnZipFile(moduleInfoList[moduleIndex].moduleName);
+                                //once download is complete, do the "Get Updates" button stuff
+                                loadModuleInfoFiles();
+                                loadModsAvailableList();
+                                setupModuleInfoListAndButtonText(false);
+                            }
+                        }
+                        else if (btnGetUpdates.getImpact(x, y))
+                        {
+                            downloadFile("mods_available.json");
+                            loadModsAvailableList();
+                            setupModuleInfoListAndButtonText(true);
+                        }
                     }
                     break;
 		
@@ -402,31 +404,33 @@ namespace IBbasic
                         }
                         return;
                     }
-
-                    if (btnLeft.getImpact(x, y))
-			        {
-                        btnLeft.glowOn = true;
-			        }
-			        else if (btnRight.getImpact(x, y))
-			        {
-				        btnRight.glowOn = true;
-			        }
-			        else if (btnModuleName.getImpact(x, y))
-			        {
-                        btnModuleName.glowOn = true;
-                        if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
-                        {
-                            downloadText = "Downloading update...may take a few seconds...";
-                        }
-                        else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
-                        {
-                            downloadText = "Downloading module...may take a few seconds...";
-                        }                        
-			        }
-                    else if (btnGetUpdates.getImpact(x, y))
+                    else
                     {
-                        btnGetUpdates.glowOn = true;
-                        downloadText = "Checking for updates or new modules...may take a few seconds...";
+                        if (btnLeft.getImpact(x, y))
+                        {
+                            btnLeft.glowOn = true;
+                        }
+                        else if (btnRight.getImpact(x, y))
+                        {
+                            btnRight.glowOn = true;
+                        }
+                        else if (btnModuleName.getImpact(x, y))
+                        {
+                            btnModuleName.glowOn = true;
+                            if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
+                            {
+                                downloadText = "Downloading update...may take a few seconds...";
+                            }
+                            else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
+                            {
+                                downloadText = "Downloading module...may take a few seconds...";
+                            }
+                        }
+                        else if (btnGetUpdates.getImpact(x, y))
+                        {
+                            btnGetUpdates.glowOn = true;
+                            downloadText = "Checking for updates or new modules...may take a few seconds...";
+                        }
                     }
                     break;		
 		    }

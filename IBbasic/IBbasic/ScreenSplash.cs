@@ -22,7 +22,10 @@ namespace IBbasic
         private IbbButton btnCreate = null;
         private IbbButton btnZip = null;
         private IbbButton btnUnZip = null;
-        public IbbToggle tglGoogleAnalytics = null;
+        private IbbButton btnNews = null;
+        private IbbButton btnTwitter = null;
+        private IbbButton btnWebsite = null;
+        //public IbbToggle tglGoogleAnalytics = null;
         private SKBitmap titleBitmap;
         //private List<string> moduleFolderList = new List<string>();
         //private List<string> moduleZipList = new List<string>();
@@ -47,7 +50,7 @@ namespace IBbasic
                 btnPlay.Img = "btn_large";
                 btnPlay.Glow = "btn_large_glow";
                 btnPlay.X = wideX;
-                btnPlay.Y = 1 * gv.uiSquareSize + pH * 2;
+                btnPlay.Y = 0 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 2;
                 btnPlay.Height = (int)(gv.ibbheight * gv.scaler);
                 btnPlay.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -58,7 +61,7 @@ namespace IBbasic
                 btnCreate.Img = "btn_large";
                 btnCreate.Glow = "btn_large_glow";
                 btnCreate.X = wideX;
-                btnCreate.Y = 2 * gv.uiSquareSize + pH * 4;
+                btnCreate.Y = 1 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 4;
                 btnCreate.Height = (int)(gv.ibbheight * gv.scaler);
                 btnCreate.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -69,7 +72,7 @@ namespace IBbasic
                 btnZip.Img = "btn_large";
                 btnZip.Glow = "btn_large_glow";
                 btnZip.X = wideX;
-                btnZip.Y = 3 * gv.uiSquareSize + pH * 6;
+                btnZip.Y = 2 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 6;
                 btnZip.Height = (int)(gv.ibbheight * gv.scaler);
                 btnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -80,23 +83,53 @@ namespace IBbasic
                 btnUnZip.Img = "btn_large";
                 btnUnZip.Glow = "btn_large_glow";
                 btnUnZip.X = wideX;
-                btnUnZip.Y = 4 * gv.uiSquareSize + pH * 8;
+                btnUnZip.Y = 3 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 8;
                 btnUnZip.Height = (int)(gv.ibbheight * gv.scaler);
                 btnUnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
-            if (tglGoogleAnalytics == null)
+            if (btnNews == null)
             {
-                tglGoogleAnalytics = new IbbToggle(gv);
+                btnNews = new IbbButton(gv, 1.0f);
+                btnNews.Text = "IBbasic News";
+                btnNews.Img = "btn_large";
+                btnNews.Glow = "btn_large_glow";
+                btnNews.X = wideX;
+                btnNews.Y = 4 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 10;
+                btnNews.Height = (int)(gv.ibbheight * gv.scaler);
+                btnNews.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
-                tglGoogleAnalytics.ImgOn = "mtgl_rbtn_on";
-                tglGoogleAnalytics.ImgOff = "mtgl_rbtn_off";
-                tglGoogleAnalytics.X = wideX - (gv.uiSquareSize / 2);
-                tglGoogleAnalytics.Y = 6 * gv.uiSquareSize - (gv.uiSquareSize / 6);
-                tglGoogleAnalytics.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
-                tglGoogleAnalytics.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+            if (btnTwitter == null)
+            {
+                btnTwitter = new IbbButton(gv, 0.8f);
+            }
+            btnTwitter.Img = "btn_small";
+            btnTwitter.Img2 = "btntwitter";
+            btnTwitter.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnTwitter.X = 10 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnTwitter.Y = 6 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnTwitter.Height = (int)(gv.ibbheight * gv.scaler);
+            btnTwitter.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnWebsite == null)
+            {
+                btnWebsite = new IbbButton(gv, 0.8f);
+            }
+            btnWebsite.Img2 = "btnweb";
+            btnWebsite.Img = "btn_small"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small);
+            btnWebsite.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnWebsite.X = 9 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnWebsite.Y = 6 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnWebsite.Height = (int)(gv.ibbheight * gv.scaler);
+            btnWebsite.Width = (int)(gv.ibbwidthR * gv.scaler);
+
         }
-        
-        
+
+        public async void downloadFile(string filename)
+        {
+            //downloadText = "Downloading...may take a few seconds...";            
+            bool result = await gv.DownloadResult("https://www.iceblinkengine.com/ibbasic_modules/" + filename, filename);
+            
+        }
 
         //TITLE SCREEN
         public void redrawSplash()
@@ -112,34 +145,26 @@ namespace IBbasic
             btnCreate.Draw();
             btnZip.Draw();
             btnUnZip.Draw();
+            btnNews.Draw();
+            btnTwitter.Draw();
+            btnWebsite.Draw();
 
-            //Google Analytics
-            if (gv.IBprefs.GoogleAnalyticsOn) { tglGoogleAnalytics.toggleOn = true; }
-            else { tglGoogleAnalytics.toggleOn = false; }
-            tglGoogleAnalytics.Draw();
-            for (int x = 0; x <= 2; x++)
-            {
-                for (int y = 0; y <= 2; y++)
-                {
-                    gv.DrawText("Share Game Play", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler + x, tglGoogleAnalytics.Y + y, "bk");
-                    gv.DrawText("Analytics with IB Team:", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler + x, tglGoogleAnalytics.Y + gv.fontHeight + gv.fontLineSpacing + y, "bk");
-
-                }
-            }
-            gv.DrawText("Share Game Play", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler, tglGoogleAnalytics.Y, "wh");
-            gv.DrawText("Analytics with IB Team", tglGoogleAnalytics.X + tglGoogleAnalytics.Width + gv.scaler, tglGoogleAnalytics.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            
             //Draw IceBlink2RPG Engine Version Number
             int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (4 * gv.fontWidth);
-            int pH = (int)((float)gv.screenHeight / 100.0f);
+            int yLoc = 6 * gv.uiSquareSize + gv.uiSquareSize / 2;
             for (int x = 0; x <= 2; x++)
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("v" + gv.versionNum, xLoc + x, (6 * gv.uiSquareSize) + (gv.uiSquareSize / 2) + y, "bk");
+                    gv.DrawText("v" + gv.versionNum, xLoc + x, yLoc + y, "bk");
                 }
             }
-            gv.DrawText("v" + gv.versionNum, xLoc, (6 * gv.uiSquareSize) + (gv.uiSquareSize / 2), "wh");
+            gv.DrawText("v" + gv.versionNum, xLoc, yLoc, "wh");
+
+            if (gv.showMessageBox)
+            {
+                gv.messageBox.onDrawLogBox();
+            }
         }
 
         public void onTouchSplash(int eX, int eY, MouseEventType.EventType eventType)
@@ -148,6 +173,14 @@ namespace IBbasic
             btnCreate.glowOn = false;
             btnZip.glowOn = false;
             btnUnZip.glowOn = false;
+            btnNews.glowOn = false;
+            btnTwitter.glowOn = false;
+            btnWebsite.glowOn = false;
+
+            if (gv.showMessageBox)
+            {
+                gv.messageBox.btnReturn.glowOn = false;
+            }
 
             //int eventAction = event.getAction();
             switch (eventType)
@@ -160,88 +193,109 @@ namespace IBbasic
                     btnCreate.glowOn = false;
                     btnZip.glowOn = false;
                     btnUnZip.glowOn = false;
+                    btnNews.glowOn = false;
+                    btnTwitter.glowOn = false;
+                    btnWebsite.glowOn = false;
 
-                    if (btnPlay.getImpact(x, y))
+                    if (gv.showMessageBox)
                     {
-                        btnPlay.Text = "Loading...";
-                        if (gv.fixedModule.Equals(""))
-                        {
-                            gv.screenLauncher = new ScreenLauncher(gv.mod, gv);
-                            gv.screenLauncher.loadModuleInfoFiles();
-                            gv.screenType = "launcher";
-                        }
-                        else
-                        {
-                            gv.mod.moduleName = gv.fixedModule + "/" + gv.fixedModule;
-                            gv.resetGame();
-                        }
+                        gv.messageBox.btnReturn.glowOn = false;
                     }
-                    else if (btnCreate.getImpact(x, y))
+
+                    if (gv.showMessageBox)
                     {
-                        if (!gv.AllowReadWriteExternal())
+                        if (gv.messageBox.btnReturn.getImpact(x, y))
                         {
-                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
-                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
-                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
-                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            gv.PlaySound("btn_click");
+                            gv.showMessageBox = false;
                         }
-                        else
-                        {
-                            SelectModuleToEdit();
-                        }
+                        return;
                     }
-                    else if (btnZip.getImpact(x, y))
+                    else
                     {
-                        if (!gv.AllowReadWriteExternal())
+                        if (btnPlay.getImpact(x, y))
                         {
-                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
-                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
-                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
-                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            btnPlay.Text = "Loading...";
+                            if (gv.fixedModule.Equals(""))
+                            {
+                                gv.screenLauncher = new ScreenLauncher(gv.mod, gv);
+                                gv.screenLauncher.loadModuleInfoFiles();
+                                gv.screenType = "launcher";
+                            }
+                            else
+                            {
+                                gv.mod.moduleName = gv.fixedModule + "/" + gv.fixedModule;
+                                gv.resetGame();
+                            }
                         }
-                        else
+                        else if (btnCreate.getImpact(x, y))
                         {
-                            SelectModuleToZip();
+                            if (!gv.AllowReadWriteExternal())
+                            {
+                                string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                        "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                                noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                                gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            }
+                            else
+                            {
+                                SelectModuleToEdit();
+                            }
                         }
-                    }
-                    else if (btnUnZip.getImpact(x, y))
-                    {
-                        if (!gv.AllowReadWriteExternal())
+                        else if (btnZip.getImpact(x, y))
                         {
-                            string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
-                                                    "iOS: This feature is only available on devices running iOS 10.3 and greater.";
-                            noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
-                            gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            if (!gv.AllowReadWriteExternal())
+                            {
+                                string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                        "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                                noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                                gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            }
+                            else
+                            {
+                                SelectModuleToZip();
+                            }
                         }
-                        else
+                        else if (btnUnZip.getImpact(x, y))
                         {
-                            SelectModuleToUnZip();
+                            if (!gv.AllowReadWriteExternal())
+                            {
+                                string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                        "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                                noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                                gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            }
+                            else
+                            {
+                                SelectModuleToUnZip();
+                            }
                         }
-                    }
-                    else if (tglGoogleAnalytics.getImpact(x, y))
-                    {
-                        if (tglGoogleAnalytics.toggleOn)
+                        else if (btnNews.getImpact(x, y))
                         {
-                            gv.TrackerSendEvent(":TURN_ANALYTICS_OFF:", "none", true);
+                            if (!gv.AllowReadWriteExternal())
+                            {
+                                string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                        "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                                noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                                gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            }
+                            else
+                            {
+                                gv.TrackerSendEvent(":READ_IB_NEWS:", "none", true);
+                                downloadFile("ibnews.txt");
+                                string news = loadNews();
+                                gv.showMessageBox = true;
+                                gv.sf.MessageBoxHtml(news);
+                            }                            
                         }
-                        tglGoogleAnalytics.toggleOn = !tglGoogleAnalytics.toggleOn;
-                        gv.IBprefs.GoogleAnalyticsOn = tglGoogleAnalytics.toggleOn;
-                        gv.savePreferences();
-                        if (tglGoogleAnalytics.toggleOn)
+                        else if (btnTwitter.getImpact(x, y))
                         {
-                            gv.TrackerSendEvent(":TURN_ANALYTICS_ON:", "none", true);
+                            Device.OpenUri(new Uri("twitter://user?user_id=1042598307187503104"));
                         }
-                        string policy = "When this box is checked, data about your game play will be sent " +
-                        "to the Iceblink Engine Team's Google Analytics Dashboard. There is no personally " +
-                        "identifiable information contained in the data sent. The data is used to see " +
-                        "where we can improve on the app and to let builders know when and how their module " +
-                        "is being played. Since we all do this for free, this little bit of insight into how " +
-                        "our project is going and seeing that others are enjoying it is part of our fuel to " +
-                        "keep us motivated. The type of data sent looks like this:" + Environment.NewLine + Environment.NewLine +
-                        "7/22/2018 7:41:21 AM: TheElderinStone(v7):(IBv1.0.03):none_754200 *** TheElderinStone(v7):(IBv1.0.03):none_754200:20180722074120:00000420:HP5005:SP5045:XP0:LVL6:PS6::NEWGAME:TheElderinStone *** none" + Environment.NewLine + Environment.NewLine +
-                        "7/22/2018 7:41:22 AM: TheElderinStone(v7):(IBv1.0.03):Odren_754200 *** TheElderinStone(v7):(IBv1.0.03):Odren_754200: 20180722074122:00000424:HP4018: SP4051: XP0: LVL6: PS6::CONVO:0 Intro *** none" + Environment.NewLine + Environment.NewLine +
-                        "7/22/2018 7:41:25 AM: TheElderinStone(v7):(IBv1.0.03):Odren_754200 *** TheElderinStone(v7):(IBv1.0.03):Odren_754200: 20180722074125:00000424:HP4018: SP4051: XP0: LVL6: PS6::JOURNAL:The Elderin Stone-- Retrieving the Stone *** none";
-                        gv.IBMessageBox("IBbasic Privacy Policy", policy);
+                        else if (btnWebsite.getImpact(x, y))
+                        {
+                            Device.OpenUri(new Uri("https://iceblinkengine.com"));
+                        }
                     }
                     break;
                     
@@ -250,24 +304,62 @@ namespace IBbasic
                     x = (int) eX;
                     y = (int) eY;
 
-                    if (btnPlay.getImpact(x, y))
+                    if (gv.showMessageBox)
                     {
-                        btnPlay.glowOn = true;                                              
+                        if (gv.messageBox.btnReturn.getImpact(x, y))
+                        {
+                            gv.messageBox.btnReturn.glowOn = true;
+                        }
+                        return;
                     }
-                    else if (btnCreate.getImpact(x, y))
+                    else
                     {
-                        btnCreate.glowOn = true;
-                    }
-                    else if (btnZip.getImpact(x, y))
-                    {
-                        btnZip.glowOn = true;
-                    }
-                    else if (btnUnZip.getImpact(x, y))
-                    {
-                        btnUnZip.glowOn = true;
+                        if (btnPlay.getImpact(x, y))
+                        {
+                            btnPlay.glowOn = true;
+                        }
+                        else if (btnCreate.getImpact(x, y))
+                        {
+                            btnCreate.glowOn = true;
+                        }
+                        else if (btnZip.getImpact(x, y))
+                        {
+                            btnZip.glowOn = true;
+                        }
+                        else if (btnUnZip.getImpact(x, y))
+                        {
+                            btnUnZip.glowOn = true;
+                        }
+                        else if (btnNews.getImpact(x, y))
+                        {
+                            btnNews.glowOn = true;
+                        }
+                        else if (btnTwitter.getImpact(x, y))
+                        {
+                            btnTwitter.glowOn = true;
+                        }
+                        else if (btnWebsite.getImpact(x, y))
+                        {
+                            btnWebsite.glowOn = true;
+                        }
                     }
                     break;
             }
+        }
+
+        public string loadNews()
+        {
+            string txt = "";
+            try
+            {
+                txt = gv.LoadStringFromUserFolder("\\modules\\ibnews.txt");                
+            }
+            catch (Exception ex)
+            {
+                gv.errorLog(ex.ToString());
+                return "error loading...";
+            }
+            return txt;
         }
 
         public async void GetStringInput()
