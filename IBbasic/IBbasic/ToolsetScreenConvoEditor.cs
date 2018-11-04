@@ -42,8 +42,7 @@ namespace IBbasic
         private IbbButton btnExpandAllNodes = null;
         private IbbButton btnCollapseAllNodes = null;
         private IbbButton btnSettings = null;
-        private IbbButton btnHelp = null;
-
+        
         //touch scrolling stuff
         public bool touchIsDown = false;
         public int touchMoveDeltaY = 0;
@@ -69,7 +68,7 @@ namespace IBbasic
         public IbbButton btnNodePaste = null;
         public IbbButton btnNodePasteAsLink = null;
         public IbbButton btnNodeRelocateCopiedNodes = null;
-
+        public IbbButton btnFollowLink = null;
 
         //Convo Properties Panel
         public IbbToggle tglSettingConvoFileName = null;
@@ -234,19 +233,7 @@ namespace IBbasic
             btnSettings.Y = 5 * gv.uiSquareSize + (int)(gv.scaler);
             btnSettings.Height = (int)(gv.ibbheight * gv.scaler);
             btnSettings.Width = (int)(gv.ibbwidthR * gv.scaler);
-
-            if (btnHelp == null)
-            {
-                btnHelp = new IbbButton(gv, 0.8f);
-            }
-            //btnHelp.Text = "HELP";
-            btnHelp.Img = "btn_small";
-            btnHelp.Img2 = "btnhelp";
-            btnHelp.Glow = "btn_small_glow";
-            btnHelp.X = 10 * gv.uiSquareSize;
-            btnHelp.Y = 6 * gv.uiSquareSize + (int)(gv.scaler);
-            btnHelp.Height = (int)(gv.ibbheight * gv.scaler);
-            btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
+                        
         }
         public void setupConvoNodeControls()
         {
@@ -468,6 +455,19 @@ namespace IBbasic
             btnNodeRelocateCopiedNodes.Y = panelTopLocation + (6 * gv.uiSquareSize);
             btnNodeRelocateCopiedNodes.Height = (int)(gv.ibbheight * gv.scaler);
             btnNodeRelocateCopiedNodes.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnFollowLink == null)
+            {
+                btnFollowLink = new IbbButton(gv, 0.8f);
+            }
+            //btnHelp.Text = "HELP";
+            btnFollowLink.Img = "btn_small";
+            btnFollowLink.Img2 = "btnhelp";
+            btnFollowLink.Glow = "btn_small_glow";
+            btnFollowLink.X = panelLeftLocation + 2 * gv.uiSquareSize;
+            btnFollowLink.Y = panelTopLocation + (6 * gv.uiSquareSize);
+            btnFollowLink.Height = (int)(gv.ibbheight * gv.scaler);
+            btnFollowLink.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
         public void setupConvoPropertiesPanelControls()
         {
@@ -1037,6 +1037,10 @@ namespace IBbasic
                 description.AddFormattedTextToTextBox(editNode.conversationText);
                 int raise = description.linesList.Count;
                 description.tbYloc = (int)(10 * gv.squareSize * gv.scaler - (gv.scaler * 4) - (raise * (gv.fontHeight + gv.fontLineSpacing)));
+                int txtheight = (raise * (gv.fontHeight + gv.fontLineSpacing)) + (int)(gv.scaler * 2);
+                src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_tooltip").Width, gv.cc.GetFromBitmapList("ui_bg_tooltip").Height);
+                dst = new IbRect((int)(description.tbXloc - (gv.scaler * 4)), (int)(description.tbYloc - (int)(gv.scaler * 2)), 6 * gv.uiSquareSize + (3 * gv.uiSquareSize / 4), txtheight);
+                gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_tooltip"), src, dst);
                 description.onDrawTextBox();
             }
 
@@ -1126,7 +1130,6 @@ namespace IBbasic
             gv.DrawText("Speak To Main", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y, "gy");
             gv.DrawText("PC Only:", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-            btnHelp.Draw();
         }
         public void drawNodePanel()
         {
@@ -1169,7 +1172,7 @@ namespace IBbasic
             btnNodePaste.Draw();
             btnNodePasteAsLink.Draw();
             btnNodeRelocateCopiedNodes.Draw();
-            btnHelp.Draw();
+            btnFollowLink.Draw();
         }
         public void drawCondPanel()
         {
@@ -1412,8 +1415,7 @@ namespace IBbasic
             btnExpandAllNodes.glowOn = false;
             btnCollapseAllNodes.glowOn = false;
             btnSettings.glowOn = false;
-            btnHelp.glowOn = false;
-
+            
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -1496,10 +1498,6 @@ namespace IBbasic
                     {
                         btnSettings.glowOn = true;
                     }
-                    else if (btnHelp.getImpact(x, y))
-                    {
-                        btnHelp.glowOn = true;
-                    }
                     break;
 
                 case MouseEventType.EventType.MouseUp:
@@ -1512,8 +1510,7 @@ namespace IBbasic
                     btnExpandAllNodes.glowOn = false;
                     btnCollapseAllNodes.glowOn = false;
                     btnSettings.glowOn = false;
-                    btnHelp.glowOn = false;
-
+                    
                     if (gv.showMessageBox)
                     {
                         gv.messageBox.btnReturn.glowOn = false;
@@ -1583,17 +1580,11 @@ namespace IBbasic
                     {
                         currentMode = "Settings";
                     }
-                    else if (btnHelp.getImpact(x, y))
-                    {
-                        //incrementalSaveModule();
-                    }
                     break;
             }
         }
         public bool onTouchSettingsPanel(int eX, int eY, MouseEventType.EventType eventType)
         {
-            btnHelp.glowOn = false;
-
             switch (eventType)
             {
                 case MouseEventType.EventType.MouseDown:
@@ -1601,18 +1592,11 @@ namespace IBbasic
                     int x = (int)eX;
                     int y = (int)eY;
 
-                    if (btnHelp.getImpact(x, y))
-                    {
-                        btnHelp.glowOn = true;
-                        return true;
-                    }
                     break;
 
                 case MouseEventType.EventType.MouseUp:
                     x = (int)eX;
                     y = (int)eY;
-
-                    btnHelp.glowOn = false;
 
                     if (tglSettingConvoFileName.getImpact(x, y))
                     {
@@ -1642,18 +1626,6 @@ namespace IBbasic
                         tglSettingSpeakToMainPcOnly.toggleOn = !tglSettingSpeakToMainPcOnly.toggleOn;
                         gv.mod.currentConvo.SpeakToMainPcOnly = tglSettingSpeakToMainPcOnly.toggleOn;
                     }
-                    else if (btnHelp.getImpact(x, y))
-                    {
-                        //incrementalSaveModule();
-                        /*if (mapSquareSizeScaler == 1)
-                        {
-                            mapSquareSizeScaler = 2;
-                        }
-                        else
-                        {
-                            mapSquareSizeScaler = 1;
-                        }*/
-                    }
                     break;
             }
             return false;
@@ -1668,7 +1640,7 @@ namespace IBbasic
             btnNodePaste.glowOn = false;
             btnNodePasteAsLink.glowOn = false;
             btnNodeRelocateCopiedNodes.glowOn = false;
-            btnHelp.glowOn = false;
+            btnFollowLink.glowOn = false;
 
             switch (eventType)
             {
@@ -1733,9 +1705,11 @@ namespace IBbasic
                         gv.showTooltip = true;
                         return true;
                     }
-                    else if (btnHelp.getImpact(x, y))
+                    else if (btnFollowLink.getImpact(x, y))
                     {
-                        btnHelp.glowOn = true;
+                        btnFollowLink.glowOn = true;
+                        gv.tooltip.AddHtmlTextToLog("<yl>Follow Link</yl><br>select a 'grey' text node and then click this button and it will take you to the actual node that this node is linked to...will highlight the linked node with green text.");
+                        gv.showTooltip = true;
                         return true;
                     }
                     break;
@@ -1752,7 +1726,7 @@ namespace IBbasic
                     btnNodePaste.glowOn = false;
                     btnNodePasteAsLink.glowOn = false;
                     btnNodeRelocateCopiedNodes.glowOn = false;
-                    btnHelp.glowOn = false;
+                    btnFollowLink.glowOn = false;
 
                     if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
                     {
@@ -1807,17 +1781,9 @@ namespace IBbasic
                     {
                         PasteAsRelocatedNodes();
                     }
-                    else if (btnHelp.getImpact(x, y))
+                    else if (btnFollowLink.getImpact(x, y))
                     {
-                        //incrementalSaveModule();
-                        /*if (mapSquareSizeScaler == 1)
-                        {
-                            mapSquareSizeScaler = 2;
-                        }
-                        else
-                        {
-                            mapSquareSizeScaler = 1;
-                        }*/
+                        FollowLink();
                     }
                     break;
             }

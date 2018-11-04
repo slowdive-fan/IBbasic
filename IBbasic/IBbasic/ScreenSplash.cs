@@ -290,10 +290,12 @@ namespace IBbasic
                         }
                         else if (btnTwitter.getImpact(x, y))
                         {
+                            gv.TrackerSendEvent(":VISIT_TWITTER:", "none", true);
                             Device.OpenUri(new Uri("twitter://user?user_id=1042598307187503104"));
                         }
                         else if (btnWebsite.getImpact(x, y))
                         {
+                            gv.TrackerSendEvent(":VISIT_WEBSITE:", "none", true);
                             Device.OpenUri(new Uri("https://iceblinkengine.com"));
                         }
                     }

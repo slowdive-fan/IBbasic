@@ -13,7 +13,7 @@ namespace IBbasic
         public int currentLocY = 0;
         public int Width = 192;
         public int Height = 120;
-        public int tbHeight = 120;
+        public int tbHeight = 240;
         public int tbWidth = 192;
         public int tbXloc = 10;
 

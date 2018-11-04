@@ -359,6 +359,7 @@ namespace IBbasic
                             }
                             else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
                             {
+                                gv.TrackerSendEvent(":UPDATE_"+ moduleInfoList[moduleIndex].moduleName + ":", "none", true);
                                 //download and replace existing file
                                 downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
                                 //delete old folder
@@ -372,6 +373,7 @@ namespace IBbasic
                             }
                             else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
                             {
+                                gv.TrackerSendEvent(":DOWNLOAD" + moduleInfoList[moduleIndex].moduleName + ":", "none", true);
                                 //download file
                                 downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
                                 //unzip file
@@ -384,6 +386,7 @@ namespace IBbasic
                         }
                         else if (btnGetUpdates.getImpact(x, y))
                         {
+                            gv.TrackerSendEvent(":GET_UPDATES:", "none", true);
                             downloadFile("mods_available.json");
                             loadModsAvailableList();
                             setupModuleInfoListAndButtonText(true);
