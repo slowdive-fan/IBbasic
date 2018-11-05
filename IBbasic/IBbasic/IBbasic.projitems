@@ -1568,4 +1568,7 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btnfollowlink.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\color_palette2.png" />
+  </ItemGroup>
 </Project>

@@ -243,7 +243,7 @@ namespace IBbasic
             {
                 palette = new IbPalette(gv);
             }
-            palette.Img = "color_palette";
+            palette.Img = "color_palette2";
             palette.X = (1 * gv.uiSquareSize) + (int)((10 * gv.squareSize * gv.scaler));
             palette.Y = 0 * gv.uiSquareSize;
             palette.Width = (int)(2 * gv.uiSquareSize) - (int)((gv.scaler * 2));
@@ -1286,7 +1286,7 @@ namespace IBbasic
         public IbPalette(GameView g)
         {
             gv = g;
-            bmpGDI = gv.cc.LoadBitmap("color_palette");
+            bmpGDI = gv.cc.LoadBitmap("color_palette2");
         }
 
         public bool getImpact(int x, int y)

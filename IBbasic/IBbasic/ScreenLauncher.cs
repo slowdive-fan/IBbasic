@@ -28,9 +28,11 @@ namespace IBbasic
         private List<SKBitmap> titleList = new List<SKBitmap>();
 	    private int moduleIndex = 0;
         public string downloadText = "";
-	
-	
-	    public ScreenLauncher(Module m, GameView g) 
+        long previousTime = 0;
+        int elapsedTime = 0;
+        long currentTime = 0;
+
+        public ScreenLauncher(Module m, GameView g) 
 	    {
 		    //gv.mod = m;
 		    gv = g;
@@ -97,10 +99,10 @@ namespace IBbasic
             string updateList = "";
             string newModList = "";
             //go through all moduleInfoList items and set buttonText to PLAY
-            foreach (ModuleInfo modInfo in moduleInfoList)
+            /*foreach (ModuleInfo modInfo in moduleInfoList)
             {
                 modInfo.buttonText = "PLAY";
-            }
+            }*/
             //go through each item in modsAvailableList and see if is in moduleInfoList
             foreach (ModuleInfo modAvail in modsAvailableList)
             {
@@ -124,6 +126,10 @@ namespace IBbasic
                     modAvail.buttonText = "DOWNLOAD";
                     moduleInfoList.Add(modAvail);
                     newModList += modAvail.moduleLabelName + "<br>";
+                }
+                else
+                {
+                    modAvail.buttonText = "PLAY";
                 }
             }
             if (showMessageBox)
@@ -359,9 +365,13 @@ namespace IBbasic
                             }
                             else if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
                             {
-                                gv.TrackerSendEvent(":UPDATE_"+ moduleInfoList[moduleIndex].moduleName + ":", "none", true);
+                                gv.TrackerSendEvent(":UPDATE_START_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-0", "none", true);
                                 //download and replace existing file
+                                previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                                 downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
+                                elapsedTime = (int)(currentTime - previousTime);
+                                gv.TrackerSendEvent(":UPDATE_END_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-" + elapsedTime.ToString(), "none", true);
                                 //delete old folder
                                 //DeleteFolder(moduleInfoList[moduleIndex].moduleName);
                                 //unzip file
@@ -373,9 +383,13 @@ namespace IBbasic
                             }
                             else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
                             {
-                                gv.TrackerSendEvent(":DOWNLOAD" + moduleInfoList[moduleIndex].moduleName + ":", "none", true);
+                                gv.TrackerSendEvent(":DOWNLOAD_START_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-0", "none", true);
                                 //download file
+                                previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                                 downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
+                                elapsedTime = (int)(currentTime - previousTime);
+                                gv.TrackerSendEvent(":DOWNLOAD_END_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-" + elapsedTime.ToString(), "none", true);
                                 //unzip file
                                 UnZipFile(moduleInfoList[moduleIndex].moduleName);
                                 //once download is complete, do the "Get Updates" button stuff
@@ -386,8 +400,12 @@ namespace IBbasic
                         }
                         else if (btnGetUpdates.getImpact(x, y))
                         {
-                            gv.TrackerSendEvent(":GET_UPDATES:", "none", true);
+                            gv.TrackerSendEvent(":GET_UPDATES_START:TIME(ms)-0", "none", true);
+                            previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                             downloadFile("mods_available.json");
+                            currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
+                            elapsedTime = (int)(currentTime - previousTime);
+                            gv.TrackerSendEvent(":GET_UPDATES_END:TIME(ms) - " + elapsedTime.ToString(), "none", true);
                             loadModsAvailableList();
                             setupModuleInfoListAndButtonText(true);
                         }
@@ -422,17 +440,17 @@ namespace IBbasic
                             btnModuleName.glowOn = true;
                             if (moduleInfoList[moduleIndex].buttonText.Equals("UPDATE"))
                             {
-                                downloadText = "Downloading update...may take a few seconds...";
+                                downloadText = "Downloading update...may take seconds to a few minutes...";
                             }
                             else if (moduleInfoList[moduleIndex].buttonText.Equals("DOWNLOAD"))
                             {
-                                downloadText = "Downloading module...may take a few seconds...";
+                                downloadText = "Downloading module...may take seconds to a few minutes...";
                             }
                         }
                         else if (btnGetUpdates.getImpact(x, y))
                         {
                             btnGetUpdates.glowOn = true;
-                            downloadText = "Checking for updates or new modules...may take a few seconds...";
+                            downloadText = "Checking for updates...may take seconds to a few minutes...";
                         }
                     }
                     break;		
