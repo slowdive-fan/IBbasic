@@ -4683,11 +4683,11 @@ namespace IBbasic
                 //check if target is within attack distance, use green if true, red if false
                 if (isVisibleLineOfSight(new Coordinate(endX2, endY2), new Coordinate(startX2, startY2)))
                 {
-                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), SkiaSharp.SKColors.Lime, 2);
+                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), "green", 2);
                 }
                 else
                 {
-                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), SkiaSharp.SKColors.Red, 2);
+                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), "red", 2);
                 }
             }
         }
@@ -7167,7 +7167,7 @@ namespace IBbasic
 
             return true;
         }
-        public bool drawVisibleLineOfSightTrail(Coordinate end, Coordinate start, SkiaSharp.SKColor penColor, int penWidth)
+        public bool drawVisibleLineOfSightTrail(Coordinate end, Coordinate start, string penColor, int penWidth)
         {
             // Bresenham Line algorithm
             // Creates a line from Begin to End starting at (x0,y0) and ending at (x1,y1)

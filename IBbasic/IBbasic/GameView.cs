@@ -892,9 +892,10 @@ namespace IBbasic
                 x += fontWidth + fontCharSpacing;
             }
         }        
-        public void DrawLine(int lastX, int lastY, int nextX, int nextY, SKColor penColor, int penWidth)
+        public void DrawLine(int lastX, int lastY, int nextX, int nextY, string penColor, int penWidth)
         {
-            using (SKPaint skp = new SKPaint())
+            //string clr = "red";
+            /*using (SKPaint skp = new SKPaint())
             {
                 skp.IsAntialias = true;
                 skp.Style = SKPaintStyle.Stroke;
@@ -902,6 +903,40 @@ namespace IBbasic
                 skp.StrokeWidth = penWidth;
                 canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
                 //renderTarget2D.DrawLine(new Vector2(lastX + oXshift, lastY + oYshift), new Vector2(nextX + oXshift, nextY + oYshift), scb, penWidth);
+            }*/
+
+            if (penColor.Equals("red"))
+            {
+                using (SKPaint skp = new SKPaint())
+                {
+                    skp.IsAntialias = true;
+                    skp.Style = SKPaintStyle.Stroke;
+                    skp.Color = SkiaSharp.SKColors.Red;
+                    skp.StrokeWidth = penWidth;
+                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                }
+            }
+            else if (penColor.Equals("green"))
+            {
+                using (SKPaint skp = new SKPaint())
+                {
+                    skp.IsAntialias = true;
+                    skp.Style = SKPaintStyle.Stroke;
+                    skp.Color = SkiaSharp.SKColors.Lime;
+                    skp.StrokeWidth = penWidth;
+                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                }
+            }
+            else if (penColor.Equals("black"))
+            {
+                using (SKPaint skp = new SKPaint())
+                {
+                    skp.IsAntialias = true;
+                    skp.Style = SKPaintStyle.Stroke;
+                    skp.Color = SkiaSharp.SKColors.Black;
+                    skp.StrokeWidth = penWidth;
+                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                }
             }
         }
         public void DrawRectangle(IbRect rect, SKColor penColor, int penWidth)

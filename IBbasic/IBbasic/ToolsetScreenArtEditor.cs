@@ -269,6 +269,38 @@ namespace IBbasic
         //{
         //selectedColorBitmapDX = gv.cc.ConvertGDIBitmapToD2D(selectedColorBitmapGDI);
         //}
+        public async void doDiskUtilities()
+        {
+            List<string> items = new List<string>();
+            items.Add("cancel");
+            items.Add("Create New Image");
+            items.Add("Open Image");
+            items.Add("Save Image");
+            items.Add("Save As (give new name)");
+
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select a disk function:");
+            if (selected != "cancel")
+            {
+                if (selected.Equals("Create New Image"))
+                {
+                    doNewDialog();
+                }
+                else if (selected.Equals("Open Image"))
+                {
+                    doOpenDialog();
+                }
+                else if (selected.Equals("Save Image"))
+                {
+                    doSaveDialog();
+                }
+                else if (selected.Equals("Save As (give new name)"))
+                {
+                    doSaveAsDialog();
+                }
+            }
+            gv.touchEnabled = true;
+        }
         public async void doNewDialog()
         {
             List<string> items = new List<string>();
@@ -753,20 +785,28 @@ namespace IBbasic
 
             //DRAW GRID
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("grid_black").Width, gv.cc.GetFromTileBitmapList("grid_black").Height);
-            int pixelSize = (int)(drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
+            float pixelSize = (drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
             if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192)) //tall creature
             {
-                pixelSize = (int)(drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
+                pixelSize = (drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
             }
-            int gridSqrSize = (int)(gv.squareSize * gv.scaler * pencilSize);
-            if (zoomScaler > 4) { gridSqrSize = gridSqrSize * 2 * pencilSize; }
-            for (int x = 0; x < myBitmapGDI.Width; x++)
+            //int gridSqrSize = (int)(gv.squareSize * gv.scaler * pencilSize);
+            //if (zoomScaler > 4) { gridSqrSize = gridSqrSize * 2 * pencilSize; }
+            /*for (int x = 0; x < myBitmapGDI.Width; x++)
             {
                 for (int y = 0; y < myBitmapGDI.Height; y++)
                 {
                     dst = new IbRect(mapStartLocXinPixels + (int)(x * pixelSize), (int)(y * pixelSize), gridSqrSize, gridSqrSize);
                     gv.DrawBitmap(gv.cc.GetFromTileBitmapList("grid_black"), src, dst);
                 }
+            }*/
+            for (int x = 0; x < myBitmapGDI.Height; x++)
+            {
+                gv.DrawLine(mapStartLocXinPixels + (int)(x * pixelSize), 0, mapStartLocXinPixels + (int)(x * pixelSize), (int)(myBitmapGDI.Height * pixelSize / pencilSize), "black", 1);
+            }
+            for (int y = 0; y < myBitmapGDI.Width; y++)
+            {
+                gv.DrawLine(mapStartLocXinPixels + 0, (int)(y * pixelSize), mapStartLocXinPixels + (int)(myBitmapGDI.Width * pixelSize / pencilSize), (int)(y * pixelSize), "black", 1);
             }
 
             //draw border
@@ -1123,7 +1163,8 @@ namespace IBbasic
                     }
                     else if (btnNew.getImpact(x, y))
                     {
-                        doNewDialog();
+                        doDiskUtilities();
+                        //doNewDialog();
                         /*performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
                         new AlertDialog.Builder(this.gameContext)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
