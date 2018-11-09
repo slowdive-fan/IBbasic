@@ -1571,4 +1571,14 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\color_palette2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btnbucketfill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btnswitchpalette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btndiskutils.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btntransforms.png" />
+  </ItemGroup>
 </Project>

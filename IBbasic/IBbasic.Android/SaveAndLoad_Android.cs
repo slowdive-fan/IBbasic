@@ -456,6 +456,18 @@ namespace IBbasic.Droid
                     {
                         bm = SKBitmap.Decode(storageFolder + "/modules/" + mdl.moduleName + "/graphics/" + filename);
                     }
+                    else  if (File.Exists(storageFolder + "/user/" + filename + ".png"))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/user/" + filename + ".png");
+                    }
+                    else if (File.Exists(storageFolder + "/user/" + filename + ".PNG"))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/user/" + filename + ".PNG");
+                    }
+                    else if (File.Exists(storageFolder + "/user/" + filename))
+                    {
+                        bm = SKBitmap.Decode(storageFolder + "/user/" + filename);
+                    }
                 }
                 //STOP here if already found bitmap
                 if (bm != null)

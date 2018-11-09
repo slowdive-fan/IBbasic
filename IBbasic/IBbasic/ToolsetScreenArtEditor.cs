@@ -19,9 +19,9 @@ namespace IBbasic
         public string slot = "item_slot";
         public string grass = "t_f_grass";
         public IbbButton btnNew = null;
-        public IbbButton btnOpen = null;
-        public IbbButton btnSave = null;
-        public IbbButton btnSaveAs = null;
+        public IbbButton btnBucketFill = null;
+        public IbbButton btnSwitchPalette = null;
+        public IbbButton btnTransform = null;
         public IbbButton btnAlphaAdjust = null;
         public IbbButton btnEraser = null;
         public IbbButton btnCanvasBackground = null;
@@ -37,7 +37,8 @@ namespace IBbasic
         public bool isIdleLayerShown = true;
         //public bool showLayers = true;
         public bool getColorMode = false;
-        public List<int> colorPaletteList = new List<int>();
+        public List<string> colorPaletteList = new List<string>();
+        public int colorPaletteListIndex = 0;
         public int previewBackIndex = 0;
         public int canvasBackIndex = 0;
         public string filename = "newdrawing";
@@ -59,6 +60,7 @@ namespace IBbasic
             gv = g;
             artScaler = (float)gv.scaler / 2f;
             mapStartLocXinPixels = 1 * gv.uiSquareSize;
+            loadColorPaletteList();
             //var bitmapProperties = new BitmapProperties(new SharpDX.Direct2D1.PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied));
             myBitmapGDI = new SKBitmap(48, 48);
             //updateBitmapDX();
@@ -68,7 +70,29 @@ namespace IBbasic
             //updateSelectedColorBitmapDX();
             setControlsStart();
         }
-
+        public void loadColorPaletteList()
+        {
+            colorPaletteList.Clear();
+            colorPaletteList.Add("color_palette");
+            colorPaletteList.Add("color_palette2");
+            //USER SPECIFIC
+            List<string> files = gv.GetAllFilesWithExtensionFromUserFolder("\\user", ".png");
+            foreach (string f in files)
+            {
+                try
+                {
+                    if (f.StartsWith("pal_"))
+                    {
+                        colorPaletteList.Add(f);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.ToString());
+                    gv.errorLog(ex.ToString());
+                }
+            }
+        }
         public void setControlsStart()
         {
             if (btnNew == null)
@@ -76,7 +100,7 @@ namespace IBbasic
                 btnNew = new IbbButton(gv, 1.0f);
             }
             btnNew.Img = "btn_small";
-            btnNew.Img2 = "btnnew";
+            btnNew.Img2 = "btndiskutils";
             btnNew.Glow = "btn_small_glow";
             //btnNew.Text = "NEW";
             btnNew.X = 0 * gv.uiSquareSize;
@@ -84,44 +108,44 @@ namespace IBbasic
             btnNew.Height = (int)(gv.ibbheight * gv.scaler);
             btnNew.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnOpen == null)
+            if (btnBucketFill == null)
             {
-                btnOpen = new IbbButton(gv, 1.0f);
+                btnBucketFill = new IbbButton(gv, 1.0f);
             }
-            btnOpen.Img = "btn_small";
-            btnOpen.Img2 = "btnopen";
-            btnOpen.Glow = "btn_small_glow";
+            btnBucketFill.Img = "btn_small";
+            btnBucketFill.Img2 = "btnbucketfill";
+            btnBucketFill.Glow = "btn_small_glow";
             //btnOpen.Text = "OPEN";
-            btnOpen.X = 0 * gv.uiSquareSize;
-            btnOpen.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
-            btnOpen.Height = (int)(gv.ibbheight * gv.scaler);
-            btnOpen.Width = (int)(gv.ibbwidthR * gv.scaler);
+            btnBucketFill.X = 0 * gv.uiSquareSize;
+            btnBucketFill.Y = 1 * gv.uiSquareSize + (int)(gv.scaler);
+            btnBucketFill.Height = (int)(gv.ibbheight * gv.scaler);
+            btnBucketFill.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnSave == null)
+            if (btnSwitchPalette == null)
             {
-                btnSave = new IbbButton(gv, 1.0f);
+                btnSwitchPalette = new IbbButton(gv, 1.0f);
             }
-            btnSave.Img = "btn_small";
-            btnSave.Img2 = "btnsave";
-            btnSave.Glow = "btn_small_glow";
+            btnSwitchPalette.Img = "btn_small";
+            btnSwitchPalette.Img2 = "btnswitchpalette";
+            btnSwitchPalette.Glow = "btn_small_glow";
             //btnSave.Text = "SAVE";
-            btnSave.X = 0 * gv.uiSquareSize;
-            btnSave.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
-            btnSave.Height = (int)(gv.ibbheight * gv.scaler);
-            btnSave.Width = (int)(gv.ibbwidthR * gv.scaler);
+            btnSwitchPalette.X = 0 * gv.uiSquareSize;
+            btnSwitchPalette.Y = 2 * gv.uiSquareSize + (int)(gv.scaler);
+            btnSwitchPalette.Height = (int)(gv.ibbheight * gv.scaler);
+            btnSwitchPalette.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnSaveAs == null)
+            if (btnTransform == null)
             {
-                btnSaveAs = new IbbButton(gv, 1.0f);
+                btnTransform = new IbbButton(gv, 1.0f);
             }
-            btnSaveAs.Img = "btn_small";
-            btnSaveAs.Img2 = "btnsaveas";
-            btnSaveAs.Glow = "btn_small_glow";
+            btnTransform.Img = "btn_small";
+            btnTransform.Img2 = "btntransforms";
+            btnTransform.Glow = "btn_small_glow";
             //btnSaveAs.Text = "SAVEAS";
-            btnSaveAs.X = 0 * gv.uiSquareSize;
-            btnSaveAs.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
-            btnSaveAs.Height = (int)(gv.ibbheight * gv.scaler);
-            btnSaveAs.Width = (int)(gv.ibbwidthR * gv.scaler);
+            btnTransform.X = 0 * gv.uiSquareSize;
+            btnTransform.Y = 3 * gv.uiSquareSize + (int)(gv.scaler);
+            btnTransform.Height = (int)(gv.ibbheight * gv.scaler);
+            btnTransform.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnUndo == null)
             {
@@ -242,8 +266,8 @@ namespace IBbasic
             if (palette == null)
             {
                 palette = new IbPalette(gv);
-            }
-            palette.Img = "color_palette2";
+                palette.Img = colorPaletteList[0];
+            }            
             palette.X = (1 * gv.uiSquareSize) + (int)((10 * gv.squareSize * gv.scaler));
             palette.Y = 0 * gv.uiSquareSize;
             palette.Width = (int)(2 * gv.uiSquareSize) - (int)((gv.scaler * 2));
@@ -300,6 +324,238 @@ namespace IBbasic
                 }
             }
             gv.touchEnabled = true;
+        }
+        public async void doTransform()
+        {
+            List<string> items = new List<string>();
+            items.Add("cancel");
+            items.Add("Rotate Right");
+            items.Add("Rotate Left");
+            items.Add("Flip Horizontal");
+            items.Add("Flip Vertical");
+            items.Add("Shift All Down 1 pixel");
+            items.Add("Shift All Up 1 pixel");
+            items.Add("Shift All Right 1 pixel");
+            items.Add("Shift All Left 1 pixel");
+
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select a transformation function:");
+            if (selected != "cancel")
+            {
+                if (selected.Equals("Rotate Right"))
+                {
+                    doRotateRight();
+                }
+                else if (selected.Equals("Rotate Left"))
+                {
+                    doRotateLeft();
+                }
+                else if (selected.Equals("Flip Horizontal"))
+                {
+                    doFlipHorizontal();
+                }
+                else if (selected.Equals("Flip Vertical"))
+                {
+                    doFlipVertical();
+                }
+                else if (selected.Equals("Shift All Down 1 pixel"))
+                {
+                    doShiftDown();
+                }
+                else if (selected.Equals("Shift All Up 1 pixel"))
+                {
+                    doShiftUp();
+                }
+                else if (selected.Equals("Shift All Right 1 pixel"))
+                {
+                    doShiftRight();
+                }
+                else if (selected.Equals("Shift All Left 1 pixel"))
+                {
+                    doShiftLeft();
+                }
+            }
+            gv.touchEnabled = true;
+        }
+        public void doRotateRight()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        SKColor clr = oldBm.GetPixel(y, oldBm.Height - 1 - x); //going through x when loop goes through y
+                        myBitmapGDI.SetPixel(x, y, clr);
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doRotateLeft()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        SKColor clr = oldBm.GetPixel(oldBm.Width - 1 - y, x); //going through x when loop goes through y
+                        myBitmapGDI.SetPixel(x, y, clr);
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doFlipVertical()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        SKColor clr = oldBm.GetPixel(oldBm.Width - 1 - x, y);
+                        myBitmapGDI.SetPixel(x, y, clr);
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doFlipHorizontal()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        SKColor clr = oldBm.GetPixel(x, oldBm.Height - 1 - y);
+                        myBitmapGDI.SetPixel(x, y, clr);
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doShiftUp()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        if (y < oldBm.Height - 1)
+                        {
+                            SKColor clr = oldBm.GetPixel(x, y + 1);
+                            myBitmapGDI.SetPixel(x, y, clr);
+                        }
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doShiftDown()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        if (y > 0)
+                        {
+                            SKColor clr = oldBm.GetPixel(x, y - 1);
+                            myBitmapGDI.SetPixel(x, y, clr);
+                        }
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doShiftLeft()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        if (x < oldBm.Width - 1)
+                        {
+                            SKColor clr = oldBm.GetPixel(x + 1, y);
+                            myBitmapGDI.SetPixel(x, y, clr);
+                        }
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void doShiftRight()
+        {
+            try
+            {
+                SKBitmap oldBm = myBitmapGDI.Copy();
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        if (x > 0)
+                        {
+                            SKColor clr = oldBm.GetPixel(x - 1, y);
+                            myBitmapGDI.SetPixel(x, y, clr);
+                        }
+                    }
+                }
+                oldBm.Dispose();
+                pushToUndoStack();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public async void doNewDialog()
         {
@@ -518,6 +774,17 @@ namespace IBbasic
                 }
             }
             //updateBitmapDX();
+        }
+        public void doBucketFill()
+        {
+            for (int x = 0; x < myBitmapGDI.Width; x++)
+            {
+                for (int y = 0; y < myBitmapGDI.Height; y++)
+                {
+                    myBitmapGDI.SetPixel(x, y, currentColor);
+
+                }
+            }
         }
         public void clearAllPixels()
         {
@@ -874,9 +1141,9 @@ namespace IBbasic
 
             //CONTROLS            
             btnNew.Draw();
-            btnOpen.Draw();
-            btnSave.Draw();
-            btnSaveAs.Draw();
+            btnBucketFill.Draw();
+            btnSwitchPalette.Draw();
+            btnTransform.Draw();
             btnToggleLayer.Draw();
             tglPencil.Draw();
             btnAlphaAdjust.Draw();
@@ -1133,19 +1400,27 @@ namespace IBbasic
                         continuousDrawMode = false;
                     }
 
-                    if (btnSaveAs.getImpact(x, y))
+                    if (btnTransform.getImpact(x, y))
                     {
-                        doSaveAsDialog();
+                        doTransform();
                     }
-                    else if (btnSave.getImpact(x, y))
+                    else if (btnSwitchPalette.getImpact(x, y))
                     {
-                        doSaveDialog();
+                        if (colorPaletteListIndex >= colorPaletteList.Count - 1)
+                        {
+                            colorPaletteListIndex = 0;
+                        }
+                        else
+                        {
+                            colorPaletteListIndex++;
+                        }
+                        palette.Img = colorPaletteList[colorPaletteListIndex];
+                        palette.bmpGDI = gv.cc.LoadBitmap(palette.Img);
                     }
-                    else if (btnOpen.getImpact(x, y))
+                    else if (btnBucketFill.getImpact(x, y))
                     {
-                        doOpenDialog();
-                        undoStack.Clear();
-                        redoStack.Clear();
+                        pushToUndoStack();
+                        doBucketFill();
                     }
                     else if (btnUndo.getImpact(x, y))
                     {
@@ -1163,27 +1438,7 @@ namespace IBbasic
                     }
                     else if (btnNew.getImpact(x, y))
                     {
-                        doDiskUtilities();
-                        //doNewDialog();
-                        /*performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY);
-                        new AlertDialog.Builder(this.gameContext)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .setTitle("New Canvas")
-                                .setMessage("Are you sure you want start a new canvas (existing drawing will be erased)?")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                                {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which)
-                        {
-                            doCanvasSizeSelectionDialog();
-                            //myBitmap = Bitmap.createBitmap(24, 24, Bitmap.Config.ARGB_8888);
-                            undoStack.clear();
-                            redoStack.clear();
-                            invalidate();
-                        }
-                    })
-                                        .setNegativeButton("No", null)
-                                        .show();*/
+                        doDiskUtilities();                        
                     }
                     else if (btnAlphaAdjust.getImpact(x, y))
                     {

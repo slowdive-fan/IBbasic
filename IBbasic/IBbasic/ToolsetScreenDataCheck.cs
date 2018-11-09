@@ -17,6 +17,7 @@ namespace IBbasic
         public Encounter chkEnc;
         public Convo chkConvo;
         public string report = "";
+        public List<string> nodeImagesList = new List<string>();
 
         public ToolsetScreenDataCheck(GameView g)
         {
@@ -306,6 +307,8 @@ namespace IBbasic
         }
         public void CheckConvos()
         {
+            nodeImagesList.Clear();
+            nodeImagesList = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
             string convoslist = "";
             //look for end points on red nodes
             List<string> ret = gv.GetAllFilesWithExtensionFromUserFolder("\\modules\\" + gv.mod.moduleName, ".dlg");
@@ -326,6 +329,14 @@ namespace IBbasic
                             {
                                 //this is a red node on an end point
                                 logText("CONVO ERROR: node ID# " + subNode.idNum + " NPC node on end dialog node which is not allowed.");
+                            }
+                            //check to see if node image is in list
+                            if (!subNode.NodePortraitBitmap.Equals(""))
+                            {
+                                if ((!nodeImagesList.Contains(subNode.NodePortraitBitmap)) && (!nodeImagesList.Contains(Path.GetFileNameWithoutExtension(subNode.NodePortraitBitmap))))
+                                {
+                                    logText("CONVO ERROR: node ID# " + subNode.idNum + " - Node image not found: " + subNode.NodePortraitBitmap);
+                                }
                             }
                             //check to see if still using gaRemovePropByTag or gaRemovePropByIndex
                             foreach (Action a in subNode.actions)
@@ -383,6 +394,14 @@ namespace IBbasic
                 {
                     //this is a red node on an end point
                     logText("CONVO ERROR: node ID# " + node.idNum + " NPC node on end dialog node which is not allowed.");
+                }
+                //check to see if node image is in list
+                if (!node.NodePortraitBitmap.Equals(""))
+                {
+                    if ((!nodeImagesList.Contains(node.NodePortraitBitmap)) && (!nodeImagesList.Contains(Path.GetFileNameWithoutExtension(node.NodePortraitBitmap))))
+                    {
+                        logText("CONVO ERROR: node ID# " + node.idNum + " - Node image not found: " + node.NodePortraitBitmap);
+                    }
                 }
                 //check to see if still using gaRemovePropByTag or gaRemovePropByIndex
                 foreach (Action a in node.actions)

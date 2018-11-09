@@ -84,6 +84,13 @@ namespace IBbasic
         {
             //sort players based on name
             gv.mod.companionPlayerList = gv.mod.companionPlayerList.OrderBy(x => x.name).ToList();
+            foreach (Player pc in gv.mod.companionPlayerList)
+            {
+                try { pc.race = gv.cc.getRace(pc.raceTag).DeepCopy(); }
+                catch (Exception ex) { gv.errorLog(ex.ToString()); }
+                try { pc.playerClass = gv.cc.getPlayerClass(pc.classTag).DeepCopy(); }
+                catch (Exception ex) { gv.errorLog(ex.ToString()); }
+            }
         }
 
         public void setControlsStart()
@@ -631,6 +638,16 @@ namespace IBbasic
 
             if (gv.mod.companionPlayerList.Count > 0)
             {
+                if (gv.mod.companionPlayerList[playerListIndex].hp < gv.mod.companionPlayerList[playerListIndex].hpMax)
+                {
+                    gv.mod.companionPlayerList[playerListIndex].hp = gv.mod.companionPlayerList[playerListIndex].hpMax;
+                }
+                if (gv.mod.companionPlayerList[playerListIndex].sp < gv.mod.companionPlayerList[playerListIndex].spMax)
+                {
+                    gv.mod.companionPlayerList[playerListIndex].sp = gv.mod.companionPlayerList[playerListIndex].spMax;
+                }
+                gv.sf.UpdateStats(gv.mod.companionPlayerList[playerListIndex]);
+
                 if (currentMode.Equals("Main"))
                 {
                     setMainControlsStart();
@@ -707,12 +724,17 @@ namespace IBbasic
             gv.DrawText("WIS: " + gv.mod.companionPlayerList[playerListIndex].baseWis, btnPcWisBase.X + btnPcWisBase.Width + gv.scaler, btnPcWisBase.Y + shiftForFont, "wh");
             btnPcChaBase.Draw();
             gv.DrawText("CHA: " + gv.mod.companionPlayerList[playerListIndex].baseCha, btnPcChaBase.X + btnPcChaBase.Width + gv.scaler, btnPcChaBase.Y + shiftForFont, "wh");
-            btnPcReflex.Draw();
-            gv.DrawText("REFLEX: " + gv.mod.companionPlayerList[playerListIndex].reflex, btnPcReflex.X + btnPcReflex.Width + gv.scaler, btnPcReflex.Y + shiftForFont, "wh");
-            btnPcWill.Draw();
-            gv.DrawText("WILL: " + gv.mod.companionPlayerList[playerListIndex].will, btnPcWill.X + btnPcWill.Width + gv.scaler, btnPcWill.Y + shiftForFont, "wh");
-            btnPcFortitude.Draw();
-            gv.DrawText("FORTITUDE: " + gv.mod.companionPlayerList[playerListIndex].fortitude, btnPcFortitude.X + btnPcFortitude.Width + gv.scaler, btnPcFortitude.Y + shiftForFont, "wh");
+            int yLoc = btnPcChaBase.Y;
+            //btnPcReflex.Draw();
+            gv.DrawText("Reflex: " + gv.mod.companionPlayerList[playerListIndex].reflex, btnPcReflex.X, yLoc + (2 * gv.fontHeight), "wh");
+            //btnPcWill.Draw();
+            gv.DrawText("Will: " + gv.mod.companionPlayerList[playerListIndex].will, btnPcWill.X, yLoc + (3 * gv.fontHeight), "wh");
+            //btnPcFortitude.Draw();
+            gv.DrawText("Fortitude: " + gv.mod.companionPlayerList[playerListIndex].fortitude, btnPcFortitude.X, yLoc + (4 * gv.fontHeight), "wh");
+            gv.DrawText("HP: " + gv.mod.companionPlayerList[playerListIndex].hp + " HPmax: " + gv.mod.companionPlayerList[playerListIndex].hpMax,
+                        btnPcFortitude.X, yLoc + (5 * gv.fontHeight), "wh");
+            gv.DrawText("SP: " + gv.mod.companionPlayerList[playerListIndex].sp + " SPmax: " + gv.mod.companionPlayerList[playerListIndex].spMax,
+                        btnPcFortitude.X, yLoc + (6 * gv.fontHeight), "wh");
 
         }
         public void drawImages()
@@ -1089,15 +1111,15 @@ namespace IBbasic
                     }
                     else if (btnPcReflex.getImpact(x, y))
                     {
-                        changePcReflex();
+                        //changePcReflex();
                     }
                     else if (btnPcFortitude.getImpact(x, y))
                     {
-                        changePcFortitude();
+                        //changePcFortitude();
                     }
                     else if (btnPcWill.getImpact(x, y))
                     {
-                        changePcWill();
+                        //changePcWill();
                     }
                     break;
             }

@@ -375,6 +375,7 @@ namespace IBbasic.iOS
 
         public SKBitmap LoadBitmap(string filename, Module mdl)
         {
+            //MODULE'S GRAPHICS FOLDER
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var modulesDir = Path.Combine(documents, "modules");
             var modFolder = Path.Combine(modulesDir, mdl.moduleName);
@@ -397,6 +398,29 @@ namespace IBbasic.iOS
                     return bm;
                 }
             }
+            //USER FOLDER
+            documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var userDir = Path.Combine(documents, "user");
+            filePath = Path.Combine(userDir, filename);
+
+            if (File.Exists(filePath))
+            {
+                SKBitmap bm = SKBitmap.Decode(filePath);
+                if (bm != null)
+                {
+                    return bm;
+                }
+            }
+            else if (File.Exists(filePath + ".png"))
+            {
+                SKBitmap bm = SKBitmap.Decode(filePath + ".png");
+                if (bm != null)
+                {
+                    return bm;
+                }
+            }
+
+            //DEFAULT ASSETS
             Assembly assembly = GetType().GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("IBbasic.iOS.Assets.modules." + mdl.moduleName + ".graphics." + filename);            
             if (stream == null)
