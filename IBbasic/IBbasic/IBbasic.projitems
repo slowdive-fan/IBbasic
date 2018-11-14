@@ -921,17 +921,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\NewModule.mod" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\area3d.are" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\FirstMod.mod" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\koboldenc1.dlg" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\kobolds.enc" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\new3DareaSmall.are" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\outdoors.are" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\graphics\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\sounds\defaultstep.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -1111,14 +1100,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_stone03_day.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_stone03_night.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\bd_wood01.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\area3d.are" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\FirstMod.mod" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\koboldenc1.dlg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\kobolds.enc" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\new3DareaSmall.are" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\outdoors.are" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_a_black_tile.png" />
@@ -1344,5 +1325,20 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_wooda3.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_wooda6.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_wooda7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\area3d.are" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\FirstMod.mod" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\koboldenc1.dlg" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\kobolds.enc" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\new3DareaSmall.are" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\outdoors.are" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\modules\FirstMod\graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rocka3.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rockb3.png" />
   </ItemGroup>
 </Project>
