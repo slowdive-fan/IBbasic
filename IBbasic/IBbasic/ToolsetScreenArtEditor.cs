@@ -569,6 +569,9 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
+            items.Add("3Dwallset");
+            items.Add("3Dbackdrop");
+            items.Add("3Doverlay");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select a canvas size:");
@@ -622,6 +625,24 @@ namespace IBbasic
                     myBitmapGDI = new SKBitmap(48, 48);
                     clearAllPixels();
                 }
+                else if (selected.Equals("3Dwallset"))
+                {
+                    filename = "w_w_newwallset";
+                    myBitmapGDI = new SKBitmap(204, 88);
+                    clearAllPixels();
+                }
+                else if (selected.Equals("3Dbackdrop"))
+                {
+                    filename = "w_w_newbackdrop";
+                    myBitmapGDI = new SKBitmap(88, 88);
+                    clearAllPixels();
+                }
+                else if (selected.Equals("3Doverlay"))
+                {
+                    filename = "w_w_newoverlay";
+                    myBitmapGDI = new SKBitmap(204, 88);
+                    clearAllPixels();
+                }
             }
             gv.touchEnabled = true;
         }
@@ -636,9 +657,9 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
-            //items.Add("walls");
-            //items.Add("backdrops");
-            //items.Add("overlays");
+            items.Add("3Dwallset");
+            items.Add("3Dbackdrop");
+            items.Add("3Doverlay");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image type to open:");
@@ -664,15 +685,15 @@ namespace IBbasic
                 {
                     prefix = "t_";
                 }
-                else if (selected.Equals("walls"))
+                else if (selected.Equals("3Dwallset"))
                 {
                     prefix = "w_";
                 }
-                else if (selected.Equals("backdrops"))
+                else if (selected.Equals("3Dbackdrop"))
                 {
                     prefix = "bd_";
                 }
-                else if (selected.Equals("overlays"))
+                else if (selected.Equals("3Doverlay"))
                 {
                     prefix = "o_";
                 }
@@ -987,6 +1008,22 @@ namespace IBbasic
                 canvasScaler = 5;
                 zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
             }
+            else if ((myBitmapGDI.Width == 88) && (myBitmapGDI.Height == 88)) //backdrop
+            {
+                previewImageWidth = 88;
+                previewImageHeight = 88;
+                previewScaler = 1;
+                canvasScaler = 5;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+            }
+            else if ((myBitmapGDI.Width == 204) && (myBitmapGDI.Height == 88)) //wallset or overlay
+            {
+                previewImageWidth = 204;
+                previewImageHeight = 88;
+                previewScaler = 1;
+                canvasScaler = 5;
+                zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+            }
 
             //CANVAS
             string background = grass;
@@ -1259,6 +1296,28 @@ namespace IBbasic
                         {
                             previewImageWidth = artSquareSize * 2;
                             previewImageHeight = artSquareSize * 2;
+                            previewScaler = 1;
+                            canvasScaler = 5;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+                        else if ((myBitmapGDI.Width == 88) && (myBitmapGDI.Height == 88)) //backdrop
+                        {
+                            previewImageWidth = 88;
+                            previewImageHeight = 88;
+                            previewScaler = 1;
+                            canvasScaler = 5;
+                            zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
+                            pixelSize = (drawingSurfaceSize / zoomBoxSize) * artScaler;
+                            gridX = (((float)(eX - mapStartLocXinPixels) / (float)pixelSize) + (panSquareX / previewScaler));
+                            gridY = (((float)eY / (float)pixelSize) + (panSquareY / previewScaler));
+                        }
+                        else if ((myBitmapGDI.Width == 204) && (myBitmapGDI.Height == 88)) //wallset or overlay
+                        {
+                            previewImageWidth = 204;
+                            previewImageHeight = 88;
                             previewScaler = 1;
                             canvasScaler = 5;
                             zoomBoxSize = drawingPreviewSize / (zoomScaler * previewScaler);
@@ -1582,7 +1641,7 @@ namespace IBbasic
         public IbPalette(GameView g)
         {
             gv = g;
-            bmpGDI = gv.cc.LoadBitmap("color_palette2");
+            bmpGDI = gv.cc.LoadBitmap("color_palette");
         }
 
         public bool getImpact(int x, int y)
