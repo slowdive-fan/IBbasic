@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0.19" package="com.iceblinkengine.ibb.ibbasic" android:installLocation="auto" android:versionCode="19">
-	<uses-sdk android:minSdkVersion="18" android:targetSdkVersion="27" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0.21" package="com.iceblinkengine.ibb.ibbasic" android:installLocation="auto" android:versionCode="21">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<application android:label="IBbasic.Android"></application>

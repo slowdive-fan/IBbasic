@@ -35,6 +35,7 @@ namespace IBbasic
     {
         public bool GoogleAnalyticsOn = true;
         public string UserID = "none";
+        public string UserName = "";
         public int CustomWindowSizeWidth = 1024;
         public int CustomWindowSizeHeight = 768;
 

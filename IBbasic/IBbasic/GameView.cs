@@ -15,7 +15,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.17";
+        public string versionNum = "1.0.21";
         public int numOfTrackerEventHitsInThisSession = 0;
         public ContentPage cp;
         public SKCanvas canvas;
@@ -1755,12 +1755,12 @@ namespace IBbasic
                 }
             }
             string totals = "HP" + totalHP + ":SP" + totalSP + ":XP" + totalXP + ":LVL" + totalLVL + ":PS" + partySize;
-            string totAction = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + ":" + realtime + ":" + mod.WorldTime.ToString("D8") + ":" + totals + ":" + action;
+            string totAction = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + "_" + IBprefs.UserName + ":" + realtime + ":" + mod.WorldTime.ToString("D8") + ":" + totals + ":" + action;
 
             try
             {
                 //Hearkenwold:Drin_586842:20170101123456:00027546:HP234:SP123:XP4567:LVL18:PS6::CONVO:guard
-                string category = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID;
+                string category = mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + "_" + IBprefs.UserName;
                 TrackAppEvent(category, totAction, label, mustSend);
             }
             catch (Exception e)
@@ -1771,7 +1771,7 @@ namespace IBbasic
         public void TrackerSendMilestoneEvent(string milestone)
         {
             //string mainPcName = GetMainPcName();
-            TrackerSendEvent("none", mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + "::" + milestone, false);
+            TrackerSendEvent("none", mod.moduleName + "(v" + mod.moduleVersion + ")" + ":(IBv" + versionNum + ")" + ":" + IBprefs.UserID + "_" + IBprefs.UserName + "::" + milestone, false);
             TrackerSendEventFullPartyInfo("PARTYINFO");
         }
         public void TrackerSendEventEncounter(string encounterName)

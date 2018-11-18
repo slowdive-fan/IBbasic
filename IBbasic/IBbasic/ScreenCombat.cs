@@ -594,9 +594,10 @@ namespace IBbasic
             if (tglHelp == null)
             {
                 tglHelp = new IbbToggle(gv);
+                tglHelp.toggleOn = false;
             }
             tglHelp.ImgOn = "tgl_help_on";
-            tglHelp.ImgOff = "tgl_help_on";
+            tglHelp.ImgOff = "tgl_help_off";
             tglHelp.X = togglePanelLocX + 6 * gv.uiSquareSize;
             tglHelp.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglHelp.Height = (int)(gv.ibbheight * gv.scaler);
@@ -5404,6 +5405,8 @@ namespace IBbasic
             btnMove.glowOn = false;
             btnAttack.glowOn = false;
 
+            gv.showTooltip = false;
+
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -5420,6 +5423,86 @@ namespace IBbasic
                         if (gv.messageBox.btnReturn.getImpact(x, y))
                         {
                             gv.messageBox.btnReturn.glowOn = true;
+                        }
+                        return;
+                    }
+
+                    if ((tglHelp.toggleOn) && (!gv.mod.debugMode))
+                    {
+                        if (btnSkipTurn.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Skip Turn</yl><br>Skip the current player character's turn. Also, when your PC has no moves or actions left, you will need to use this button.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnInventory.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Inventory Screen</yl><br>Takes you to the party inventory screen where you can view your items, drop an item, use an item such as healing potions, and more.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnUseTrait.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Use a Trait</yl><br>Allows the current PC to use a trait if they have any.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnCast.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Cast a Spell</yl><br>Allows the current PC to cast a spell if they have any.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnMove.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Move Mode</yl><br>Move mode is used to move the current PC. If you move and bump into an enemy, this will trigger attacking them.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnAttack.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Attack Mode</yl><br>Attack mode is used for targeting enemies with ranged weapons.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglHP.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Show/Hide Hit Points</yl><br>Toggles on/off showing hit points on the PCs and enemies. The HP displayed will be green when near max, yellow when in the middle, and red when low.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglGrid.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggle Grid</yl><br>Turns the grid on and off.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglSP.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Show/Hide Spell/Stamina Points</yl><br>Toggles on/off showing spell/stamina points on the PCs and enemies.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglMoveOrder.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Show/Hide Move Order</yl><br>Toggles on/off showing the order in which each PC or enemy performs their turn.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglSpeed.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Animation Speed</yl><br>Adjusts the speed of animation and enemy actions.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglPortraits.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Player Tokens</yl><br>Shows or hides the player tokens at the top of the screen. Tapping on a player token will take you to the character screen where you can switch weapons.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglSettings.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggles</yl><br>Shows or hides the toggle buttons at the bottom of the screen.");
+                            gv.showTooltip = true;
+                        }
+                        else if ((tglHelp.getImpact(x, y)) && (!gv.mod.debugMode))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Help</yl><br>When this button is toggled on, you will see tooltips when you tap on or hover over any button. When in the help mode, you can not do any other action until you turn help mode off.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnArrowSelect.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Select</yl><br>This button is used for doing an action at the current location of the selection targeting box. You can also just tap on the map at the location of the targeting box to do the same thing.");
+                            gv.showTooltip = true;
                         }
                         return;
                     }
@@ -5619,7 +5702,16 @@ namespace IBbasic
                         }
                         return;
                     }
-                                        
+
+                    if ((tglHelp.toggleOn) && (!gv.mod.debugMode))
+                    {
+                        if (tglHelp.getImpact(x, y))
+                        {
+                            tglHelp.toggleOn = !tglHelp.toggleOn;
+                        }
+                        return;
+                    }
+
                     //NEW SYSTEM FOR GLOW
                     //combatUiLayout.setHover(-1, -1);
 
@@ -5701,8 +5793,8 @@ namespace IBbasic
                         return;
                     }
                     if ((tglHelp.getImpact(x, y)) && (!gv.mod.debugMode))
-                    {                        
-                        gv.cc.tutorialMessageCombat(true);
+                    {
+                        tglHelp.toggleOn = !tglHelp.toggleOn;
                         return;
                     }
                     if ((tglKill.getImpact(x, y)) && (gv.mod.debugMode))

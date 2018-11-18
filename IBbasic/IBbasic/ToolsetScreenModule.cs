@@ -19,6 +19,8 @@ namespace IBbasic
         private IbbToggle btnStartingArea = null;
         private IbbToggle btnStartingLocX = null;
         private IbbToggle btnStartingLocY = null;
+        private IbbToggle btnMaxPartySize = null;
+        private IbbToggle btnMaxPlayerMadePCs = null;
         private IbbToggle btnStartingGold = null;
         private IbbButton btnDataChk = null;
 
@@ -115,6 +117,17 @@ namespace IBbasic
             btnStartingLocX.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocX.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
+            if (btnMaxPartySize == null)
+            {
+                btnMaxPartySize = new IbbToggle(gv);
+            }
+            btnMaxPartySize.ImgOn = "mtgl_edit_btn";
+            btnMaxPartySize.ImgOff = "mtgl_edit_btn";
+            btnMaxPartySize.X = 5 * gv.uiSquareSize;
+            btnMaxPartySize.Y = (int)(4 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
+            btnMaxPartySize.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMaxPartySize.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
             if (btnStartingLocY == null)
             {
                 btnStartingLocY = new IbbToggle(gv);
@@ -125,6 +138,17 @@ namespace IBbasic
             btnStartingLocY.Y = (int)(5 * gv.uiSquareSize + gv.scaler);
             btnStartingLocY.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingLocY.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnMaxPlayerMadePCs == null)
+            {
+                btnMaxPlayerMadePCs = new IbbToggle(gv);
+            }
+            btnMaxPlayerMadePCs.ImgOn = "mtgl_edit_btn";
+            btnMaxPlayerMadePCs.ImgOff = "mtgl_edit_btn";
+            btnMaxPlayerMadePCs.X = 5 * gv.uiSquareSize;
+            btnMaxPlayerMadePCs.Y = (int)(5 * gv.uiSquareSize + gv.scaler);
+            btnMaxPlayerMadePCs.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnMaxPlayerMadePCs.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
             if (btnStartingGold == null)
             {
@@ -211,8 +235,12 @@ namespace IBbasic
             gv.DrawText(" Starting Area: " + gv.mod.startingArea, btnStartingArea.X + btnStartingArea.Width + gv.scaler, btnStartingArea.Y + shiftForFont, "wh");
             btnStartingLocX.Draw();
             gv.DrawText(" Starting Location X: " + gv.mod.startingPlayerPositionX, btnStartingLocX.X + btnStartingLocX.Width + gv.scaler, btnStartingLocX.Y + shiftForFont, "wh");
+            btnMaxPartySize.Draw();
+            gv.DrawText(" Max Party Size: " + gv.mod.MaxPartySize, btnMaxPartySize.X + btnMaxPartySize.Width + gv.scaler, btnMaxPartySize.Y + shiftForFont, "wh");
             btnStartingLocY.Draw();
             gv.DrawText(" Starting Location Y: " + gv.mod.startingPlayerPositionY, btnStartingLocY.X + btnStartingLocY.Width + gv.scaler, btnStartingLocY.Y + shiftForFont, "wh");
+            btnMaxPlayerMadePCs.Draw();
+            gv.DrawText(" Max Player Made PCs: " + gv.mod.numberOfPlayerMadePcsAllowed, btnMaxPlayerMadePCs.X + btnMaxPlayerMadePCs.Width + gv.scaler, btnMaxPlayerMadePCs.Y + shiftForFont, "wh");
             btnStartingGold.Draw();
             gv.DrawText(" Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
             btnModuleTitleImage.Draw();
@@ -311,6 +339,14 @@ namespace IBbasic
                     else if (btnStartingLocY.getImpact(x, y))
                     {
                         changeStartingLocationY();
+                    }
+                    else if (btnMaxPartySize.getImpact(x, y))
+                    {
+                        changeMaxPartySize();
+                    }
+                    else if (btnMaxPlayerMadePCs.getImpact(x, y))
+                    {
+                        changeMaxPlayerMadePCs();
                     }
                     else if (btnStartingGold.getImpact(x, y))
                     {
@@ -498,6 +534,20 @@ namespace IBbasic
                     gv.mod.startingPlayerPositionY = itSel.numInput;
                 }
             }*/
+        }
+        public async void changeMaxPartySize()
+        {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the maximum number of PCs in the party. Must be between 1 and 6.", gv.mod.MaxPartySize);
+            gv.mod.MaxPartySize = myinput;
+            gv.touchEnabled = true;
+        }
+        public async void changeMaxPlayerMadePCs()
+        {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the maximum number of player made PCs allowed in the party. Must be between 0 and 6.", gv.mod.numberOfPlayerMadePcsAllowed);
+            gv.mod.numberOfPlayerMadePcsAllowed = myinput;
+            gv.touchEnabled = true;
         }
         public async void changeStartingGold()
         {

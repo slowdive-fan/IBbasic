@@ -569,9 +569,9 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
-            items.Add("3Dwallset");
+            //items.Add("3Dwallset");
             items.Add("3Dbackdrop");
-            items.Add("3Doverlay");
+            //items.Add("3Doverlay");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select a canvas size:");
@@ -657,9 +657,9 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
-            items.Add("3Dwallset");
+            //items.Add("3Dwallset");
             items.Add("3Dbackdrop");
-            items.Add("3Doverlay");
+            //items.Add("3Doverlay");
 
             gv.touchEnabled = false;
             string selected = await gv.ListViewPage(items, "Select an image type to open:");
@@ -1048,8 +1048,18 @@ namespace IBbasic
             if (tknWidth > drawingSurfaceSize * artScaler) { tknWidth = (int)(drawingSurfaceSize * artScaler); }
             if (tknHeight > drawingSurfaceSize * artScaler) { tknHeight = (int)(drawingSurfaceSize * artScaler); }
 
+            if (myBitmapGDI.Width == 204)
+            {
+                src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height);
+                if (zoomScaler > 1)
+                {
+                    src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
+                }
+                dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
+                gv.DrawBitmap(myBitmapGDI, src, dst);
+            }
             //if combat token, show idle or attack
-            if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))
+            else if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))
             {
 
 
@@ -1151,6 +1161,10 @@ namespace IBbasic
                 {
                     src = new IbRect(0, myBitmapGDI.Height / 2, myBitmapGDI.Width, myBitmapGDI.Height / 2);
                 }
+            }
+            if (myBitmapGDI.Width == 204)
+            {
+                src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height);
             }
             dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(previewImageWidth * artScaler * previewScaler), (int)(previewImageHeight * artScaler * previewScaler));
             gv.DrawBitmap(myBitmapGDI, src, dst);

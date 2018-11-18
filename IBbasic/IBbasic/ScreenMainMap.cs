@@ -70,6 +70,7 @@ namespace IBbasic
         public IbbToggle tglZoom = null;
         public IbbToggle tglDebugMode = null;
         public IbbToggle tglSound = null;
+        public IbbToggle tglHelp = null;
         //PORTRAITS PANEL
         public IbbPortrait btnPort0 = null;
         public IbbPortrait btnPort1 = null;
@@ -436,7 +437,7 @@ namespace IBbasic
         }
         public void createTogglesPanel()
         {
-            togglePanelLocX = (1 * gv.uiSquareSize);
+            togglePanelLocX = (1 * gv.uiSquareSize) + (0 * gv.uiSquareSize / 2);
             if (showTogglePanel)
             {
                 togglePanelLocY = (6 * gv.uiSquareSize);
@@ -535,7 +536,19 @@ namespace IBbasic
             tglDebugMode.Y = togglePanelLocY + 0 * gv.uiSquareSize;
             tglDebugMode.Height = (int)(gv.ibbheight * gv.scaler);
             tglDebugMode.Width = (int)(gv.ibbwidthR * gv.scaler);
-                       
+
+            if (tglHelp == null)
+            {
+                tglHelp = new IbbToggle(gv);
+                tglHelp.toggleOn = false;
+            }
+            tglHelp.ImgOn = "tgl_help_on";
+            tglHelp.ImgOff = "tgl_help_off";
+            tglHelp.X = togglePanelLocX + 7 * gv.uiSquareSize;
+            tglHelp.Y = togglePanelLocY + 0 * gv.uiSquareSize;
+            tglHelp.Height = (int)(gv.ibbheight * gv.scaler);
+            tglHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
+
             /*
             //create buttons panel
             IB2Panel newPanel = new IB2Panel(gv);
@@ -3118,6 +3131,7 @@ namespace IBbasic
             tglDebugMode.Draw();
             tglZoom.Draw();
             tglSound.Draw();
+            tglHelp.Draw();
 
             createPortraitsPanel();
             //SET PORTRAITS
@@ -3314,6 +3328,8 @@ namespace IBbasic
             btnCastOnMainMap.glowOn = false;
             btnSave.glowOn = false;
 
+            gv.showTooltip = false;
+
             if (gv.showMessageBox)
             {
                 gv.messageBox.btnReturn.glowOn = false;
@@ -3330,6 +3346,91 @@ namespace IBbasic
                         if (gv.messageBox.btnReturn.getImpact(x, y))
                         {
                             gv.messageBox.btnReturn.glowOn = true;
+                        }
+                        return;
+                    }
+
+                    if (tglHelp.toggleOn)
+                    {
+                        if (btnParty.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Party Screen</yl><br>Takes you to the party screen where you can equip items, level up characters, view character stats, and more.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnInventory.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Inventory Screen</yl><br>Takes you to the party inventory screen where you can view your items, drop an item, use and item such as healing potions, and more.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnJournal.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Journal Screen</yl><br>Takes you to the journal screen where you can see what quests are on going or completed.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnCastOnMainMap.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Cast a Spell</yl><br>Allows a character in the party to cast a spell such as healing outside of combat.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnSave.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Save Game</yl><br>Allows you to save your current game and also has an option to exit the adventure and return to the main splash screen.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglMiniMap.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggle MiniMap</yl><br>Turns the mini-map on and off.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglFullParty.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Party Tokens</yl><br>Toggles between showing all of your party character's tokens on the map or onlly showing the currently selecter party leader token.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglGrid.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggle Grid</yl><br>Turns the grid on and off for top-down type maps. Does nothing in 3d map areas.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglClock.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggle Clock</yl><br>Turns the text that shows the time on and off.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglZoom.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggle Zoom</yl><br>This button switches the scaling of the entire interface to be either a whole number or a decimal value. Whole number scaling does not result in any weird pixel scaling, but the interface may not fill the entire screen of your device.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglDebugMode.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Debug Mode</yl><br>Turns debug mode on and off. Debug mode will show useful information to builders while they are testing their modules. It also gives you a 'WIN' button in combat to automatically win the encounter for faster testing purposes.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglPortraits.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Player Tokens</yl><br>Shows or hides the player tokens at the top of the screen. Tapping on a player token will set that player as the current party leader.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglSettings.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Toggles</yl><br>Shows or hides the toggle buttons at the bottom of the screen.");
+                            gv.showTooltip = true;
+                        }
+                        else if (btnArrowWait.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Wait</yl><br>This button will make the time move forward by one turn while staying in the same location.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglSound.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Sound</yl><br>Turns music (if the module has any) and other sounds on or off.");
+                            gv.showTooltip = true;
+                        }
+                        else if (tglHelp.getImpact(x, y))
+                        {
+                            gv.tooltip.AddHtmlTextToLog("<yl>Help</yl><br>When this button is toggled on, you will see tooltips when you tap on or hover over any button. When in the help mode, you can not do any other action until you turn help mode off.");
+                            gv.showTooltip = true;
                         }
                         return;
                     }
@@ -3374,10 +3475,6 @@ namespace IBbasic
                     {
                         btnJournal.glowOn = true;
                     }
-                    /*else if (btnUseTraitOnMainMap.getImpact(x, y))
-                    {
-                        btnUseTraitOnMainMap.glowOn = true;
-                    }*/
                     else if (btnCastOnMainMap.getImpact(x, y))
                     {
                         btnCastOnMainMap.glowOn = true;
@@ -3466,12 +3563,21 @@ namespace IBbasic
                         return;
                     }
 
+                    if (tglHelp.toggleOn)
+                    {
+                        if (tglHelp.getImpact(x, y))
+                        {
+                            tglHelp.toggleOn = !tglHelp.toggleOn;
+                        }
+                        return;
+                    }
+
                     //NEW SYSTEM FOR GLOW
                     //mainUiLayout.setHover(-1, -1);
 
                     //NEW SYSTEM
                     //string rtn = mainUiLayout.getImpact(x, y);
-                    
+
                     if (tglGrid.getImpact(x, y))
                     {
                         if (tglGrid.toggleOn)
@@ -3991,6 +4097,10 @@ namespace IBbasic
                         tglSettings.toggleOn = !tglSettings.toggleOn;
                         showTogglePanel = !showTogglePanel;
                         gv.toggleSettings.showTogglePanel = showTogglePanel;                        
+                    }
+                    else if (tglHelp.getImpact(x, y))
+                    {
+                        tglHelp.toggleOn = !tglHelp.toggleOn;
                     }
                     else if (tglPortraits.getImpact(x, y))
                     {
