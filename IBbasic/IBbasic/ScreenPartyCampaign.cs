@@ -244,6 +244,15 @@ namespace IBbasic
                 gv.mod.partyName = toReturn.partyName;
                 gv.mod.partyNotes = toReturn.partyNotes;
                 gv.mod.partyFilename = toReturn.partyFilename;
+                //first remove all down to reserve list
+                foreach (Player ply in gv.mod.playerList)
+                {
+                    Player copyPC = ply.DeepCopy();
+                    copyPC.playerClass = gv.cc.getPlayerClass(copyPC.classTag);
+                    copyPC.race = gv.cc.getRace(copyPC.raceTag);
+                    gv.screenPartyBuild.pcList.Add(copyPC);
+                }
+                //copy all to playerList
                 gv.mod.playerList = toReturn.playerList;
                 //add campaign items to gv.cc.allitemslist
                 foreach (Item it in toReturn.partyNonStandardItemsList)

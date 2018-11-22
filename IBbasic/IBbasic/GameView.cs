@@ -1469,9 +1469,12 @@ namespace IBbasic
 
             var lblTitle = new Label { Text = "Text Entry", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
             var lblMessage = new Label { Text = headerText };
-            var txtInput = new Editor { Text = existingTextInputValue };
+            var txtInput = new Editor { Text = existingTextInputValue, AutoSize = EditorAutoSizeOption.TextChanges };
+            //var txtInput = new Entry { Text = existingTextInputValue };
+
             //txtInput.HorizontalOptions = LayoutOptions.FillAndExpand;
-            txtInput.VerticalOptions = LayoutOptions.FillAndExpand;
+            //txtInput.VerticalOptions = LayoutOptions.FillAndExpand;
+            //txtInput.On<Android>().SetImeOptions(ImeFlags.None);
 
             var btnOk = new Button
             {
@@ -1481,6 +1484,8 @@ namespace IBbasic
             };
             btnOk.Clicked += async (s, e) =>
             {
+                //Small delay
+                await Task.Delay(100);
                 // close page
                 var result = txtInput.Text;
                 await cp.Navigation.PopModalAsync();
@@ -1496,6 +1501,8 @@ namespace IBbasic
             };
             btnCancel.Clicked += async (s, e) =>
             {
+                //Small delay
+                await Task.Delay(100);
                 // close page
                 await cp.Navigation.PopModalAsync();
                 // pass empty result
@@ -1526,7 +1533,8 @@ namespace IBbasic
 
             // code is waiting her, until result is passed with tcs.SetResult() in btn-Clicked
             // then proc returns the result
-            return tcs.Task;
+
+            return tcs.Task;           
         }
         public Task<int> NumInputBox(string headerText, int existingIntValue)
         {
