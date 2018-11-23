@@ -71,7 +71,7 @@ namespace IBbasic
             if (btnZip == null)
             {
                 btnZip = new IbbButton(gv, 1.0f);
-                btnZip.Text = "ZIP A MODULE";
+                btnZip.Text = "PACK A MODULE";
                 btnZip.Img = "btn_large";
                 btnZip.Glow = "btn_large_glow";
                 btnZip.X = wideX;
@@ -82,7 +82,7 @@ namespace IBbasic
             if (btnUnZip == null)
             {
                 btnUnZip = new IbbButton(gv, 1.0f);
-                btnUnZip.Text = "UNZIP A MODULE";
+                btnUnZip.Text = "UNPACK A MODULE";
                 btnUnZip.Img = "btn_large";
                 btnUnZip.Glow = "btn_large_glow";
                 btnUnZip.X = wideX;
