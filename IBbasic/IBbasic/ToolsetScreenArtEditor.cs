@@ -699,16 +699,27 @@ namespace IBbasic
                 }
 
                 items = GetAllImagesList(prefix);
-                items.Insert(0, "none");
+                gv.screenType = "tokenSelector";
+                gv.screenTokenSelector.resetTokenSelector("tsArtEditor", null);
+                gv.screenTokenSelector.playerTokenList = items;
+                /*items.Insert(0, "none");
                 selected = await gv.ListViewPage(items, "Select an image to open:");
                 if (selected != "none")
                 {
                     filename = selected;
                     myBitmapGDI = gv.cc.LoadBitmap(selected);
                     //updateBitmapDX();
-                }
+                }*/
             }
             gv.touchEnabled = true;
+        }
+        public void OpenSelectedImage(string selected)
+        {
+            if (selected != "none")
+            {
+                filename = selected;
+                myBitmapGDI = gv.cc.LoadBitmap(selected);
+            }
         }
         public List<string> GetAllImagesList(string prefix)
         {

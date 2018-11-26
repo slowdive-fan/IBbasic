@@ -55,6 +55,10 @@ namespace IBbasic
             {
                 LoadPropTokenList();
             }
+            else if (callingScreen.Equals("tsArtEditor"))
+            {
+                //LoadPropTokenList();
+            }
         }
 
         public void LoadPlayerTokenList()
@@ -408,6 +412,11 @@ namespace IBbasic
                                 gv.mod.currentConvo.NpcPortraitBitmap = playerTokenList[GetIndex()];
                                 gv.screenType = "tsConvoEditor";
                             }
+                            else if (callingScreen.Equals("tsArtEditor"))
+                            {
+                                gv.screenType = "tsArtEditor";
+                                gv.tsArtEditor.OpenSelectedImage(playerTokenList[GetIndex()]);
+                            }
                             doCleanUp();
                         }
 					    tknSlotIndex = j;
@@ -460,6 +469,11 @@ namespace IBbasic
                         gv.mod.currentConvo.NpcPortraitBitmap = playerTokenList[GetIndex()];
                         gv.screenType = "tsConvoEditor";
                     }
+                    else if (callingScreen.Equals("tsArtEditor"))
+                    {
+                        gv.screenType = "tsArtEditor";
+                        gv.tsArtEditor.OpenSelectedImage(playerTokenList[GetIndex()]);
+                    }
                     doCleanUp();						
 			    }
                 else if (btnExit.getImpact(x, y))
@@ -484,6 +498,10 @@ namespace IBbasic
                     else if (callingScreen.Equals("tsConvoEditor"))
                     {
                         gv.screenType = "tsConvoEditor";
+                    }
+                    else if (callingScreen.Equals("tsArtEditor"))
+                    {
+                        gv.screenType = "tsArtEditor";
                     }
                     doCleanUp();
                 }                
