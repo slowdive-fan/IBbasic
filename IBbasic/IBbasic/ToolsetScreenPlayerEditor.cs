@@ -1295,7 +1295,7 @@ namespace IBbasic
         //PLAYER PANEL
         public void addPlayer()
         {
-            if (playerListIndex < gv.mod.companionPlayerList.Count)
+            if (playerListIndex <= gv.mod.companionPlayerList.Count)
             {
                 Player newPc = new Player();
                 newPc.name = "NewPlayerName";

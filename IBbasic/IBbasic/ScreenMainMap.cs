@@ -2344,8 +2344,8 @@ namespace IBbasic
         {
             if (showMiniMap)
             {
-                int shiftY = (int)((5 * gv.scaler));
-                int shiftX = (int)((8 * gv.uiSquareSize) - (12 * gv.scaler));
+                int shiftY = (int)((5 * (int)gv.scaler));
+                int shiftX = (int)((8 * gv.uiSquareSize) - (12 * (int)gv.scaler));
 
                 int mapSquareSizeScaler = 1;
 
@@ -2373,10 +2373,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer1Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
 
                         try
                         {
@@ -2398,10 +2398,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer2Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
 
                         try
                         {
@@ -2423,10 +2423,10 @@ namespace IBbasic
                     for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                     {
                         string tile = gv.mod.currentArea.Layer3Filename[y * gv.mod.currentArea.MapSizeX + x];
-                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                        int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                        int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
 
                         try
                         {
@@ -2450,10 +2450,10 @@ namespace IBbasic
                     {
                         for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                         {
-                            int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                            int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
                             src = new IbRect(0, 0, gv.cc.walkBlocked.Width, gv.cc.walkBlocked.Height);
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                             if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
@@ -2479,10 +2479,10 @@ namespace IBbasic
                     {
                         if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                         {
-                            int tlX = (int)(p.X * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int tlY = (int)(p.Y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                            int tlX = (int)(p.X * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int tlY = (int)(p.Y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
                             src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                             gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
@@ -2497,10 +2497,10 @@ namespace IBbasic
                     {
                         for (int y = 0; y <= gv.mod.currentArea.MapSizeY - 1; y++)
                         {
-                            int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                            int tlX = (int)(x * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int tlY = (int)(y * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brX = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                            int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
 
                             try
                             {
@@ -2517,10 +2517,10 @@ namespace IBbasic
                 }
 
                 //Draw Location Marker
-                int tlX2 = (int)(gv.mod.PlayerLocationX * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                int tlY2 = (int)(gv.mod.PlayerLocationY * gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                int brX2 = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
-                int brY2 = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler);
+                int tlX2 = (int)(gv.mod.PlayerLocationX * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                int tlY2 = (int)(gv.mod.PlayerLocationY * gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                int brX2 = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
+                int brY2 = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
                 if (gv.mod.PlayerFacingDirection == 0) //NORTH
                 {
                     try
@@ -2570,8 +2570,8 @@ namespace IBbasic
                 src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_minimap_frame").Width, gv.cc.GetFromBitmapList("ui_minimap_frame").Height);
                 int tlX1 = 0;
                 int tlY1 = 0;
-                int brX1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeX);
-                int brY1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * gv.scaler) * gv.mod.currentArea.MapSizeY);
+                int brX1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler) * gv.mod.currentArea.MapSizeX);
+                int brY1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler) * gv.mod.currentArea.MapSizeY);
                 dst = new IbRect(tlX1 + shiftX, tlY1 + shiftY, brX1, brY1);
                 gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_minimap_frame"), src, dst);
             }

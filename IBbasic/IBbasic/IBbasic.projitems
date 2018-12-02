@@ -1340,6 +1340,9 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rocka3.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rockb3.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_magentaback.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_swapcolor_off.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_swapcolor_on.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\btnusername.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_help_off.png" />
   </ItemGroup>

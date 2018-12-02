@@ -25,7 +25,7 @@ namespace IBbasic
         private IbbButton btnNews = null;
         private IbbButton btnTwitter = null;
         private IbbButton btnWebsite = null;
-        private IbbButton btnUserName = null;
+        //private IbbButton btnUserName = null;
         private IbbButton btnComment = null;
 
         //public IbbToggle tglGoogleAnalytics = null;
@@ -125,7 +125,7 @@ namespace IBbasic
             btnWebsite.Height = (int)(gv.ibbheight * gv.scaler);
             btnWebsite.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnUserName == null)
+            /*if (btnUserName == null)
             {
                 btnUserName = new IbbButton(gv, 0.8f);
             }
@@ -136,7 +136,7 @@ namespace IBbasic
             btnUserName.Y = 6 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
             btnUserName.Height = (int)(gv.ibbheight * gv.scaler);
             btnUserName.Width = (int)(gv.ibbwidthR * gv.scaler);
-
+            */
             if (btnComment == null)
             {
                 btnComment = new IbbButton(gv, 0.8f);
@@ -144,7 +144,7 @@ namespace IBbasic
             btnComment.Img = "btn_small";
             btnComment.Img2 = "btnconvo";
             btnComment.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
-            btnComment.X = 7 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnComment.X = 8 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
             btnComment.Y = 6 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
             btnComment.Height = (int)(gv.ibbheight * gv.scaler);
             btnComment.Width = (int)(gv.ibbwidthR * gv.scaler);
@@ -175,7 +175,7 @@ namespace IBbasic
             btnNews.Draw();
             btnTwitter.Draw();
             btnWebsite.Draw();
-            btnUserName.Draw();
+            //btnUserName.Draw();
             btnComment.Draw();
 
             //Draw IceBlink2RPG Engine Version Number
@@ -205,7 +205,7 @@ namespace IBbasic
             btnNews.glowOn = false;
             btnTwitter.glowOn = false;
             btnWebsite.glowOn = false;
-            btnUserName.glowOn = false;
+            //btnUserName.glowOn = false;
             btnComment.glowOn = false;
 
             if (gv.showMessageBox)
@@ -227,7 +227,7 @@ namespace IBbasic
                     btnNews.glowOn = false;
                     btnTwitter.glowOn = false;
                     btnWebsite.glowOn = false;
-                    btnUserName.glowOn = false;
+                    //btnUserName.glowOn = false;
                     btnComment.glowOn = false;
 
                     if (gv.showMessageBox)
@@ -331,11 +331,11 @@ namespace IBbasic
                             gv.TrackerSendEvent(":VISIT_WEBSITE:", "none", true);
                             Device.OpenUri(new Uri("https://iceblinkengine.com"));
                         }
-                        else if (btnUserName.getImpact(x, y))
+                        /*else if (btnUserName.getImpact(x, y))
                         {
                             gv.TrackerSendEvent(":CHANGE_USERNAME:", "none", true);
                             changeUserName();                           
-                        }
+                        }*/
                         else if (btnComment.getImpact(x, y))
                         {
                             gv.TrackerSendEvent(":COMMENT_PAGE:", "none", true);
@@ -387,10 +387,10 @@ namespace IBbasic
                         {
                             btnWebsite.glowOn = true;
                         }
-                        else if (btnUserName.getImpact(x, y))
+                        /*else if (btnUserName.getImpact(x, y))
                         {
                             btnUserName.glowOn = true;
-                        }
+                        }*/
                         else if (btnComment.getImpact(x, y))
                         {
                             btnComment.glowOn = true;

@@ -18,11 +18,12 @@ namespace IBbasic
         public string button = "btn_small";
         public string slot = "item_slot";
         public string grass = "t_f_grass";
+        public string magenta = "ui_magentaback";
         public IbbButton btnNew = null;
         public IbbButton btnBucketFill = null;
         public IbbButton btnSwitchPalette = null;
         public IbbButton btnTransform = null;
-        public IbbButton btnAlphaAdjust = null;
+        public IbbToggle tglSwapColor = null;
         public IbbButton btnEraser = null;
         public IbbButton btnCanvasBackground = null;
         public IbbButton btnPreviewBackground = null;
@@ -37,6 +38,7 @@ namespace IBbasic
         public bool isIdleLayerShown = true;
         //public bool showLayers = true;
         public bool getColorMode = false;
+        public List<Coordinate> swapColorCoorList = new List<Coordinate>();
         public List<string> colorPaletteList = new List<string>();
         public int colorPaletteListIndex = 0;
         public int previewBackIndex = 0;
@@ -73,8 +75,8 @@ namespace IBbasic
         public void loadColorPaletteList()
         {
             colorPaletteList.Clear();
-            colorPaletteList.Add("color_palette");
             colorPaletteList.Add("color_palette2");
+            colorPaletteList.Add("color_palette");
             //USER SPECIFIC
             List<string> files = gv.GetAllFilesWithExtensionFromUserFolder("\\user", ".png");
             foreach (string f in files)
@@ -173,18 +175,17 @@ namespace IBbasic
             btnRedo.Height = (int)(gv.ibbheight * gv.scaler);
             btnRedo.Width = (int)(gv.ibbwidthR * gv.scaler);
 
-            if (btnAlphaAdjust == null)
+            if (tglSwapColor == null)
             {
-                btnAlphaAdjust = new IbbButton(gv, 1.0f);
+                tglSwapColor = new IbbToggle(gv);
+                tglSwapColor.toggleOn = false;
             }
-            btnAlphaAdjust.Img = "btn_small";
-            btnAlphaAdjust.Img2 = "btnalphaset";
-            btnAlphaAdjust.Glow = "btn_small_glow";
-            //btnAlphaAdjust.Text = "ALPHASET";
-            btnAlphaAdjust.X = 0 * gv.uiSquareSize;
-            btnAlphaAdjust.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
-            btnAlphaAdjust.Height = (int)(gv.ibbheight * gv.scaler);
-            btnAlphaAdjust.Width = (int)(gv.ibbwidthR * gv.scaler);
+            tglSwapColor.ImgOn = "tgl_swapcolor_on";
+            tglSwapColor.ImgOff = "tgl_swapcolor_off";
+            tglSwapColor.X = 0 * gv.uiSquareSize;
+            tglSwapColor.Y = 4 * gv.uiSquareSize + (int)(gv.scaler);
+            tglSwapColor.Height = (int)(gv.ibbheight * gv.scaler);
+            tglSwapColor.Width = (int)(gv.ibbwidthR * gv.scaler);
 
             if (btnPreviewBackground == null)
             {
@@ -569,6 +570,7 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
+            items.Add("Player Tokens");
             //items.Add("3Dwallset");
             items.Add("3Dbackdrop");
             //items.Add("3Doverlay");
@@ -586,6 +588,12 @@ namespace IBbasic
                 else if (selected.Equals("token_regular"))
                 {
                     filename = "tkn_newdrawing";
+                    myBitmapGDI = new SKBitmap(48, 96);
+                    clearAllPixels();
+                }
+                else if (selected.Equals("Player Tokens"))
+                {
+                    filename = "pc_newdrawing";
                     myBitmapGDI = new SKBitmap(48, 96);
                     clearAllPixels();
                 }
@@ -648,6 +656,7 @@ namespace IBbasic
         }
         public async void doOpenDialog()
         {
+            gv.cc.commonBitmapList.Clear();
             string prefix = "it_";
             //choose type of file to load
             List<string> items = new List<string>();
@@ -657,6 +666,7 @@ namespace IBbasic
             items.Add("prop");
             items.Add("ui");
             items.Add("tiles");
+            items.Add("Player Tokens");
             //items.Add("3Dwallset");
             items.Add("3Dbackdrop");
             //items.Add("3Doverlay");
@@ -697,6 +707,10 @@ namespace IBbasic
                 {
                     prefix = "o_";
                 }
+                else if (selected.Equals("Player Tokens"))
+                {
+                    prefix = "pc_";
+                }
 
                 items = GetAllImagesList(prefix);
                 gv.screenType = "tokenSelector";
@@ -733,6 +747,10 @@ namespace IBbasic
             else if (prefix.Equals("ui_"))
             {
                 files = gv.GetAllFilesWithExtensionFromBothFolders("\\ui", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
+            }
+            else if (prefix.Equals("pc_"))
+            {
+                files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\user", ".png");
             }
             else if ((prefix.Equals("bd_")) || (prefix.Equals("o_")) || (prefix.Equals("t_")) || (prefix.Equals("w_")))
             {
@@ -777,10 +795,20 @@ namespace IBbasic
             try
             {
                 {
+                    if (filename.StartsWith("pc_"))
+                    {
+                        gv.SaveImage("\\user\\" + filename + ".png", myBitmapGDI);
+                        gv.sf.MessageBoxHtml("file saved as: " + filename + ".png" + " in the 'user' directory.");
+                    }
+                    else
+                    {
+                        gv.SaveImage("\\modules\\" + gv.mod.moduleName + "\\graphics\\" + filename + ".png", myBitmapGDI);
+                        gv.sf.MessageBoxHtml("file saved as: " + filename + ".png" + " in your module's 'graphics' folder.");
+                    }
                     //gv.cc.createDirectory(gv.mainDirectory + "//modules//" + gv.mod.moduleName + "//graphics");
                     //myBitmapGDI.Save(gv.mainDirectory + "//modules//" + gv.mod.moduleName + "//graphics//" + filename + ".png", System.Drawing.Imaging.ImageFormat.Png);
-                    gv.SaveImage("\\modules\\" + gv.mod.moduleName + "\\graphics\\" + filename + ".png", myBitmapGDI);
-                    gv.sf.MessageBoxHtml("file saved as: " + filename + ".png");
+                    //gv.SaveImage("\\modules\\" + gv.mod.moduleName + "\\graphics\\" + filename + ".png", myBitmapGDI);
+                    //gv.sf.MessageBoxHtml("file saved as: " + filename + ".png");
                 }
             }
             catch (Exception ex)
@@ -1050,6 +1078,11 @@ namespace IBbasic
             {
                 background = button;
             }
+            else if (canvasBackIndex == 3)
+            {
+                background = magenta;
+            }
+
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
             dst = new IbRect(mapStartLocXinPixels, 0, (int)(drawingSurfaceSize * artScaler), (int)(drawingSurfaceSize * artScaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
@@ -1109,7 +1142,7 @@ namespace IBbasic
             }
 
             //DRAW GRID
-            src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("grid_black").Width, gv.cc.GetFromTileBitmapList("grid_black").Height);
+            src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             float pixelSize = (drawingSurfaceSize * artScaler * pencilSize / zoomBoxSize);
             if ((myBitmapGDI.Width == 48) && (myBitmapGDI.Height == 192)) //tall creature
             {
@@ -1132,6 +1165,25 @@ namespace IBbasic
             for (int y = 0; y < myBitmapGDI.Width; y++)
             {
                 gv.DrawLine(mapStartLocXinPixels + 0, (int)(y * pixelSize), mapStartLocXinPixels + (int)(myBitmapGDI.Width * pixelSize / pencilSize), (int)(y * pixelSize), "black", 1);
+            }
+
+            //DRAW SWAP COLOR LIST
+            if (swapColorCoorList.Count > 0)
+            {
+                for (int x = 0; x < myBitmapGDI.Width; x++)
+                {
+                    for (int y = 0; y < myBitmapGDI.Height; y++)
+                    {
+                        foreach (Coordinate cr in swapColorCoorList)
+                        {
+                            if ((cr.X == x) && (cr.Y == y))
+                            {
+                                dst = new IbRect(mapStartLocXinPixels + (int)(x * pixelSize / pencilSize), (int)(y * pixelSize / pencilSize), (int)(pixelSize / pencilSize), (int)(pixelSize / pencilSize));
+                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
+                            }
+                        }
+                    }
+                }
             }
 
             //draw border
@@ -1158,6 +1210,11 @@ namespace IBbasic
             {
                 background = button;
             }
+            else if (previewBackIndex == 3)
+            {
+                background = magenta;
+            }
+
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
             dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(drawingPreviewSize * artScaler), (int)(drawingPreviewSize * artScaler));
             gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
@@ -1208,7 +1265,7 @@ namespace IBbasic
             btnTransform.Draw();
             btnToggleLayer.Draw();
             tglPencil.Draw();
-            btnAlphaAdjust.Draw();
+            tglSwapColor.Draw();
             btnEraser.Draw();
             btnGetColor.Draw();
             btnCanvasBackground.Draw();
@@ -1366,81 +1423,80 @@ namespace IBbasic
                             if (panSquareY < 0) { panSquareY = 0; }
                             if (panSquareY > (int)(previewImageHeight * previewScaler - (zoomBoxSize * previewScaler))) { panSquareY = (int)(previewImageHeight * previewScaler - (zoomBoxSize * previewScaler)); }
                         }
-                        if (getColorMode)
+
+                    if (tglSwapColor.toggleOn)
+                    {
+                        if (tapInMapViewport(x, y))
                         {
-                            //check to see if in drawing area first
-                            if (tapInMapViewport(x, y))
+
+                        }
+                        else if (palette.getImpact(x, y))
+                        {
+                            palette.getColorClicked(x, y);
+                            selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                            //updateSelectedColorBitmapDX();
+                            foreach (Coordinate crd in swapColorCoorList)
                             {
-                                //check to see if combat token
-                                if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96)) //combat token so get color from active layer
-                                {
-                                    if (isIdleLayerShown) //get color from idle layer
-                                    {
-                                    currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY));
-                                    selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
-                                        //updateSelectedColorBitmapDX();
-                                    }
-                                    else //get color from attack layer
-                                    {
-                                    currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY) + myBitmapGDI.Height / 2);
-                                    selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
-                                        //updateSelectedColorBitmapDX();
-                                    }
-                                }
-                                else //not a combat token
+                                myBitmapGDI.SetPixel(crd.X, crd.Y, currentColor);
+                            }
+                            //updateBitmapDX();
+                            //myBitmapDX = gv.cc.ConvertGDIBitmapToD2D(myBitmapGDI);
+                        }
+                    }
+                    else if (getColorMode)
+                    {
+                        //check to see if in drawing area first
+                        if (tapInMapViewport(x, y))
+                        {
+                            //check to see if combat token
+                            if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96)) //combat token so get color from active layer
+                            {
+                                if (isIdleLayerShown) //get color from idle layer
                                 {
                                 currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY));
                                 selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
                                     //updateSelectedColorBitmapDX();
                                 }
+                                else //get color from attack layer
+                                {
+                                currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY) + myBitmapGDI.Height / 2);
+                                selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                                    //updateSelectedColorBitmapDX();
+                                }
+                            }
+                            else //not a combat token
+                            {
+                            currentColor = myBitmapGDI.GetPixel((int)(gridX), (int)(gridY));
+                            selectedColorBitmapGDI.SetPixel(0, 0, currentColor);
+                                //updateSelectedColorBitmapDX();
                             }
                         }
-                        else //drawing mode
+                    }
+                    else //drawing mode
+                    {
+                        //check to see if in drawing area first
+                        if (tapInMapViewport(x, y))
                         {
-                            //check to see if in drawing area first
-                            if (tapInMapViewport(x, y))
+                            if (!continuousDrawMode)
                             {
-                                if (!continuousDrawMode)
-                                {
-                                    pushToUndoStack();
-                                    continuousDrawMode = true;
-                                }
+                                pushToUndoStack();
+                                continuousDrawMode = true;
                             }
-                            if (tapInMapViewport(x, y))
+                        }
+                        if (tapInMapViewport(x, y))
+                        {
+                            int pGridX = (int)(gridX);
+                            int pGridY = (int)(gridY);
+                            if (pencilSize == 2)
                             {
-                                int pGridX = (int)(gridX);
-                                int pGridY = (int)(gridY);
-                                if (pencilSize == 2)
-                                {
-                                    pGridX = (int)(gridX / 2);
-                                    pGridY = (int)(gridY / 2);
-                                    pGridX = pGridX * 2;
-                                    pGridY = pGridY * 2;
-                                }
-                                if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))//combat token so draw on active layer
-                                {
-                                    if (isIdleLayerShown) //draw on idle layer
-                                    {
-                                        myBitmapGDI.SetPixel(pGridX, pGridY, currentColor);
-                                        if (pencilSize == 2)
-                                        {
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
-                                        }
-                                    }
-                                    else //draw on attack layer
-                                    {
-                                        myBitmapGDI.SetPixel(pGridX, pGridY + myBitmapGDI.Height / 2, currentColor);
-                                        if (pencilSize == 2)
-                                        {
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + myBitmapGDI.Height / 2, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
-                                            myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
-                                        }
-                                    }
-                                }
-                                else //not combat token
+                                pGridX = (int)(gridX / 2);
+                                pGridY = (int)(gridY / 2);
+                                pGridX = pGridX * 2;
+                                pGridY = pGridY * 2;
+                            }
+                            if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))//combat token so draw on active layer
+                            {
+                                if (isIdleLayerShown) //draw on idle layer
                                 {
                                     myBitmapGDI.SetPixel(pGridX, pGridY, currentColor);
                                     if (pencilSize == 2)
@@ -1450,9 +1506,30 @@ namespace IBbasic
                                         myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
                                     }
                                 }
-                            //updateBitmapDX();
+                                else //draw on attack layer
+                                {
+                                    myBitmapGDI.SetPixel(pGridX, pGridY + myBitmapGDI.Height / 2, currentColor);
+                                    if (pencilSize == 2)
+                                    {
+                                        myBitmapGDI.SetPixel(pGridX + 1, pGridY + myBitmapGDI.Height / 2, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
+                                        myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1 + myBitmapGDI.Height / 2, currentColor);
+                                    }
+                                }
                             }
+                            else //not combat token
+                            {
+                                myBitmapGDI.SetPixel(pGridX, pGridY, currentColor);
+                                if (pencilSize == 2)
+                                {
+                                    myBitmapGDI.SetPixel(pGridX + 1, pGridY, currentColor);
+                                    myBitmapGDI.SetPixel(pGridX, pGridY + 1, currentColor);
+                                    myBitmapGDI.SetPixel(pGridX + 1, pGridY + 1, currentColor);
+                                }
+                            }
+                        //updateBitmapDX();
                         }
+                    }
                     //}
                     /*if (btnHelp.getImpact(x, y))
                     {
@@ -1524,10 +1601,29 @@ namespace IBbasic
                     {
                         doDiskUtilities();                        
                     }
-                    else if (btnAlphaAdjust.getImpact(x, y))
+                    else if (tglSwapColor.getImpact(x, y))
                     {
-                        pushToUndoStack();
-                        doAlphaAdjust();
+                        tglSwapColor.toggleOn = !tglSwapColor.toggleOn;
+                        if (tglSwapColor.toggleOn)
+                        {
+                            swapColorCoorList.Clear();
+                            for (int xx = 0; xx < myBitmapGDI.Width; xx++)
+                            {
+                                for (int yy = 0; yy < myBitmapGDI.Height; yy++)
+                                {
+                                    if (myBitmapGDI.GetPixel(xx, yy) == currentColor)
+                                    {
+                                        swapColorCoorList.Add(new Coordinate(xx, yy));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            swapColorCoorList.Clear();
+                        }
+                        //pushToUndoStack();
+                        //doAlphaAdjust();
                     }
                     else if (btnToggleLayer.getImpact(x, y))
                     {
@@ -1586,9 +1682,9 @@ namespace IBbasic
                     else if (btnCanvasBackground.getImpact(x, y))
                     {
                         canvasBackIndex++;
-                        if (canvasBackIndex > 2) { canvasBackIndex = 0; }
+                        if (canvasBackIndex > 3) { canvasBackIndex = 0; }
                         previewBackIndex++;
-                        if (previewBackIndex > 2) { previewBackIndex = 0; }
+                        if (previewBackIndex > 3) { previewBackIndex = 0; }
                     }
                     //else if (btnPreviewBackground.getImpact(x, y))
                     //{
@@ -1666,7 +1762,7 @@ namespace IBbasic
         public IbPalette(GameView g)
         {
             gv = g;
-            bmpGDI = gv.cc.LoadBitmap("color_palette");
+            bmpGDI = gv.cc.LoadBitmap("color_palette2");
         }
 
         public bool getImpact(int x, int y)

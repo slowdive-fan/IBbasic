@@ -1469,8 +1469,8 @@ namespace IBbasic
 
             var lblTitle = new Label { Text = "Text Entry", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
             var lblMessage = new Label { Text = headerText };
-            var txtInput = new Editor { Text = existingTextInputValue, AutoSize = EditorAutoSizeOption.TextChanges };
-            //var txtInput = new Entry { Text = existingTextInputValue };
+            //var txtInput = new Editor { Text = existingTextInputValue, AutoSize = EditorAutoSizeOption.TextChanges }; //multi-line
+            var txtInput = new Entry { Text = existingTextInputValue }; //single-line
 
             //txtInput.HorizontalOptions = LayoutOptions.FillAndExpand;
             //txtInput.VerticalOptions = LayoutOptions.FillAndExpand;

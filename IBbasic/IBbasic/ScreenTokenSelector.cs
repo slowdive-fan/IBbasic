@@ -313,10 +313,23 @@ namespace IBbasic
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
 		    btnPageIndex.Draw();
 		    btnTokensLeft.Draw();
-		    btnTokensRight.Draw();		
-		
-		    //DRAW ALL INVENTORY SLOTS		
-		    int cntSlot = 0;
+		    btnTokensRight.Draw();
+
+            //DRAW SELECTED ITEM NAME
+            if (playerTokenList.Count > 0)
+            {
+                int idx = GetIndex();
+                if (idx < playerTokenList.Count)
+                {
+                    if (callingScreen.StartsWith("ts"))
+                    {
+                        gv.DrawText(playerTokenList[GetIndex()], btnPageIndex.X, btnPageIndex.Y + btnPageIndex.Height + gv.fontHeight / 2, "wh");
+                    }
+                }
+            }
+
+            //DRAW ALL INVENTORY SLOTS		
+            int cntSlot = 0;
 		    foreach (IbbButton btn in btnTokenSlot)
 		    {
 			    if (cntSlot == tknSlotIndex) {btn.glowOn = true;}

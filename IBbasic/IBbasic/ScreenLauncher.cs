@@ -251,7 +251,7 @@ namespace IBbasic
             }
                 btnGetUpdates.Img = "btn_large";
                 btnGetUpdates.Glow = "btn_large_glow";
-                btnGetUpdates.Text = "GET UPDATES";
+                btnGetUpdates.Text = "GET MODULES";
                 btnGetUpdates.X = wideX;
                 btnGetUpdates.Y = (6 * gv.uiSquareSize) - (pH * 2);
                 btnGetUpdates.Height = (int)(gv.ibbheight * gv.scaler);
