@@ -87,6 +87,36 @@ namespace IBbasic
             }
             try
             {
+                List<string> files = gv.GetAllFilesWithExtensionFromUserFolder("\\user", ".png");
+                foreach (string file in files)
+                {
+                    try
+                    {
+                        string filename = Path.GetFileName(file);
+                        if (filename.StartsWith("pc_"))
+                        {
+                            string fileNameWithOutExt = Path.GetFileNameWithoutExtension(file);
+                            if (!playerTokenList.Contains(fileNameWithOutExt))
+                            {
+                                playerTokenList.Add(fileNameWithOutExt);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        gv.sf.MessageBox(ex.ToString());
+                        gv.errorLog(ex.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                gv.sf.MessageBox(ex.ToString());
+                gv.errorLog(ex.ToString());
+            }
+            
+            try
+            {
                 List<string> files = gv.GetAllFilesWithExtensionFromBothFolders("\\graphics", "\\modules\\" + gv.mod.moduleName + "\\graphics", ".png");
                 //List<string> files = gv.GetGraphicsFiles(gv.mod.moduleName, ".png");
                 //Load from PlayerTokens folder last

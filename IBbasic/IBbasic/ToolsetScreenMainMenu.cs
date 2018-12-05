@@ -519,6 +519,7 @@ namespace IBbasic
             gv.touchEnabled = false;
 
             List<string> itlist = new List<string>();
+            itlist.Add("cancel");
             itlist.Add("New 2D 10x10 Area");
             itlist.Add("New 2D 20x20 Area");
             itlist.Add("New 3D 10x10 Area");
@@ -536,7 +537,11 @@ namespace IBbasic
 
             gv.touchEnabled = true;
 
-            if (selectedArea.Equals("New 2D 10x10 Area"))
+            if (selectedArea.Equals("cancel"))
+            {
+                //do nothing
+            }
+            else if (selectedArea.Equals("New 2D 10x10 Area"))
             {
                 Area newArea = new Area();
                 newArea.Filename = "new2DareaSmall_" + gv.mod.getNextIdNumber();
@@ -620,6 +625,7 @@ namespace IBbasic
             gv.touchEnabled = false;
 
             List<string> itlist = new List<string>();
+            itlist.Add("cancel");
             itlist.Add("New Encounter");
 
             List<string> encsFromModFolder = gv.GetAllFilesWithExtensionFromBothFolders("\\modules\\" + gv.mod.moduleName, "\\modules\\" + gv.mod.moduleName, ".enc");
@@ -633,7 +639,11 @@ namespace IBbasic
 
             gv.touchEnabled = true;
 
-            if (selectedEnc.Equals("New Encounter"))
+            if (selectedEnc.Equals("cancel"))
+            {
+                //do nothing
+            }
+            else if (selectedEnc.Equals("New Encounter"))
             {
                 Encounter newEnc = new Encounter();
                 newEnc.encounterName = "newEncounter_" + gv.mod.getNextIdNumber();
@@ -667,6 +677,7 @@ namespace IBbasic
             gv.touchEnabled = false;
 
             List<string> itlist = new List<string>();
+            itlist.Add("cancel");
             itlist.Add("New Conversation");
             List<string> convosFromModFolder = gv.GetAllFilesWithExtensionFromBothFolders("\\modules\\" + gv.mod.moduleName, "\\modules\\" + gv.mod.moduleName, ".dlg");
             
@@ -679,7 +690,11 @@ namespace IBbasic
 
             gv.touchEnabled = true;
 
-            if (selectedConvo.Equals("New Conversation"))
+            if (selectedConvo.Equals("cancel"))
+            {
+                //do nothing
+            }
+            else if (selectedConvo.Equals("New Conversation"))
             {
                 Convo newConvo = new Convo();
                 newConvo.ConvoFileName = "newConversation_" + gv.mod.getNextIdNumber();
