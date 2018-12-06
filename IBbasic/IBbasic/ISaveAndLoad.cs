@@ -27,6 +27,7 @@ namespace IBbasic
         void SaveImage(string fullPath, SKBitmap bmp);
         void ZipModule(string modFilename);
         void UnZipModule(string modFilename);
+        void SubmitModule(string modFilename);
 
         string LoadStringFromUserFolder(string fullPath);
         string LoadStringFromAssetFolder(string fullPath);

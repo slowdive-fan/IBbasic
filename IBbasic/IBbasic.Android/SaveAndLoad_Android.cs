@@ -228,6 +228,58 @@ namespace IBbasic.Droid
             {
                 
             }
+            try
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename + ".ibb";
+                string fullpath = ConvertFullPath(convertedFullPath, "\\");
+                Java.IO.File full = new Java.IO.File(fullpath);
+                Android.Net.Uri path = Android.Net.Uri.FromFile(full);
+
+                full.SetReadable(true, false);
+                var email = new Intent(Android.Content.Intent.ActionSend);
+                email.PutExtra(Android.Content.Intent.ExtraEmail,
+                new string[] { "iceblinkengine@gmail.com" });
+                email.PutExtra(Android.Content.Intent.ExtraSubject, "Submit Module");
+                email.PutExtra(Android.Content.Intent.ExtraText,
+                "I am submitting a module or updated module for inclusion in the IBbasic module downloads list.");
+                email.PutExtra(Intent.ExtraStream, path);
+                email.SetType("message/rfc822");
+                Android.App.Application.Context.StartActivity(Intent.CreateChooser(email, "Send email..."));
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void SubmitModule(string modFilename)
+        {
+            try
+            {
+                Java.IO.File sdCard = Android.OS.Environment.ExternalStorageDirectory;
+                string convertedFullPath = sdCard.AbsolutePath + "/IBbasic/modules/" + modFilename + ".ibb";
+                string fullpath = ConvertFullPath(convertedFullPath, "\\");
+                Java.IO.File full = new Java.IO.File(fullpath);
+                Android.Net.Uri path = Android.Net.Uri.FromFile(full);
+
+                full.SetReadable(true, false);
+                var email = new Intent(Android.Content.Intent.ActionSend);
+                email.PutExtra(Android.Content.Intent.ExtraEmail,
+                new string[] { "iceblinkengine@gmail.com" });
+                email.PutExtra(Android.Content.Intent.ExtraSubject, "Submit Module");
+                email.PutExtra(Android.Content.Intent.ExtraText,
+                "I am submitting a module or updated module for inclusion in the IBbasic module downloads list.");
+                email.PutExtra(Intent.ExtraStream, path);
+                email.SetType("message/rfc822");
+                Android.App.Application.Context.StartActivity(Intent.CreateChooser(email, "Send email..."));
+                Android.Widget.Toast.MakeText(Android.App.Application.Context, "Send Email...Success...yeah, more modules!", Android.Widget.ToastLength.Short);
+            }
+            catch (Exception ex)
+            {
+                Android.Widget.Toast.MakeText(Android.App.Application.Context, "Failed to Send Email...", Android.Widget.ToastLength.Short);
+            }
         }
 
         public void SaveText(string fullPath, string text)

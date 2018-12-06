@@ -15,6 +15,8 @@ namespace IBbasic
         private IbbToggle btnModuleTitleImage = null;
         private IbbToggle btnModuleDescription = null;
         private IbbToggle btnModuleCredits = null;
+        private IbbToggle btnAddToDefaultPlayersList = null;
+        private IbbToggle btnClearDefaultPlayersList = null;
         private IbbToggle btnModuleVersion = null;
         private IbbToggle btnStartingArea = null;
         private IbbToggle btnStartingLocX = null;
@@ -22,6 +24,8 @@ namespace IBbasic
         private IbbToggle btnMaxPartySize = null;
         private IbbToggle btnMaxPlayerMadePCs = null;
         private IbbToggle btnStartingGold = null;
+        private IbbToggle btnStartingWorldTime = null;
+        private IbbToggle btnUseRationSystem = null;
         private IbbButton btnDataChk = null;
 
         private IBminiTextBox description;
@@ -80,9 +84,32 @@ namespace IBbasic
             btnModuleCredits.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small);
             btnModuleCredits.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(getResources(), R.drawable.btn_small_glow);
             btnModuleCredits.X = 0 * gv.uiSquareSize;
-            btnModuleCredits.Y = (int)(2 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
+            btnModuleCredits.Y = (int)(2 * gv.uiSquareSize + gv.scaler);
             btnModuleCredits.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnModuleCredits.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnAddToDefaultPlayersList == null)
+            {
+                btnAddToDefaultPlayersList = new IbbToggle(gv);
+            }
+            btnAddToDefaultPlayersList.ImgOn = "mtgl_edit_btn";
+            btnAddToDefaultPlayersList.ImgOff = "mtgl_edit_btn";
+            btnAddToDefaultPlayersList.X = 0 * gv.uiSquareSize;
+            btnAddToDefaultPlayersList.Y = (int)(2 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
+            btnAddToDefaultPlayersList.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnAddToDefaultPlayersList.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnClearDefaultPlayersList == null)
+            {
+                btnClearDefaultPlayersList = new IbbToggle(gv);
+            }
+            btnClearDefaultPlayersList.ImgOn = "mtgl_edit_btn";
+            btnClearDefaultPlayersList.ImgOff = "mtgl_edit_btn";
+            btnClearDefaultPlayersList.X = 0 * gv.uiSquareSize;
+            btnClearDefaultPlayersList.Y = (int)(3 * gv.uiSquareSize + gv.scaler);
+            btnClearDefaultPlayersList.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnClearDefaultPlayersList.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
 
             if (btnModuleVersion == null)
             {
@@ -161,6 +188,28 @@ namespace IBbasic
             btnStartingGold.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
             btnStartingGold.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
 
+            if (btnStartingWorldTime == null)
+            {
+                btnStartingWorldTime = new IbbToggle(gv);
+            }
+            btnStartingWorldTime.ImgOn = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large);
+            btnStartingWorldTime.ImgOff = "mtgl_edit_btn"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_large_glow);
+            btnStartingWorldTime.X = 5 * gv.uiSquareSize;
+            btnStartingWorldTime.Y = (int)(3 * gv.uiSquareSize + (gv.uiSquareSize / 2) + gv.scaler);
+            btnStartingWorldTime.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnStartingWorldTime.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
+            if (btnUseRationSystem == null)
+            {
+                btnUseRationSystem = new IbbToggle(gv);
+            }
+            btnUseRationSystem.ImgOn = "mtgl_rbtn_on";
+            btnUseRationSystem.ImgOff = "mtgl_rbtn_off";
+            btnUseRationSystem.X = 5 * gv.uiSquareSize;
+            btnUseRationSystem.Y = (int)(4 * gv.uiSquareSize + gv.scaler);
+            btnUseRationSystem.Height = (int)(gv.ibbMiniTglHeight * gv.scaler);
+            btnUseRationSystem.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
+
             if (btnModuleTitleImage == null)
             {
                 btnModuleTitleImage = new IbbToggle(gv);
@@ -184,6 +233,9 @@ namespace IBbasic
             btnDataChk.Y = (int)(6 * gv.uiSquareSize + gv.scaler);
             btnDataChk.Height = (int)(gv.ibbheight * gv.scaler);
             btnDataChk.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            btnUseRationSystem.toggleOn = gv.mod.useRationSystem;
+
         }
 
         public void redrawTsModule()
@@ -202,32 +254,23 @@ namespace IBbasic
             gv.DrawText(" Module Label Name: " + gv.mod.moduleLabelName, btnModuleLabelName.X + btnModuleLabelName.Width + gv.scaler, btnModuleLabelName.Y + shiftForFont, "wh");
 
             btnModuleDescription.Draw();
-            //Description
-            int yLoc = btnModuleDescription.Y;
-            description.tbXloc = (int)(btnModuleDescription.X + btnModuleDescription.Width + gv.scaler);
-            description.tbYloc = yLoc;
-            description.tbWidth = 11 * gv.uiSquareSize;
-            description.tbHeight = 1 * gv.uiSquareSize;
-            string textToSpan = "";
-            textToSpan = "<gn> Description:</gn>" + Environment.NewLine;
-            textToSpan += gv.mod.moduleDescription;
-            description.linesList.Clear();
-            description.AddFormattedTextToTextBox(textToSpan);
-            description.onDrawTextBox();
+            gv.DrawText(" Description:", btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y, "gn");
+            gv.DrawText(" " + gv.mod.moduleDescription, btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y + gv.fontHeight, "gy");
 
             btnModuleCredits.Draw();
-            //credits
-            yLoc = btnModuleCredits.Y;
-            description.tbXloc = (int)(btnModuleCredits.X + btnModuleCredits.Width + gv.scaler);
-            description.tbYloc = yLoc;
-            description.tbWidth = 11 * gv.uiSquareSize;
-            description.tbHeight = 1 * gv.uiSquareSize;
-            textToSpan = "";
-            textToSpan = "<gn> Credits:</gn>" + Environment.NewLine;
-            textToSpan += gv.mod.moduleCredits;
-            description.linesList.Clear();
-            description.AddFormattedTextToTextBox(textToSpan);
-            description.onDrawTextBox();
+            gv.DrawText(" Module Credits:", btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y, "gn");
+            gv.DrawText(" " + gv.mod.moduleCredits, btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y + gv.fontHeight, "gy");
+
+            btnAddToDefaultPlayersList.Draw();
+            gv.DrawText(" Add to default player list:", btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y, "gn");
+            string playerList = "";
+            foreach (StringForDropDownList s in gv.mod.defaultPlayerFilenameList)
+            {
+                playerList += s.stringValue + ", ";
+            }
+            gv.DrawText(" " + playerList, btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y + gv.fontHeight, "gy");
+            btnClearDefaultPlayersList.Draw();
+            gv.DrawText(" Clear default player list", btnClearDefaultPlayersList.X + btnClearDefaultPlayersList.Width + gv.scaler, btnClearDefaultPlayersList.Y + shiftForFont, "gn");
 
             btnModuleVersion.Draw();
             gv.DrawText(" Module Version: " + gv.mod.moduleVersion, btnModuleVersion.X + btnModuleVersion.Width + gv.scaler, btnModuleVersion.Y + shiftForFont, "wh");
@@ -243,6 +286,10 @@ namespace IBbasic
             gv.DrawText(" Max Player Made PCs: " + gv.mod.numberOfPlayerMadePcsAllowed, btnMaxPlayerMadePCs.X + btnMaxPlayerMadePCs.Width + gv.scaler, btnMaxPlayerMadePCs.Y + shiftForFont, "wh");
             btnStartingGold.Draw();
             gv.DrawText(" Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
+            btnStartingWorldTime.Draw();
+            gv.DrawText(" Starting World Time (min): " + gv.mod.WorldTime, btnStartingWorldTime.X + btnStartingWorldTime.Width + gv.scaler, btnStartingWorldTime.Y + shiftForFont, "wh");
+            btnUseRationSystem.Draw();
+            gv.DrawText(" Use Ration System", btnUseRationSystem.X + btnUseRationSystem.Width + gv.scaler, btnUseRationSystem.Y + shiftForFont, "wh");
             btnModuleTitleImage.Draw();
             gv.DrawText(" Title Image: " + gv.mod.titleImageName, btnModuleTitleImage.X + btnModuleTitleImage.Width + gv.scaler, btnModuleTitleImage.Y + shiftForFont, "wh");
 
@@ -352,9 +399,25 @@ namespace IBbasic
                     {
                         changeStartingGold();
                     }
+                    else if (btnStartingWorldTime.getImpact(x, y))
+                    {
+                        changeStartingWorldTime();
+                    }
                     else if (btnModuleTitleImage.getImpact(x, y))
                     {
                         changeTitleImage();
+                    }
+                    else if (btnUseRationSystem.getImpact(x, y))
+                    {
+                        gv.mod.useRationSystem = !gv.mod.useRationSystem;
+                    }
+                    else if (btnAddToDefaultPlayersList.getImpact(x, y))
+                    {
+                        addToDefaultPlayersList();
+                    }
+                    else if (btnClearDefaultPlayersList.getImpact(x, y))
+                    {
+                        gv.mod.defaultPlayerFilenameList.Clear();
                     }
                     else if (btnDataChk.getImpact(x, y))
                     {
@@ -549,6 +612,13 @@ namespace IBbasic
             gv.mod.numberOfPlayerMadePcsAllowed = myinput;
             gv.touchEnabled = true;
         }
+        public async void changeStartingWorldTime()
+        {
+            gv.touchEnabled = false;
+            int myinput = await gv.NumInputBox("Enter the starting World Time in minutes (360 would be 6:00 AM)", gv.mod.WorldTime);
+            gv.mod.WorldTime = myinput;
+            gv.touchEnabled = true;
+        }
         public async void changeStartingGold()
         {
             gv.touchEnabled = false;
@@ -606,6 +676,25 @@ namespace IBbasic
                 }
             }
             return titleImageList;
+        }
+        public async void addToDefaultPlayersList()
+        {
+            List<string> items = new List<string>();
+            items.Add("cancel");
+            foreach (Player p in gv.mod.companionPlayerList)
+            {
+                items.Add(p.name);
+            }
+
+            gv.touchEnabled = false;
+            string selected = await gv.ListViewPage(items, "Select a player from the list to add to the default players list. These are the deafult players that will be in the party at the start of a game (players can remove them if wanted).");
+            if (selected != "cancel")
+            {
+                StringForDropDownList sv = new StringForDropDownList();
+                sv.stringValue = selected;
+                gv.mod.defaultPlayerFilenameList.Add(sv);
+            }
+            gv.touchEnabled = true;
         }
     }
 }

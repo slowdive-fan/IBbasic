@@ -25,7 +25,7 @@ namespace IBbasic
         private IbbButton btnNews = null;
         private IbbButton btnTwitter = null;
         private IbbButton btnWebsite = null;
-        //private IbbButton btnUserName = null;
+        private IbbButton btnSubmitModule = null;
         private IbbButton btnComment = null;
 
         //public IbbToggle tglGoogleAnalytics = null;
@@ -43,7 +43,7 @@ namespace IBbasic
 
         public void setControlsStart()
         {
-            int pH = (int)((float)gv.screenHeight / 100.0f);
+            int pH = (int)((float)gv.screenHeight / 200.0f);
             int wideX = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (int)(gv.ibbwidthL * gv.scaler / 2);
 
             if (btnPlay == null)
@@ -53,7 +53,7 @@ namespace IBbasic
                 btnPlay.Img = "btn_large";
                 btnPlay.Glow = "btn_large_glow";
                 btnPlay.X = wideX;
-                btnPlay.Y = 0 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 2;
+                btnPlay.Y = 0 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 1;
                 btnPlay.Height = (int)(gv.ibbheight * gv.scaler);
                 btnPlay.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -64,7 +64,7 @@ namespace IBbasic
                 btnCreate.Img = "btn_large";
                 btnCreate.Glow = "btn_large_glow";
                 btnCreate.X = wideX;
-                btnCreate.Y = 1 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 4;
+                btnCreate.Y = 1 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 2;
                 btnCreate.Height = (int)(gv.ibbheight * gv.scaler);
                 btnCreate.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -75,7 +75,7 @@ namespace IBbasic
                 btnZip.Img = "btn_large";
                 btnZip.Glow = "btn_large_glow";
                 btnZip.X = wideX;
-                btnZip.Y = 2 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 6;
+                btnZip.Y = 2 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 3;
                 btnZip.Height = (int)(gv.ibbheight * gv.scaler);
                 btnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -86,9 +86,20 @@ namespace IBbasic
                 btnUnZip.Img = "btn_large";
                 btnUnZip.Glow = "btn_large_glow";
                 btnUnZip.X = wideX;
-                btnUnZip.Y = 3 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 8;
+                btnUnZip.Y = 3 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 4;
                 btnUnZip.Height = (int)(gv.ibbheight * gv.scaler);
                 btnUnZip.Width = (int)(gv.ibbwidthL * gv.scaler);
+            }
+            if (btnSubmitModule == null)
+            {
+                btnSubmitModule = new IbbButton(gv, 1.0f);
+                btnSubmitModule.Text = "Submit a Module";
+                btnSubmitModule.Img = "btn_large";
+                btnSubmitModule.Glow = "btn_large_glow";
+                btnSubmitModule.X = wideX;
+                btnSubmitModule.Y = 4 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 5;
+                btnSubmitModule.Height = (int)(gv.ibbheight * gv.scaler);
+                btnSubmitModule.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
             if (btnNews == null)
             {
@@ -97,7 +108,7 @@ namespace IBbasic
                 btnNews.Img = "btn_large";
                 btnNews.Glow = "btn_large_glow";
                 btnNews.X = wideX;
-                btnNews.Y = 4 * gv.uiSquareSize + (1 * gv.uiSquareSize / 2) + pH * 10;
+                btnNews.Y = 5 * gv.uiSquareSize + (1 * gv.uiSquareSize / 8) + pH * 6;
                 btnNews.Height = (int)(gv.ibbheight * gv.scaler);
                 btnNews.Width = (int)(gv.ibbwidthL * gv.scaler);
             }
@@ -175,7 +186,7 @@ namespace IBbasic
             btnNews.Draw();
             btnTwitter.Draw();
             btnWebsite.Draw();
-            //btnUserName.Draw();
+            btnSubmitModule.Draw();
             btnComment.Draw();
 
             //Draw IceBlink2RPG Engine Version Number
@@ -205,7 +216,7 @@ namespace IBbasic
             btnNews.glowOn = false;
             btnTwitter.glowOn = false;
             btnWebsite.glowOn = false;
-            //btnUserName.glowOn = false;
+            btnSubmitModule.glowOn = false;
             btnComment.glowOn = false;
 
             if (gv.showMessageBox)
@@ -227,7 +238,7 @@ namespace IBbasic
                     btnNews.glowOn = false;
                     btnTwitter.glowOn = false;
                     btnWebsite.glowOn = false;
-                    //btnUserName.glowOn = false;
+                    btnSubmitModule.glowOn = false;
                     btnComment.glowOn = false;
 
                     if (gv.showMessageBox)
@@ -331,11 +342,21 @@ namespace IBbasic
                             gv.TrackerSendEvent(":VISIT_WEBSITE:", "none", true);
                             Device.OpenUri(new Uri("https://iceblinkengine.com"));
                         }
-                        /*else if (btnUserName.getImpact(x, y))
+                        else if (btnSubmitModule.getImpact(x, y))
                         {
-                            gv.TrackerSendEvent(":CHANGE_USERNAME:", "none", true);
-                            changeUserName();                           
-                        }*/
+                            if (!gv.AllowReadWriteExternal())
+                            {
+                                string noreadwrite = "ANDROID: You must grant External Storage Read and Write Permissions in order to use this feature." + Environment.NewLine + Environment.NewLine +
+                                                        "iOS: This feature is only available on devices running iOS 10.3 and greater.";
+                                noreadwrite = "You must grant External Storage Read and Write Permissions in order to use this feature. Do this through your devices Settings/Apps/IceBlink Basic. Toggle 'Storage' to on and then restart this app.";
+                                gv.IBMessageBox("Feature Not Available", noreadwrite);
+                            }
+                            else
+                            {
+                                gv.TrackerSendEvent(":SUBMIT_MODULE:", "none", true);
+                                SelectModuleToSubmit();
+                            }                                                      
+                        }
                         else if (btnComment.getImpact(x, y))
                         {
                             gv.TrackerSendEvent(":COMMENT_PAGE:", "none", true);
@@ -387,10 +408,10 @@ namespace IBbasic
                         {
                             btnWebsite.glowOn = true;
                         }
-                        /*else if (btnUserName.getImpact(x, y))
+                        else if (btnSubmitModule.getImpact(x, y))
                         {
-                            btnUserName.glowOn = true;
-                        }*/
+                            btnSubmitModule.glowOn = true;
+                        }
                         else if (btnComment.getImpact(x, y))
                         {
                             btnComment.glowOn = true;
@@ -519,6 +540,32 @@ namespace IBbasic
             else
             {
                 gv.UnZipModule(selectedModule);
+            }
+
+            gv.touchEnabled = true;
+        }
+        public async void SelectModuleToSubmit()
+        {
+            gv.touchEnabled = false;
+
+            List<string> itlist = new List<string>();
+            itlist.Add("None");
+
+            var list2 = loadZipFilesToList();
+            foreach (string s in list2)
+            {
+                itlist.Add(s);
+            }
+
+            string selectedModule = await gv.ListViewPage(itlist, "Module to Submit for review by the IBbasic Team for inlcusion in the downloads list (This function is only available for Android).");
+
+            if (selectedModule.Equals("None"))
+            {
+                //do nothing
+            }
+            else
+            {
+                gv.SubmitModule(selectedModule);
             }
 
             gv.touchEnabled = true;
