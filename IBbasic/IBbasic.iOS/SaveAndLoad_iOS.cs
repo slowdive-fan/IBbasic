@@ -57,15 +57,18 @@ namespace IBbasic.iOS
 
         public bool DownloadFile(string url, string folder)
         {
+            //var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //var directoryname = Path.Combine(documents, "modules");
+            //var path = Path.Combine(directoryname, folder);
             var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var directoryname = Path.Combine(documents, "modules");
-            var path = Path.Combine(directoryname, folder);
+            string path = documents + ConvertFullPath("/" + folder, "/");
+            string url2 = ConvertFullPath(url, "/");
             try
             {
                 WebClient webClient = new WebClient();
                 //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
                 //string pathToNewFile = Path.Combine(path, Path.GetFileName(url));
-                webClient.DownloadFile(url, path);
+                webClient.DownloadFile(url2, path);
                 return true;
             }
             catch (Exception ex)

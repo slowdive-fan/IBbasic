@@ -34,10 +34,10 @@
 	<key>CFBundleName</key>
 	<string>IBbasic</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.24</string>
+	<string>1.0.26</string>
 	<key>XSAppIconAssets</key>
 	<string>Media.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleVersion</key>
-	<string>24</string>
+	<string>26</string>
 </dict>
 </plist>

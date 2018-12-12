@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalInt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IB2HtmlLogBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IBbasicReview.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IBbasicToolTip.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbbButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IbbHtmlTextBox.cs" />
@@ -1340,6 +1341,8 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rocka3.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\tiles\t_w_rockb3.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_endorse_off.png" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_endorse_on.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\ui_magentaback.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_swapcolor_off.png" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Assets\ui\tgl_swapcolor_on.png" />

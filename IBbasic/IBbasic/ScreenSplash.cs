@@ -426,7 +426,7 @@ namespace IBbasic
             string txt = "";
             try
             {
-                txt = gv.LoadStringFromUserFolder("\\modules\\ibnews.txt");                
+                txt = gv.LoadStringFromUserFolder("\\ibnews.txt");                
             }
             catch (Exception ex)
             {

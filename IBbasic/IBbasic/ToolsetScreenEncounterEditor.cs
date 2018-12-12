@@ -3130,6 +3130,10 @@ namespace IBbasic
             {
                 crtref.creatureStartLocationX++;
             }
+            foreach (Coordinate pcCoor in gv.mod.currentEncounter.encounterPcStartLocations)
+            {
+                pcCoor.X++;
+            }
             gv.mod.currentEncounter.MapSizeX++;
             //mapSizeChangeStuff();
         }
@@ -3156,6 +3160,10 @@ namespace IBbasic
             foreach (CreatureRefs crtref in gv.mod.currentEncounter.encounterCreatureRefsList)
             {
                 crtref.creatureStartLocationX--;
+            }
+            foreach (Coordinate pcCoor in gv.mod.currentEncounter.encounterPcStartLocations)
+            {
+                pcCoor.X--;
             }
             gv.mod.currentEncounter.MapSizeX--;
             //mapSizeChangeStuff();
@@ -3217,6 +3225,10 @@ namespace IBbasic
             {
                 crtref.creatureStartLocationY++;
             }
+            foreach (Coordinate pcCoor in gv.mod.currentEncounter.encounterPcStartLocations)
+            {
+                pcCoor.Y++;
+            }
             gv.mod.currentEncounter.MapSizeY++;
             //mapSizeChangeStuff();
         }
@@ -3242,6 +3254,10 @@ namespace IBbasic
             foreach (CreatureRefs crtref in gv.mod.currentEncounter.encounterCreatureRefsList)
             {
                 crtref.creatureStartLocationY--;
+            }
+            foreach (Coordinate pcCoor in gv.mod.currentEncounter.encounterPcStartLocations)
+            {
+                pcCoor.Y--;
             }
             gv.mod.currentEncounter.MapSizeY--;
             //mapSizeChangeStuff();

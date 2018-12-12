@@ -99,6 +99,8 @@ namespace IBbasic
         public bool touchEnabled = true;
         public Settings toggleSettings;
         public IBbasicPrefernces IBprefs;
+        public IBbasicReview userReviews;
+        public IBbasicReview communityReviews;
         //TOOLSET SCREENS
         public ToolsetScreenModule tsModule;
         public ToolsetScreenAreaEditor tsAreaEditor;
@@ -1737,7 +1739,84 @@ namespace IBbasic
         {
             return DependencyService.Get<ISaveAndLoad>().DownloadFile(url, folder);
         }
-               
+
+        public void loadReviews()
+        {
+            userReviews = new IBbasicReview();
+            communityReviews = new IBbasicReview();
+
+            try
+            {
+                string s = LoadStringFromEitherFolder("\\IBbasicUserReviews.json", "\\IBbasicUserReviews.json");
+                if (s != "")
+                {
+                    try
+                    {
+                        using (StringReader sr = new StringReader(s))
+                        {
+                            JsonSerializer serializer = new JsonSerializer();
+                            userReviews = (IBbasicReview)serializer.Deserialize(sr, typeof(IBbasicReview));
+                        }
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                //int x = 0;
+            }
+
+            try
+            {
+                string s = LoadStringFromEitherFolder("\\IBbasicCommunityReviews.json", "\\IBbasicCommunityReviews.json");
+                if (s != "")
+                {
+                    try
+                    {
+                        using (StringReader sr = new StringReader(s))
+                        {
+                            JsonSerializer serializer = new JsonSerializer();
+                            communityReviews = (IBbasicReview)serializer.Deserialize(sr, typeof(IBbasicReview));
+                        }
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                //int x = 0;
+            }
+        }
+        public void saveUserReviews()
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(userReviews, Newtonsoft.Json.Formatting.Indented);
+                SaveText("\\IBbasicUserReviews.json", json);
+            }
+            catch { }
+        }
+        public void postReview(IBReview thisReview)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(userReviews, Newtonsoft.Json.Formatting.Indented);
+                SaveText("\\IBbasicUserReviews.json", json);
+            }
+            catch { }
+            TrackerSendEvent(":POST_REVIEW:", "REVIEW::" + thisReview.reviewDate + ":" + thisReview.moduleName + "(v" + thisReview.moduleVersion + "):" + thisReview.userID + ":" + thisReview.userName + ":" + thisReview.review, true);
+        }
+        public void postEndorse(IBEndorse thisEndorse)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(userReviews, Newtonsoft.Json.Formatting.Indented);
+                SaveText("\\IBbasicUserReviews.json", json);
+            }
+            catch { }
+            TrackerSendEvent(":POST_ENDORSE:", "ENDORSE::" + thisEndorse.moduleName + ":" + thisEndorse.userID + ":" + thisEndorse.userName + ":" + thisEndorse.endorsed.ToString(), true);
+        }
+
         //ANALYTICS
         public void TrackerSendEvent(string action, string label, bool mustSend)
         {

@@ -26,7 +26,11 @@ namespace IBbasic
         private List<ModuleInfo> moduleInfoList = new List<ModuleInfo>();
         public List<ModuleInfo> modsAvailableList = new List<ModuleInfo>();
         private List<SKBitmap> titleList = new List<SKBitmap>();
-	    private int moduleIndex = 0;
+        private IbbButton btnUserName = null;
+        private IbbButton btnReadReviews = null;
+        private IbbButton btnPostReview = null;
+        private IbbToggle tglEndorse = null;
+        private int moduleIndex = 0;
         public string downloadText = "";
         long previousTime = 0;
         int elapsedTime = 0;
@@ -44,14 +48,17 @@ namespace IBbasic
             description.tbWidth = (int)(16 * gv.squareSize * gv.scaler);
             description.tbHeight = (int)(6 * gv.squareSize * gv.scaler);
             description.showBoxBorder = false;
-	    }
+
+            downloadFile("IBbasicCommunityReviews.json", "IBbasicCommunityReviews.json");
+            gv.loadReviews();
+        }
 	
         //when click on "Get Updates"
         //download mod_available.json from server
-        public async void downloadFile(string filename)
+        public async void downloadFile(string filename, string folderpath)
         {
             //downloadText = "Downloading...may take a few seconds...";            
-            bool result = await gv.DownloadResult("https://www.iceblinkengine.com/ibbasic_modules/" + filename, filename);
+            bool result = await gv.DownloadResult("https://www.iceblinkengine.com/ibbasic_modules/" + filename, folderpath);
             downloadText = "";
             if (result) { downloadText = "download was successful."; }
             else { downloadText = "failed to download the file...please check your connection."; }
@@ -256,7 +263,55 @@ namespace IBbasic
                 btnGetUpdates.Y = (6 * gv.uiSquareSize) - (pH * 2);
                 btnGetUpdates.Height = (int)(gv.ibbheight * gv.scaler);
                 btnGetUpdates.Width = (int)(gv.ibbwidthL * gv.scaler);
-            
+
+            if (btnUserName == null)
+            {
+                btnUserName = new IbbButton(gv, 0.8f);
+            }
+            btnUserName.Img = "btn_small";
+            btnUserName.Img2 = "btnusername";
+            btnUserName.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnUserName.X = 10 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnUserName.Y = 6 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnUserName.Height = (int)(gv.ibbheight * gv.scaler);
+            btnUserName.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnReadReviews == null)
+            {
+                btnReadReviews = new IbbButton(gv, 0.8f);
+            }
+            btnReadReviews.Img = "btn_small";
+            btnReadReviews.Img2 = "btnconvo";
+            btnReadReviews.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnReadReviews.X = 10 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnReadReviews.Y = 0 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnReadReviews.Height = (int)(gv.ibbheight * gv.scaler);
+            btnReadReviews.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (btnPostReview == null)
+            {
+                btnPostReview = new IbbButton(gv, 0.8f);
+            }
+            btnPostReview.Img = "btn_small";
+            btnPostReview.Img2 = "btnpencil";
+            btnPostReview.Glow = "btn_small_glow"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_glow);
+            btnPostReview.X = 10 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnPostReview.Y = 1 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            btnPostReview.Height = (int)(gv.ibbheight * gv.scaler);
+            btnPostReview.Width = (int)(gv.ibbwidthR * gv.scaler);
+
+            if (tglEndorse == null)
+            {
+                tglEndorse = new IbbToggle(gv);
+                tglEndorse.toggleOn = false;
+            }
+            tglEndorse.ImgOn = "tgl_endorse_on";
+            tglEndorse.ImgOff = "tgl_endorse_off";
+            tglEndorse.X = 10 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            tglEndorse.Y = 2 * gv.uiSquareSize + (0 * gv.uiSquareSize / 2);
+            tglEndorse.Height = (int)(gv.ibbheight * gv.scaler);
+            tglEndorse.Width = (int)(gv.ibbwidthR * gv.scaler);
+
         }
         //TITLE SCREEN  
         public void redrawLauncher()
@@ -289,27 +344,137 @@ namespace IBbasic
                 textToSpan += moduleInfoList[moduleIndex].moduleDescription;
                 description.linesList.Clear();
                 description.AddFormattedTextToTextBox(textToSpan);
-                description.onDrawTextBox();                	    	    
-		    }
+                description.onDrawTextBox();
+
+                btnPostReview.Draw();
+
+                btnReadReviews.Draw();
+                string reviewCnt = getTotalReviewCount().ToString();
+                gv.DrawText(reviewCnt, btnReadReviews.X - (gv.fontWidth * reviewCnt.Length), btnReadReviews.Y + (btnReadReviews.Height / 2), "wh");
+
+                setEndorseToggle();
+                tglEndorse.Draw();
+                string endorseCnt = getTotalEndorsementCount().ToString();
+                gv.DrawText(endorseCnt, tglEndorse.X - (gv.fontWidth * endorseCnt.Length), tglEndorse.Y + (tglEndorse.Height / 2), "wh");
+
+            }
 
             if (gv.showMessageBox)
             {
                 gv.messageBox.onDrawLogBox();
             }
         }
+
+        public int getTotalReviewCount()
+        {
+            int cnt = 0;
+            foreach (IBReview rev in gv.userReviews.reviews)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    if (rev.review.Length > 0)
+                    {
+                        cnt++;
+                    }
+                }
+            }
+            foreach (IBReview rev in gv.communityReviews.reviews)
+            {
+                if (rev.userID != gv.IBprefs.UserID)
+                {
+                    if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                    {
+                        if (rev.review.Length > 0)
+                        {
+                            cnt++;
+                        }
+                    }
+                }
+            }
+            return cnt;
+        }
+        public int getTotalEndorsementCount()
+        {
+            int cnt = 0;
+            foreach (IBEndorse rev in gv.userReviews.endorsements)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    if (rev.endorsed)
+                    {
+                        cnt++;
+                    }
+                }
+            }
+            foreach (IBEndorse rev in gv.communityReviews.endorsements)
+            {
+                if (rev.userID != gv.IBprefs.UserID)
+                {
+                    if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                    {
+                        if (rev.endorsed)
+                        {
+                            cnt++;
+                        }
+                    }
+                }
+            }
+            return cnt;
+        }
+        public string getTotalEndorsementString()
+        {
+            string s = "Liked by: ";
+            foreach (IBEndorse rev in gv.userReviews.endorsements)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    s += rev.userName + ", ";
+                }
+            }
+            foreach (IBEndorse rev in gv.communityReviews.endorsements)
+            {
+                if (rev.userID != gv.IBprefs.UserID)
+                {
+                    if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                    {
+                        s += rev.userName + ", ";
+                    }
+                }
+            }
+            return s;
+        }
+        public void setEndorseToggle()
+        {
+            tglEndorse.toggleOn = false;
+            foreach (IBEndorse rev in gv.userReviews.endorsements)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    if (rev.endorsed)
+                    {
+                        tglEndorse.toggleOn = true;
+                    }
+                }
+            }
+        }
+
         public void drawLauncherControls()
 	    {    	
 		    btnLeft.Draw();		
 		    btnRight.Draw();
 		    btnModuleName.Draw();
             btnGetUpdates.Draw();
-	    }
+            btnUserName.Draw();
+        }
         public void onTouchLauncher(int eX, int eY, MouseEventType.EventType eventType)
 	    {
     	    btnLeft.glowOn = false;
     	    btnRight.glowOn = false;	
     	    btnModuleName.glowOn = false;
             btnGetUpdates.glowOn = false;
+            btnUserName.glowOn = false;
+            btnReadReviews.glowOn = false;
+            btnPostReview.glowOn = false;
             downloadText = "";
 
             switch (eventType)
@@ -322,6 +487,9 @@ namespace IBbasic
 	    	        btnRight.glowOn = false;	
 	    	        btnModuleName.glowOn = false;
                     btnGetUpdates.glowOn = false;
+                    btnUserName.glowOn = false;
+                    btnReadReviews.glowOn = false;
+                    btnPostReview.glowOn = false;
 
                     if (gv.showMessageBox)
                     {
@@ -368,7 +536,7 @@ namespace IBbasic
                                 gv.TrackerSendEvent(":UPDATE_START_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-0", "none", true);
                                 //download and replace existing file
                                 previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
-                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb", "modules\\" + moduleInfoList[moduleIndex].moduleName + ".ibb");
                                 currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                                 elapsedTime = (int)(currentTime - previousTime);
                                 gv.TrackerSendEvent(":UPDATE_END_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-" + elapsedTime.ToString(), "none", true);
@@ -386,7 +554,7 @@ namespace IBbasic
                                 gv.TrackerSendEvent(":DOWNLOAD_START_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-0", "none", true);
                                 //download file
                                 previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
-                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb");
+                                downloadFile(moduleInfoList[moduleIndex].moduleName + ".ibb", "modules\\" + moduleInfoList[moduleIndex].moduleName + ".ibb");
                                 currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                                 elapsedTime = (int)(currentTime - previousTime);
                                 gv.TrackerSendEvent(":DOWNLOAD_END_" + moduleInfoList[moduleIndex].moduleName + ":TIME(ms)-" + elapsedTime.ToString(), "none", true);
@@ -402,12 +570,56 @@ namespace IBbasic
                         {
                             gv.TrackerSendEvent(":GET_UPDATES_START:TIME(ms)-0", "none", true);
                             previousTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
-                            downloadFile("mods_available.json");
+                            downloadFile("mods_available.json", "modules\\mods_available.json");
                             currentTime = gv.gameTimerStopwatch.ElapsedMilliseconds;
                             elapsedTime = (int)(currentTime - previousTime);
                             gv.TrackerSendEvent(":GET_UPDATES_END:TIME(ms) - " + elapsedTime.ToString(), "none", true);
                             loadModsAvailableList();
                             setupModuleInfoListAndButtonText(true);
+                        }
+                        else if (btnUserName.getImpact(x, y))
+                        {
+                            gv.TrackerSendEvent(":CHANGE_USERNAME:", "none", true);
+                            changeUserName();
+                        }
+                        else if (btnReadReviews.getImpact(x, y))
+                        {
+                            gv.TrackerSendEvent(":READ_REVIEWS:", "none", true);
+                            downloadFile("IBbasicCommunityReviews.json", "IBbasicCommunityReviews.json");
+                            gv.loadReviews();
+                            string reviews = "";
+                            reviews += "<bu>LIKES:</bu><br>";
+                            reviews += "<gn>" + getTotalEndorsementString() + "</gn><br>";
+                            reviews += "<bu>REVIEWS:</bu><br>";
+                            foreach (IBReview rev in gv.userReviews.reviews)
+                            {
+                                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                                {
+                                    reviews += "<yl>" + rev.reviewDate + ":" + rev.moduleName + "(v" + rev.moduleVersion + "):" + rev.userName + ":</yl>" + rev.review + Environment.NewLine;
+                                }
+                            }
+                            foreach (IBReview rev in gv.communityReviews.reviews)
+                            {
+                                if (rev.userID != gv.IBprefs.UserID)
+                                {
+                                    if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                                    {
+                                        reviews += "<yl>" + rev.reviewDate + ":" + rev.moduleName + "(v" + rev.moduleVersion + "):" + rev.userName + ":</yl>" + rev.review + Environment.NewLine;
+                                    }
+                                }
+                            }
+                            gv.showMessageBox = true;
+                            gv.sf.MessageBoxHtml(reviews);
+                        }
+                        else if (btnPostReview.getImpact(x, y))
+                        {
+                            gv.TrackerSendEvent(":POST_REVIEW:", "none", true);
+                            changeReview();
+                        }
+                        else if (tglEndorse.getImpact(x, y))
+                        {
+                            gv.TrackerSendEvent(":TOGGLE_ENDORSE:", "none", true);
+                            changeEndorse();
                         }
                     }
                     break;
@@ -452,6 +664,18 @@ namespace IBbasic
                             btnGetUpdates.glowOn = true;
                             downloadText = "Checking for updates...may take seconds to a few minutes...";
                         }
+                        else if (btnUserName.getImpact(x, y))
+                        {
+                            btnUserName.glowOn = true;
+                        }
+                        else if (btnReadReviews.getImpact(x, y))
+                        {
+                            btnReadReviews.glowOn = true;
+                        }
+                        else if (btnPostReview.getImpact(x, y))
+                        {
+                            btnPostReview.glowOn = true;
+                        }
                     }
                     break;		
 		    }
@@ -468,6 +692,79 @@ namespace IBbasic
                 //MessageBox.Show("Extract file completed");
             }
             catch { }
+        }
+
+        public async void changeUserName()
+        {
+            gv.touchEnabled = false;
+            string myinput = await gv.StringInputBox("Your User Name (leave blank to remain anonymous), will be used for the in-app module reviewing and endorsing system:", gv.IBprefs.UserName);
+            gv.IBprefs.UserName = myinput;
+            gv.savePreferences();
+            gv.touchEnabled = true;
+        }
+        public async void changeReview()
+        {
+            bool foundOne = false;
+            foreach (IBReview rev in gv.userReviews.reviews)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    foundOne = true;
+                    //gv.touchEnabled = false;
+                    string myinput = await gv.StringInputBox("Your review for this module (all reviews will be reviewed by the IB Team within 24 hours and any inappropriate or non-constructive reviews will be rejected):", rev.review);
+                    rev.review = myinput;
+                    rev.userID = gv.IBprefs.UserID;
+                    rev.userName = gv.IBprefs.UserName;
+                    rev.moduleVersion = moduleInfoList[moduleIndex].moduleVersion;
+                    rev.reviewDate = DateTime.Now.ToString("yyyy-MM-dd");
+                    gv.postReview(rev);
+                    gv.saveUserReviews();
+                    //gv.touchEnabled = true;
+                    break;
+                }
+            }
+            if (!foundOne)
+            {
+                IBReview newRev = new IBReview();
+                newRev.moduleName = moduleInfoList[moduleIndex].moduleName;
+                newRev.userID = gv.IBprefs.UserID;
+                newRev.userName = gv.IBprefs.UserName;
+                newRev.moduleVersion = moduleInfoList[moduleIndex].moduleVersion;
+                newRev.reviewDate = DateTime.Now.ToString("yyyy-MM-dd");
+                string myinput = await gv.StringInputBox("Your review for this module (all reviews will be reviewed by the IB Team within 24 hours and any inappropriate or non-constructive reviews will be rejected):", newRev.review);
+                newRev.review = myinput;
+                gv.postReview(newRev);
+                gv.userReviews.reviews.Add(newRev);
+                gv.saveUserReviews();
+            }
+        }
+        public async void changeEndorse()
+        {
+            bool foundOne = false;
+            foreach (IBEndorse rev in gv.userReviews.endorsements)
+            {
+                if (rev.moduleName.Equals(moduleInfoList[moduleIndex].moduleName))
+                {
+                    foundOne = true;
+                    //gv.touchEnabled = false;
+                    rev.endorsed = !rev.endorsed;
+                    gv.postEndorse(rev);
+                    gv.saveUserReviews();
+                    //gv.touchEnabled = true;
+                    break;
+                }
+            }
+            if (!foundOne)
+            {
+                IBEndorse newRev = new IBEndorse();
+                newRev.moduleName = moduleInfoList[moduleIndex].moduleName;
+                newRev.userID = gv.IBprefs.UserID;
+                newRev.userName = gv.IBprefs.UserName;
+                newRev.endorsed = true;
+                gv.postEndorse(newRev);
+                gv.userReviews.endorsements.Add(newRev);
+                gv.saveUserReviews();
+            }
         }
     }
 }
