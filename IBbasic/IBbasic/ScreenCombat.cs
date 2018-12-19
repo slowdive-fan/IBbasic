@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Newtonsoft.Json;
+using SkiaSharp;
 
 namespace IBbasic
 {
@@ -4149,32 +4150,32 @@ namespace IBbasic
         }
 
         #region Combat Draw
-        public void redrawCombat()
+        public void redrawCombat(SKCanvas c)
         {
             if (gv.mod.currentEncounter.Layer1Filename.Count == 0)
             {
                 return;
             }
-            drawCombatMap();
-            drawProps();
-            drawEffectSquares();
-            drawCombatPlayers();
-            drawCombatCreatures();            
-            drawSprites();
+            drawCombatMap(c);
+            drawProps(c);
+            drawEffectSquares(c);
+            drawCombatPlayers(c);
+            drawCombatCreatures(c);            
+            drawSprites(c);
             if (gv.mod.currentEncounter.UseDayNightCycle)
             {
-                drawOverlayTints();
+                drawOverlayTints(c);
             }
             if (!animationsOn)
             {
-                drawTargetHighlight();
-                drawLosTrail();
+                drawTargetHighlight(c);
+                drawLosTrail(c);
             }
-            drawFloatyText();
-            drawHPText();
-            drawSPText();
-            drawFloatyTextList();
-            drawMovesLeftText();
+            drawFloatyText(c);
+            drawHPText(c);
+            drawSPText(c);
+            drawFloatyTextList(c);
+            drawMovesLeftText(c);
             //DRAW ALL CONTROLS
             /*if (!use11x11)
             {
@@ -4183,39 +4184,39 @@ namespace IBbasic
                 panLeft.Draw();
                 panRight.Draw();
             }*/            
-            drawUiLayout();            
+            drawUiLayout(c);            
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawUiLayout()
+        public void drawUiLayout(SKCanvas c)
         {
             
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
             IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
 
             int width = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Width;
             int height = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Height;
             IbRect src = new IbRect(0, 0, width, height);
             IbRect dst = new IbRect(gv.log.tbXloc - (int)((2 * gv.scaler)), gv.log.tbYloc, (int)(width * gv.scaler), (int)(height * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
 
             
 
             createArrowsPanel();
-            btnArrowUpLeft.Draw();
-            btnArrowUp.Draw();
-            btnArrowUpRight.Draw();
-            btnArrowLeft.Draw();            
-            btnArrowSelect.Draw();
-            btnArrowRight.Draw();
-            btnArrowDownLeft.Draw();
-            btnArrowDown.Draw();
-            btnArrowDownRight.Draw();
+            btnArrowUpLeft.Draw(c);
+            btnArrowUp.Draw(c);
+            btnArrowUpRight.Draw(c);
+            btnArrowLeft.Draw(c);            
+            btnArrowSelect.Draw(c);
+            btnArrowRight.Draw(c);
+            btnArrowDownLeft.Draw(c);
+            btnArrowDown.Draw(c);
+            btnArrowDownRight.Draw(c);
 
             createButtonsPanel();
             //SET BUTTON STATES
@@ -4274,23 +4275,23 @@ namespace IBbasic
                 tglHelp.show = true;
             }
             //btnSwitchWeapon.Draw();
-            btnInventory.Draw();
-            btnSkipTurn.Draw();
-            btnUseTrait.Draw();
-            btnCast.Draw();
-            btnMove.Draw();
-            btnAttack.Draw();
-            tglSettings.Draw();
+            btnInventory.Draw(c);
+            btnSkipTurn.Draw(c);
+            btnUseTrait.Draw(c);
+            btnCast.Draw(c);
+            btnMove.Draw(c);
+            btnAttack.Draw(c);
+            tglSettings.Draw(c);
 
             createTogglesPanel();
-            tglPortraits.Draw();
-            tglHP.Draw();
-            tglSP.Draw();
-            tglMoveOrder.Draw();
-            tglSpeed.Draw();
-            tglGrid.Draw();
-            tglHelp.Draw();
-            tglKill.Draw();
+            tglPortraits.Draw(c);
+            tglHP.Draw(c);
+            tglSP.Draw(c);
+            tglMoveOrder.Draw(c);
+            tglSpeed.Draw(c);
+            tglGrid.Draw(c);
+            tglHelp.Draw(c);
+            tglKill.Draw(c);
 
             createPortraitsPanel();
             //SET PORTRAITS
@@ -4398,18 +4399,18 @@ namespace IBbasic
                 }
             }
 
-            btnPort0.Draw();
-            btnPort1.Draw();
-            btnPort2.Draw();
-            btnPort3.Draw();
-            btnPort4.Draw();
-            btnPort5.Draw();
+            btnPort0.Draw(c);
+            btnPort1.Draw(c);
+            btnPort2.Draw(c);
+            btnPort3.Draw(c);
+            btnPort4.Draw(c);
+            btnPort5.Draw(c);
 
-            gv.log.onDrawLogBox();
+            gv.log.onDrawLogBox(c);
                         
             
         }
-        public void drawCombatMap()
+        public void drawCombatMap(SKCanvas c)
         {            
             int minX = UpperLeftSquare.X - (gv.playerOffsetX + 0);
             if (minX < 0) { minX = 0; }
@@ -4460,7 +4461,7 @@ namespace IBbasic
                         //bool mirror = false;
                         //if (gv.mod.currentEncounter.Layer1Mirror[index] == 1) { mirror = true; }
                         //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer1Rotate[index], mirror);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                     }
                 }
             }
@@ -4494,7 +4495,7 @@ namespace IBbasic
                         //bool mirror = false;
                         //if (gv.mod.currentEncounter.Layer2Mirror[index] == 1) { mirror = true; }
                         //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer2Rotate[index], mirror);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                     }
                 }
             }
@@ -4530,7 +4531,7 @@ namespace IBbasic
                             //bool mirror = false;
                             //if (gv.mod.currentEncounter.Layer3Mirror[index] == 1) { mirror = true; }
                             //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr, gv.mod.currentEncounter.Layer3Rotate[index], mirror);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), srcLyr, dstLyr);
                         }
                     }
                 }
@@ -4559,15 +4560,15 @@ namespace IBbasic
                         IbRect dstGrid = new IbRect(tlX, tlY, brX, brY);
                         if (gv.mod.currentEncounter.LoSBlocked[index] == 1)
                         {
-                            gv.DrawBitmap(gv.cc.losBlocked, srcGrid, dstGrid);
+                            gv.DrawBitmap(c, gv.cc.losBlocked, srcGrid, dstGrid);
                         }
                         if (gv.mod.currentEncounter.Walkable[index] == 0)
                         {
-                            gv.DrawBitmap(gv.cc.walkBlocked, srcGrid, dstGrid);
+                            gv.DrawBitmap(c, gv.cc.walkBlocked, srcGrid, dstGrid);
                         }
                         else
                         {
-                            gv.DrawBitmap(gv.cc.walkPass, srcGrid, dstGrid);
+                            gv.DrawBitmap(c, gv.cc.walkPass, srcGrid, dstGrid);
                         }
                     }
                 }
@@ -4586,14 +4587,14 @@ namespace IBbasic
                     {
                         if (pf.values[x, y] != 9999)
                         {
-                            gv.DrawText(pf.values[x, y].ToString(), x * (int)(gv.squareSize * gv.scaler) + mapStartLocXinPixels + (int)((gv.squareSize * gv.scaler) / 2), y * (int)(gv.squareSize * gv.scaler) + (int)((gv.squareSize * gv.scaler) / 2), "gy");
+                            gv.DrawText(c, pf.values[x, y].ToString(), x * (int)(gv.squareSize * gv.scaler) + mapStartLocXinPixels + (int)((gv.squareSize * gv.scaler) / 2), y * (int)(gv.squareSize * gv.scaler) + (int)((gv.squareSize * gv.scaler) / 2), "gy");
                         }
                     }
                 }
             }
             #endregion
         }
-        public void drawCombatPlayers()
+        public void drawCombatPlayers(SKCanvas c)
         {
             Player p = gv.mod.playerList[currentPlayerIndex];
             
@@ -4603,7 +4604,7 @@ namespace IBbasic
             {
                 if (IsInVisibleCombatWindow(p.combatLocX, p.combatLocY))
                 {
-                    gv.DrawBitmap(gv.cc.turn_marker, src, dst);
+                    gv.DrawBitmap(c, gv.cc.turn_marker, src, dst);
                 }
             }
             
@@ -4623,11 +4624,11 @@ namespace IBbasic
                 if ((pc.isDead()) || (pc.isUnconcious()))
                 {
                     src = new IbRect(0, 0, gv.cc.pc_dead.Width, gv.cc.pc_dead.Width);
-                    gv.DrawBitmap(gv.cc.pc_dead, src, dst);
+                    gv.DrawBitmap(c, gv.cc.pc_dead, src, dst);
                 }
                 else
                 {
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(pc.tokenFilename), src, dst, !pc.combatFacingLeft);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(pc.tokenFilename), src, dst, !pc.combatFacingLeft);
                     //src = new IbRect(0, 0, gv.cc.GetFromBitmapList(pc.tokenFilename).PixelSize.Width, gv.cc.GetFromBitmapList(pc.tokenFilename).PixelSize.Width);
                     if (!animationsOn)
                     {
@@ -4635,37 +4636,37 @@ namespace IBbasic
                         {
                             //Bitmap fx = gv.cc.LoadBitmap(ef.spriteFilename);
                             src = new IbRect(0, 0, gv.cc.GetFromBitmapList(ef.spriteFilename).Width, gv.cc.GetFromBitmapList(ef.spriteFilename).Width);
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
                             //gv.cc.DisposeOfBitmap(ref fx);
                         }
                     }
                     if (pc.steathModeOn)
                     {
                         src = new IbRect(0, 0, gv.cc.pc_stealth.Width, gv.cc.pc_stealth.Width);
-                        gv.DrawBitmap(gv.cc.pc_stealth, src, dst);
+                        gv.DrawBitmap(c, gv.cc.pc_stealth, src, dst);
                     }
                     //PLAYER FACING
                     src = new IbRect(0, 0, gv.cc.facing1.Width, gv.cc.facing1.Height);
-                    if (pc.combatFacing == 8) { gv.DrawBitmap(gv.cc.facing8, src, dst); }
-                    else if (pc.combatFacing == 9) { gv.DrawBitmap(gv.cc.facing9, src, dst); }
-                    else if (pc.combatFacing == 6) { gv.DrawBitmap(gv.cc.facing6, src, dst); }
-                    else if (pc.combatFacing == 3) { gv.DrawBitmap(gv.cc.facing3, src, dst); }
-                    else if (pc.combatFacing == 2) { gv.DrawBitmap(gv.cc.facing2, src, dst); }
-                    else if (pc.combatFacing == 1) { gv.DrawBitmap(gv.cc.facing1, src, dst); }
-                    else if (pc.combatFacing == 4) { gv.DrawBitmap(gv.cc.facing4, src, dst); }
-                    else if (pc.combatFacing == 7) { gv.DrawBitmap(gv.cc.facing7, src, dst); }
+                    if (pc.combatFacing == 8) { gv.DrawBitmap(c, gv.cc.facing8, src, dst); }
+                    else if (pc.combatFacing == 9) { gv.DrawBitmap(c, gv.cc.facing9, src, dst); }
+                    else if (pc.combatFacing == 6) { gv.DrawBitmap(c, gv.cc.facing6, src, dst); }
+                    else if (pc.combatFacing == 3) { gv.DrawBitmap(c, gv.cc.facing3, src, dst); }
+                    else if (pc.combatFacing == 2) { gv.DrawBitmap(c, gv.cc.facing2, src, dst); }
+                    else if (pc.combatFacing == 1) { gv.DrawBitmap(c, gv.cc.facing1, src, dst); }
+                    else if (pc.combatFacing == 4) { gv.DrawBitmap(c, gv.cc.facing4, src, dst); }
+                    else if (pc.combatFacing == 7) { gv.DrawBitmap(c, gv.cc.facing7, src, dst); }
                     else { } //didn't find one
                 }
 
                 if (showMoveOrder)
                 {
                     int mo = pc.moveOrder + 1;
-                    drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
+                    drawText(c, getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
                 }
                 
             }
         }
-        public void drawLosTrail()
+        public void drawLosTrail(SKCanvas c)
         {
             Player p = gv.mod.playerList[currentPlayerIndex];
             if ((currentCombatMode.Equals("attack")) || (currentCombatMode.Equals("cast")) || (currentCombatMode.Equals("usetrait")))
@@ -4684,15 +4685,15 @@ namespace IBbasic
                 //check if target is within attack distance, use green if true, red if false
                 if (isVisibleLineOfSight(new Coordinate(endX2, endY2), new Coordinate(startX2, startY2)))
                 {
-                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), "green", 2);
+                    drawVisibleLineOfSightTrail(c, new Coordinate(endX, endY), new Coordinate(startX, startY), "green", 2);
                 }
                 else
                 {
-                    drawVisibleLineOfSightTrail(new Coordinate(endX, endY), new Coordinate(startX, startY), "red", 2);
+                    drawVisibleLineOfSightTrail(c, new Coordinate(endX, endY), new Coordinate(startX, startY), "red", 2);
                 }
             }
         }
-        public void drawCombatCreatures()
+        public void drawCombatCreatures(SKCanvas c)
         {
             if (gv.mod.currentEncounter.encounterCreatureList.Count > 0)
             {
@@ -4707,7 +4708,7 @@ namespace IBbasic
                             IbRect dst = new IbRect(getPixelLocX(coor.X), getPixelLocY(coor.Y), (int)(gv.squareSize * gv.scaler), (int)(gv.squareSize * gv.scaler));
                             if (IsInVisibleCombatWindow(coor.X, coor.Y))
                             {
-                                gv.DrawBitmap(gv.cc.turn_marker, src, dst);
+                                gv.DrawBitmap(c, gv.cc.turn_marker, src, dst);
                             }
                         }
                     }
@@ -4748,37 +4749,37 @@ namespace IBbasic
                     dst = new IbRect(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), (int)(gv.squareSize * gv.scaler) * 2, (int)(gv.squareSize * gv.scaler) * 2);
                 }
 
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(crt.cr_tokenFilename), src, dst, !crt.combatFacingLeft);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(crt.cr_tokenFilename), src, dst, !crt.combatFacingLeft);
                 if (!animationsOn)
                 {
                     foreach (Effect ef in crt.cr_effectsList)
                     {
                         //Bitmap fx = gv.cc.LoadBitmap(ef.spriteFilename);
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(ef.spriteFilename).Width, gv.cc.GetFromBitmapList(ef.spriteFilename).Width);
-                        gv.DrawBitmap(gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
                         //gv.cc.DisposeOfBitmap(ref fx);
                     }
                 }
                 //CREATURE FACING
                 src = new IbRect(0, 0, gv.cc.facing1.Width, gv.cc.facing1.Height);
-                if (crt.combatFacing == 8) { gv.DrawBitmap(gv.cc.facing8, src, dst); }
-                else if (crt.combatFacing == 9) { gv.DrawBitmap(gv.cc.facing9, src, dst); }
-                else if (crt.combatFacing == 6) { gv.DrawBitmap(gv.cc.facing6, src, dst); }
-                else if (crt.combatFacing == 3) { gv.DrawBitmap(gv.cc.facing3, src, dst); }
-                else if (crt.combatFacing == 2) { gv.DrawBitmap(gv.cc.facing2, src, dst); }
-                else if (crt.combatFacing == 1) { gv.DrawBitmap(gv.cc.facing1, src, dst); }
-                else if (crt.combatFacing == 4) { gv.DrawBitmap(gv.cc.facing4, src, dst); }
-                else if (crt.combatFacing == 7) { gv.DrawBitmap(gv.cc.facing7, src, dst); }
+                if (crt.combatFacing == 8) { gv.DrawBitmap(c, gv.cc.facing8, src, dst); }
+                else if (crt.combatFacing == 9) { gv.DrawBitmap(c, gv.cc.facing9, src, dst); }
+                else if (crt.combatFacing == 6) { gv.DrawBitmap(c, gv.cc.facing6, src, dst); }
+                else if (crt.combatFacing == 3) { gv.DrawBitmap(c, gv.cc.facing3, src, dst); }
+                else if (crt.combatFacing == 2) { gv.DrawBitmap(c, gv.cc.facing2, src, dst); }
+                else if (crt.combatFacing == 1) { gv.DrawBitmap(c, gv.cc.facing1, src, dst); }
+                else if (crt.combatFacing == 4) { gv.DrawBitmap(c, gv.cc.facing4, src, dst); }
+                else if (crt.combatFacing == 7) { gv.DrawBitmap(c, gv.cc.facing7, src, dst); }
                 else { } //didn't find one
 
                 if (showMoveOrder)
                 {
                     int mo = crt.moveOrder + 1;
-                    drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
+                    drawText(c, getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) - gv.fontHeight, mo.ToString(), "wh");
                 }
             }
         }
-        public void drawEffectSquares()
+        public void drawEffectSquares(SKCanvas c)
         {
             if (!animationsOn)
             {
@@ -4790,11 +4791,11 @@ namespace IBbasic
                     }
                     IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList(ef.spriteFilename).Width, gv.cc.GetFromBitmapList(ef.spriteFilename).Width);
                     IbRect dst = new IbRect(getPixelLocX(ef.combatLocX), getPixelLocY(ef.combatLocY), (int)(gv.squareSize * gv.scaler), (int)(gv.squareSize * gv.scaler));
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ef.spriteFilename), src, dst);
                 }
             }
         }
-        public void drawProps()
+        public void drawProps(SKCanvas c)
         {
             foreach (Prop prp in gv.mod.currentEncounter.propsList)
             {
@@ -4804,10 +4805,10 @@ namespace IBbasic
                 }
                 IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList(prp.ImageFileName).Width, gv.cc.GetFromBitmapList(prp.ImageFileName).Width);
                 IbRect dst = new IbRect(getPixelLocX(prp.LocationX), getPixelLocY(prp.LocationY), (int)(gv.squareSize * gv.scaler), (int)(gv.squareSize * gv.scaler));
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(prp.ImageFileName), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(prp.ImageFileName), src, dst);
             }
         }
-        public void drawTargetHighlight()
+        public void drawTargetHighlight(SKCanvas c)
         {
             Player pc = gv.mod.playerList[currentPlayerIndex];
             if (currentCombatMode.Equals("attack"))
@@ -4864,14 +4865,14 @@ namespace IBbasic
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_green, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_green, src, dst);
                         }
                     }
                     else
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_red, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_red, src, dst);
                         }
                     }
                 }
@@ -4918,14 +4919,14 @@ namespace IBbasic
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_green, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_green, src, dst);
                         }
                     }
                     else
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_red, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_red, src, dst);
                         }
                     }
                 }
@@ -4972,20 +4973,20 @@ namespace IBbasic
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_green, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_green, src, dst);
                         }
                     }
                     else
                     {
                         if (IsInVisibleCombatWindow(coor.X, coor.Y))
                         {
-                            gv.DrawBitmap(gv.cc.highlight_red, src, dst);
+                            gv.DrawBitmap(c, gv.cc.highlight_red, src, dst);
                         }
                     }
                 }
             }
         }
-        public void drawFloatyText()
+        public void drawFloatyText(SKCanvas c)
         {
             int txtH = (int)gv.fontHeight;
 
@@ -5003,16 +5004,16 @@ namespace IBbasic
             {
                 for (int y = -2; y <= 2; y++)
                 {
-                    gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X + x, yLoc + txtH + y, "bk");
-                    gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 2) + y, "bk");
-                    gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 3) + y, "bk");
+                    gv.DrawText(c, gv.cc.floatyText, gv.cc.floatyTextLoc.X + x, yLoc + txtH + y, "bk");
+                    gv.DrawText(c, gv.cc.floatyText2, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 2) + y, "bk");
+                    gv.DrawText(c, gv.cc.floatyText3, gv.cc.floatyTextLoc.X + x, yLoc + (txtH * 3) + y, "bk");
                 }
             }
-            gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X, yLoc + txtH, "yl");
-            gv.DrawText(gv.cc.floatyText2, gv.cc.floatyTextLoc.X, yLoc + txtH * 2, "yl");
-            gv.DrawText(gv.cc.floatyText3, gv.cc.floatyTextLoc.X, yLoc + txtH * 3, "yl");
+            gv.DrawText(c, gv.cc.floatyText, gv.cc.floatyTextLoc.X, yLoc + txtH, "yl");
+            gv.DrawText(c, gv.cc.floatyText2, gv.cc.floatyTextLoc.X, yLoc + txtH * 2, "yl");
+            gv.DrawText(c, gv.cc.floatyText3, gv.cc.floatyTextLoc.X, yLoc + txtH * 3, "yl");
         }
-        public void drawHPText()
+        public void drawHPText(SKCanvas c)
         {
             if ((showHP) && (!animationsOn))
             {
@@ -5024,15 +5025,15 @@ namespace IBbasic
                     }
                     if (crt.hp > (int)(crt.hpMax * 0.66f))
                     {
-                        drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "gn");
+                        drawText(c, getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "gn");
                     }
                     else if (crt.hp > (int)(crt.hpMax * 0.33f))
                     {
-                        drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "yl");
+                        drawText(c, getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "yl");
                     }
                     else
                     {
-                        drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "rd");
+                        drawText(c, getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY), crt.hp + "", "rd");
                     }
                 }
                 foreach (Player pc in gv.mod.playerList)
@@ -5043,20 +5044,20 @@ namespace IBbasic
                     }
                     if (pc.hp > (int)(pc.hpMax * 0.66f))
                     {
-                        drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "gn");
+                        drawText(c, getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "gn");
                     }
                     else if (pc.hp > (int)(pc.hpMax * 0.33f))
                     {
-                        drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "yl");
+                        drawText(c, getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "yl");
                     }
                     else
                     {
-                        drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "rd");
+                        drawText(c, getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY), pc.hp + "", "rd");
                     }
                 }
             }
         }
-        public void drawSPText()
+        public void drawSPText(SKCanvas c)
         {
             if ((showSP) && (!animationsOn))
             {
@@ -5067,7 +5068,7 @@ namespace IBbasic
                     {
                         continue;
                     }
-                    drawText(getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) + txtH, crt.sp + "", "yl");                    
+                    drawText(c, getPixelLocX(crt.combatLocX), getPixelLocY(crt.combatLocY) + txtH, crt.sp + "", "yl");                    
                 }
                 foreach (Player pc in gv.mod.playerList)
                 {
@@ -5075,11 +5076,11 @@ namespace IBbasic
                     {
                         continue;
                     }
-                    drawText(getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) + txtH, pc.sp + "", "yl");                    
+                    drawText(c, getPixelLocX(pc.combatLocX), getPixelLocY(pc.combatLocY) + txtH, pc.sp + "", "yl");                    
                 }
             }
         }
-        public void drawText(int xLoc, int yLoc, string text, string colr)
+        public void drawText(SKCanvas c, int xLoc, int yLoc, string text, string colr)
         {
             int txtH = (int)gv.fontHeight;
 
@@ -5087,12 +5088,12 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText(text, xLoc + x, yLoc + txtH + y, "bk");
+                    gv.DrawText(c, text, xLoc + x, yLoc + txtH + y, "bk");
                 }
             }
-            gv.DrawText(text, xLoc, yLoc + txtH, colr);
+            gv.DrawText(c, text, xLoc, yLoc + txtH, colr);
         }
-        public void drawFloatyTextList()
+        public void drawFloatyTextList(SKCanvas c)
         {
             if (floatyTextOn)
             {
@@ -5104,7 +5105,7 @@ namespace IBbasic
                     {
                         for (int y = -2; y <= 2; y++)
                         {
-                            gv.DrawText(ft.value, ft.location.X - (UpperLeftSquare.X * (int)(gv.squareSize * gv.scaler)) + x + mapStartLocXinPixels, ft.location.Y - (UpperLeftSquare.Y * (int)(gv.squareSize * gv.scaler)) + y, "bk");
+                            gv.DrawText(c, ft.value, ft.location.X - (UpperLeftSquare.X * (int)(gv.squareSize * gv.scaler)) + x + mapStartLocXinPixels, ft.location.Y - (UpperLeftSquare.Y * (int)(gv.squareSize * gv.scaler)) + y, "bk");
                         }
                     }
                     string colr = "yl";
@@ -5124,11 +5125,11 @@ namespace IBbasic
                     {
                         colr = "rd";
                     }
-                    gv.DrawText(ft.value, ft.location.X - (UpperLeftSquare.X * (int)(gv.squareSize * gv.scaler)) + mapStartLocXinPixels, ft.location.Y - (UpperLeftSquare.Y * (int)(gv.squareSize * gv.scaler)), colr);
+                    gv.DrawText(c, ft.value, ft.location.X - (UpperLeftSquare.X * (int)(gv.squareSize * gv.scaler)) + mapStartLocXinPixels, ft.location.Y - (UpperLeftSquare.Y * (int)(gv.squareSize * gv.scaler)), colr);
                 }
             }
         }
-        public void drawOverlayTints()
+        public void drawOverlayTints(SKCanvas c)
         {
             IbRect src = new IbRect(0, 0, gv.cc.tint_sunset.Width, gv.cc.tint_sunset.Height);
             IbRect dst = new IbRect(mapStartLocXinPixels, 0, (int)(gv.squareSize * gv.scaler) * (gv.playerOffsetX + gv.playerOffsetX + 1), (int)(gv.squareSize * gv.scaler) * (gv.playerOffsetY + gv.playerOffsetY + 2));
@@ -5145,11 +5146,11 @@ namespace IBbasic
             int time = gv.mod.WorldTime % 1440;
             if ((time >= dawn) && (time < sunrise))
             {
-                gv.DrawBitmap(gv.cc.tint_dawn, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_dawn, src, dst);
             }
             else if ((time >= sunrise) && (time < day))
             {
-                gv.DrawBitmap(gv.cc.tint_sunrise, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_sunrise, src, dst);
             }
             else if ((time >= day) && (time < sunset))
             {
@@ -5157,19 +5158,19 @@ namespace IBbasic
             }
             else if ((time >= sunset) && (time < dusk))
             {
-                gv.DrawBitmap(gv.cc.tint_sunset, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_sunset, src, dst);
             }
             else if ((time >= dusk) && (time < night))
             {
-                gv.DrawBitmap(gv.cc.tint_dusk, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_dusk, src, dst);
             }
             else if ((time >= night) || (time < dawn))
             {
-                gv.DrawBitmap(gv.cc.tint_night, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_night, src, dst);
             }
 
         }
-        public void drawMovesLeftText()
+        public void drawMovesLeftText(SKCanvas c)
         {
             int txtH = (int)gv.fontHeight;
             int xLoc = gv.uiSquareSize + (int)((2 * gv.scaler));
@@ -5186,16 +5187,16 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("moves left: " + movesLeft.ToString(), x + xLoc, y + yLoc, "bk");                    
+                    gv.DrawText(c, "moves left: " + movesLeft.ToString(), x + xLoc, y + yLoc, "bk");                    
                 }
             }
-            gv.DrawText("moves left: " + movesLeft.ToString(), xLoc, yLoc, "wh");            
+            gv.DrawText(c, "moves left: " + movesLeft.ToString(), xLoc, yLoc, "wh");            
         }
-        public void drawSprites()
+        public void drawSprites(SKCanvas c)
         {
             foreach (Sprite spr in spriteList)
             {
-                spr.Draw(gv);
+                spr.Draw(c, gv);
             }
             if (animationsOn)
             {
@@ -5208,7 +5209,7 @@ namespace IBbasic
                             foreach (Sprite spr in seq.AnimationSeq[0].SpriteGroup)
                             {
                                 //just draw the group at the top of the stack, first in first
-                                spr.Draw(gv);
+                                spr.Draw(c, gv);
                             }
                         }
                     }
@@ -7259,7 +7260,7 @@ namespace IBbasic
 
             return true;
         }
-        public bool drawVisibleLineOfSightTrail(Coordinate end, Coordinate start, string penColor, int penWidth)
+        public bool drawVisibleLineOfSightTrail(SKCanvas c, Coordinate end, Coordinate start, string penColor, int penWidth)
         {
             // Bresenham Line algorithm
             // Creates a line from Begin to End starting at (x0,y0) and ending at (x1,y1)
@@ -7296,7 +7297,7 @@ namespace IBbasic
                         //do your checks here for LoS blocking
                         int gridx = getGridX(nextPoint);
                         int gridy = getGridY(nextPoint);
-                        gv.DrawLine(lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
+                        gv.DrawLine(c, lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
                         if (gv.mod.currentEncounter.LoSBlocked[gridy * gv.mod.currentEncounter.MapSizeX + gridx] == 1)
                         {
                             return false;
@@ -7321,7 +7322,7 @@ namespace IBbasic
                         //do your checks here for LoS blocking
                         int gridx = getGridX(nextPoint);
                         int gridy = getGridY(nextPoint);
-                        gv.DrawLine(lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
+                        gv.DrawLine(c, lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
                         if (gv.mod.currentEncounter.LoSBlocked[gridy * gv.mod.currentEncounter.MapSizeX + gridx] == 1)
                         {
                             return false;
@@ -7355,7 +7356,7 @@ namespace IBbasic
                         //do your checks here for LoS blocking
                         int gridx = getGridX(nextPoint);
                         int gridy = getGridY(nextPoint);
-                        gv.DrawLine(lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
+                        gv.DrawLine(c, lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
                         if (gv.mod.currentEncounter.LoSBlocked[gridy * gv.mod.currentEncounter.MapSizeX + gridx] == 1)
                         {
                             return false;
@@ -7380,7 +7381,7 @@ namespace IBbasic
                         //do your checks here for LoS blocking
                         int gridx = getGridX(nextPoint);
                         int gridy = getGridY(nextPoint);
-                        gv.DrawLine(lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
+                        gv.DrawLine(c, lastX, lastY, nextPoint.X, nextPoint.Y, penColor, penWidth);
                         if (gv.mod.currentEncounter.LoSBlocked[gridy * gv.mod.currentEncounter.MapSizeX + gridx] == 1)
                         {
                             return false;

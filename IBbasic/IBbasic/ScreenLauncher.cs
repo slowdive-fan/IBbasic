@@ -314,7 +314,7 @@ namespace IBbasic
 
         }
         //TITLE SCREEN  
-        public void redrawLauncher()
+        public void redrawLauncher(SKCanvas c)
         {
             setControlsStart();
             int titleW = gv.uiSquareSize * 4;
@@ -325,16 +325,16 @@ namespace IBbasic
 		    {
                 IbRect src = new IbRect(0, 0, titleList[moduleIndex].Width, titleList[moduleIndex].Height);
                 IbRect dst = new IbRect(titleX, 0, titleW, titleH);
-                gv.DrawBitmap(titleList[moduleIndex], src, dst);
+                gv.DrawBitmap(c, titleList[moduleIndex], src, dst);
 		    }
 
-            gv.DrawText(downloadText, 0 * gv.uiSquareSize, 0 * gv.uiSquareSize, "yl");
+            gv.DrawText(c, downloadText, 0 * gv.uiSquareSize, 0 * gv.uiSquareSize, "yl");
 
             //DRAW DESCRIPTION BOX
             if ((moduleInfoList.Count > 0) && (moduleIndex < moduleInfoList.Count))
 		    {
                 btnModuleName.Text = moduleInfoList[moduleIndex].buttonText + " MODULE";
-                drawLauncherControls();
+                drawLauncherControls(c);
 
                 string textToSpan = "<gn>" + moduleInfoList[moduleIndex].moduleLabelName + "</gn><br>";
                 description.tbXloc = 0 * gv.uiSquareSize / 2;
@@ -344,24 +344,24 @@ namespace IBbasic
                 textToSpan += moduleInfoList[moduleIndex].moduleDescription;
                 description.linesList.Clear();
                 description.AddFormattedTextToTextBox(textToSpan);
-                description.onDrawTextBox();
+                description.onDrawTextBox(c);
 
-                btnPostReview.Draw();
+                btnPostReview.Draw(c);
 
-                btnReadReviews.Draw();
+                btnReadReviews.Draw(c);
                 string reviewCnt = getTotalReviewCount().ToString();
-                gv.DrawText(reviewCnt, btnReadReviews.X - (gv.fontWidth * reviewCnt.Length), btnReadReviews.Y + (btnReadReviews.Height / 2), "wh");
+                gv.DrawText(c, reviewCnt, btnReadReviews.X - (gv.fontWidth * reviewCnt.Length), btnReadReviews.Y + (btnReadReviews.Height / 2), "wh");
 
                 setEndorseToggle();
-                tglEndorse.Draw();
+                tglEndorse.Draw(c);
                 string endorseCnt = getTotalEndorsementCount().ToString();
-                gv.DrawText(endorseCnt, tglEndorse.X - (gv.fontWidth * endorseCnt.Length), tglEndorse.Y + (tglEndorse.Height / 2), "wh");
+                gv.DrawText(c, endorseCnt, tglEndorse.X - (gv.fontWidth * endorseCnt.Length), tglEndorse.Y + (tglEndorse.Height / 2), "wh");
 
             }
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
 
@@ -458,13 +458,13 @@ namespace IBbasic
             }
         }
 
-        public void drawLauncherControls()
+        public void drawLauncherControls(SKCanvas c)
 	    {    	
-		    btnLeft.Draw();		
-		    btnRight.Draw();
-		    btnModuleName.Draw();
-            btnGetUpdates.Draw();
-            btnUserName.Draw();
+		    btnLeft.Draw(c);		
+		    btnRight.Draw(c);
+		    btnModuleName.Draw(c);
+            btnGetUpdates.Draw(c);
+            btnUserName.Draw(c);
         }
         public void onTouchLauncher(int eX, int eY, MouseEventType.EventType eventType)
 	    {
@@ -584,7 +584,7 @@ namespace IBbasic
                         }
                         else if (btnReadReviews.getImpact(x, y))
                         {
-                            gv.TrackerSendEvent(":READ_REVIEWS:", "none", true);
+                            gv.TrackerSendEvent(":READ_REVIEWS:" + moduleInfoList[moduleIndex].moduleName + ":", "none", true);
                             downloadFile("IBbasicCommunityReviews.json", "IBbasicCommunityReviews.json");
                             gv.loadReviews();
                             string reviews = "";
@@ -717,7 +717,14 @@ namespace IBbasic
                     rev.userName = gv.IBprefs.UserName;
                     rev.moduleVersion = moduleInfoList[moduleIndex].moduleVersion;
                     rev.reviewDate = DateTime.Now.ToString("yyyy-MM-dd");
-                    gv.postReview(rev);
+                    if ((rev.review.Equals("")) || (rev.review.Equals("none")))
+                    {
+                        //don't do anything                        
+                    }
+                    else
+                    {
+                        gv.postReview(rev);
+                    }
                     gv.saveUserReviews();
                     //gv.touchEnabled = true;
                     break;
@@ -733,9 +740,16 @@ namespace IBbasic
                 newRev.reviewDate = DateTime.Now.ToString("yyyy-MM-dd");
                 string myinput = await gv.StringInputBox("Your review for this module (all reviews will be reviewed by the IB Team within 24 hours and any inappropriate or non-constructive reviews will be rejected):", newRev.review);
                 newRev.review = myinput;
-                gv.postReview(newRev);
-                gv.userReviews.reviews.Add(newRev);
-                gv.saveUserReviews();
+                if ((newRev.review.Equals("")) || (newRev.review.Equals("none")))
+                {
+                    //don't do anything  
+                }
+                else
+                {
+                    gv.postReview(newRev);
+                    gv.userReviews.reviews.Add(newRev);
+                    gv.saveUserReviews();
+                }
             }
         }
         public async void changeEndorse()

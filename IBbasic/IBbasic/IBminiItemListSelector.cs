@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,7 +54,7 @@ namespace IBbasic
                 btnSelections.Add(btnNew);
             }
         }                
-        public void drawItemListSelection()
+        public void drawItemListSelection(SKCanvas c)
         {
             //IF CONTROLS ARE NULL, CREATE THEM
             if (btnSelections.Count < 1)
@@ -70,17 +71,17 @@ namespace IBbasic
             //DRAW PANEL BACKGROUND
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_log").Width, gv.cc.GetFromBitmapList("ui_bg_log").Height);
             IbRect dst = new IbRect((int)(currentLocX * gv.scaler), (int)(currentLocY * gv.scaler), (int)(Width * gv.scaler), (int)(Height * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_log"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromBitmapList("ui_bg_log"), src, dst);
 
             //DRAW TEXT		
             int textWidth = HeaderText.Length * (gv.fontWidth + gv.fontCharSpacing);
             locX = (int)(currentLocX * gv.scaler) + (((int)(Width * gv.scaler) - textWidth) / 2);
-            gv.DrawText(HeaderText, locX, locY, "wh");
+            gv.DrawText(c, HeaderText, locX, locY, "wh");
             
             //DRAW ALL SELECTION BUTTONS		
             foreach (IbbButton btn in btnSelections)
             {
-                btn.Draw();
+                btn.Draw(c);
             }
         }        
         public void onTouchItemListSelection(int eX, int eY, MouseEventType.EventType eventType)

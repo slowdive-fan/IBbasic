@@ -32,17 +32,17 @@ namespace IBbasic
             gv = g;
         }
 
-        public void DrawBitmap(SKBitmap bmp, int x, int y)
+        public void DrawBitmap(SKCanvas c, SKBitmap bmp, int x, int y)
         {
             IbRect src = new IbRect(0, 0, bmp.Width, bmp.Height);
             IbRect dst = new IbRect(x + tbXloc, y + tbYloc, bmp.Width, bmp.Height);
-            gv.DrawBitmap(bmp, src, dst);
+            gv.DrawBitmap(c, bmp, src, dst);
         }
-        public void DrawString(string text, float x, float y, string fontColor)
+        public void DrawString(SKCanvas c, string text, float x, float y, string fontColor)
         {
             if ((y > -2) && (y <= tbHeight - gv.fontHeight))
             {
-                gv.DrawText(text, x + tbXloc, y + tbYloc, fontColor);
+                gv.DrawText(c, text, x + tbXloc, y + tbYloc, fontColor);
             }
         }
 
@@ -70,7 +70,7 @@ namespace IBbasic
             }
         }
         
-        public void onDrawLogBox()
+        public void onDrawLogBox(SKCanvas c)
         {
             //only draw lines needed to fill textbox
             float xLoc = 0;
@@ -81,7 +81,7 @@ namespace IBbasic
                 //loop through each line and print each word
                 foreach (IBminiFormattedWord word in logLinesList[i].wordsList)
                 {
-                    DrawString(word.text + " ", xLoc, yLoc, word.color);
+                    DrawString(c, word.text + " ", xLoc, yLoc, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
                 xLoc = 0;
@@ -91,7 +91,7 @@ namespace IBbasic
             //draw border for debug info
             if (showBoxBorder)
             {
-                gv.DrawRectangle(new IbRect(tbXloc, tbYloc, tbWidth, tbHeight), SKColors.DimGray, 1);
+                gv.DrawRectangle(c, new IbRect(tbXloc, tbYloc, tbWidth, tbHeight), SKColors.DimGray, 1);
             }
         }
     }

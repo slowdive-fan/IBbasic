@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,7 @@ namespace IBbasic
             return false;
         }
 
-        public void Draw()
+        public void Draw(SKCanvas c)
         {
             if (show)
             {
@@ -43,11 +44,11 @@ namespace IBbasic
                 IbRect dst = new IbRect(this.X, this.Y, (int)((float)this.Width), (int)((float)this.Height));                
                 if (toggleOn)
                 {
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgOn), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgOn), src, dst);
                 }
                 else
                 {
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgOff), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgOff), src, dst);
                 }
             }
         }

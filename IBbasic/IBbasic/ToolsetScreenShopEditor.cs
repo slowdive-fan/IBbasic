@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -137,53 +138,53 @@ namespace IBbasic
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsShopEditor()
+        public void redrawTsShopEditor(SKCanvas c)
         {
             setControlsStart();
             int shiftForFont = (btnShopTag.Height / 2) - (gv.fontHeight / 2);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
-            gv.DrawText("SHOP EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "SHOP EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
 
             //label for Containers in module      
-            gv.DrawText("SHOPS", btnAddShop.X, btnAddShop.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            gv.DrawText(c, "SHOPS", btnAddShop.X, btnAddShop.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
             //on the left draw the add and remove buttons
-            btnAddShop.Draw();
-            btnRemoveShop.Draw();
+            btnAddShop.Draw(c);
+            btnRemoveShop.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = 1 * gv.fontWidth;
             int startY = btnAddShop.Y + btnAddShop.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (Shop c in gv.mod.moduleShopsList)
+            foreach (Shop c2 in gv.mod.moduleShopsList)
             {
                 if (cnt == shopListIndex)
                 {
-                    gv.DrawText(c.shopTag, startX, startY += incY, "gn");
+                    gv.DrawText(c, c2.shopTag, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(c.shopTag, startX, startY += incY, "wh");
+                    gv.DrawText(c, c2.shopTag, startX, startY += incY, "wh");
                 }
                 cnt++;
             }
 
             if (gv.mod.moduleShopsList.Count > 0)
             {
-                btnShopTag.Draw();
-                gv.DrawText("SHOP TAG: " + gv.mod.moduleShopsList[shopListIndex].shopTag, btnShopTag.X + btnShopTag.Width + gv.scaler, btnShopTag.Y + shiftForFont, "wh");
-                btnShopName.Draw();
-                gv.DrawText("SHOP NAME: " + gv.mod.moduleShopsList[shopListIndex].shopName, btnShopName.X + btnShopName.Width + gv.scaler, btnShopName.Y + shiftForFont, "wh");
-                btnShopBuyBack.Draw();
-                gv.DrawText("BUY %: " + gv.mod.moduleShopsList[shopListIndex].buybackPercent, btnShopBuyBack.X + btnShopBuyBack.Width + gv.scaler, btnShopBuyBack.Y + shiftForFont, "wh");
-                btnShopSell.Draw();
-                gv.DrawText("SELL %: " + gv.mod.moduleShopsList[shopListIndex].sellPercent, btnShopSell.X + btnShopSell.Width + gv.scaler, btnShopSell.Y + shiftForFont, "wh");
+                btnShopTag.Draw(c);
+                gv.DrawText(c, "SHOP TAG: " + gv.mod.moduleShopsList[shopListIndex].shopTag, btnShopTag.X + btnShopTag.Width + gv.scaler, btnShopTag.Y + shiftForFont, "wh");
+                btnShopName.Draw(c);
+                gv.DrawText(c, "SHOP NAME: " + gv.mod.moduleShopsList[shopListIndex].shopName, btnShopName.X + btnShopName.Width + gv.scaler, btnShopName.Y + shiftForFont, "wh");
+                btnShopBuyBack.Draw(c);
+                gv.DrawText(c, "BUY %: " + gv.mod.moduleShopsList[shopListIndex].buybackPercent, btnShopBuyBack.X + btnShopBuyBack.Width + gv.scaler, btnShopBuyBack.Y + shiftForFont, "wh");
+                btnShopSell.Draw(c);
+                gv.DrawText(c, "SELL %: " + gv.mod.moduleShopsList[shopListIndex].sellPercent, btnShopSell.X + btnShopSell.Width + gv.scaler, btnShopSell.Y + shiftForFont, "wh");
 
                 //label for item list
-                gv.DrawText("SHOP ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+                gv.DrawText(c, "SHOP ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
                 //on the left draw the add and remove buttons
-                btnAddItem.Draw();
-                btnRemoveItem.Draw();
+                btnAddItem.Draw(c);
+                btnRemoveItem.Draw(c);
                 //list all containers (tap on a container in the list to show elements for editing)
                 startX = btnAddItem.X;
                 startY = btnAddItem.Y + btnAddItem.Height - gv.fontHeight;
@@ -200,11 +201,11 @@ namespace IBbasic
                     //need to check if should start new column after list hits end of screen
                     if (cnt == itemListIndex)
                     {
-                        gv.DrawText(itr.name, startX, startY += incY, "gn");
+                        gv.DrawText(c, itr.name, startX, startY += incY, "gn");
                     }
                     else
                     {
-                        gv.DrawText(itr.name, startX, startY += incY, "wh");
+                        gv.DrawText(c, itr.name, startX, startY += incY, "wh");
                     }
                     cnt++;
                     columncount++;
@@ -217,13 +218,13 @@ namespace IBbasic
                 }
             }
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTsShopEditor(int eX, int eY, MouseEventType.EventType eventType)

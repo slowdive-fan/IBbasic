@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace IBbasic
         }
 
         //PARTY SCREEN
-        public void redrawPcSelector()
+        public void redrawPcSelector(SKCanvas c)
         {
 
             if (pcSelectorPcIndex >= gv.mod.playerList.Count)
@@ -87,51 +88,51 @@ namespace IBbasic
                 {
                     if (cntPCs == pcSelectorPcIndex) { btn.glowOn = true; }
                     else { btn.glowOn = false; }
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntPCs++;
             }
 
             //DRAW LEFT STATS
             //name            
-            gv.DrawText("Name: " + pc.name, locX, locY += leftStartY, "wh");
+            gv.DrawText(c, "Name: " + pc.name, locX, locY += leftStartY, "wh");
 
             //race
-            gv.DrawText("Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
+            gv.DrawText(c, "Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
 
             //gender
             if (pc.isMale)
             {
-                gv.DrawText("Gender: Male", locX, locY += spacing, "wh");
+                gv.DrawText(c, "Gender: Male", locX, locY += spacing, "wh");
             }
             else
             {
-                gv.DrawText("Gender: Female", locX, locY += spacing, "wh");
+                gv.DrawText(c, "Gender: Female", locX, locY += spacing, "wh");
             }
 
             //class
-            gv.DrawText("Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
-            gv.DrawText("Level: " + pc.classLevel, locX, locY += spacing, "wh");
-            gv.DrawText("XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
-            gv.DrawText("---------------", locX, locY += spacing, "wh");
+            gv.DrawText(c, "Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
+            gv.DrawText(c, "Level: " + pc.classLevel, locX, locY += spacing, "wh");
+            gv.DrawText(c, "XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
+            gv.DrawText(c, "---------------", locX, locY += spacing, "wh");
             
             //DRAW RIGHT STATS
             int actext = 0;
             if (gv.mod.ArmorClassAscending) { actext = pc.AC; }
             else { actext = 20 - pc.AC; }
             locY = 0;
-            gv.DrawText("STR: " + pc.strength, tabX, locY += leftStartY, "wh");
-            gv.DrawText("AC: " + actext, tabX2, locY, "wh");
-            gv.DrawText("DEX: " + pc.dexterity, tabX, locY += spacing, "wh");
-            gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY, "wh");
-            gv.DrawText("CON: " + pc.constitution, tabX, locY += spacing, "wh");
-            gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, tabX2, locY, "wh");
-            gv.DrawText("INT: " + pc.intelligence, tabX, locY += spacing, "wh");
-            gv.DrawText("BAB: " + pc.baseAttBonus, tabX2, locY, "wh");
-            gv.DrawText("WIS: " + pc.wisdom, tabX, locY += spacing, "wh");
-            gv.DrawText("CHA: " + pc.charisma, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "STR: " + pc.strength, tabX, locY += leftStartY, "wh");
+            gv.DrawText(c, "AC: " + actext, tabX2, locY, "wh");
+            gv.DrawText(c, "DEX: " + pc.dexterity, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY, "wh");
+            gv.DrawText(c, "CON: " + pc.constitution, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "SP: " + pc.sp + "/" + pc.spMax, tabX2, locY, "wh");
+            gv.DrawText(c, "INT: " + pc.intelligence, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "BAB: " + pc.baseAttBonus, tabX2, locY, "wh");
+            gv.DrawText(c, "WIS: " + pc.wisdom, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "CHA: " + pc.charisma, tabX, locY += spacing, "wh");
                         
-            btnReturn.Draw();
+            btnReturn.Draw(c);
         }
         public void onTouchPcSelector(int eX, int eY, MouseEventType.EventType eventType)
         {

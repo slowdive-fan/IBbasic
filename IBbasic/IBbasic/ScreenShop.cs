@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -187,7 +188,7 @@ namespace IBbasic
 		    }
 	    }
 
-        public void redrawShop()
+        public void redrawShop(SKCanvas c)
         {
             
     	    this.doItemStackingParty();
@@ -205,13 +206,13 @@ namespace IBbasic
     	    int tabStartY = 9 * gv.uiSquareSize + pH * 2;
     	    int tabShopStartY = 4 * gv.uiSquareSize + pH * 2;
     	
-    	    gv.DrawText(currentShop.shopName, 5 * gv.uiSquareSize, locY + pH, "gy");
+    	    gv.DrawText(c, currentShop.shopName, 5 * gv.uiSquareSize, locY + pH, "gy");
 		
 	
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX of SHOP
-		    btnShopPageIndex.Draw();
-		    btnShopLeft.Draw();
-		    btnShopRight.Draw();		
+		    btnShopPageIndex.Draw(c);
+		    btnShopLeft.Draw(c);
+		    btnShopRight.Draw(c);		
 		
 		    //DRAW ALL SHOP INVENTORY SLOTS of SHOP		
 		    int cntSlot = 0;
@@ -254,7 +255,7 @@ namespace IBbasic
 				    btn.Text = "";
 				    btn.Quantity = "";
 			    }
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -290,21 +291,21 @@ namespace IBbasic
                 description.tbHeight = 4 * gv.uiSquareSize;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
 		
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
-		    btnPageIndex.Draw();
-		    btnInventoryLeft.Draw();
-		    btnInventoryRight.Draw();
+		    btnPageIndex.Draw(c);
+		    btnInventoryLeft.Draw(c);
+		    btnInventoryRight.Draw(c);
 
             //DRAW TEXT		
             locY = (3 * gv.uiSquareSize);
-            gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "gy");
-            gv.DrawText("Inventory", locX + gv.uiSquareSize * 4, locY += spacing, "gy");
+            gv.DrawText(c, "Party", locX + gv.uiSquareSize * 4, locY, "gy");
+            gv.DrawText(c, "Inventory", locX + gv.uiSquareSize * 4, locY += spacing, "gy");
             locY = (int)(3.5 * gv.uiSquareSize);
-            gv.DrawText("Party", locX + gv.uiSquareSize * 4, locY, "yl");
-            gv.DrawText(gv.mod.goldLabelPlural + ": " + gv.mod.partyGold, locX + gv.uiSquareSize * 4, locY += spacing, "yl");
+            gv.DrawText(c, "Party", locX + gv.uiSquareSize * 4, locY, "yl");
+            gv.DrawText(c, gv.mod.goldLabelPlural + ": " + gv.mod.partyGold, locX + gv.uiSquareSize * 4, locY += spacing, "yl");
 
             //DRAW ALL PARTY INVENTORY SLOTS		
             cntSlot = 0;
@@ -346,7 +347,7 @@ namespace IBbasic
 				    btn.Text = "";
 				    btn.Quantity = "";
 			    }
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -381,14 +382,14 @@ namespace IBbasic
                 description.tbHeight = 4 * gv.uiSquareSize;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
 				
-		    btnHelp.Draw();		
-		    btnReturn.Draw();
+		    btnHelp.Draw(c);		
+		    btnReturn.Draw(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
 	

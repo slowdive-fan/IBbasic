@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -914,7 +915,7 @@ namespace IBbasic
             btnActionPaste.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsConvoEditor()
+        public void redrawTsConvoEditor(SKCanvas c)
         {
             setControlsStart();
             setupConvoNodeControls();
@@ -930,7 +931,7 @@ namespace IBbasic
             {
                 convoToEdit = gv.mod.currentConvo.ConvoFileName;
             }
-            gv.DrawText("CONVO EDITOR: " + convoToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
+            gv.DrawText(c, "CONVO EDITOR: " + convoToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
             numberOfLinesToShow = 23;
             int cnt = 0;
@@ -952,18 +953,18 @@ namespace IBbasic
                         dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
                         if (n.IsExpanded)
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("mtgl_expand_off"), src, dst);
                         }
                         else
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("mtgl_expand_on"), src, dst);
                         }
                     }
                     else
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("mtgl_expand_none").Width, gv.cc.GetFromTileBitmapList("mtgl_expand_none").Height);
                         dst = new IbRect(tlX, tlY, gv.fontHeight, gv.fontHeight);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList("mtgl_expand_none"), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("mtgl_expand_none"), src, dst);
                     }
 
                     string cnvNodeImg = "cnv_normal";
@@ -972,9 +973,9 @@ namespace IBbasic
                     else if (n.actions.Count > 0) { cnvNodeImg = "cnv_action"; }
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("cnv_normal").Width, gv.cc.GetFromTileBitmapList("cnv_normal").Height);
                     dst = new IbRect(tlX + gv.fontHeight + gv.fontCharSpacing, tlY, gv.fontHeight, gv.fontHeight);
-                    gv.DrawBitmap(gv.cc.GetFromTileBitmapList(cnvNodeImg), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(cnvNodeImg), src, dst);
 
-                    gv.DrawText(n.conversationText, tlX + ((gv.fontHeight + gv.fontCharSpacing) * 2), tlY, nodeColor);
+                    gv.DrawText(c, n.conversationText, tlX + ((gv.fontHeight + gv.fontCharSpacing) * 2), tlY, nodeColor);
                     cnt++;
                 }
                 nodeLineIndex++;
@@ -1040,30 +1041,30 @@ namespace IBbasic
                 int txtheight = (raise * (gv.fontHeight + gv.fontLineSpacing)) + (int)(gv.scaler * 2);
                 src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_tooltip").Width, gv.cc.GetFromBitmapList("ui_bg_tooltip").Height);
                 dst = new IbRect((int)(description.tbXloc - (gv.scaler * 4)), (int)(description.tbYloc - (int)(gv.scaler * 2)), 6 * gv.uiSquareSize + (3 * gv.uiSquareSize / 4), txtheight);
-                gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_tooltip"), src, dst);
-                description.onDrawTextBox();
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList("ui_bg_tooltip"), src, dst);
+                description.onDrawTextBox(c);
             }
 
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
             IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
             
             if (currentMode.Equals("Node"))
             {
                 setupNodePropertiesPanelControls();
-                drawNodePanel();
+                drawNodePanel(c);
             }
             else if (currentMode.Equals("Conditionals"))
             {
                 setupNodeConditionalsPanelControls();
-                drawCondPanel();
+                drawCondPanel(c);
             }
             else if (currentMode.Equals("Actions"))
             {
                 setupNodeActionsPanelControls();
-                drawActionsPanel();
+                drawActionsPanel(c);
             }
             else if (currentMode.Equals("Copy"))
             {
@@ -1079,113 +1080,113 @@ namespace IBbasic
             else if (currentMode.Equals("Settings"))
             {
                 setupConvoPropertiesPanelControls();
-                drawSettingsPanel();
+                drawSettingsPanel(c);
             }
 
-            btnNode.Draw();
-            btnConditionals.Draw();
-            btnActions.Draw();
-            btnExpandAllNodes.Draw();
-            btnCollapseAllNodes.Draw();
-            btnSettings.Draw();
+            btnNode.Draw(c);
+            btnConditionals.Draw(c);
+            btnActions.Draw(c);
+            btnExpandAllNodes.Draw(c);
+            btnCollapseAllNodes.Draw(c);
+            btnSettings.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawSettingsPanel()
+        public void drawSettingsPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("CONVO PROPERTIES", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "CONVO PROPERTIES", panelLeftLocation, panelTopLocation, "gn");
 
             int shiftForFont = (tglSettingConvoFileName.Height / 2) - (gv.fontHeight / 2);
-            tglSettingConvoFileName.Draw();
-            gv.DrawText("Convo Filename:", tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y, "gy");
-            gv.DrawText(gv.mod.currentConvo.ConvoFileName, tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            tglSettingDefaultNpcName.Draw();
-            gv.DrawText("NPC Name:", tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y, "gy");
-            gv.DrawText(gv.mod.currentConvo.DefaultNpcName, tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            tglSettingNpcPortraitBitmap.Draw();
-            gv.DrawText("NPC Portrait:", tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y, "gy");
-            gv.DrawText(gv.mod.currentConvo.NpcPortraitBitmap, tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingConvoFileName.Draw(c);
+            gv.DrawText(c, "Convo Filename:", tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y, "gy");
+            gv.DrawText(c, gv.mod.currentConvo.ConvoFileName, tglSettingConvoFileName.X + tglSettingConvoFileName.Width + gv.scaler, tglSettingConvoFileName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingDefaultNpcName.Draw(c);
+            gv.DrawText(c, "NPC Name:", tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y, "gy");
+            gv.DrawText(c, gv.mod.currentConvo.DefaultNpcName, tglSettingDefaultNpcName.X + tglSettingDefaultNpcName.Width + gv.scaler, tglSettingDefaultNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingNpcPortraitBitmap.Draw(c);
+            gv.DrawText(c, "NPC Portrait:", tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y, "gy");
+            gv.DrawText(c, gv.mod.currentConvo.NpcPortraitBitmap, tglSettingNpcPortraitBitmap.X + tglSettingNpcPortraitBitmap.Width + gv.scaler, tglSettingNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             
             if (gv.mod.currentConvo.Narration) { tglSettingNarration.toggleOn = true; }
             else { tglSettingNarration.toggleOn = false; }
-            tglSettingNarration.Draw();
-            gv.DrawText("Is Narration", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y, "gy");
-            gv.DrawText("Type Convo:", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+            tglSettingNarration.Draw(c);
+            gv.DrawText(c, "Is Narration", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y, "gy");
+            gv.DrawText(c, "Type Convo:", tglSettingNarration.X + tglSettingNarration.Width + gv.scaler, tglSettingNarration.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
             if (gv.mod.currentConvo.PartyChat) { tglSettingPartyChat.toggleOn = true; }
             else { tglSettingPartyChat.toggleOn = false; }
-            tglSettingPartyChat.Draw();
-            gv.DrawText("Is Party Chat", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y, "gy");
-            gv.DrawText("Type Convo:", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+            tglSettingPartyChat.Draw(c);
+            gv.DrawText(c, "Is Party Chat", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y, "gy");
+            gv.DrawText(c, "Type Convo:", tglSettingPartyChat.X + tglSettingPartyChat.Width + gv.scaler, tglSettingPartyChat.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
             if (gv.mod.currentConvo.SpeakToMainPcOnly) { tglSettingSpeakToMainPcOnly.toggleOn = true; }
             else { tglSettingSpeakToMainPcOnly.toggleOn = false; }
-            tglSettingSpeakToMainPcOnly.Draw();
-            gv.DrawText("Speak To Main", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y, "gy");
-            gv.DrawText("PC Only:", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+            tglSettingSpeakToMainPcOnly.Draw(c);
+            gv.DrawText(c, "Speak To Main", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y, "gy");
+            gv.DrawText(c, "PC Only:", tglSettingSpeakToMainPcOnly.X + tglSettingSpeakToMainPcOnly.Width + gv.scaler, tglSettingSpeakToMainPcOnly.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
         }
-        public void drawNodePanel()
+        public void drawNodePanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("NODE PROPERTIES", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "NODE PROPERTIES", panelLeftLocation, panelTopLocation, "gn");
 
             if (editNode == null) { return; }
 
             if ((editNode != null) && (editNode != gv.mod.currentConvo.subNodes[0]))
             {
                 int shiftForFont = (tglNodeText.Height / 2) - (gv.fontHeight / 2);
-                tglNodeText.Draw();
-                gv.DrawText("Node Text:", tglNodeText.X + tglNodeText.Width + gv.scaler, tglNodeText.Y, "gy");
-                gv.DrawText(editNode.conversationText, tglNodeText.X + tglNodeText.Width + gv.scaler, tglNodeText.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                tglNodeText.Draw(c);
+                gv.DrawText(c, "Node Text:", tglNodeText.X + tglNodeText.Width + gv.scaler, tglNodeText.Y, "gy");
+                gv.DrawText(c, editNode.conversationText, tglNodeText.X + tglNodeText.Width + gv.scaler, tglNodeText.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                tglNodeNpcName.Draw();
-                gv.DrawText("Node NPC Name:", tglNodeNpcName.X + tglNodeNpcName.Width + gv.scaler, tglNodeNpcName.Y, "gy");
-                gv.DrawText(editNode.NodeNpcName, tglNodeNpcName.X + tglNodeNpcName.Width + gv.scaler, tglNodeNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                tglNodeNpcName.Draw(c);
+                gv.DrawText(c, "Node NPC Name:", tglNodeNpcName.X + tglNodeNpcName.Width + gv.scaler, tglNodeNpcName.Y, "gy");
+                gv.DrawText(c, editNode.NodeNpcName, tglNodeNpcName.X + tglNodeNpcName.Width + gv.scaler, tglNodeNpcName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                tglNodeNpcPortraitBitmap.Draw();
-                gv.DrawText("Node NPC Portrait:", tglNodeNpcPortraitBitmap.X + tglNodeNpcPortraitBitmap.Width + gv.scaler, tglNodeNpcPortraitBitmap.Y, "gy");
-                gv.DrawText(editNode.NodePortraitBitmap, tglNodeNpcPortraitBitmap.X + tglNodeNpcPortraitBitmap.Width + gv.scaler, tglNodeNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                tglNodeNpcPortraitBitmap.Draw(c);
+                gv.DrawText(c, "Node NPC Portrait:", tglNodeNpcPortraitBitmap.X + tglNodeNpcPortraitBitmap.Width + gv.scaler, tglNodeNpcPortraitBitmap.Y, "gy");
+                gv.DrawText(c, editNode.NodePortraitBitmap, tglNodeNpcPortraitBitmap.X + tglNodeNpcPortraitBitmap.Width + gv.scaler, tglNodeNpcPortraitBitmap.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                 if (editNode.ShowOnlyOnce) { tglShowOnlyOnce.toggleOn = true; }
                 else { tglShowOnlyOnce.toggleOn = false; }
-                tglShowOnlyOnce.Draw();
-                gv.DrawText("Show This Node", tglShowOnlyOnce.X + tglShowOnlyOnce.Width + gv.scaler, tglShowOnlyOnce.Y, "gy");
-                gv.DrawText("Only Once:", tglShowOnlyOnce.X + tglShowOnlyOnce.Width + gv.scaler, tglShowOnlyOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                tglShowOnlyOnce.Draw(c);
+                gv.DrawText(c, "Show This Node", tglShowOnlyOnce.X + tglShowOnlyOnce.Width + gv.scaler, tglShowOnlyOnce.Y, "gy");
+                gv.DrawText(c, "Only Once:", tglShowOnlyOnce.X + tglShowOnlyOnce.Width + gv.scaler, tglShowOnlyOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                gv.DrawText("Node Id#: " + editNode.idNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 3, "gy");
-                gv.DrawText("Order Index: " + editNode.orderNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 4, "gy");
-                gv.DrawText("Link To Id#: " + editNode.linkTo, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 5, "gy");
-                gv.DrawText("Parent Id#: " + editNode.parentIdNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 6, "gy");
+                gv.DrawText(c, "Node Id#: " + editNode.idNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 3, "gy");
+                gv.DrawText(c, "Order Index: " + editNode.orderNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 4, "gy");
+                gv.DrawText(c, "Link To Id#: " + editNode.linkTo, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 5, "gy");
+                gv.DrawText(c, "Parent Id#: " + editNode.parentIdNum, tglShowOnlyOnce.X + (gv.fontHeight + gv.fontLineSpacing) * 1, tglShowOnlyOnce.Y + (gv.fontHeight + gv.fontLineSpacing) * 6, "gy");
             }
-            btnNodeAdd.Draw();
-            btnNodeMoveUp.Draw();
-            btnNodeMoveDown.Draw();
-            btnNodeRemove.Draw();
-            btnNodeCopy.Draw();
-            btnNodePaste.Draw();
-            btnNodePasteAsLink.Draw();
-            btnNodeRelocateCopiedNodes.Draw();
-            btnFollowLink.Draw();
+            btnNodeAdd.Draw(c);
+            btnNodeMoveUp.Draw(c);
+            btnNodeMoveDown.Draw(c);
+            btnNodeRemove.Draw(c);
+            btnNodeCopy.Draw(c);
+            btnNodePaste.Draw(c);
+            btnNodePasteAsLink.Draw(c);
+            btnNodeRelocateCopiedNodes.Draw(c);
+            btnFollowLink.Draw(c);
         }
-        public void drawCondPanel()
+        public void drawCondPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("NODE CONDITIONALS", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "NODE CONDITIONALS", panelLeftLocation, panelTopLocation, "gn");
 
             if (editNode == null) { return; }
 
             if (editNode.conditions.Count > 0)
             {
-                tglCond1Radio.Draw();
+                tglCond1Radio.Draw(c);
                 int shiftForFont = (tglCond1Radio.Height / 2) - (gv.fontHeight / 2);                
-                gv.DrawText(editNode.conditions[0].c_script, tglCond1Radio.X + tglCond1Radio.Width + gv.scaler, tglCond1Radio.Y, "wh");
+                gv.DrawText(c, editNode.conditions[0].c_script, tglCond1Radio.X + tglCond1Radio.Width + gv.scaler, tglCond1Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1195,13 +1196,13 @@ namespace IBbasic
                 if (editNode.conditions[0].c_parameter_3 != null) { parm3 = editNode.conditions[0].c_parameter_3; }
                 if (editNode.conditions[0].c_parameter_4 != null) { parm4 = editNode.conditions[0].c_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglCond1Radio.X + tglCond1Radio.Width + gv.scaler, tglCond1Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglCond1Radio.X + tglCond1Radio.Width + gv.scaler, tglCond1Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.conditions.Count > 1)
             {
-                tglCond2Radio.Draw();
+                tglCond2Radio.Draw(c);
                 int shiftForFont = (tglCond2Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.conditions[1].c_script, tglCond2Radio.X + tglCond2Radio.Width + gv.scaler, tglCond2Radio.Y, "wh");
+                gv.DrawText(c, editNode.conditions[1].c_script, tglCond2Radio.X + tglCond2Radio.Width + gv.scaler, tglCond2Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1211,13 +1212,13 @@ namespace IBbasic
                 if (editNode.conditions[1].c_parameter_3 != null) { parm3 = editNode.conditions[1].c_parameter_3; }
                 if (editNode.conditions[1].c_parameter_4 != null) { parm4 = editNode.conditions[1].c_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglCond2Radio.X + tglCond2Radio.Width + gv.scaler, tglCond2Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglCond2Radio.X + tglCond2Radio.Width + gv.scaler, tglCond2Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.conditions.Count > 2)
             {
-                tglCond3Radio.Draw();
+                tglCond3Radio.Draw(c);
                 int shiftForFont = (tglCond3Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.conditions[2].c_script, tglCond3Radio.X + tglCond3Radio.Width + gv.scaler, tglCond3Radio.Y, "wh");
+                gv.DrawText(c, editNode.conditions[2].c_script, tglCond3Radio.X + tglCond3Radio.Width + gv.scaler, tglCond3Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1227,13 +1228,13 @@ namespace IBbasic
                 if (editNode.conditions[2].c_parameter_3 != null) { parm3 = editNode.conditions[2].c_parameter_3; }
                 if (editNode.conditions[2].c_parameter_4 != null) { parm4 = editNode.conditions[2].c_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglCond3Radio.X + tglCond3Radio.Width + gv.scaler, tglCond3Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglCond3Radio.X + tglCond3Radio.Width + gv.scaler, tglCond3Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.conditions.Count > 3)
             {
-                tglCond4Radio.Draw();
+                tglCond4Radio.Draw(c);
                 int shiftForFont = (tglCond4Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.conditions[3].c_script, tglCond4Radio.X + tglCond4Radio.Width + gv.scaler, tglCond4Radio.Y, "wh");
+                gv.DrawText(c, editNode.conditions[3].c_script, tglCond4Radio.X + tglCond4Radio.Width + gv.scaler, tglCond4Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1243,7 +1244,7 @@ namespace IBbasic
                 if (editNode.conditions[3].c_parameter_3 != null) { parm3 = editNode.conditions[3].c_parameter_3; }
                 if (editNode.conditions[3].c_parameter_4 != null) { parm4 = editNode.conditions[3].c_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglCond4Radio.X + tglCond4Radio.Width + gv.scaler, tglCond4Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglCond4Radio.X + tglCond4Radio.Width + gv.scaler, tglCond4Radio.Y + shiftForFont * 2, "wh");
             }
 
             int index = 0;
@@ -1270,38 +1271,38 @@ namespace IBbasic
                 if (editNode.conditions[index].c_parameter_2 != null) { parm2 = editNode.conditions[index].c_parameter_2; }
                 if (editNode.conditions[index].c_parameter_3 != null) { parm3 = editNode.conditions[index].c_parameter_3; }
                 if (editNode.conditions[index].c_parameter_4 != null) { parm4 = editNode.conditions[index].c_parameter_4; }
-                gv.DrawText("SCRIPT + PARMS", panelLeftLocation, tglCondScript.Y - gv.fontHeight, "gn");
-                tglCondScript.Draw();
-                gv.DrawText(editNode.conditions[index].c_script, tglCondScript.X + tglCondScript.Width + gv.scaler, tglCondScript.Y + shiftForFont, "wh");
-                tglCondParm1.Draw();
-                gv.DrawText("P1:" + parm1, tglCondParm1.X + tglCondParm1.Width + gv.scaler, tglCondParm1.Y + shiftForFont, "wh");
-                tglCondParm2.Draw();
-                gv.DrawText("P2:" + parm2, tglCondParm2.X + tglCondParm2.Width + gv.scaler, tglCondParm2.Y + shiftForFont, "wh");
-                tglCondParm3.Draw();
-                gv.DrawText("P3:" + parm3, tglCondParm3.X + tglCondParm3.Width + gv.scaler, tglCondParm3.Y + shiftForFont, "wh");
-                tglCondParm4.Draw();
-                gv.DrawText("P4:" + parm4, tglCondParm4.X + tglCondParm4.Width + gv.scaler, tglCondParm4.Y + shiftForFont, "wh");
+                gv.DrawText(c, "SCRIPT + PARMS", panelLeftLocation, tglCondScript.Y - gv.fontHeight, "gn");
+                tglCondScript.Draw(c);
+                gv.DrawText(c, editNode.conditions[index].c_script, tglCondScript.X + tglCondScript.Width + gv.scaler, tglCondScript.Y + shiftForFont, "wh");
+                tglCondParm1.Draw(c);
+                gv.DrawText(c, "P1:" + parm1, tglCondParm1.X + tglCondParm1.Width + gv.scaler, tglCondParm1.Y + shiftForFont, "wh");
+                tglCondParm2.Draw(c);
+                gv.DrawText(c, "P2:" + parm2, tglCondParm2.X + tglCondParm2.Width + gv.scaler, tglCondParm2.Y + shiftForFont, "wh");
+                tglCondParm3.Draw(c);
+                gv.DrawText(c, "P3:" + parm3, tglCondParm3.X + tglCondParm3.Width + gv.scaler, tglCondParm3.Y + shiftForFont, "wh");
+                tglCondParm4.Draw(c);
+                gv.DrawText(c, "P4:" + parm4, tglCondParm4.X + tglCondParm4.Width + gv.scaler, tglCondParm4.Y + shiftForFont, "wh");
             }
 
-            btnCondAdd.Draw();
-            btnCondMoveUp.Draw();
-            btnCondMoveDown.Draw();
-            btnCondRemove.Draw();
-            btnCondCopy.Draw();
-            btnCondPaste.Draw();
+            btnCondAdd.Draw(c);
+            btnCondMoveUp.Draw(c);
+            btnCondMoveDown.Draw(c);
+            btnCondRemove.Draw(c);
+            btnCondCopy.Draw(c);
+            btnCondPaste.Draw(c);
         }
-        public void drawActionsPanel()
+        public void drawActionsPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("NODE ACTIONS", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "NODE ACTIONS", panelLeftLocation, panelTopLocation, "gn");
 
             if (editNode == null) { return; }
 
             if (editNode.actions.Count > 0)
             {
-                tglAction1Radio.Draw();
+                tglAction1Radio.Draw(c);
                 int shiftForFont = (tglAction1Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.actions[0].a_script, tglAction1Radio.X + tglAction1Radio.Width + gv.scaler, tglAction1Radio.Y, "wh");
+                gv.DrawText(c, editNode.actions[0].a_script, tglAction1Radio.X + tglAction1Radio.Width + gv.scaler, tglAction1Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1311,13 +1312,13 @@ namespace IBbasic
                 if (editNode.actions[0].a_parameter_3 != null) { parm3 = editNode.actions[0].a_parameter_3; }
                 if (editNode.actions[0].a_parameter_4 != null) { parm4 = editNode.actions[0].a_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglAction1Radio.X + tglAction1Radio.Width + gv.scaler, tglAction1Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglAction1Radio.X + tglAction1Radio.Width + gv.scaler, tglAction1Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.actions.Count > 1)
             {
-                tglAction2Radio.Draw();
+                tglAction2Radio.Draw(c);
                 int shiftForFont = (tglAction2Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.actions[1].a_script, tglAction2Radio.X + tglAction2Radio.Width + gv.scaler, tglAction2Radio.Y, "wh");
+                gv.DrawText(c, editNode.actions[1].a_script, tglAction2Radio.X + tglAction2Radio.Width + gv.scaler, tglAction2Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1327,13 +1328,13 @@ namespace IBbasic
                 if (editNode.actions[1].a_parameter_3 != null) { parm3 = editNode.actions[1].a_parameter_3; }
                 if (editNode.actions[1].a_parameter_4 != null) { parm4 = editNode.actions[1].a_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglAction2Radio.X + tglAction2Radio.Width + gv.scaler, tglAction2Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglAction2Radio.X + tglAction2Radio.Width + gv.scaler, tglAction2Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.actions.Count > 2)
             {
-                tglAction3Radio.Draw();
+                tglAction3Radio.Draw(c);
                 int shiftForFont = (tglAction3Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.actions[2].a_script, tglAction3Radio.X + tglAction3Radio.Width + gv.scaler, tglAction3Radio.Y, "wh");
+                gv.DrawText(c, editNode.actions[2].a_script, tglAction3Radio.X + tglAction3Radio.Width + gv.scaler, tglAction3Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1343,13 +1344,13 @@ namespace IBbasic
                 if (editNode.actions[2].a_parameter_3 != null) { parm3 = editNode.actions[2].a_parameter_3; }
                 if (editNode.actions[2].a_parameter_4 != null) { parm4 = editNode.actions[2].a_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglAction3Radio.X + tglAction3Radio.Width + gv.scaler, tglAction3Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglAction3Radio.X + tglAction3Radio.Width + gv.scaler, tglAction3Radio.Y + shiftForFont * 2, "wh");
             }
             if (editNode.actions.Count > 3)
             {
-                tglAction4Radio.Draw();
+                tglAction4Radio.Draw(c);
                 int shiftForFont = (tglAction4Radio.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText(editNode.actions[3].a_script, tglAction4Radio.X + tglAction4Radio.Width + gv.scaler, tglAction4Radio.Y, "wh");
+                gv.DrawText(c, editNode.actions[3].a_script, tglAction4Radio.X + tglAction4Radio.Width + gv.scaler, tglAction4Radio.Y, "wh");
                 string parm1 = "";
                 string parm2 = "";
                 string parm3 = "";
@@ -1359,7 +1360,7 @@ namespace IBbasic
                 if (editNode.actions[3].a_parameter_3 != null) { parm3 = editNode.actions[3].a_parameter_3; }
                 if (editNode.actions[3].a_parameter_4 != null) { parm4 = editNode.actions[3].a_parameter_4; }
                 string total = "(" + parm1 + "," + parm2 + "," + parm3 + "," + parm4 + ")";
-                gv.DrawText(total, tglAction4Radio.X + tglAction4Radio.Width + gv.scaler, tglAction4Radio.Y + shiftForFont * 2, "wh");
+                gv.DrawText(c, total, tglAction4Radio.X + tglAction4Radio.Width + gv.scaler, tglAction4Radio.Y + shiftForFont * 2, "wh");
             }
 
             int index = 0;
@@ -1386,25 +1387,25 @@ namespace IBbasic
                 if (editNode.actions[index].a_parameter_2 != null) { parm2 = editNode.actions[index].a_parameter_2; }
                 if (editNode.actions[index].a_parameter_3 != null) { parm3 = editNode.actions[index].a_parameter_3; }
                 if (editNode.actions[index].a_parameter_4 != null) { parm4 = editNode.actions[index].a_parameter_4; }
-                gv.DrawText("SCRIPT + PARMS", panelLeftLocation, tglActionScript.Y - gv.fontHeight, "gn");
-                tglActionScript.Draw();
-                gv.DrawText(editNode.actions[index].a_script, tglActionScript.X + tglActionScript.Width + gv.scaler, tglActionScript.Y + shiftForFont, "wh");
-                tglActionParm1.Draw();
-                gv.DrawText("P1:" + parm1, tglActionParm1.X + tglActionParm1.Width + gv.scaler, tglActionParm1.Y + shiftForFont, "wh");
-                tglActionParm2.Draw();
-                gv.DrawText("P2:" + parm2, tglActionParm2.X + tglActionParm2.Width + gv.scaler, tglActionParm2.Y + shiftForFont, "wh");
-                tglActionParm3.Draw();
-                gv.DrawText("P3:" + parm3, tglActionParm3.X + tglActionParm3.Width + gv.scaler, tglActionParm3.Y + shiftForFont, "wh");
-                tglActionParm4.Draw();
-                gv.DrawText("P4:" + parm4, tglActionParm4.X + tglActionParm4.Width + gv.scaler, tglActionParm4.Y + shiftForFont, "wh");
+                gv.DrawText(c, "SCRIPT + PARMS", panelLeftLocation, tglActionScript.Y - gv.fontHeight, "gn");
+                tglActionScript.Draw(c);
+                gv.DrawText(c, editNode.actions[index].a_script, tglActionScript.X + tglActionScript.Width + gv.scaler, tglActionScript.Y + shiftForFont, "wh");
+                tglActionParm1.Draw(c);
+                gv.DrawText(c, "P1:" + parm1, tglActionParm1.X + tglActionParm1.Width + gv.scaler, tglActionParm1.Y + shiftForFont, "wh");
+                tglActionParm2.Draw(c);
+                gv.DrawText(c, "P2:" + parm2, tglActionParm2.X + tglActionParm2.Width + gv.scaler, tglActionParm2.Y + shiftForFont, "wh");
+                tglActionParm3.Draw(c);
+                gv.DrawText(c, "P3:" + parm3, tglActionParm3.X + tglActionParm3.Width + gv.scaler, tglActionParm3.Y + shiftForFont, "wh");
+                tglActionParm4.Draw(c);
+                gv.DrawText(c, "P4:" + parm4, tglActionParm4.X + tglActionParm4.Width + gv.scaler, tglActionParm4.Y + shiftForFont, "wh");
             }
 
-            btnActionAdd.Draw();
-            btnActionMoveUp.Draw();
-            btnActionMoveDown.Draw();
-            btnActionRemove.Draw();
-            btnActionCopy.Draw();
-            btnActionPaste.Draw();
+            btnActionAdd.Draw(c);
+            btnActionMoveUp.Draw(c);
+            btnActionMoveDown.Draw(c);
+            btnActionRemove.Draw(c);
+            btnActionCopy.Draw(c);
+            btnActionPaste.Draw(c);
         }
 
         public void onTouchTsConvoEditor(int eX, int eY, MouseEventType.EventType eventType)

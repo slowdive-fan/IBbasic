@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -328,7 +329,7 @@ namespace IBbasic
             //btnPortrait.Img = gv.mod.playerList[gv.cc.partyScreenPcIndex].portraitFilename;
         }
 
-        public void redrawParty()
+        public void redrawParty(SKCanvas c)
         {
             setControlsStart();
             if (gv.cc.partyScreenPcIndex >= gv.mod.playerList.Count)
@@ -358,42 +359,42 @@ namespace IBbasic
                 {
                     if (cntPCs == gv.cc.partyScreenPcIndex) { btn.glowOn = true; }
                     else { btn.glowOn = false; }
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntPCs++;
             }
             //DRAW TOKEN AND PORTRAIT
             //btnPortrait.Draw();
-            btnToken.Draw();
+            btnToken.Draw(c);
 
             //DRAW LEFT STATS
             //name            
-            gv.DrawText(pc.name, locX, locY += leftStartY + spacing, "wh");
+            gv.DrawText(c, pc.name, locX, locY += leftStartY + spacing, "wh");
 
             //race
-            gv.DrawText("Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
+            gv.DrawText(c, "Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
 
             //gender
             if (pc.isMale)
             {
-                gv.DrawText("Gender: Male", locX, locY += spacing, "wh");
+                gv.DrawText(c, "Gender: Male", locX, locY += spacing, "wh");
             }
             else
             {
-                gv.DrawText("Gender: Female", locX, locY += spacing, "wh");
+                gv.DrawText(c, "Gender: Female", locX, locY += spacing, "wh");
             }
 
             //class
-            gv.DrawText("Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
-            gv.DrawText("Level: " + pc.classLevel, locX, locY += spacing, "wh");
-            gv.DrawText("XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
+            gv.DrawText(c, "Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
+            gv.DrawText(c, "Level: " + pc.classLevel, locX, locY += spacing, "wh");
+            gv.DrawText(c, "XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
             int actext = 0;
             //float locY2 = 4 * gv.squareSize + gv.squareSize / 4;
             if (gv.mod.ArmorClassAscending) { actext = pc.AC; }
             else { actext = 20 - pc.AC; }
-            gv.DrawText("AC: " + actext + " BAB: " + pc.baseAttBonus, locX, locY += spacing, "wh");
-            gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, locX, locY += spacing, "wh");
-            gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, locX, locY += spacing, "wh");
+            gv.DrawText(c, "AC: " + actext + " BAB: " + pc.baseAttBonus, locX, locY += spacing, "wh");
+            gv.DrawText(c, "HP: " + pc.hp + "/" + pc.hpMax, locX, locY += spacing, "wh");
+            gv.DrawText(c, "SP: " + pc.sp + "/" + pc.spMax, locX, locY += spacing, "wh");
             //gv.DrawText("---------------", locX, locY += spacing, 1.0f, Color.White);
 
             //LOCATE STATS INFO BUTTONS
@@ -427,40 +428,40 @@ namespace IBbasic
             if (pc.strength - pc.baseStr < 0) { oper = " - "; }
             string spacer = "";
             if (pc.baseStr < 10) { spacer = " "; }
-            gv.DrawText("STR: " + spacer + pc.baseStr + oper + Math.Abs(pc.strength - pc.baseStr) + " = " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", tabX, locY += spacing * 2, "wh");
+            gv.DrawText(c, "STR: " + spacer + pc.baseStr + oper + Math.Abs(pc.strength - pc.baseStr) + " = " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", tabX, locY += spacing * 2, "wh");
             oper = " + ";
             if (pc.dexterity - pc.baseDex < 0) { oper = " - "; }
             spacer = "";
             if (pc.baseDex < 10) { spacer = " "; }
-            gv.DrawText("DEX: " + spacer + pc.baseDex + oper + Math.Abs(pc.dexterity - pc.baseDex) + " = " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", tabX, locY += spacing, "wh");
+            gv.DrawText(c, "DEX: " + spacer + pc.baseDex + oper + Math.Abs(pc.dexterity - pc.baseDex) + " = " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", tabX, locY += spacing, "wh");
             oper = " + ";
             if (pc.constitution - pc.baseCon < 0) { oper = " - "; }
             spacer = "";
             if (pc.baseCon < 10) { spacer = " "; }
-            gv.DrawText("CON: " + spacer + pc.baseCon + " + " + Math.Abs(pc.constitution - pc.baseCon) + " = " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", tabX, locY += spacing, "wh");
+            gv.DrawText(c, "CON: " + spacer + pc.baseCon + " + " + Math.Abs(pc.constitution - pc.baseCon) + " = " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", tabX, locY += spacing, "wh");
             oper = " + ";
             if (pc.intelligence - pc.baseInt < 0) { oper = " - "; }
             spacer = "";
             if (pc.baseInt < 10) { spacer = " "; }
-            gv.DrawText("INT: " + spacer + pc.baseInt + " + " + Math.Abs(pc.intelligence - pc.baseInt) + " = " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", tabX, locY += spacing, "wh");
+            gv.DrawText(c, "INT: " + spacer + pc.baseInt + " + " + Math.Abs(pc.intelligence - pc.baseInt) + " = " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", tabX, locY += spacing, "wh");
             oper = " + ";
             if (pc.wisdom - pc.baseWis < 0) { oper = " - "; }
             spacer = "";
             if (pc.baseWis < 10) { spacer = " "; }
-            gv.DrawText("WIS: " + spacer + pc.baseWis + " + " + Math.Abs(pc.wisdom - pc.baseWis) + " = " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", tabX, locY += spacing, "wh");
+            gv.DrawText(c, "WIS: " + spacer + pc.baseWis + " + " + Math.Abs(pc.wisdom - pc.baseWis) + " = " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", tabX, locY += spacing, "wh");
             oper = " + ";
             if (pc.charisma - pc.baseCha < 0) { oper = " - "; }
             spacer = "";
             if (pc.baseCha < 10) { spacer = " "; }
-            gv.DrawText("CHA: " + pc.baseCha + " + " + Math.Abs(pc.charisma - pc.baseCha) + " = " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", tabX, locY += spacing, "wh");
-            gv.DrawText("FORT: " + pc.fortitude, tabX, locY += spacing, "wh");
-            gv.DrawText("REF:  " + pc.reflex, tabX, locY += spacing, "wh");
-            gv.DrawText("WILL: " + pc.will, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "CHA: " + pc.baseCha + " + " + Math.Abs(pc.charisma - pc.baseCha) + " = " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", tabX, locY += spacing, "wh");
+            gv.DrawText(c, "FORT: " + pc.fortitude, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "REF:  " + pc.reflex, tabX, locY += spacing, "wh");
+            gv.DrawText(c, "WILL: " + pc.will, tabX, locY += spacing, "wh");
 
             //DRAW LEVEL UP BUTTON
             if (gv.mod.playerList[gv.cc.partyScreenPcIndex].IsReadyToAdvanceLevel())
             {
-                btnLevelUp.Draw();
+                btnLevelUp.Draw(c);
             }
 
             if (gv.cc.partyItemSlotIndex == 0) { btnMainHand.glowOn = true; }
@@ -511,26 +512,26 @@ namespace IBbasic
                 btnAmmo.Quantity = "";
             }
             
-            btnMainHand.Draw();
-            btnHead.Draw();
-            btnNeck.Draw();
-            btnOffHand.Draw();
-            btnRing.Draw();
-            btnBody.Draw();
-            btnFeet.Draw();
-            btnRing2.Draw();
-            btnAmmo.Draw();
-            btnSpells.Draw();
-            btnTraits.Draw();
-            btnEffects.Draw();
+            btnMainHand.Draw(c);
+            btnHead.Draw(c);
+            btnNeck.Draw(c);
+            btnOffHand.Draw(c);
+            btnRing.Draw(c);
+            btnBody.Draw(c);
+            btnFeet.Draw(c);
+            btnRing2.Draw(c);
+            btnAmmo.Draw(c);
+            btnSpells.Draw(c);
+            btnTraits.Draw(c);
+            btnEffects.Draw(c);
             //btnOthers.Draw();
             if (gv.mod.hideRoster == false)
             {
-                btnPartyRoster.Draw();
+                btnPartyRoster.Draw(c);
             }
             if (gv.fixedModule.Equals(""))
             {
-                btnPartyCampaign.Draw();
+                btnPartyCampaign.Draw(c);
             }
 
             //DRAW DESCRIPTION BOX
@@ -570,11 +571,11 @@ namespace IBbasic
             int yLoc = (3 * gv.uiSquareSize) + (int)(pW * 5.5f);
             int width = 4 * gv.uiSquareSize;
             int height = 8 * gv.uiSquareSize;
-            DrawTextLayout(description, textToSpan, xLoc, yLoc, width, height);
+            DrawTextLayout(c, description, textToSpan, xLoc, yLoc, width, height);
 
             //btnHelp.Draw();
-            btnInfo.Draw();
-            btnReturn.Draw();
+            btnInfo.Draw(c);
+            btnReturn.Draw(c);
 
             //Current attack and damage box
 
@@ -687,13 +688,13 @@ namespace IBbasic
             yLoc = (2 * gv.uiSquareSize) + (int)(pW * 3.5f);
             width = 7 * gv.uiSquareSize;
             height = 6 * gv.uiSquareSize;
-            DrawTextLayout(attackAndDamageInfo, textToSpan2, xLoc, yLoc, width, height);
+            DrawTextLayout(c, attackAndDamageInfo, textToSpan2, xLoc, yLoc, width, height);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void DrawTextLayout(IbbHtmlTextBox tb, string text, int xLoc, int yLoc, int width, int height)
+        public void DrawTextLayout(SKCanvas c, IbbHtmlTextBox tb, string text, int xLoc, int yLoc, int width, int height)
         {
             tb.tbXloc = xLoc;
             tb.tbYloc = yLoc;
@@ -701,7 +702,7 @@ namespace IBbasic
             tb.tbHeight = height;
             tb.logLinesList.Clear();
             tb.AddHtmlTextToLog(text);
-            tb.onDrawLogBox();                       
+            tb.onDrawLogBox(c);                       
         }
         public void onTouchParty(int eX, int eY, MouseEventType.EventType eventType, bool inCombat)
         {

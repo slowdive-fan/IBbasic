@@ -1104,26 +1104,26 @@ namespace IBbasic
             btnTurnRight.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsAreaEditor()
+        public void redrawTsAreaEditor(SKCanvas c)
         {
             setControlsStart();
             if (currentMode.Equals("3DPreview"))
             {
-                draw3dView();
-                drawLocationText();
+                draw3dView(c);
+                drawLocationText(c);
             }
             else
             {
-                drawAreaMap();
-                drawTriggers();
-                drawGrid();
+                drawAreaMap(c);
+                drawTriggers(c);
+                drawGrid(c);
             }
 
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
             IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
 
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
@@ -1132,55 +1132,55 @@ namespace IBbasic
             {
                 areaToEdit = gv.mod.currentArea.Filename;
             }
-            gv.DrawText("AREA EDITOR: " + areaToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
+            gv.DrawText(c, "AREA EDITOR: " + areaToEdit, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
             if (currentMode.Equals("Info"))
             {
                 setupInfoPanelControls();
-                drawInfoPanel();
+                drawInfoPanel(c);
             }
             else if (currentMode.Equals("Tiles"))
             {
                 setupTilesPanelControls();
-                drawTilesPanel();
+                drawTilesPanel(c);
             }
             else if (currentMode.Equals("Triggers"))
             {
                 setupTriggerPanelControls();
-                drawTriggersPanel();
+                drawTriggersPanel(c);
             }
             else if (currentMode.Equals("WalkLoS"))
             {
                 setupWalkLoSPanelControls();
-                drawWalkLoSPanel();
+                drawWalkLoSPanel(c);
             }
             else if (currentMode.Equals("3DPreview"))
             {
                 setup3DPreviewControls();
-                draw3DPreviewPanel();
-                drawMiniMap();
+                draw3DPreviewPanel(c);
+                drawMiniMap(c);
             }
             else if (currentMode.Equals("Settings"))
             {
                 setupSettingsPanelControls();
-                drawSettingsPanel();
+                drawSettingsPanel(c);
             }
 
-            btnInfo.Draw();
-            btnTiles.Draw();
-            btnTriggers.Draw();
-            btnWalkLoS.Draw();
-            btn3DPreview.Draw();
-            btnSettings.Draw();            
+            btnInfo.Draw(c);
+            btnTiles.Draw(c);
+            btnTriggers.Draw(c);
+            btnWalkLoS.Draw(c);
+            btn3DPreview.Draw(c);
+            btnSettings.Draw(c);            
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void draw3dView()
+        public void draw3dView(SKCanvas c)
         {
             map3DViewStartLocXinPixels = 2 * gv.squareSize - 10;
             int scaler = (int)(gv.scaler * 2);
@@ -1205,7 +1205,7 @@ namespace IBbasic
                 }
             }
             IbRect dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((int)((1 * gv.squareSize * gv.scaler))), 88 * scaler, 88 * scaler);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
 
             if (IsSquareOnMap(0, 1))
             {
@@ -1227,7 +1227,7 @@ namespace IBbasic
                     }
                 }
                 dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((1 * gv.squareSize * gv.scaler)) + 16 * scaler, 88 * scaler, 56 * scaler);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
             }
 
             if (IsSquareOnMap(0, 2))
@@ -1250,7 +1250,7 @@ namespace IBbasic
                     }
                 }
                 dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((1 * gv.squareSize * gv.scaler)) + 32 * scaler, 88 * scaler, 24 * scaler);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
             }
 
             //draw far row
@@ -1279,11 +1279,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else if (col == 2)
@@ -1296,11 +1296,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else
@@ -1319,11 +1319,11 @@ namespace IBbasic
                             dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                             if (!wallset.Equals("none"))
                             {
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                             }
                             if (!overlay.Equals("none"))
                             {
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                             }
                         }
                     }
@@ -1362,11 +1362,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         //draw right side
                         tlX = 8 * scaler;
@@ -1376,11 +1376,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else if (col == -1)
@@ -1393,11 +1393,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1407,7 +1407,7 @@ namespace IBbasic
                             brX = 12 * scaler;
                             brY = 12 * scaler;
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                         //draw right side
                         tlX = 32 * scaler;
@@ -1417,11 +1417,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                 }
@@ -1457,11 +1457,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                         //draw front (8)
                         tlX = 72 * scaler;
@@ -1471,11 +1471,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1485,7 +1485,7 @@ namespace IBbasic
                             brX = 2 * scaler;
                             brY = 12 * scaler;
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     else if (col == 1)
@@ -1498,11 +1498,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                         //draw front (24)
                         tlX = 48 * scaler;
@@ -1512,11 +1512,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1526,7 +1526,7 @@ namespace IBbasic
                             brX = 12 * scaler;
                             brY = 12 * scaler;
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     else if (col == 0)
@@ -1539,11 +1539,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1553,7 +1553,7 @@ namespace IBbasic
                             brX = 12 * scaler;
                             brY = 12 * scaler;
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                 }
@@ -1591,11 +1591,11 @@ namespace IBbasic
                         }
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     catch { }
@@ -1622,11 +1622,11 @@ namespace IBbasic
                         }
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                     }
                     catch { }
@@ -1669,11 +1669,11 @@ namespace IBbasic
                     }
                     if (!wallset.Equals("none"))
                     {
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                     }
                     if (!overlay.Equals("none"))
                     {
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                     }
                     if (!trigImage.Equals("none"))
                     {
@@ -1699,7 +1699,7 @@ namespace IBbasic
                             brX = 24 * scaler;
                         }
                         dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                     }
                 }
                 catch { }
@@ -1730,11 +1730,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     catch { }
@@ -1756,11 +1756,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                     }
                     catch { }
@@ -1791,7 +1791,7 @@ namespace IBbasic
                             int brX = 48 * scaler;
                             int brY = 48 * scaler;
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     catch { }
@@ -1904,7 +1904,7 @@ namespace IBbasic
             }
             return filename;
         }
-        public void drawMiniMap()
+        public void drawMiniMap(SKCanvas c)
         {
             int shiftY = panelTopLocation + gv.fontHeight + gv.fontLineSpacing;
             int shiftX = panelLeftLocation - (gv.squareSize / 1);
@@ -1927,7 +1927,7 @@ namespace IBbasic
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -1955,7 +1955,7 @@ namespace IBbasic
                                 src = new IbRect(32, 16, 56, 56);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -1985,7 +1985,7 @@ namespace IBbasic
                                     src = new IbRect(32, 16, 56, 56);
                                 }
                                 dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                             }
                             catch { }
                         }
@@ -2007,15 +2007,15 @@ namespace IBbasic
                     dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                     if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
                     {
-                        gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.losBlocked, src, dst);
                     }
                     if (gv.mod.currentArea.Walkable[y * gv.mod.currentArea.MapSizeX + x] == 0)
                     {
-                        gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkBlocked, src, dst);
                     }
                     else
                     {
-                        gv.DrawBitmap(gv.cc.walkPass, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkPass, src, dst);
                     }
                 }
             }
@@ -2050,7 +2050,7 @@ namespace IBbasic
                         clr = SKColors.Magenta;
                     }
                     IbRect rect = new IbRect(dx + 3, dy + 3, gv.squareSize / (int)((2 * 2) * gv.scaler) - 6, gv.squareSize / (int)((2 * 2) * gv.scaler) - 6);
-                    gv.DrawRectangle(rect, clr, 2);
+                    gv.DrawRectangle(c, rect, clr, 2);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
@@ -2060,7 +2060,7 @@ namespace IBbasic
                         int brY = (int)(gv.squareSize / (2 * 2) * gv.scaler);
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
+                        gv.DrawBitmap(c, gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
                     }
                 }
             }
@@ -2077,7 +2077,7 @@ namespace IBbasic
                     string tile = "minimap_location_n";
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                     dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                    gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                 }
                 catch { }
             }
@@ -2088,7 +2088,7 @@ namespace IBbasic
                     string tile = "minimap_location_e";
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                     dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                    gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                 }
                 catch { }
             }
@@ -2099,7 +2099,7 @@ namespace IBbasic
                     string tile = "minimap_location_s";
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                     dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                    gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                 }
                 catch { }
             }
@@ -2110,12 +2110,12 @@ namespace IBbasic
                     string tile = "minimap_location_w";
                     src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                     dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                    gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                 }
                 catch { }
             }
         }
-        public void drawLocationText()
+        public void drawLocationText(SKCanvas c)
         {            
             string direction = "N";
             if (PlayerFacingDirection == 0) { direction = "N"; }
@@ -2131,10 +2131,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("(" + PlayerLocationX + "," + PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
+                    gv.DrawText(c, "(" + PlayerLocationX + "," + PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
                 }
             }
-            gv.DrawText("(" + PlayerLocationX + "," + PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
+            gv.DrawText(c, "(" + PlayerLocationX + "," + PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
         }
         public int GetSquareIndex(int col, int row)
         {
@@ -2212,7 +2212,7 @@ namespace IBbasic
             return true;
         }
 
-        public void drawAreaMap()
+        public void drawAreaMap(SKCanvas c)
         {
             #region Draw Layer 1
             if (rbtnShowLayer1.toggleOn)
@@ -2233,7 +2233,7 @@ namespace IBbasic
                             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                             //bool mirror = false;
                             //if (gv.mod.currentArea.Layer1Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2263,7 +2263,7 @@ namespace IBbasic
                             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                             //bool mirror = false;
                             //if (gv.mod.currentArea.Layer2Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2295,7 +2295,7 @@ namespace IBbasic
                                 dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                                 //bool mirror = false;
                                 //if (gv.mod.currentArea.Layer3Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                             }
                             catch { }
                         }
@@ -2304,7 +2304,7 @@ namespace IBbasic
             }
             #endregion
         }
-        public void drawTriggers()
+        public void drawTriggers(SKCanvas c)
         {
             foreach (Trigger t in gv.mod.currentArea.Triggers)
             {
@@ -2339,18 +2339,18 @@ namespace IBbasic
                     int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
                     src = new IbRect(0, 0, gv.cc.GetFromBitmapList(TrigColor).Width, gv.cc.GetFromBitmapList(TrigColor).Height);
                     dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(TrigColor), src, dst, !t.ImageFacingLeft);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(TrigColor), src, dst, !t.ImageFacingLeft);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
+                        gv.DrawBitmap(c, gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
                     }
                 }
             }
         }
-        public void drawGrid()
+        public void drawGrid(SKCanvas c)
         {
             for (int x = upperSquareX; x <= gv.mod.currentArea.MapSizeX - 1; x++)
             {
@@ -2364,32 +2364,32 @@ namespace IBbasic
                     dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                     if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
                     {
-                        gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.losBlocked, src, dst);
                     }
                     if (gv.mod.currentArea.Walkable[y * gv.mod.currentArea.MapSizeX + x] == 0)
                     {
-                        gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkBlocked, src, dst);
                     }
                     else
                     {
-                        gv.DrawBitmap(gv.cc.walkPass, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkPass, src, dst);
                     }
                 }
             }
         }
-        public void drawInfoPanel()
+        public void drawInfoPanel(SKCanvas c)
         {
             int index = selectedSquare.Y * gv.mod.currentArea.MapSizeX + selectedSquare.X;
             if (index > gv.mod.currentArea.Layer2Filename.Count) { index = 0; }
 
-            gv.DrawText("INFO OF TILE", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("Tile: (" + selectedSquare.X + "," + selectedSquare.Y + ")", panelLeftLocation, panelTopLocation + (1 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 1:", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentArea.Layer1Filename[index], panelLeftLocation, panelTopLocation + (3 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 2:", panelLeftLocation, panelTopLocation + (4 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentArea.Layer2Filename[index], panelLeftLocation, panelTopLocation + (5 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 3:", panelLeftLocation, panelTopLocation + (6 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentArea.Layer3Filename[index], panelLeftLocation, panelTopLocation + (7 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "INFO OF TILE", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "Tile: (" + selectedSquare.X + "," + selectedSquare.Y + ")", panelLeftLocation, panelTopLocation + (1 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 1:", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentArea.Layer1Filename[index], panelLeftLocation, panelTopLocation + (3 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 2:", panelLeftLocation, panelTopLocation + (4 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentArea.Layer2Filename[index], panelLeftLocation, panelTopLocation + (5 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 3:", panelLeftLocation, panelTopLocation + (6 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentArea.Layer3Filename[index], panelLeftLocation, panelTopLocation + (7 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
 
             //info on trigger
             string trigTag = "none";
@@ -2397,37 +2397,37 @@ namespace IBbasic
             {
                 trigTag = gv.mod.currentArea.getTriggerByLocation(selectedSquare.X, selectedSquare.Y).TriggerTag;
             }
-            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (9 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Trigger:", panelLeftLocation, panelTopLocation + (9 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, trigTag, panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             //info on walk/LoS
-            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, "Walkable:", panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentArea.Walkable[index] == 1)
             {
-                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (12 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "OPEN", panelLeftLocation, panelTopLocation + (12 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (12 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "BLOCKED", panelLeftLocation, panelTopLocation + (12 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //info on walk/LoS
-            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, "Line-Of-Sight:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentArea.LoSBlocked[index] == 1)
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "BLOCKED", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "VISIBLE", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //ZOOM
-            gv.DrawText("ZOOM LEVEL", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "ZOOM LEVEL", panelLeftLocation, panelTopLocation + (16 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
             int shiftForFont = (rbtnShowLayer1.Height / 2) - (gv.fontHeight / 2);
-            rbtnZoom1.Draw();
-            gv.DrawText("1X", rbtnZoom1.X + rbtnZoom1.Width + gv.scaler, rbtnZoom1.Y + shiftForFont, "wh");
-            rbtnZoom2.Draw();
-            gv.DrawText("2X", rbtnZoom2.X + rbtnZoom2.Width + gv.scaler, rbtnZoom2.Y + shiftForFont, "wh");
+            rbtnZoom1.Draw(c);
+            gv.DrawText(c, "1X", rbtnZoom1.X + rbtnZoom1.Width + gv.scaler, rbtnZoom1.Y + shiftForFont, "wh");
+            rbtnZoom2.Draw(c);
+            gv.DrawText(c, "2X", rbtnZoom2.X + rbtnZoom2.Width + gv.scaler, rbtnZoom2.Y + shiftForFont, "wh");
 
             
             //draw selected info tile highlight
@@ -2437,12 +2437,12 @@ namespace IBbasic
             int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
-            drawPreviewViewport();
+            drawPreviewViewport(c);
             //btnHelp.Draw();
         }
-        public void drawPreviewViewport()
+        public void drawPreviewViewport(SKCanvas c)
         {
             int previewSquareSize = (int)(gv.squareSize * gv.scaler * 3 / gv.mod.currentArea.MapSizeX);
             if (previewSquareSize > (int)(gv.squareSize * gv.scaler * 3 / gv.mod.currentArea.MapSizeY))
@@ -2457,7 +2457,7 @@ namespace IBbasic
             int brY1 = (int)(gv.squareSize * gv.scaler * 3);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("ui_previewback").Width, gv.cc.GetFromTileBitmapList("ui_previewback").Height);
             dst = new IbRect(0 + shiftX, 0 + shiftY, brX1, brY1);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_previewback"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_previewback"), src, dst);
 
 
             //Draw Layers
@@ -2478,7 +2478,7 @@ namespace IBbasic
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2506,7 +2506,7 @@ namespace IBbasic
                                 src = new IbRect(32, 16, 56, 56);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2534,7 +2534,7 @@ namespace IBbasic
                                 src = new IbRect(32, 16, 56, 56);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2552,10 +2552,10 @@ namespace IBbasic
             int brY2 = (int)(panSqrSize * previewSquareSize);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Width, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Height);
             dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
 
         }
-        public void drawTilesPanel()
+        public void drawTilesPanel(SKCanvas c)
         {
             #region 2D AREA
             if (!gv.mod.currentArea.Is3dArea)
@@ -2608,7 +2608,7 @@ namespace IBbasic
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                             dst = new IbRect(tlX + panelLeftLocation, tlY + panelTopLocation, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                         cnt++;
@@ -2623,43 +2623,43 @@ namespace IBbasic
                 int brY2 = (int)(gv.squareSize * gv.scaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
                 dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
                 //Description     
-                gv.DrawText("PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
+                gv.DrawText(c, "PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
 
-                tglMiscTiles.Draw();
-                tglWallFloorTiles.Draw();
-                tglPropTiles.Draw();
-                tglUserTiles.Draw();
+                tglMiscTiles.Draw(c);
+                tglWallFloorTiles.Draw(c);
+                tglPropTiles.Draw(c);
+                tglUserTiles.Draw(c);
 
-                btnTilesLeft.Draw();
-                btnTilesPageIndex.Draw();
+                btnTilesLeft.Draw(c);
+                btnTilesPageIndex.Draw(c);
                 tlX2 = (int)(btnTilesPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
                 tlY2 = (int)(btnTilesPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
                 brX2 = (int)(gv.squareSize * gv.scaler);
                 brY2 = (int)(gv.squareSize * gv.scaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(currentTile).Width, gv.cc.GetFromTileBitmapList(currentTile).Height);
                 dst = new IbRect(tlX2, tlY2, brX2, brY2);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentTile), src, dst);
-                btnTilesRight.Draw();
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(currentTile), src, dst);
+                btnTilesRight.Draw(c);
 
                 int shiftForFont = (rbtnShowLayer1.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText("SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-                rbtnShowLayer1.Draw();
-                gv.DrawText("Lyr1", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
-                rbtnShowLayer2.Draw();
-                gv.DrawText("Lyr2", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
-                rbtnShowLayer3.Draw();
-                gv.DrawText("Lyr3", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
+                gv.DrawText(c, "SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+                rbtnShowLayer1.Draw(c);
+                gv.DrawText(c, "Lyr1", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
+                rbtnShowLayer2.Draw(c);
+                gv.DrawText(c, "Lyr2", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
+                rbtnShowLayer3.Draw(c);
+                gv.DrawText(c, "Lyr3", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
 
-                gv.DrawText("EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
-                rbtnEditLayer1.Draw();
-                gv.DrawText("Lyr1", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
-                rbtnEditLayer2.Draw();
-                gv.DrawText("Lyr2", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
-                rbtnEditLayer3.Draw();
-                gv.DrawText("Lyr3", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
+                gv.DrawText(c, "EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+                rbtnEditLayer1.Draw(c);
+                gv.DrawText(c, "Lyr1", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
+                rbtnEditLayer2.Draw(c);
+                gv.DrawText(c, "Lyr2", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
+                rbtnEditLayer3.Draw(c);
+                gv.DrawText(c, "Lyr3", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
                 //btnHelp.Draw();
                 
             }
@@ -2712,7 +2712,7 @@ namespace IBbasic
                                 src = new IbRect(32,16,56,56);
                             }
                             dst = new IbRect(tlX + panelLeftLocation, tlY + panelTopLocation, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                         cnt++;
@@ -2727,13 +2727,13 @@ namespace IBbasic
                 int brY2 = (int)(gv.squareSize * gv.scaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
                 dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
                 //Description     
-                gv.DrawText("PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
+                gv.DrawText(c, "PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
 
-                btnTilesLeft.Draw();
-                btnTilesPageIndex.Draw();
+                btnTilesLeft.Draw(c);
+                btnTilesPageIndex.Draw(c);
                 tlX2 = (int)(btnTilesPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
                 tlY2 = (int)(btnTilesPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
                 brX2 = (int)(gv.squareSize * gv.scaler);
@@ -2744,56 +2744,56 @@ namespace IBbasic
                     src = new IbRect(32, 16, 56, 56);
                 }
                 dst = new IbRect(tlX2, tlY2, brX2, brY2);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentTile), src, dst);
-                btnTilesRight.Draw();
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(currentTile), src, dst);
+                btnTilesRight.Draw(c);
 
                 int shiftForFont = (rbtnShowLayer1.Height / 2) - (gv.fontHeight / 2);
-                gv.DrawText("SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-                rbtnShowLayer1.Draw();
-                gv.DrawText("bkdrp", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
-                rbtnShowLayer2.Draw();
-                gv.DrawText("walls", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
-                rbtnShowLayer3.Draw();
-                gv.DrawText("ovrlay", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
+                gv.DrawText(c, "SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+                rbtnShowLayer1.Draw(c);
+                gv.DrawText(c, "bkdrp", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
+                rbtnShowLayer2.Draw(c);
+                gv.DrawText(c, "walls", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
+                rbtnShowLayer3.Draw(c);
+                gv.DrawText(c, "ovrlay", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
 
-                gv.DrawText("EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
-                rbtnEditLayer1.Draw();
-                gv.DrawText("bkdrp", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
-                rbtnEditLayer2.Draw();
-                gv.DrawText("walls", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
-                rbtnEditLayer3.Draw();
-                gv.DrawText("ovrlay", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
+                gv.DrawText(c, "EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+                rbtnEditLayer1.Draw(c);
+                gv.DrawText(c, "bkdrp", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
+                rbtnEditLayer2.Draw(c);
+                gv.DrawText(c, "walls", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
+                rbtnEditLayer3.Draw(c);
+                gv.DrawText(c, "ovrlay", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
                 //btnHelp.Draw();
             }
             #endregion
         }
-        public void drawTriggersPanel()
+        public void drawTriggersPanel(SKCanvas c)
         {
             //selectedTrigger = gv.mod.currentArea.Triggers[0];
             //Description     
-            gv.DrawText("TRIGGERS", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "TRIGGERS", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
             //gv.DrawText("LINE-OF-SIGHT", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            rbtnViewInfoTrigger.Draw();
-            gv.DrawText("View", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y, "wh");
-            gv.DrawText("Info", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnViewInfoTrigger.Draw(c);
+            gv.DrawText(c, "View", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y, "wh");
+            gv.DrawText(c, "Info", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            rbtnPlaceNewTrigger.Draw();
-            gv.DrawText("Create", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y, "wh");
-            gv.DrawText("New", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnPlaceNewTrigger.Draw(c);
+            gv.DrawText(c, "Create", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y, "wh");
+            gv.DrawText(c, "New", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (selectedTrigger != null)
             {
-                rbtnEditTrigger.Draw();
-                gv.DrawText("Edit Last", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y, "wh");
-                gv.DrawText("Selected Trigger", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                rbtnEditTrigger.Draw(c);
+                gv.DrawText(c, "Edit Last", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y, "wh");
+                gv.DrawText(c, "Selected Trigger", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             }
 
             if (selectedTrigger != null)
             {
-                rbtnTriggerProperties.Draw();
-                gv.DrawText("Main", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y, "wh");
-                gv.DrawText("Info", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                rbtnTriggerProperties.Draw(c);
+                gv.DrawText(c, "Main", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y, "wh");
+                gv.DrawText(c, "Info", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                 string color = "wh";
                 if (selectedTrigger != null)
@@ -2804,9 +2804,9 @@ namespace IBbasic
                     else if (selectedTrigger.Event1Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event1Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent1Properties.Draw();
-                gv.DrawText("Event", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y, color);
-                gv.DrawText("one", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent1Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y, color);
+                gv.DrawText(c, "one", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
 
                 color = "wh";
                 if (selectedTrigger != null)
@@ -2817,9 +2817,9 @@ namespace IBbasic
                     else if (selectedTrigger.Event2Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event2Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent2Properties.Draw();
-                gv.DrawText("Event", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y, color);
-                gv.DrawText("two", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent2Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y, color);
+                gv.DrawText(c, "two", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
 
                 color = "wh";
                 if (selectedTrigger != null)
@@ -2830,222 +2830,222 @@ namespace IBbasic
                     else if (selectedTrigger.Event3Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event3Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent3Properties.Draw();
-                gv.DrawText("Event", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y, color);
-                gv.DrawText("three", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent3Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y, color);
+                gv.DrawText(c, "three", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
                             
                 if (rbtnTriggerProperties.toggleOn)
                 {
-                    tglTriggerTag.Draw();
-                    gv.DrawText("Trigger Tag:", tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.TriggerTag, tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglTriggerTag.Draw(c);
+                    gv.DrawText(c, "Trigger Tag:", tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.TriggerTag, tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Enabled) { tglTriggerEnabled.toggleOn = true; }
                     else { tglTriggerEnabled.toggleOn = false; }
-                    tglTriggerEnabled.Draw();
-                    gv.DrawText("Triggr", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
-                    gv.DrawText("Enabld", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglTriggerEnabled.Draw(c);
+                    gv.DrawText(c, "Triggr", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
+                    gv.DrawText(c, "Enabld", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnly) { tglTriggerDoOnce.toggleOn = true; }
                     else { tglTriggerDoOnce.toggleOn = false; }
-                    tglTriggerDoOnce.Draw();
-                    gv.DrawText("Do Once", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y, "gy");
-                    gv.DrawText("Only", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglTriggerDoOnce.Draw(c);
+                    gv.DrawText(c, "Do Once", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y, "gy");
+                    gv.DrawText(c, "Only", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglImageFilename.Draw();
-                    gv.DrawText("Image Filename:", tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y, "gy");
-                    gv.DrawText(selectedTrigger.ImageFileName, tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglImageFilename.Draw(c);
+                    gv.DrawText(c, "Image Filename:", tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.ImageFileName, tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.ImageFacingLeft) { tglImageFacingLeft.toggleOn = true; }
                     else { tglImageFacingLeft.toggleOn = false; }
-                    tglImageFacingLeft.Draw();
-                    gv.DrawText("Face", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y, "gy");
-                    gv.DrawText("Left", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglImageFacingLeft.Draw(c);
+                    gv.DrawText(c, "Face", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y, "gy");
+                    gv.DrawText(c, "Left", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.isShown) { tglIsShown.toggleOn = true; }
                     else { tglIsShown.toggleOn = false; }
-                    tglIsShown.Draw();
-                    gv.DrawText("Is", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y, "gy");
-                    gv.DrawText("Shown", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglIsShown.Draw(c);
+                    gv.DrawText(c, "Is", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y, "gy");
+                    gv.DrawText(c, "Shown", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.HideImageAfterEnc) { tglHideAfterEnc.toggleOn = true; }
                     else { tglHideAfterEnc.toggleOn = false; }
-                    tglHideAfterEnc.Draw();
-                    gv.DrawText("Hide Image", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y, "gy");
-                    gv.DrawText("After Encounter", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglHideAfterEnc.Draw(c);
+                    gv.DrawText(c, "Hide Image", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y, "gy");
+                    gv.DrawText(c, "After Encounter", tglHideAfterEnc.X + tglHideAfterEnc.Width + gv.scaler, tglHideAfterEnc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
                     
-                    gv.DrawText("COMBAT ONLY:", tglNumberOfScriptCallsRemaining.X, tglNumberOfScriptCallsRemaining.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+                    gv.DrawText(c, "COMBAT ONLY:", tglNumberOfScriptCallsRemaining.X, tglNumberOfScriptCallsRemaining.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
 
-                    tglNumberOfScriptCallsRemaining.Draw();
-                    gv.DrawText("Num of Calls", tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y, "gy");
-                    gv.DrawText(selectedTrigger.numberOfScriptCallsRemaining.ToString(), tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglNumberOfScriptCallsRemaining.Draw(c);
+                    gv.DrawText(c, "Num of Calls", tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.numberOfScriptCallsRemaining.ToString(), tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.canBeTriggeredByPc) { tglCanBeTriggeredByPc.toggleOn = true; }
                     else { tglCanBeTriggeredByPc.toggleOn = false; }
-                    tglCanBeTriggeredByPc.Draw();
-                    gv.DrawText("Triggered", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y, "gy");
-                    gv.DrawText("by PC", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglCanBeTriggeredByPc.Draw(c);
+                    gv.DrawText(c, "Triggered", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y, "gy");
+                    gv.DrawText(c, "by PC", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.canBeTriggeredByCreature) { tglCanBeTriggeredByCreature.toggleOn = true; }
                     else { tglCanBeTriggeredByCreature.toggleOn = false; }
-                    tglCanBeTriggeredByCreature.Draw();
-                    gv.DrawText("Triggered", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y, "gy");
-                    gv.DrawText("by Creatures", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglCanBeTriggeredByCreature.Draw(c);
+                    gv.DrawText(c, "Triggered", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y, "gy");
+                    gv.DrawText(c, "by Creatures", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
                 }
                 if (rbtnEvent1Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent1) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent1) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event1Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event1Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event1FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event1FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event1Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c, "Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event1Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
                 if (rbtnEvent2Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent2) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent2) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event2Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event2Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event2FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event2FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event2Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c, "Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event2Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
                 if (rbtnEvent3Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent3) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent3) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event3Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event3Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event3FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event3FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event3Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c, "Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event3Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
             }
@@ -3057,7 +3057,7 @@ namespace IBbasic
             int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
             //rbtnEditTrigger.Draw();
             //gv.DrawText("Edit Existing", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y, "wh");
@@ -3069,42 +3069,42 @@ namespace IBbasic
             //gv.DrawText("square to make", panelLeftLocation, panelTopLocation + (17 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
             //gv.DrawText("the setting", panelLeftLocation, panelTopLocation + (18 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawWalkLoSPanel()
+        public void drawWalkLoSPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("WALKABLE", panelLeftLocation, panelTopLocation + gv.fontHeight + gv.fontLineSpacing, "gn");
-            gv.DrawText("LINE-OF-SIGHT", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "WALKABLE", panelLeftLocation, panelTopLocation + gv.fontHeight + gv.fontLineSpacing, "gn");
+            gv.DrawText(c, "LINE-OF-SIGHT", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            rbtnWalkOpen.Draw();
-            gv.DrawText("WALKABLE", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y, "wh");
-            gv.DrawText("OPEN", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnWalkBlocking.Draw();
-            gv.DrawText("WALKABLE", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y, "wh");
-            gv.DrawText("BLOCK", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnSightOpen.Draw();
-            gv.DrawText("Line-of-Sight", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y, "wh");
-            gv.DrawText("Visible", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnSightBlocking.Draw();
-            gv.DrawText("Line-of-Sight", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y, "wh");
-            gv.DrawText("Blocked", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnWalkOpen.Draw(c);
+            gv.DrawText(c, "WALKABLE", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y, "wh");
+            gv.DrawText(c, "OPEN", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnWalkBlocking.Draw(c);
+            gv.DrawText(c, "WALKABLE", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y, "wh");
+            gv.DrawText(c, "BLOCK", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnSightOpen.Draw(c);
+            gv.DrawText(c, "Line-of-Sight", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y, "wh");
+            gv.DrawText(c, "Visible", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnSightBlocking.Draw(c);
+            gv.DrawText(c, "Line-of-Sight", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y, "wh");
+            gv.DrawText(c, "Blocked", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            gv.DrawText("MAP SIZE (NO UNDO)", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "MAP SIZE (NO UNDO)", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            btnPlusLeft.Draw();
-            gv.DrawText("X=" + gv.mod.currentArea.MapSizeX, btnPlusLeft.X + btnPlusLeft.Width + gv.scaler, btnPlusLeft.Y + btnPlusLeft.Height / 4, "yl");
-            btnMinusLeft.Draw();
-            gv.DrawText("Y=" + gv.mod.currentArea.MapSizeY, btnMinusLeft.X + btnMinusLeft.Width + gv.scaler, btnMinusLeft.Y + btnMinusLeft.Height / 4, "yl");
-            btnPlusRight.Draw();
-            btnMinusRight.Draw();
-            btnPlusTop.Draw();
-            btnMinusTop.Draw();
-            btnPlusBottom.Draw();
-            btnMinusBottom.Draw();
+            btnPlusLeft.Draw(c);
+            gv.DrawText(c, "X=" + gv.mod.currentArea.MapSizeX, btnPlusLeft.X + btnPlusLeft.Width + gv.scaler, btnPlusLeft.Y + btnPlusLeft.Height / 4, "yl");
+            btnMinusLeft.Draw(c);
+            gv.DrawText(c, "Y=" + gv.mod.currentArea.MapSizeY, btnMinusLeft.X + btnMinusLeft.Width + gv.scaler, btnMinusLeft.Y + btnMinusLeft.Height / 4, "yl");
+            btnPlusRight.Draw(c);
+            btnMinusRight.Draw(c);
+            btnPlusTop.Draw(c);
+            btnMinusTop.Draw(c);
+            btnPlusBottom.Draw(c);
+            btnMinusBottom.Draw(c);
 
         }
-        public void drawPropsPanel()
+        public void drawPropsPanel(SKCanvas c)
         {
             //Description            
             int yLoc = 0 * gv.uiSquareSize;
@@ -3117,68 +3117,68 @@ namespace IBbasic
             textToSpan += gv.mod.moduleDescription;
             description.linesList.Clear();
             description.AddFormattedTextToTextBox(textToSpan);
-            description.onDrawTextBox();
+            description.onDrawTextBox(c);
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawSettingsPanel()
+        public void drawSettingsPanel(SKCanvas c)
         {            
             //Description     
-            gv.DrawText("AREA SETTINGS", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "AREA SETTINGS", panelLeftLocation, panelTopLocation, "gn");
 
             int shiftForFont = (tglSettingAreaName.Height / 2) - (gv.fontHeight / 2);
-            tglSettingAreaName.Draw();
-            gv.DrawText("Area Name:", tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y, "yl");
-            gv.DrawText(gv.mod.currentArea.Filename, tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            tglSettingInGameAreaName.Draw();
-            gv.DrawText("In-Game Name:", tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y, "yl");
-            gv.DrawText(gv.mod.currentArea.inGameAreaName, tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            tglAreaMusic.Draw();
-            gv.DrawText("Area Music:", tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y, "yl");
-            gv.DrawText(gv.mod.currentArea.AreaMusic, tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingAreaName.Draw(c);
+            gv.DrawText(c, "Area Name:", tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y, "yl");
+            gv.DrawText(c, gv.mod.currentArea.Filename, tglSettingAreaName.X + tglSettingAreaName.Width + gv.scaler, tglSettingAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingInGameAreaName.Draw(c);
+            gv.DrawText(c, "In-Game Name:", tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y, "yl");
+            gv.DrawText(c, gv.mod.currentArea.inGameAreaName, tglSettingInGameAreaName.X + tglSettingInGameAreaName.Width + gv.scaler, tglSettingInGameAreaName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglAreaMusic.Draw(c);
+            gv.DrawText(c, "Area Music:", tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y, "yl");
+            gv.DrawText(c, gv.mod.currentArea.AreaMusic, tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            tglSettingAreaVisibleDistance.Draw();
-            gv.DrawText("Visible", tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y, "wh");
-            gv.DrawText("Distance: " + gv.mod.currentArea.AreaVisibleDistance, tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            tglSettingTimePerSquare.Draw();
-            gv.DrawText("Time Per", tglSettingTimePerSquare.X + tglSettingTimePerSquare.Width + gv.scaler, tglSettingTimePerSquare.Y, "wh");
-            gv.DrawText("Square: " + gv.mod.currentArea.TimePerSquare, tglSettingTimePerSquare.X + tglSettingTimePerSquare.Width + gv.scaler, tglSettingTimePerSquare.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingAreaVisibleDistance.Draw(c);
+            gv.DrawText(c, "Visible", tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y, "wh");
+            gv.DrawText(c, "Distance: " + gv.mod.currentArea.AreaVisibleDistance, tglSettingAreaVisibleDistance.X + tglSettingAreaVisibleDistance.Width + gv.scaler, tglSettingAreaVisibleDistance.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingTimePerSquare.Draw(c);
+            gv.DrawText(c, "Time Per", tglSettingTimePerSquare.X + tglSettingTimePerSquare.Width + gv.scaler, tglSettingTimePerSquare.Y, "wh");
+            gv.DrawText(c, "Square: " + gv.mod.currentArea.TimePerSquare, tglSettingTimePerSquare.X + tglSettingTimePerSquare.Width + gv.scaler, tglSettingTimePerSquare.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (gv.mod.currentArea.Is3dArea) { tglSettingIs3dArea.toggleOn = true; }
             else { tglSettingIs3dArea.toggleOn = false; }
-            tglSettingIs3dArea.Draw();
-            gv.DrawText("Is 3D", tglSettingIs3dArea.X + tglSettingIs3dArea.Width + gv.scaler, tglSettingIs3dArea.Y, "rd");
-            gv.DrawText("View", tglSettingIs3dArea.X + tglSettingIs3dArea.Width + gv.scaler, tglSettingIs3dArea.Y + gv.fontHeight + gv.fontLineSpacing, "rd");
+            tglSettingIs3dArea.Draw(c);
+            gv.DrawText(c, "Is 3D", tglSettingIs3dArea.X + tglSettingIs3dArea.Width + gv.scaler, tglSettingIs3dArea.Y, "rd");
+            gv.DrawText(c, "View", tglSettingIs3dArea.X + tglSettingIs3dArea.Width + gv.scaler, tglSettingIs3dArea.Y + gv.fontHeight + gv.fontLineSpacing, "rd");
 
             if (gv.mod.currentArea.RestingAllowed) { tglSettingRestingAllowed.toggleOn = true; }
             else { tglSettingRestingAllowed.toggleOn = false; }
-            tglSettingRestingAllowed.Draw();
-            gv.DrawText("Resting", tglSettingRestingAllowed.X + tglSettingRestingAllowed.Width + gv.scaler, tglSettingRestingAllowed.Y, "wh");
-            gv.DrawText("Allowed", tglSettingRestingAllowed.X + tglSettingRestingAllowed.Width + gv.scaler, tglSettingRestingAllowed.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingRestingAllowed.Draw(c);
+            gv.DrawText(c, "Resting", tglSettingRestingAllowed.X + tglSettingRestingAllowed.Width + gv.scaler, tglSettingRestingAllowed.Y, "wh");
+            gv.DrawText(c, "Allowed", tglSettingRestingAllowed.X + tglSettingRestingAllowed.Width + gv.scaler, tglSettingRestingAllowed.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (gv.mod.currentArea.UseMiniMapFogOfWar) { tglSettingUseMiniMapFogOfWar.toggleOn = true; }
             else { tglSettingUseMiniMapFogOfWar.toggleOn = false; }
-            tglSettingUseMiniMapFogOfWar.Draw();
-            gv.DrawText("Use Mini Map", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y, "wh");
-            gv.DrawText("Fog-of-War", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingUseMiniMapFogOfWar.Draw(c);
+            gv.DrawText(c, "Use Mini Map", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y, "wh");
+            gv.DrawText(c, "Fog-of-War", tglSettingUseMiniMapFogOfWar.X + tglSettingUseMiniMapFogOfWar.Width + gv.scaler, tglSettingUseMiniMapFogOfWar.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (gv.mod.currentArea.UseDayNightCycle) { tglSettingUseDayNightCycle.toggleOn = true; }
             else { tglSettingUseDayNightCycle.toggleOn = false; }
-            tglSettingUseDayNightCycle.Draw();
-            gv.DrawText("Use Day/Night", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "wh");
-            gv.DrawText("Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingUseDayNightCycle.Draw(c);
+            gv.DrawText(c, "Use Day/Night", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "wh");
+            gv.DrawText(c, "Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void draw3DPreviewPanel()
+        public void draw3DPreviewPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("3D VIEW PREVIEW", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "3D VIEW PREVIEW", panelLeftLocation, panelTopLocation, "gn");
 
-            btnMoveForward.Draw();
-            btnTurnLeft.Draw();
-            btnTurnRight.Draw();
-            btnHelp.Draw();
+            btnMoveForward.Draw(c);
+            btnTurnLeft.Draw(c);
+            btnTurnRight.Draw(c);
+            btnHelp.Draw(c);
         }
 
         public void onTouchTsAreaEditor(int eX, int eY, MouseEventType.EventType eventType)

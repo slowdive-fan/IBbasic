@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -149,7 +150,7 @@ namespace IBbasic
 	    }
 	
 	    //CAST SELECTOR SCREEN (COMBAT and MAIN)
-        public void redrawCastSelector(bool inCombat)
+        public void redrawCastSelector(SKCanvas c, bool inCombat)
         {
             Player pc = getCastingPlayer();
 
@@ -180,9 +181,9 @@ namespace IBbasic
             //DRAW TEXT		
 		    locY = (gv.uiSquareSize * 0) + (pH * 2);
 		    //gv.mSheetTextPaint.setColor(Color.LTGRAY);
-		    gv.DrawText("Select a " + gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " to Cast", noticeX, pH * 3, "wh");
+		    gv.DrawText(c, "Select a " + gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " to Cast", noticeX, pH * 3, "wh");
 		    //gv.mSheetTextPaint.setColor(Color.YELLOW);
-		    gv.DrawText(getCastingPlayer().name + " SP: " + getCastingPlayer().sp + "/" + getCastingPlayer().spMax, pW * 55, leftStartY, "yl");
+		    gv.DrawText(c, getCastingPlayer().name + " SP: " + getCastingPlayer().sp + "/" + getCastingPlayer().spMax, pW * 55, leftStartY, "yl");
 		
 		    //DRAW NOTIFICATIONS
 		    if (isSelectedSpellSlotInKnownSpellsRange())
@@ -197,12 +198,12 @@ namespace IBbasic
 					    if (pc.sp >= GetCurrentlySelectedSpell().costSP)
 					    {
 						    //gv.mSheetTextPaint.setColor(Color.GREEN);
-                            gv.DrawText("Available to Cast", noticeX, noticeY, "gn");
+                            gv.DrawText(c, "Available to Cast", noticeX, noticeY, "gn");
 					    }
 					    else //if known but not enough spell points, "Insufficient SP to Cast" in yellow
 					    {
 						    //gv.mSheetTextPaint.setColor(Color.YELLOW);
-                            gv.DrawText("Insufficient SP", noticeX, noticeY, "yl");
+                            gv.DrawText(c, "Insufficient SP", noticeX, noticeY, "yl");
 					    }					
 				    }
 				    //not in combat so check if spell can be used on adventure maps
@@ -212,25 +213,25 @@ namespace IBbasic
 					    if (pc.sp >= GetCurrentlySelectedSpell().costSP)
 					    {
 						    //gv.mSheetTextPaint.setColor(Color.GREEN);
-                            gv.DrawText("Available to Cast", noticeX, noticeY, "gn");
+                            gv.DrawText(c, "Available to Cast", noticeX, noticeY, "gn");
 					    }
 					    else //if known but not enough spell points, "Insufficient SP to Cast" in yellow
 					    {
 						    //gv.mSheetTextPaint.setColor(Color.YELLOW);
-                            gv.DrawText("Insufficient SP", noticeX, noticeY, "yl");
+                            gv.DrawText(c, "Insufficient SP", noticeX, noticeY, "yl");
 					    }					
 				    }
 				    else //can't be used on adventure map
 				    {
 					    //gv.mSheetTextPaint.setColor(Color.YELLOW);
-                        gv.DrawText("Not Available Here", noticeX, noticeY, "yl");
+                        gv.DrawText(c, "Not Available Here", noticeX, noticeY, "yl");
 				    }	
 			    }
 			    else //spell not known
 			    {
 				    //if unknown spell, "Spell Not Known Yet" in red
 				    //gv.mSheetTextPaint.setColor(Color.RED);
-                    gv.DrawText(gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " Not Known Yet", noticeX, noticeY, "rd");
+                    gv.DrawText(c, gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " Not Known Yet", noticeX, noticeY, "rd");
 			    }
 		    }		
 		
@@ -244,7 +245,7 @@ namespace IBbasic
 			    else {btn.glowOn = false;}
 			
 			    		
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -268,15 +269,15 @@ namespace IBbasic
                 description.tbHeight = pH * 80;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
 		
-		    btnHelp.Draw();	
-		    btnExit.Draw();	
-		    btnSelect.Draw();
+		    btnHelp.Draw(c);	
+		    btnExit.Draw(c);	
+		    btnSelect.Draw(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchCastSelector(int eX, int eY, MouseEventType.EventType eventType, bool inCombat)

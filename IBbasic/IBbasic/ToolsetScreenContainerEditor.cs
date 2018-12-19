@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -101,46 +102,46 @@ namespace IBbasic
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsContainerEditor()
+        public void redrawTsContainerEditor(SKCanvas c)
         {
             setControlsStart();
             int shiftForFont = (btnConatinerTag.Height / 2) - (gv.fontHeight / 2);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
-            gv.DrawText("CONTAINERS EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "CONTAINERS EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
 
             //label for Containers in module      
-            gv.DrawText("CONTAINERS", btnAddContainer.X, btnAddContainer.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            gv.DrawText(c, "CONTAINERS", btnAddContainer.X, btnAddContainer.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
             //on the left draw the add and remove buttons
-            btnAddContainer.Draw();
-            btnRemoveContainer.Draw();
+            btnAddContainer.Draw(c);
+            btnRemoveContainer.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = 1 * gv.fontWidth;
             int startY = btnAddContainer.Y + btnAddContainer.Height;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (Container c in gv.mod.moduleContainersList)
+            foreach (Container cn in gv.mod.moduleContainersList)
             {
                 if (cnt == containerListIndex)
                 {
-                    gv.DrawText(c.containerTag, startX, startY += incY, "gn");
+                    gv.DrawText(c, cn.containerTag, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(c.containerTag, startX, startY += incY, "wh");
+                    gv.DrawText(c, cn.containerTag, startX, startY += incY, "wh");
                 }
                 cnt++;
             }
 
             if (gv.mod.moduleContainersList.Count > 0)
             {
-                btnConatinerTag.Draw();
-                gv.DrawText("CONTAINER TAG: " + gv.mod.moduleContainersList[containerListIndex].containerTag, btnConatinerTag.X + btnConatinerTag.Width + gv.scaler, btnConatinerTag.Y + shiftForFont, "wh");
+                btnConatinerTag.Draw(c);
+                gv.DrawText(c, "CONTAINER TAG: " + gv.mod.moduleContainersList[containerListIndex].containerTag, btnConatinerTag.X + btnConatinerTag.Width + gv.scaler, btnConatinerTag.Y + shiftForFont, "wh");
                 //label for item list
-                gv.DrawText("CONTAINER ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+                gv.DrawText(c, "CONTAINER ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
                 //on the left draw the add and remove buttons
-                btnAddItem.Draw();
-                btnRemoveItem.Draw();
+                btnAddItem.Draw(c);
+                btnRemoveItem.Draw(c);
                 //list all containers (tap on a container in the list to show elements for editing)
                 startX = btnAddItem.X;
                 startY = btnAddItem.Y + btnAddItem.Height;
@@ -151,23 +152,23 @@ namespace IBbasic
                     //need to check if should start new column after list hits end of screen
                     if (cnt == itemListIndex)
                     {
-                        gv.DrawText(itr.name, startX, startY += incY, "gn");
+                        gv.DrawText(c, itr.name, startX, startY += incY, "gn");
                     }
                     else
                     {
-                        gv.DrawText(itr.name, startX, startY += incY, "wh");
+                        gv.DrawText(c, itr.name, startX, startY += incY, "wh");
                     }
                     cnt++;
                 }
             }
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTsContainerEditor(int eX, int eY, MouseEventType.EventType eventType)

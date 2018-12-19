@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace IBbasic
             return false;
         }
 
-        public void Draw()
+        public void Draw(SKCanvas c)
         {
             int pH = (int)((float)gv.screenHeight / 200.0f);
             int pW = (int)((float)gv.screenHeight / 200.0f);
@@ -83,34 +84,34 @@ namespace IBbasic
             //draw glow first if on
             if ((this.glowOn) && (this.Glow != null))
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(Glow), srcGlow, dstGlow);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Glow), srcGlow, dstGlow);
             }
             //draw the proper button State
             if ((this.btnState == buttonState.On) && (this.ImgOn != null))
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgOn), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgOn), src, dst);
             }
             else if ((this.btnState == buttonState.Off) && (this.ImgOff != null))
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgOff), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgOff), src, dst);
             }
             else
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(Img), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Img), src, dst);
             }
             //draw the standard overlay image if has one
             if ((this.btnState == buttonState.Off) && (this.Img2Off != null))
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(Img2Off), src2, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Img2Off), src2, dst);
             }
             else if (this.Img2 != null)
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(Img2), src2, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Img2), src2, dst);
             }
             //draw the notification image if turned on (like a level up or additional convo nodes image)
             if ((this.btnNotificationOn) && (this.Img3 != null))
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(Img3), src3, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Img3), src3, dst);
             }
 
             // DRAW TEXT
@@ -124,10 +125,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText(Text, this.X + ulX + x, this.Y + ulY + y, "bk");
+                    gv.DrawText(c, Text, this.X + ulX + x, this.Y + ulY + y, "bk");
                 }
             }
-            gv.DrawText(Text, this.X + ulX, this.Y + ulY, "wh");
+            gv.DrawText(c, Text, this.X + ulX, this.Y + ulY, "wh");
 
 
 
@@ -142,10 +143,10 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText(Quantity, this.X + ulX + x, this.Y + ulY + y, "bk");
+                    gv.DrawText(c, Quantity, this.X + ulX + x, this.Y + ulY + y, "bk");
                 }
             }
-            gv.DrawText(Quantity, this.X + ulX, this.Y + ulY, "wh");
+            gv.DrawText(c, Quantity, this.X + ulX, this.Y + ulY, "wh");
 
 
 
@@ -162,10 +163,10 @@ namespace IBbasic
                 {
                     for (int y = 0; y <= 2; y++)
                     {
-                        gv.DrawText(HotKey, this.X + ulX + x, this.Y + ulY + y, "bk");
+                        gv.DrawText(c, HotKey, this.X + ulX + x, this.Y + ulY + y, "bk");
                     }
                 }
-                gv.DrawText(HotKey, this.X + ulX, this.Y + ulY, "rd");
+                gv.DrawText(c, HotKey, this.X + ulX, this.Y + ulY, "rd");
             }
         }
     }

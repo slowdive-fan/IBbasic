@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -238,68 +239,68 @@ namespace IBbasic
 
         }
 
-        public void redrawTsModule()
+        public void redrawTsModule(SKCanvas c)
         {
             setControlsStart();
             int shiftForFont = (btnModuleName.Height / 2) - (gv.fontHeight / 2);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
-            gv.DrawText("MODULE SETTINGS", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "MODULE SETTINGS", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
 
             //btnModuleName.Text = gv.mod.moduleName;
-            btnModuleName.Draw();
-            gv.DrawText(" Module Name: " + gv.mod.moduleName, btnModuleName.X + btnModuleName.Width + gv.scaler, btnModuleName.Y + shiftForFont, "wh");
+            btnModuleName.Draw(c);
+            gv.DrawText(c, " Module Name: " + gv.mod.moduleName, btnModuleName.X + btnModuleName.Width + gv.scaler, btnModuleName.Y + shiftForFont, "wh");
 
-            btnModuleLabelName.Draw();
-            gv.DrawText(" Module Label Name: " + gv.mod.moduleLabelName, btnModuleLabelName.X + btnModuleLabelName.Width + gv.scaler, btnModuleLabelName.Y + shiftForFont, "wh");
+            btnModuleLabelName.Draw(c);
+            gv.DrawText(c, " Module Label Name: " + gv.mod.moduleLabelName, btnModuleLabelName.X + btnModuleLabelName.Width + gv.scaler, btnModuleLabelName.Y + shiftForFont, "wh");
 
-            btnModuleDescription.Draw();
-            gv.DrawText(" Description:", btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y, "gn");
-            gv.DrawText(" " + gv.mod.moduleDescription, btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y + gv.fontHeight, "gy");
+            btnModuleDescription.Draw(c);
+            gv.DrawText(c, " Description:", btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y, "gn");
+            gv.DrawText(c, " " + gv.mod.moduleDescription, btnModuleDescription.X + btnModuleDescription.Width + gv.scaler, btnModuleDescription.Y + gv.fontHeight, "gy");
 
-            btnModuleCredits.Draw();
-            gv.DrawText(" Module Credits:", btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y, "gn");
-            gv.DrawText(" " + gv.mod.moduleCredits, btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y + gv.fontHeight, "gy");
+            btnModuleCredits.Draw(c);
+            gv.DrawText(c, " Module Credits:", btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y, "gn");
+            gv.DrawText(c, " " + gv.mod.moduleCredits, btnModuleCredits.X + btnModuleCredits.Width + gv.scaler, btnModuleCredits.Y + gv.fontHeight, "gy");
 
-            btnAddToDefaultPlayersList.Draw();
-            gv.DrawText(" Add to default player list:", btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y, "gn");
+            btnAddToDefaultPlayersList.Draw(c);
+            gv.DrawText(c, " Add to default player list:", btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y, "gn");
             string playerList = "";
             foreach (StringForDropDownList s in gv.mod.defaultPlayerFilenameList)
             {
                 playerList += s.stringValue + ", ";
             }
-            gv.DrawText(" " + playerList, btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y + gv.fontHeight, "gy");
-            btnClearDefaultPlayersList.Draw();
-            gv.DrawText(" Clear default player list", btnClearDefaultPlayersList.X + btnClearDefaultPlayersList.Width + gv.scaler, btnClearDefaultPlayersList.Y + shiftForFont, "gn");
+            gv.DrawText(c, " " + playerList, btnAddToDefaultPlayersList.X + btnAddToDefaultPlayersList.Width + gv.scaler, btnAddToDefaultPlayersList.Y + gv.fontHeight, "gy");
+            btnClearDefaultPlayersList.Draw(c);
+            gv.DrawText(c, " Clear default player list", btnClearDefaultPlayersList.X + btnClearDefaultPlayersList.Width + gv.scaler, btnClearDefaultPlayersList.Y + shiftForFont, "gn");
 
-            btnModuleVersion.Draw();
-            gv.DrawText(" Module Version: " + gv.mod.moduleVersion, btnModuleVersion.X + btnModuleVersion.Width + gv.scaler, btnModuleVersion.Y + shiftForFont, "wh");
-            btnStartingArea.Draw();
-            gv.DrawText(" Starting Area: " + gv.mod.startingArea, btnStartingArea.X + btnStartingArea.Width + gv.scaler, btnStartingArea.Y + shiftForFont, "wh");
-            btnStartingLocX.Draw();
-            gv.DrawText(" Starting Location X: " + gv.mod.startingPlayerPositionX, btnStartingLocX.X + btnStartingLocX.Width + gv.scaler, btnStartingLocX.Y + shiftForFont, "wh");
-            btnMaxPartySize.Draw();
-            gv.DrawText(" Max Party Size: " + gv.mod.MaxPartySize, btnMaxPartySize.X + btnMaxPartySize.Width + gv.scaler, btnMaxPartySize.Y + shiftForFont, "wh");
-            btnStartingLocY.Draw();
-            gv.DrawText(" Starting Location Y: " + gv.mod.startingPlayerPositionY, btnStartingLocY.X + btnStartingLocY.Width + gv.scaler, btnStartingLocY.Y + shiftForFont, "wh");
-            btnMaxPlayerMadePCs.Draw();
-            gv.DrawText(" Max Player Made PCs: " + gv.mod.numberOfPlayerMadePcsAllowed, btnMaxPlayerMadePCs.X + btnMaxPlayerMadePCs.Width + gv.scaler, btnMaxPlayerMadePCs.Y + shiftForFont, "wh");
-            btnStartingGold.Draw();
-            gv.DrawText(" Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
-            btnStartingWorldTime.Draw();
-            gv.DrawText(" Starting World Time (min): " + gv.mod.WorldTime, btnStartingWorldTime.X + btnStartingWorldTime.Width + gv.scaler, btnStartingWorldTime.Y + shiftForFont, "wh");
-            btnUseRationSystem.Draw();
-            gv.DrawText(" Use Ration System", btnUseRationSystem.X + btnUseRationSystem.Width + gv.scaler, btnUseRationSystem.Y + shiftForFont, "wh");
-            btnModuleTitleImage.Draw();
-            gv.DrawText(" Title Image: " + gv.mod.titleImageName, btnModuleTitleImage.X + btnModuleTitleImage.Width + gv.scaler, btnModuleTitleImage.Y + shiftForFont, "wh");
+            btnModuleVersion.Draw(c);
+            gv.DrawText(c, " Module Version: " + gv.mod.moduleVersion, btnModuleVersion.X + btnModuleVersion.Width + gv.scaler, btnModuleVersion.Y + shiftForFont, "wh");
+            btnStartingArea.Draw(c);
+            gv.DrawText(c, " Starting Area: " + gv.mod.startingArea, btnStartingArea.X + btnStartingArea.Width + gv.scaler, btnStartingArea.Y + shiftForFont, "wh");
+            btnStartingLocX.Draw(c);
+            gv.DrawText(c, " Starting Location X: " + gv.mod.startingPlayerPositionX, btnStartingLocX.X + btnStartingLocX.Width + gv.scaler, btnStartingLocX.Y + shiftForFont, "wh");
+            btnMaxPartySize.Draw(c);
+            gv.DrawText(c, " Max Party Size: " + gv.mod.MaxPartySize, btnMaxPartySize.X + btnMaxPartySize.Width + gv.scaler, btnMaxPartySize.Y + shiftForFont, "wh");
+            btnStartingLocY.Draw(c);
+            gv.DrawText(c, " Starting Location Y: " + gv.mod.startingPlayerPositionY, btnStartingLocY.X + btnStartingLocY.Width + gv.scaler, btnStartingLocY.Y + shiftForFont, "wh");
+            btnMaxPlayerMadePCs.Draw(c);
+            gv.DrawText(c, " Max Player Made PCs: " + gv.mod.numberOfPlayerMadePcsAllowed, btnMaxPlayerMadePCs.X + btnMaxPlayerMadePCs.Width + gv.scaler, btnMaxPlayerMadePCs.Y + shiftForFont, "wh");
+            btnStartingGold.Draw(c);
+            gv.DrawText(c, " Starting Gold: " + gv.mod.partyGold, btnStartingGold.X + btnStartingGold.Width + gv.scaler, btnStartingGold.Y + shiftForFont, "wh");
+            btnStartingWorldTime.Draw(c);
+            gv.DrawText(c, " Starting World Time (min): " + gv.mod.WorldTime, btnStartingWorldTime.X + btnStartingWorldTime.Width + gv.scaler, btnStartingWorldTime.Y + shiftForFont, "wh");
+            btnUseRationSystem.Draw(c);
+            gv.DrawText(c, " Use Ration System", btnUseRationSystem.X + btnUseRationSystem.Width + gv.scaler, btnUseRationSystem.Y + shiftForFont, "wh");
+            btnModuleTitleImage.Draw(c);
+            gv.DrawText(c, " Title Image: " + gv.mod.titleImageName, btnModuleTitleImage.X + btnModuleTitleImage.Width + gv.scaler, btnModuleTitleImage.Y + shiftForFont, "wh");
 
-            btnDataChk.Draw();
+            btnDataChk.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTsModule(int eX, int eY, MouseEventType.EventType eventType)

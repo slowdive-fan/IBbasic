@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -706,20 +707,20 @@ namespace IBbasic
             btnRemoveKnownSpell.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsCreatureEditor()
+        public void redrawTsCreatureEditor(SKCanvas c)
         {
             sortCreatureList();
             setControlsStart();
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             int shiftForFont = (tglMain.Height / 2) - (gv.fontHeight / 2);
             //Page Title
-            gv.DrawText("CREATURE EDITOR", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "CREATURE EDITOR", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
 
             //label      
-            gv.DrawText("CREATURES", btnAddCreature.X, btnAddCreature.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddCreature.Draw();
-            btnRemoveCreature.Draw();
-            btnCopyCreature.Draw();
+            gv.DrawText(c, "CREATURES", btnAddCreature.X, btnAddCreature.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddCreature.Draw(c);
+            btnRemoveCreature.Draw(c);
+            btnCopyCreature.Draw(c);
 
             //string lastCategory = "";
             numberOfLinesToShow = 16;
@@ -734,7 +735,7 @@ namespace IBbasic
                 //if -1 then grab the category of the next index
                 if (indexList[idx] == -1)
                 {
-                    gv.DrawText("" + gv.cc.allCreaturesList[indexList[idx + 1]].cr_parentNodeName, tlX, tlY, "bu");
+                    gv.DrawText(c, "" + gv.cc.allCreaturesList[indexList[idx + 1]].cr_parentNodeName, tlX, tlY, "bu");
                     catCnt++;
                 }
                 else //if not -1, use index
@@ -742,17 +743,17 @@ namespace IBbasic
                     tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                     if (indexList[idx] == creatureListIndex)
                     {
-                        gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gn");
+                        gv.DrawText(c, " " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gn");
                     }
                     else
                     {
                         if (gv.cc.allCreaturesList[indexList[idx]].moduleCreature)
                         {
-                            gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "wh");
+                            gv.DrawText(c, " " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "wh");
                         }
                         else
                         {
-                            gv.DrawText(" " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gy");
+                            gv.DrawText(c, " " + gv.cc.allCreaturesList[indexList[idx]].cr_name, tlX, tlY, "gy");
                         }
                     }
                 }
@@ -803,199 +804,199 @@ namespace IBbasic
                 crtCnt++;
             }*/
 
-            tglMain.Draw();
-            gv.DrawText("MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
-            tglAttack.Draw();
-            gv.DrawText("ATTACK/DEFEND", tglAttack.X + tglAttack.Width + gv.scaler, tglAttack.Y + shiftForFont, "ma");
-            tglImages.Draw();
-            gv.DrawText("IMAGES/SOUNDS", tglImages.X + tglImages.Width + gv.scaler, tglImages.Y + shiftForFont, "ma");
-            tglResistance.Draw();
-            gv.DrawText("RESISTANCES", tglResistance.X + tglResistance.Width + gv.scaler, tglResistance.Y + shiftForFont, "ma");
-            tglBehavior.Draw();
-            gv.DrawText("BEHAVIOR", tglBehavior.X + tglBehavior.Width + gv.scaler, tglBehavior.Y + shiftForFont, "ma");
-            tglSpells.Draw();
-            gv.DrawText("SPELLS", tglSpells.X + tglSpells.Width + gv.scaler, tglSpells.Y + shiftForFont, "ma");
+            tglMain.Draw(c);
+            gv.DrawText(c, "MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
+            tglAttack.Draw(c);
+            gv.DrawText(c, "ATTACK/DEFEND", tglAttack.X + tglAttack.Width + gv.scaler, tglAttack.Y + shiftForFont, "ma");
+            tglImages.Draw(c);
+            gv.DrawText(c, "IMAGES/SOUNDS", tglImages.X + tglImages.Width + gv.scaler, tglImages.Y + shiftForFont, "ma");
+            tglResistance.Draw(c);
+            gv.DrawText(c, "RESISTANCES", tglResistance.X + tglResistance.Width + gv.scaler, tglResistance.Y + shiftForFont, "ma");
+            tglBehavior.Draw(c);
+            gv.DrawText(c, "BEHAVIOR", tglBehavior.X + tglBehavior.Width + gv.scaler, tglBehavior.Y + shiftForFont, "ma");
+            tglSpells.Draw(c);
+            gv.DrawText(c, "SPELLS", tglSpells.X + tglSpells.Width + gv.scaler, tglSpells.Y + shiftForFont, "ma");
 
             if (currentMode.Equals("Main"))
             {
                 setMainControlsStart();
-                drawMain();
+                drawMain(c);
             }
             else if (currentMode.Equals("Attack"))
             {
                 setAttackControlsStart();
-                drawAttack();
+                drawAttack(c);
             }
             else if (currentMode.Equals("Images"))
             {
                 setImagesControlsStart();
-                drawImages();
+                drawImages(c);
             }
             else if (currentMode.Equals("Resistance"))
             {
                 setResistanceControlsStart();
-                drawResistances();
+                drawResistances(c);
             }
             else if (currentMode.Equals("Behavior"))
             {
                 setBehaviorControlsStart();
-                drawBehavior();
+                drawBehavior(c);
             }
             else if (currentMode.Equals("Spells"))
             {
                 setSpellsControlsStart();
-                drawSpells();
+                drawSpells(c);
             }
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawMain()
+        public void drawMain(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
-            btnCrtName.Draw();
-            gv.DrawText("NAME: " + gv.cc.allCreaturesList[creatureListIndex].cr_name, btnCrtName.X + btnCrtName.Width + gv.scaler, btnCrtName.Y + shiftForFont, "wh");
-            btnCrtResRef.Draw();
-            gv.DrawText("RESREF: " + gv.cc.allCreaturesList[creatureListIndex].cr_resref, btnCrtResRef.X + btnCrtResRef.Width + gv.scaler, btnCrtResRef.Y + shiftForFont, "wh");
-            btnCrtParentNodeName.Draw();
-            gv.DrawText("CATEGORY: " + gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName, btnCrtParentNodeName.X + btnCrtParentNodeName.Width + gv.scaler, btnCrtParentNodeName.Y + shiftForFont, "wh");
-            btnCrtLevel.Draw();
-            gv.DrawText("LEVEL: " + gv.cc.allCreaturesList[creatureListIndex].cr_level, btnCrtLevel.X + btnCrtLevel.Width + gv.scaler, btnCrtLevel.Y + shiftForFont, "wh");
-            btnCrtHP.Draw();
-            gv.DrawText("HP: " + gv.cc.allCreaturesList[creatureListIndex].hp, btnCrtHP.X + btnCrtHP.Width + gv.scaler, btnCrtHP.Y + shiftForFont, "wh");
-            btnCrtHPMax.Draw();
-            gv.DrawText("HPMAX: " + gv.cc.allCreaturesList[creatureListIndex].hpMax, btnCrtHPMax.X + btnCrtHPMax.Width + gv.scaler, btnCrtHPMax.Y + shiftForFont, "wh");
-            btnCrtSP.Draw();
-            gv.DrawText("SP: " + gv.cc.allCreaturesList[creatureListIndex].sp, btnCrtSP.X + btnCrtSP.Width + gv.scaler, btnCrtSP.Y + shiftForFont, "wh");
-            btnCrtXP.Draw();
-            gv.DrawText("XP: " + gv.cc.allCreaturesList[creatureListIndex].cr_XP, btnCrtXP.X + btnCrtXP.Width + gv.scaler, btnCrtXP.Y + shiftForFont, "wh");
+            btnCrtName.Draw(c);
+            gv.DrawText(c, "NAME: " + gv.cc.allCreaturesList[creatureListIndex].cr_name, btnCrtName.X + btnCrtName.Width + gv.scaler, btnCrtName.Y + shiftForFont, "wh");
+            btnCrtResRef.Draw(c);
+            gv.DrawText(c, "RESREF: " + gv.cc.allCreaturesList[creatureListIndex].cr_resref, btnCrtResRef.X + btnCrtResRef.Width + gv.scaler, btnCrtResRef.Y + shiftForFont, "wh");
+            btnCrtParentNodeName.Draw(c);
+            gv.DrawText(c, "CATEGORY: " + gv.cc.allCreaturesList[creatureListIndex].cr_parentNodeName, btnCrtParentNodeName.X + btnCrtParentNodeName.Width + gv.scaler, btnCrtParentNodeName.Y + shiftForFont, "wh");
+            btnCrtLevel.Draw(c);
+            gv.DrawText(c, "LEVEL: " + gv.cc.allCreaturesList[creatureListIndex].cr_level, btnCrtLevel.X + btnCrtLevel.Width + gv.scaler, btnCrtLevel.Y + shiftForFont, "wh");
+            btnCrtHP.Draw(c);
+            gv.DrawText(c, "HP: " + gv.cc.allCreaturesList[creatureListIndex].hp, btnCrtHP.X + btnCrtHP.Width + gv.scaler, btnCrtHP.Y + shiftForFont, "wh");
+            btnCrtHPMax.Draw(c);
+            gv.DrawText(c, "HPMAX: " + gv.cc.allCreaturesList[creatureListIndex].hpMax, btnCrtHPMax.X + btnCrtHPMax.Width + gv.scaler, btnCrtHPMax.Y + shiftForFont, "wh");
+            btnCrtSP.Draw(c);
+            gv.DrawText(c, "SP: " + gv.cc.allCreaturesList[creatureListIndex].sp, btnCrtSP.X + btnCrtSP.Width + gv.scaler, btnCrtSP.Y + shiftForFont, "wh");
+            btnCrtXP.Draw(c);
+            gv.DrawText(c, "XP: " + gv.cc.allCreaturesList[creatureListIndex].cr_XP, btnCrtXP.X + btnCrtXP.Width + gv.scaler, btnCrtXP.Y + shiftForFont, "wh");
         }
-        public void drawAttack()
+        public void drawAttack(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
-            btnCrtAC.Draw();
-            gv.DrawText("AC: " + gv.cc.allCreaturesList[creatureListIndex].AC, btnCrtAC.X + btnCrtAC.Width + gv.scaler, btnCrtAC.Y + shiftForFont, "wh");
-            btnCrtAttack.Draw();
-            gv.DrawText("ATTACK: " + gv.cc.allCreaturesList[creatureListIndex].cr_att, btnCrtAttack.X + btnCrtAttack.Width + gv.scaler, btnCrtAttack.Y + shiftForFont, "wh");
-            btnCrtAttackRange.Draw();
-            gv.DrawText("ATTACK RANGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_attRange, btnCrtAttackRange.X + btnCrtAttackRange.Width + gv.scaler, btnCrtAttackRange.Y + shiftForFont, "wh");
-            btnCrtDamageNumOfDice.Draw();
-            gv.DrawText("DAMAGE NUM OF DICE: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageNumDice, btnCrtDamageNumOfDice.X + btnCrtDamageNumOfDice.Width + gv.scaler, btnCrtDamageNumOfDice.Y + shiftForFont, "wh");
-            btnCrtDamageDice.Draw();
-            gv.DrawText("DAMAGE DICE: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageDie, btnCrtDamageDice.X + btnCrtDamageDice.Width + gv.scaler, btnCrtDamageDice.Y + shiftForFont, "wh");
-            btnCrtDamageAdder.Draw();
-            gv.DrawText("DAMAGE ADDER: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageAdder, btnCrtDamageAdder.X + btnCrtDamageAdder.Width + gv.scaler, btnCrtDamageAdder.Y + shiftForFont, "wh");
-            btnCrtNumberOfAttacks.Draw();
-            gv.DrawText("NUMBER OF ATTACKS: " + gv.cc.allCreaturesList[creatureListIndex].cr_numberOfAttacks, btnCrtNumberOfAttacks.X + btnCrtNumberOfAttacks.Width + gv.scaler, btnCrtNumberOfAttacks.Y + shiftForFont, "wh");
-            btnCrtAttackCategory.Draw();
-            gv.DrawText("ATTACK TYPE: " + gv.cc.allCreaturesList[creatureListIndex].cr_category, btnCrtAttackCategory.X + btnCrtAttackCategory.Width + gv.scaler, btnCrtAttackCategory.Y + shiftForFont, "wh");
-            btnCrtTypeOfDamage.Draw();
-            gv.DrawText("TYPE OF DAMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_typeOfDamage, btnCrtTypeOfDamage.X + btnCrtTypeOfDamage.Width + gv.scaler, btnCrtTypeOfDamage.Y + shiftForFont, "wh");
+            btnCrtAC.Draw(c);
+            gv.DrawText(c, "AC: " + gv.cc.allCreaturesList[creatureListIndex].AC, btnCrtAC.X + btnCrtAC.Width + gv.scaler, btnCrtAC.Y + shiftForFont, "wh");
+            btnCrtAttack.Draw(c);
+            gv.DrawText(c, "ATTACK: " + gv.cc.allCreaturesList[creatureListIndex].cr_att, btnCrtAttack.X + btnCrtAttack.Width + gv.scaler, btnCrtAttack.Y + shiftForFont, "wh");
+            btnCrtAttackRange.Draw(c);
+            gv.DrawText(c, "ATTACK RANGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_attRange, btnCrtAttackRange.X + btnCrtAttackRange.Width + gv.scaler, btnCrtAttackRange.Y + shiftForFont, "wh");
+            btnCrtDamageNumOfDice.Draw(c);
+            gv.DrawText(c, "DAMAGE NUM OF DICE: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageNumDice, btnCrtDamageNumOfDice.X + btnCrtDamageNumOfDice.Width + gv.scaler, btnCrtDamageNumOfDice.Y + shiftForFont, "wh");
+            btnCrtDamageDice.Draw(c);
+            gv.DrawText(c, "DAMAGE DICE: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageDie, btnCrtDamageDice.X + btnCrtDamageDice.Width + gv.scaler, btnCrtDamageDice.Y + shiftForFont, "wh");
+            btnCrtDamageAdder.Draw(c);
+            gv.DrawText(c, "DAMAGE ADDER: " + gv.cc.allCreaturesList[creatureListIndex].cr_damageAdder, btnCrtDamageAdder.X + btnCrtDamageAdder.Width + gv.scaler, btnCrtDamageAdder.Y + shiftForFont, "wh");
+            btnCrtNumberOfAttacks.Draw(c);
+            gv.DrawText(c, "NUMBER OF ATTACKS: " + gv.cc.allCreaturesList[creatureListIndex].cr_numberOfAttacks, btnCrtNumberOfAttacks.X + btnCrtNumberOfAttacks.Width + gv.scaler, btnCrtNumberOfAttacks.Y + shiftForFont, "wh");
+            btnCrtAttackCategory.Draw(c);
+            gv.DrawText(c, "ATTACK TYPE: " + gv.cc.allCreaturesList[creatureListIndex].cr_category, btnCrtAttackCategory.X + btnCrtAttackCategory.Width + gv.scaler, btnCrtAttackCategory.Y + shiftForFont, "wh");
+            btnCrtTypeOfDamage.Draw(c);
+            gv.DrawText(c, "TYPE OF DAMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_typeOfDamage, btnCrtTypeOfDamage.X + btnCrtTypeOfDamage.Width + gv.scaler, btnCrtTypeOfDamage.Y + shiftForFont, "wh");
         }
-        public void drawImages()
+        public void drawImages(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
-            btnCrtTokenFilename.Draw();
+            btnCrtTokenFilename.Draw(c);
             string token = gv.cc.allCreaturesList[creatureListIndex].cr_tokenFilename;
             int brX = (int)(gv.squareSize * gv.scaler);
             int brY = (int)(gv.squareSize * gv.scaler);
-            gv.DrawText("TOKEN FILENAME: " + token, btnCrtTokenFilename.X + btnCrtTokenFilename.Width + gv.scaler, btnCrtTokenFilename.Y + shiftForFont, "wh");
+            gv.DrawText(c, "TOKEN FILENAME: " + token, btnCrtTokenFilename.X + btnCrtTokenFilename.Width + gv.scaler, btnCrtTokenFilename.Y + shiftForFont, "wh");
             //top frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);
             dst = new IbRect(btnCrtTokenFilename.X, btnCrtTokenFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
             //bottom frame
             src = new IbRect(0, gv.cc.GetFromTileBitmapList(token).Height / 2, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);
             dst = new IbRect(btnCrtTokenFilename.X + brX, btnCrtTokenFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
-            btnCrtAttackSound.Draw();
-            gv.DrawText("ATTACK SOUND: " + gv.cc.allCreaturesList[creatureListIndex].cr_attackSound, btnCrtAttackSound.X + btnCrtAttackSound.Width + gv.scaler, btnCrtAttackSound.Y + shiftForFont, "wh");
+            btnCrtAttackSound.Draw(c);
+            gv.DrawText(c, "ATTACK SOUND: " + gv.cc.allCreaturesList[creatureListIndex].cr_attackSound, btnCrtAttackSound.X + btnCrtAttackSound.Width + gv.scaler, btnCrtAttackSound.Y + shiftForFont, "wh");
 
-            btnCrtSpriteProjectileFilename.Draw();
-            gv.DrawText("PROJECTILE IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename, btnCrtSpriteProjectileFilename.X + btnCrtSpriteProjectileFilename.Width + gv.scaler, btnCrtSpriteProjectileFilename.Y + shiftForFont, "wh");
+            btnCrtSpriteProjectileFilename.Draw(c);
+            gv.DrawText(c, "PROJECTILE IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename, btnCrtSpriteProjectileFilename.X + btnCrtSpriteProjectileFilename.Width + gv.scaler, btnCrtSpriteProjectileFilename.Y + shiftForFont, "wh");
             token = gv.cc.allCreaturesList[creatureListIndex].cr_projSpriteFilename;
             brX = (int)(gv.squareSize * gv.scaler * 4);
             brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnCrtSpriteProjectileFilename.X, btnCrtSpriteProjectileFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
-            btnCrtSpriteEndingFilename.Draw();
-            gv.DrawText("PROJECTILE ENDING IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename, btnCrtSpriteEndingFilename.X + btnCrtSpriteEndingFilename.Width + gv.scaler, btnCrtSpriteEndingFilename.Y + shiftForFont, "wh");
+            btnCrtSpriteEndingFilename.Draw(c);
+            gv.DrawText(c, "PROJECTILE ENDING IMAGE: " + gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename, btnCrtSpriteEndingFilename.X + btnCrtSpriteEndingFilename.Width + gv.scaler, btnCrtSpriteEndingFilename.Y + shiftForFont, "wh");
             token = gv.cc.allCreaturesList[creatureListIndex].cr_spriteEndingFilename;
             brX = (int)(gv.squareSize * gv.scaler * 4);
             brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnCrtSpriteEndingFilename.X, btnCrtSpriteEndingFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
         }
-        public void drawResistances()
+        public void drawResistances(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
-            btnCrtReflex.Draw();
-            gv.DrawText("REFLEX: " + gv.cc.allCreaturesList[creatureListIndex].reflex, btnCrtReflex.X + btnCrtReflex.Width + gv.scaler, btnCrtReflex.Y + shiftForFont, "wh");
-            btnCrtWill.Draw();
-            gv.DrawText("WILL: " + gv.cc.allCreaturesList[creatureListIndex].will, btnCrtWill.X + btnCrtWill.Width + gv.scaler, btnCrtWill.Y + shiftForFont, "wh");
-            btnCrtFortitude.Draw();
-            gv.DrawText("FORTITUDE: " + gv.cc.allCreaturesList[creatureListIndex].fortitude, btnCrtFortitude.X + btnCrtFortitude.Width + gv.scaler, btnCrtFortitude.Y + shiftForFont, "wh");
-            btnCrtResistAcid.Draw();
-            gv.DrawText("% RESIST ACID: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueAcid, btnCrtResistAcid.X + btnCrtResistAcid.Width + gv.scaler, btnCrtResistAcid.Y + shiftForFont, "wh");
-            btnCrtResistNormal.Draw();
-            gv.DrawText("% RESIST NORMAL: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueNormal, btnCrtResistNormal.X + btnCrtResistNormal.Width + gv.scaler, btnCrtResistNormal.Y + shiftForFont, "wh");
-            btnCrtResistCold.Draw();
-            gv.DrawText("% RESIST COLD: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueCold, btnCrtResistCold.X + btnCrtResistCold.Width + gv.scaler, btnCrtResistCold.Y + shiftForFont, "wh");
-            btnCrtResistElectricity.Draw();
-            gv.DrawText("% RESIST ELECTRICITY: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueElectricity, btnCrtResistElectricity.X + btnCrtResistElectricity.Width + gv.scaler, btnCrtResistElectricity.Y + shiftForFont, "wh");
-            btnCrtResistFire.Draw();
-            gv.DrawText("% RESIST FIRE: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueFire, btnCrtResistFire.X + btnCrtResistFire.Width + gv.scaler, btnCrtResistFire.Y + shiftForFont, "wh");
-            btnCrtResistMagic.Draw();
-            gv.DrawText("% RESIST MAGIC: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueMagic, btnCrtResistMagic.X + btnCrtResistMagic.Width + gv.scaler, btnCrtResistMagic.Y + shiftForFont, "wh");
-            btnCrtResistPoison.Draw();
-            gv.DrawText("% RESIST POISON: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValuePoison, btnCrtResistPoison.X + btnCrtResistPoison.Width + gv.scaler, btnCrtResistPoison.Y + shiftForFont, "wh");
+            btnCrtReflex.Draw(c);
+            gv.DrawText(c, "REFLEX: " + gv.cc.allCreaturesList[creatureListIndex].reflex, btnCrtReflex.X + btnCrtReflex.Width + gv.scaler, btnCrtReflex.Y + shiftForFont, "wh");
+            btnCrtWill.Draw(c);
+            gv.DrawText(c, "WILL: " + gv.cc.allCreaturesList[creatureListIndex].will, btnCrtWill.X + btnCrtWill.Width + gv.scaler, btnCrtWill.Y + shiftForFont, "wh");
+            btnCrtFortitude.Draw(c);
+            gv.DrawText(c, "FORTITUDE: " + gv.cc.allCreaturesList[creatureListIndex].fortitude, btnCrtFortitude.X + btnCrtFortitude.Width + gv.scaler, btnCrtFortitude.Y + shiftForFont, "wh");
+            btnCrtResistAcid.Draw(c);
+            gv.DrawText(c, "% RESIST ACID: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueAcid, btnCrtResistAcid.X + btnCrtResistAcid.Width + gv.scaler, btnCrtResistAcid.Y + shiftForFont, "wh");
+            btnCrtResistNormal.Draw(c);
+            gv.DrawText(c, "% RESIST NORMAL: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueNormal, btnCrtResistNormal.X + btnCrtResistNormal.Width + gv.scaler, btnCrtResistNormal.Y + shiftForFont, "wh");
+            btnCrtResistCold.Draw(c);
+            gv.DrawText(c, "% RESIST COLD: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueCold, btnCrtResistCold.X + btnCrtResistCold.Width + gv.scaler, btnCrtResistCold.Y + shiftForFont, "wh");
+            btnCrtResistElectricity.Draw(c);
+            gv.DrawText(c, "% RESIST ELECTRICITY: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueElectricity, btnCrtResistElectricity.X + btnCrtResistElectricity.Width + gv.scaler, btnCrtResistElectricity.Y + shiftForFont, "wh");
+            btnCrtResistFire.Draw(c);
+            gv.DrawText(c, "% RESIST FIRE: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueFire, btnCrtResistFire.X + btnCrtResistFire.Width + gv.scaler, btnCrtResistFire.Y + shiftForFont, "wh");
+            btnCrtResistMagic.Draw(c);
+            gv.DrawText(c, "% RESIST MAGIC: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValueMagic, btnCrtResistMagic.X + btnCrtResistMagic.Width + gv.scaler, btnCrtResistMagic.Y + shiftForFont, "wh");
+            btnCrtResistPoison.Draw(c);
+            gv.DrawText(c, "% RESIST POISON: " + gv.cc.allCreaturesList[creatureListIndex].damageTypeResistanceValuePoison, btnCrtResistPoison.X + btnCrtResistPoison.Width + gv.scaler, btnCrtResistPoison.Y + shiftForFont, "wh");
         }
-        public void drawBehavior()
+        public void drawBehavior(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
-            btnCrtAI.Draw();
-            gv.DrawText("AI TYPE: " + gv.cc.allCreaturesList[creatureListIndex].cr_ai, btnCrtAI.X + btnCrtAI.Width + gv.scaler, btnCrtAI.Y + shiftForFont, "wh");
-            btnCrtIniBonus.Draw();
-            gv.DrawText("INITIATIVE BONUS: " + gv.cc.allCreaturesList[creatureListIndex].initiativeBonus, btnCrtIniBonus.X + btnCrtIniBonus.Width + gv.scaler, btnCrtIniBonus.Y + shiftForFont, "wh");
-            btnCrtMoveDistance.Draw();
-            gv.DrawText("MOVE DISTANCE: " + gv.cc.allCreaturesList[creatureListIndex].moveDistance, btnCrtMoveDistance.X + btnCrtMoveDistance.Width + gv.scaler, btnCrtMoveDistance.Y + shiftForFont, "wh");
-            btnCrtOnDeathScript.Draw();
-            gv.DrawText("ON DEATH SCRIPT: " + gv.cc.allCreaturesList[creatureListIndex].onDeathIBScript, btnCrtOnDeathScript.X + btnCrtOnDeathScript.Width + gv.scaler, btnCrtOnDeathScript.Y + shiftForFont, "wh");
-            btnCrtOnDeathScriptParms.Draw();
-            gv.DrawText("ON DEATH SCRIPT PARAMETERS: " + gv.cc.allCreaturesList[creatureListIndex].onDeathIBScriptParms, btnCrtOnDeathScriptParms.X + btnCrtOnDeathScriptParms.Width + gv.scaler, btnCrtOnDeathScriptParms.Y + shiftForFont, "wh");
-            btnCrtOnScoreHitCastSpell.Draw();
-            gv.DrawText("ON SCORE HIT CAST SPELL: " + gv.cc.allCreaturesList[creatureListIndex].onScoringHitCastSpellTag, btnCrtOnScoreHitCastSpell.X + btnCrtOnScoreHitCastSpell.Width + gv.scaler, btnCrtOnScoreHitCastSpell.Y + shiftForFont, "wh");
+            btnCrtAI.Draw(c);
+            gv.DrawText(c, "AI TYPE: " + gv.cc.allCreaturesList[creatureListIndex].cr_ai, btnCrtAI.X + btnCrtAI.Width + gv.scaler, btnCrtAI.Y + shiftForFont, "wh");
+            btnCrtIniBonus.Draw(c);
+            gv.DrawText(c, "INITIATIVE BONUS: " + gv.cc.allCreaturesList[creatureListIndex].initiativeBonus, btnCrtIniBonus.X + btnCrtIniBonus.Width + gv.scaler, btnCrtIniBonus.Y + shiftForFont, "wh");
+            btnCrtMoveDistance.Draw(c);
+            gv.DrawText(c, "MOVE DISTANCE: " + gv.cc.allCreaturesList[creatureListIndex].moveDistance, btnCrtMoveDistance.X + btnCrtMoveDistance.Width + gv.scaler, btnCrtMoveDistance.Y + shiftForFont, "wh");
+            btnCrtOnDeathScript.Draw(c);
+            gv.DrawText(c, "ON DEATH SCRIPT: " + gv.cc.allCreaturesList[creatureListIndex].onDeathIBScript, btnCrtOnDeathScript.X + btnCrtOnDeathScript.Width + gv.scaler, btnCrtOnDeathScript.Y + shiftForFont, "wh");
+            btnCrtOnDeathScriptParms.Draw(c);
+            gv.DrawText(c, "ON DEATH SCRIPT PARAMETERS: " + gv.cc.allCreaturesList[creatureListIndex].onDeathIBScriptParms, btnCrtOnDeathScriptParms.X + btnCrtOnDeathScriptParms.Width + gv.scaler, btnCrtOnDeathScriptParms.Y + shiftForFont, "wh");
+            btnCrtOnScoreHitCastSpell.Draw(c);
+            gv.DrawText(c, "ON SCORE HIT CAST SPELL: " + gv.cc.allCreaturesList[creatureListIndex].onScoringHitCastSpellTag, btnCrtOnScoreHitCastSpell.X + btnCrtOnScoreHitCastSpell.Width + gv.scaler, btnCrtOnScoreHitCastSpell.Y + shiftForFont, "wh");
 
         }
-        public void drawSpells()
+        public void drawSpells(SKCanvas c)
         {
             int shiftForFont = (btnCrtName.Height / 2) - (gv.fontHeight / 2);
             //label      
-            gv.DrawText("KNOWN SPELLS", btnAddKnownSpell.X, btnAddKnownSpell.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddKnownSpell.Draw();
-            btnRemoveKnownSpell.Draw();
+            gv.DrawText(c, "KNOWN SPELLS", btnAddKnownSpell.X, btnAddKnownSpell.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddKnownSpell.Draw(c);
+            btnRemoveKnownSpell.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownSpell.X;
             int startY = btnAddKnownSpell.Y + btnAddKnownSpell.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (string c in gv.cc.allCreaturesList[creatureListIndex].knownSpellsTags)
+            foreach (string c2 in gv.cc.allCreaturesList[creatureListIndex].knownSpellsTags)
             {
                 if (cnt == knownSpellListIndex)
                 {
-                    gv.DrawText(c, startX, startY += incY, "gn");
+                    gv.DrawText(c, c2, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(c, startX, startY += incY, "wh");
+                    gv.DrawText(c, c2, startX, startY += incY, "wh");
                 }
                 cnt++;
             }

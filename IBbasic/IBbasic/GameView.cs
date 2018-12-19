@@ -18,7 +18,7 @@ namespace IBbasic
         public string versionNum = "1.0.21";
         public int numOfTrackerEventHitsInThisSession = 0;
         public ContentPage cp;
-        public SKCanvas canvas;
+        //public SKCanvas canvas;
         public float screenDensity;
         public int screenWidth;
         public int screenHeight;
@@ -818,8 +818,12 @@ namespace IBbasic
         }
         
         //DRAW ROUTINES
-        public void DrawText(string text, float xLoc, float yLoc, string color)
+        public void DrawText(SKCanvas canvas, string text, float xLoc, float yLoc, string color)
         {
+            if (canvas == null)
+            {
+                return;
+            }
             //default is WHITE
             /*SKBitmap bm = cc.GetFromBitmapList("fontWh");
             if (color.Equals("bk"))
@@ -850,52 +854,68 @@ namespace IBbasic
             {
                 bm = cc.GetFromBitmapList("fontYl");
             }*/
-            float x = 0;
-            foreach (char c in text)
+            try
             {
-                if (c == '\r') { continue; }
-                if (c == '\n') { continue; }
-                char c1 = '0';
-                if (!charList.ContainsKey(c)) { c1 = '#'; }
-                else c1 = c;
-                if (color.Equals("bk"))
+                float x = 0;
+                foreach (char c in text)
                 {
-                    canvas.DrawBitmap(cc.fontBk, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    if (c == '\r') { continue; }
+                    if (c == '\n') { continue; }
+                    char c1 = '0';
+                    if (!charList.ContainsKey(c)) { c1 = '#'; }
+                    else c1 = c;
+                    if (color.Equals("bk"))
+                    {
+                        if (cc.fontBk == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontBk, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("wh"))
+                    {
+                        if (cc.fontWh == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontWh, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("bu"))
+                    {
+                        if (cc.fontBu == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontBu, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("gn"))
+                    {
+                        if (cc.fontGn == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontGn, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("gy"))
+                    {
+                        if (cc.fontGy == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontGy, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("ma"))
+                    {
+                        if (cc.fontMa == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontMa, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("rd"))
+                    {
+                        if (cc.fontRd == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontRd, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    else if (color.Equals("yl"))
+                    {
+                        if (cc.fontYl == null) { this.resetFonts(); }
+                        canvas.DrawBitmap(cc.fontYl, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    }
+                    //canvas.DrawBitmap(bm, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
+                    x += fontWidth + fontCharSpacing;
                 }
-                else if (color.Equals("wh"))
-                {
-                    canvas.DrawBitmap(cc.fontWh, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("bu"))
-                {
-                    canvas.DrawBitmap(cc.fontBu, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("gn"))
-                {
-                    canvas.DrawBitmap(cc.fontGn, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("gy"))
-                {
-                    canvas.DrawBitmap(cc.fontGy, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("ma"))
-                {
-                    canvas.DrawBitmap(cc.fontMa, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("rd"))
-                {
-                    canvas.DrawBitmap(cc.fontRd, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                else if (color.Equals("yl"))
-                {
-                    canvas.DrawBitmap(cc.fontYl, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                }
-                //canvas.DrawBitmap(bm, charList[c1], new SKRect(xLoc + x + oXshift, yLoc + oYshift, xLoc + x + oXshift + fontWidth, yLoc + oYshift + fontHeight));
-                x += fontWidth + fontCharSpacing;
             }
+            catch { }
         }        
-        public void DrawLine(int lastX, int lastY, int nextX, int nextY, string penColor, int penWidth)
+        public void DrawLine(SKCanvas canvas, int lastX, int lastY, int nextX, int nextY, string penColor, int penWidth)
         {
+            if (canvas == null)
+            {
+                return;
+            }
             //string clr = "red";
             /*using (SKPaint skp = new SKPaint())
             {
@@ -906,278 +926,305 @@ namespace IBbasic
                 canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
                 //renderTarget2D.DrawLine(new Vector2(lastX + oXshift, lastY + oYshift), new Vector2(nextX + oXshift, nextY + oYshift), scb, penWidth);
             }*/
-
-            if (penColor.Equals("red"))
+            try
             {
-                using (SKPaint skp = new SKPaint())
+                if (penColor.Equals("red"))
                 {
-                    skp.IsAntialias = true;
-                    skp.Style = SKPaintStyle.Stroke;
-                    skp.Color = SkiaSharp.SKColors.Red;
-                    skp.StrokeWidth = penWidth;
-                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                    using (SKPaint skp = new SKPaint())
+                    {
+                        skp.IsAntialias = true;
+                        skp.Style = SKPaintStyle.Stroke;
+                        skp.Color = SkiaSharp.SKColors.Red;
+                        skp.StrokeWidth = penWidth;
+                        canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                    }
+                }
+                else if (penColor.Equals("green"))
+                {
+                    using (SKPaint skp = new SKPaint())
+                    {
+                        skp.IsAntialias = true;
+                        skp.Style = SKPaintStyle.Stroke;
+                        skp.Color = SkiaSharp.SKColors.Lime;
+                        skp.StrokeWidth = penWidth;
+                        canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                    }
+                }
+                else if (penColor.Equals("black"))
+                {
+                    using (SKPaint skp = new SKPaint())
+                    {
+                        skp.IsAntialias = true;
+                        skp.Style = SKPaintStyle.Stroke;
+                        skp.Color = SkiaSharp.SKColors.Black;
+                        skp.StrokeWidth = penWidth;
+                        canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
+                    }
                 }
             }
-            else if (penColor.Equals("green"))
-            {
-                using (SKPaint skp = new SKPaint())
-                {
-                    skp.IsAntialias = true;
-                    skp.Style = SKPaintStyle.Stroke;
-                    skp.Color = SkiaSharp.SKColors.Lime;
-                    skp.StrokeWidth = penWidth;
-                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
-                }
-            }
-            else if (penColor.Equals("black"))
-            {
-                using (SKPaint skp = new SKPaint())
-                {
-                    skp.IsAntialias = true;
-                    skp.Style = SKPaintStyle.Stroke;
-                    skp.Color = SkiaSharp.SKColors.Black;
-                    skp.StrokeWidth = penWidth;
-                    canvas.DrawLine(lastX + oXshift, lastY + oYshift, nextX + oXshift, nextY + oYshift, skp);
-                }
-            }
+            catch { }
         }
-        public void DrawRectangle(IbRect rect, SKColor penColor, int penWidth)
+        public void DrawRectangle(SKCanvas canvas, IbRect rect, SKColor penColor, int penWidth)
         {
-            using (SKPaint skp = new SKPaint())
+            if (canvas == null)
             {
-                SKRect SKRectangle = new SKRect();
-                SKRectangle.Left = rect.Left + oXshift;
-                SKRectangle.Top = rect.Top + oYshift;
-                SKRectangle.Bottom = SKRectangle.Top + rect.Height;
-                SKRectangle.Right = SKRectangle.Left + rect.Width;
+                return;
+            }
+            try
+            {
+                using (SKPaint skp = new SKPaint())
+                {
+                    SKRect SKRectangle = new SKRect();
+                    SKRectangle.Left = rect.Left + oXshift;
+                    SKRectangle.Top = rect.Top + oYshift;
+                    SKRectangle.Bottom = SKRectangle.Top + rect.Height;
+                    SKRectangle.Right = SKRectangle.Left + rect.Width;
 
-                skp.IsAntialias = true;
-                skp.Style = SKPaintStyle.Stroke;
-                skp.Color = penColor;
-                skp.StrokeWidth = penWidth;
-                canvas.DrawRect(SKRectangle, skp);                               
-            }            
+                    skp.IsAntialias = true;
+                    skp.Style = SKPaintStyle.Stroke;
+                    skp.Color = penColor;
+                    skp.StrokeWidth = penWidth;
+                    canvas.DrawRect(SKRectangle, skp);
+                }
+            }
+            catch { }
         }
-        public void DrawBitmap(SKBitmap bitmap, IbRect source, IbRect destination)
+        public void DrawBitmap(SKCanvas canvas, SKBitmap bitmap, IbRect source, IbRect destination)
         {
-            //used for most everything
-            SKRect dst = new SKRect(destination.Left + oXshift, destination.Top + oYshift, destination.Left + oXshift + destination.Width, destination.Top + oYshift + destination.Height);
-            SKRect src = new SKRect(source.Left, source.Top, source.Left + source.Width, source.Top + source.Height);
-            canvas.DrawBitmap(bitmap, src, dst);
+            if (canvas == null)
+            {
+                return;
+            }
+            try
+            {
+                //used for most everything
+                SKRect dst = new SKRect(destination.Left + oXshift, destination.Top + oYshift, destination.Left + oXshift + destination.Width, destination.Top + oYshift + destination.Height);
+                SKRect src = new SKRect(source.Left, source.Top, source.Left + source.Width, source.Top + source.Height);
+                canvas.DrawBitmap(bitmap, src, dst);
+            }
+            catch { }
         }
-        public void DrawBitmap(SKBitmap bitmap, IbRect source, IbRect destination, bool mirror)
+        public void DrawBitmap(SKCanvas canvas, SKBitmap bitmap, IbRect source, IbRect destination, bool mirror)
         {
             //used for drawing PCs, creatures and Props
-            DrawBitmap(bitmap, source, destination, 0.0f, mirror);
+            DrawBitmap(canvas, bitmap, source, destination, 0.0f, mirror);
         }
-        public void DrawBitmap(SKBitmap bitmap, IbRect source, IbRect destination, int angleInDegrees, bool mirror)
+        public void DrawBitmap(SKCanvas canvas, SKBitmap bitmap, IbRect source, IbRect destination, int angleInDegrees, bool mirror)
         {
             // used for tiles
             //convert degrees to radians
             float angleInRadians = (angleInDegrees * (float)(Math.PI * 2)) / 360f;
-            DrawBitmap(bitmap, source, destination, angleInRadians, mirror);
+            DrawBitmap(canvas, bitmap, source, destination, angleInRadians, mirror);
         }
-        public void DrawBitmap(SKBitmap bitmap, IbRect source, IbRect destination, float angleInRadians, bool mirror)
+        public void DrawBitmap(SKCanvas canvas, SKBitmap bitmap, IbRect source, IbRect destination, float angleInRadians, bool mirror)
         {
-            int mir = 1;
-            if (mirror) { mir = -1; }
-            float xscl = 1f;
-            float yscl = 1f;
-            //float xscl = 1f + (((float)1 * 2 * scaler) / squareSize);
-            //float yscl = 1f + (((float)1 * 2 * scaler) / squareSize);
-            float angleInDegrees = (angleInRadians * 360f) / (float)(Math.PI * 2);
+            if (canvas == null)
+            {
+                return;
+            }
+            try
+            {
+                int mir = 1;
+                if (mirror) { mir = -1; }
+                float xscl = 1f;
+                float yscl = 1f;
+                //float xscl = 1f + (((float)1 * 2 * scaler) / squareSize);
+                //float yscl = 1f + (((float)1 * 2 * scaler) / squareSize);
+                float angleInDegrees = (angleInRadians * 360f) / (float)(Math.PI * 2);
 
-            canvas.Save();
-            canvas.Scale(mir * xscl, yscl, (destination.Left + oXshift) + (destination.Width / 2), (destination.Top + oYshift) + (destination.Height / 2));
-            canvas.RotateDegrees(angleInDegrees, (destination.Left + oXshift) + (destination.Width / 2), (destination.Top + oYshift) + (destination.Height / 2));
-            dstRect.Left = destination.Left + oXshift;
-            dstRect.Top = destination.Top + oYshift;
-            dstRect.Right = destination.Width + destination.Left + oXshift;
-            dstRect.Bottom = destination.Height + destination.Top + oYshift;
-            srcRect.Left = source.Left;
-            srcRect.Top = source.Top;
-            srcRect.Right = source.Left + source.Width;
-            srcRect.Bottom = source.Top + source.Height;
+                canvas.Save();
+                canvas.Scale(mir * xscl, yscl, (destination.Left + oXshift) + (destination.Width / 2), (destination.Top + oYshift) + (destination.Height / 2));
+                canvas.RotateDegrees(angleInDegrees, (destination.Left + oXshift) + (destination.Width / 2), (destination.Top + oYshift) + (destination.Height / 2));
+                dstRect.Left = destination.Left + oXshift;
+                dstRect.Top = destination.Top + oYshift;
+                dstRect.Right = destination.Width + destination.Left + oXshift;
+                dstRect.Bottom = destination.Height + destination.Top + oYshift;
+                srcRect.Left = source.Left;
+                srcRect.Top = source.Top;
+                srcRect.Right = source.Left + source.Width;
+                srcRect.Bottom = source.Top + source.Height;
 
-            //used for sprites
-            //SKRect dst = new SKRect(dstRect.Left, dstRect.Top, dstRect.Right, dstRect.Bottom);
-            //SKRect src = new SKRect(srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom);
-            canvas.DrawBitmap(bitmap, srcRect, dstRect);
-            canvas.Restore();
+                //used for sprites
+                //SKRect dst = new SKRect(dstRect.Left, dstRect.Top, dstRect.Right, dstRect.Bottom);
+                //SKRect src = new SKRect(srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom);
+                canvas.DrawBitmap(bitmap, srcRect, dstRect);
+                canvas.Restore();
+            }
+            catch { }
         }
 
         public void Render(SKCanvas c)
         {
-            canvas = c;
+            //canvas = c;
             //BeginDraw(); //uncomment this for DIRECT2D ADDITIONS  
 
             //renderTarget2D.Clear(Color4.Black); //uncomment this for DIRECT2D ADDITIONS
 
             if ((mod.useUIBackground) && (!screenType.Equals("tsAreaEditor")) && (!screenType.Equals("tsConvoEditor")) && (!screenType.Equals("tsEncEditor")) && (!screenType.Equals("main")) && (!screenType.Equals("combat")) && (!screenType.Equals("launcher")) && (!screenType.Equals("title")))
             {
-                drawUIBackground();
+                drawUIBackground(c);
             }
             //TOOLSET SCREENS
             if (screenType.Equals("tsModule"))
             {
-                tsModule.redrawTsModule();
+                tsModule.redrawTsModule(c);
             }
             else if (screenType.Equals("tsDataCheck"))
             {
-                tsDataCheck.redrawTsDataCheck();
+                tsDataCheck.redrawTsDataCheck(c);
             }
             else if (screenType.Equals("tsAreaEditor"))
             {
-                tsAreaEditor.redrawTsAreaEditor();
+                tsAreaEditor.redrawTsAreaEditor(c);
             }
             else if (screenType.Equals("tsEncEditor"))
             {
-                tsEncEditor.redrawTsEncEditor();
+                tsEncEditor.redrawTsEncEditor(c);
             }
             else if (screenType.Equals("tsConvoEditor"))
             {
-                tsConvoEditor.redrawTsConvoEditor();
+                tsConvoEditor.redrawTsConvoEditor(c);
             }
             else if (screenType.Equals("tsContainerEditor"))
             {
-                tsContainerEditor.redrawTsContainerEditor();
+                tsContainerEditor.redrawTsContainerEditor(c);
             }
             else if (screenType.Equals("tsShopEditor"))
             {
-                tsShopEditor.redrawTsShopEditor();
+                tsShopEditor.redrawTsShopEditor(c);
             }
             else if (screenType.Equals("tsJournalEditor"))
             {
-                tsJournalEditor.redrawTsJournalEditor();
+                tsJournalEditor.redrawTsJournalEditor(c);
             }
             else if (screenType.Equals("tsCreatureEditor"))
             {
-                tsCreatureEditor.redrawTsCreatureEditor();
+                tsCreatureEditor.redrawTsCreatureEditor(c);
             }
             else if (screenType.Equals("tsItemEditor"))
             {
-                tsItemEditor.redrawTsItemEditor();
+                tsItemEditor.redrawTsItemEditor(c);
             }
             else if (screenType.Equals("tsPlayerEditor"))
             {
-                tsPlayerEditor.redrawTsPlayerEditor();
+                tsPlayerEditor.redrawTsPlayerEditor(c);
             }
             else if (screenType.Equals("tsArtEditor"))
             {
-                tsArtEditor.redrawTsArtEditor();
+                tsArtEditor.redrawTsArtEditor(c);
             }
             //GAME SCREENS
             else if (screenType.Equals("title"))
             {
-                screenTitle.redrawTitle();
+                screenTitle.redrawTitle(c);
             }
             else if (screenType.Equals("launcher"))
             {
-                screenLauncher.redrawLauncher();
+                screenLauncher.redrawLauncher(c);
             }
             else if (screenType.Equals("splash"))
             {
-                screenSplash.redrawSplash();
+                screenSplash.redrawSplash(c);
             }
             else if (screenType.Equals("pcCreation"))
             {
-                screenPcCreation.redrawPcCreation();
+                screenPcCreation.redrawPcCreation(c);
             }
             else if (screenType.Equals("learnSpellCreation"))
             {
-                screenSpellLevelUp.redrawSpellLevelUp(true);
+                screenSpellLevelUp.redrawSpellLevelUp(c, true);
             }
             else if (screenType.Equals("learnSpellLevelUp"))
             {
-                screenSpellLevelUp.redrawSpellLevelUp(false);
+                screenSpellLevelUp.redrawSpellLevelUp(c, false);
             }
             else if (screenType.Equals("learnTraitCreation"))
             {
-                screenTraitLevelUp.redrawTraitLevelUp(true);
+                screenTraitLevelUp.redrawTraitLevelUp(c, true);
             }
             else if (screenType.Equals("learnTraitLevelUp"))
             {
-                screenTraitLevelUp.redrawTraitLevelUp(false);
+                screenTraitLevelUp.redrawTraitLevelUp(c, false);
             }
             else if (screenType.Equals("main"))
             {
-                screenMainMap.redrawMain();
+                screenMainMap.redrawMain(c);
             }
             else if (screenType.Equals("party"))
             {
-                screenParty.redrawParty();
+                screenParty.redrawParty(c);
             }
             else if (screenType.Equals("combatParty"))
             {
-                screenParty.redrawParty();
+                screenParty.redrawParty(c);
             }
             else if (screenType.Equals("inventory"))
             {
-                screenInventory.redrawInventory();
+                screenInventory.redrawInventory(c);
             }
             else if (screenType.Equals("itemSelector"))
             {
-                screenItemSelector.redrawItemSelector();
+                screenItemSelector.redrawItemSelector(c);
             }
             else if (screenType.Equals("portraitSelector"))
             {
-                screenPortraitSelector.redrawPortraitSelector();
+                screenPortraitSelector.redrawPortraitSelector(c);
             }
             else if (screenType.Equals("tokenSelector"))
             {
-                screenTokenSelector.redrawTokenSelector();
+                screenTokenSelector.redrawTokenSelector(c);
             }
             else if (screenType.Equals("pcSelector"))
             {
-                screenPcSelector.redrawPcSelector();
+                screenPcSelector.redrawPcSelector(c);
             }
             else if (screenType.Equals("combatInventory"))
             {
-                screenInventory.redrawInventory();
+                screenInventory.redrawInventory(c);
             }
             else if (screenType.Equals("journal"))
             {
-                screenJournal.redrawJournal();
+                screenJournal.redrawJournal(c);
             }
             else if (screenType.Equals("shop"))
             {
-                screenShop.redrawShop();
+                screenShop.redrawShop(c);
             }
             else if (screenType.Equals("combat"))
             {
-                screenCombat.redrawCombat();
+                screenCombat.redrawCombat(c);
             }
             else if (screenType.Equals("combatCast"))
             {
-                screenCastSelector.redrawCastSelector(true);
+                screenCastSelector.redrawCastSelector(c, true);
             }
             else if (screenType.Equals("mainMapCast"))
             {
-                screenCastSelector.redrawCastSelector(false);
+                screenCastSelector.redrawCastSelector(c, false);
             }
             else if (screenType.Equals("combatTraitUse"))
             {
-                screenTraitUseSelector.redrawTraitUseSelector(true);
+                screenTraitUseSelector.redrawTraitUseSelector(c, true);
             }
             else if (screenType.Equals("mainMapTraitUse"))
             {
-                screenTraitUseSelector.redrawTraitUseSelector(false);
+                screenTraitUseSelector.redrawTraitUseSelector(c, false);
             }
             else if (screenType.Equals("convo"))
             {
-                screenConvo.redrawConvo();
+                screenConvo.redrawConvo(c);
             }
             else if (screenType.Equals("partyBuild"))
             {
-                screenPartyBuild.redrawPartyBuild();
+                screenPartyBuild.redrawPartyBuild(c);
             }
             else if (screenType.Equals("partyCampaign"))
             {
-                screenPartyCampaign.redrawPartyCampaign();
+                screenPartyCampaign.redrawPartyCampaign(c);
             }
             else if (screenType.Equals("partyRoster"))
             {
-                screenPartyRoster.redrawPartyRoster();
+                screenPartyRoster.redrawPartyRoster(c);
             }
             if (mod.debugMode)
             {
@@ -1186,28 +1233,28 @@ namespace IBbasic
                 {
                     for (int y = 0; y <= 2; y++)
                     {
-                        DrawText("FPS:" + fps.ToString(), x + 5, screenHeight - oYshift - txtH - 5 + y, "bk");
+                        DrawText(c, "FPS:" + fps.ToString(), x + 5, screenHeight - oYshift - txtH - 5 + y, "bk");
                     }
                 }
-                DrawText("FPS:" + fps.ToString(), 5, screenHeight - oYshift - txtH - 5, "wh");
+                DrawText(c, "FPS:" + fps.ToString(), 5, screenHeight - oYshift - txtH - 5, "wh");
             }
             if (itemListSelector.showIBminiItemListSelector)
             {
-                itemListSelector.drawItemListSelection();
+                itemListSelector.drawItemListSelection(c);
             }
             if (showTooltip)
             {
-                tooltip.onDrawLogBox();
+                tooltip.onDrawLogBox(c);
             }
             //EndDraw(); //uncomment this for DIRECT2D ADDITIONS
         }
-        public void drawUIBackground()
+        public void drawUIBackground(SKCanvas canvas)
         {
             try
             {
                 IbRect src = new IbRect(0, 0, cc.ui_bg_fullscreen.Width, cc.ui_bg_fullscreen.Height);
                 IbRect dst = new IbRect(0 - oXshift, 0 - oYshift, screenWidth, screenHeight);
-                DrawBitmap(cc.ui_bg_fullscreen, src, dst);
+                DrawBitmap(canvas, cc.ui_bg_fullscreen, src, dst);
             }
             catch
             { }
@@ -1804,7 +1851,8 @@ namespace IBbasic
                 SaveText("\\IBbasicUserReviews.json", json);
             }
             catch { }
-            TrackerSendEvent(":POST_REVIEW:", "REVIEW::" + thisReview.reviewDate + ":" + thisReview.moduleName + "(v" + thisReview.moduleVersion + "):" + thisReview.userID + ":" + thisReview.userName + ":" + thisReview.review, true);
+            string realtime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            TrackerSendEvent(":POST_REVIEW:", "REVIEW::" + realtime + "::" + thisReview.reviewDate + ":" + thisReview.moduleName + "(v" + thisReview.moduleVersion + "):" + thisReview.userID + ":" + thisReview.userName + ":" + thisReview.review, true);
         }
         public void postEndorse(IBEndorse thisEndorse)
         {
@@ -1814,7 +1862,8 @@ namespace IBbasic
                 SaveText("\\IBbasicUserReviews.json", json);
             }
             catch { }
-            TrackerSendEvent(":POST_ENDORSE:", "ENDORSE::" + thisEndorse.moduleName + ":" + thisEndorse.userID + ":" + thisEndorse.userName + ":" + thisEndorse.endorsed.ToString(), true);
+            string realtime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            TrackerSendEvent(":POST_ENDORSE:", "ENDORSE::" + realtime + "::" + thisEndorse.moduleName + ":" + thisEndorse.userID + ":" + thisEndorse.userName + ":" + thisEndorse.endorsed.ToString(), true);
         }
 
         //ANALYTICS

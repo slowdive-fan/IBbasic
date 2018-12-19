@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -149,7 +150,7 @@ namespace IBbasic
         }
 
         //TRAIT USE SELECTOR SCREEN (COMBAT and MAIN)
-        public void redrawTraitUseSelector(bool inCombat)
+        public void redrawTraitUseSelector(SKCanvas c, bool inCombat)
         {
             Player pc = getTraitUsingPlayer();
             
@@ -179,9 +180,9 @@ namespace IBbasic
             //DRAW TEXT		
             locY = (gv.uiSquareSize * 0) + (pH * 2);
             //gv.mSheetTextPaint.setColor(Color.LTGRAY);
-            gv.DrawText("Select a Trait to Use", noticeX, pH * 3, "wh");
+            gv.DrawText(c, "Select a Trait to Use", noticeX, pH * 3, "wh");
             //gv.mSheetTextPaint.setColor(Color.YELLOW);
-            gv.DrawText(pc.name + " SP: " + pc.sp + "/" + pc.spMax, pW * 55, leftStartY, "yl");
+            gv.DrawText(c, pc.name + " SP: " + pc.sp + "/" + pc.spMax, pW * 55, leftStartY, "yl");
 
             //DRAW NOTIFICATIONS
             if (isSelectedTraitSlotInKnownTraitsRange())
@@ -197,16 +198,16 @@ namespace IBbasic
                             //if currently selected is usable say "Available to Cast" in lime
                             if (pc.sp >= GetCurrentlySelectedTrait().costSP)
                             {
-                                gv.DrawText("Available to Use", noticeX, noticeY, "gn");
+                                gv.DrawText(c, "Available to Use", noticeX, noticeY, "gn");
                             }
                             else //if known but not enough spell points, "Insufficient SP to Cast" in yellow
                             {
-                                gv.DrawText("Insufficient SP", noticeX, noticeY, "yl");
+                                gv.DrawText(c, "Insufficient SP", noticeX, noticeY, "yl");
                             }
                         }
                         else //is passive
                         {
-                            gv.DrawText("Passive Trait, Always On", noticeX, noticeY, "yl");
+                            gv.DrawText(c, "Passive Trait, Always On", noticeX, noticeY, "yl");
                         }
                     }
                     //not in combat so check if spell can be used on adventure maps
@@ -217,26 +218,26 @@ namespace IBbasic
                             //if currently selected is usable say "Available to Cast" in lime
                             if (pc.sp >= GetCurrentlySelectedTrait().costSP)
                             {
-                                gv.DrawText("Available to Use", noticeX, noticeY, "gn");
+                                gv.DrawText(c, "Available to Use", noticeX, noticeY, "gn");
                             }
                             else //if known but not enough spell points, "Insufficient SP to Cast" in yellow
                             {
-                                gv.DrawText("Insufficient SP", noticeX, noticeY, "yl");
+                                gv.DrawText(c, "Insufficient SP", noticeX, noticeY, "yl");
                             }
                         }
                         else //is passive
                         {
-                            gv.DrawText("Passive Trait, Always On", noticeX, noticeY, "yl");
+                            gv.DrawText(c, "Passive Trait, Always On", noticeX, noticeY, "yl");
                         }
                     }
                     else //can't be used on adventure map
                     {
-                        gv.DrawText("Not Available Here", noticeX, noticeY, "yl");
+                        gv.DrawText(c, "Not Available Here", noticeX, noticeY, "yl");
                     }
                 }
                 else //spell not known
                 {
-                    gv.DrawText("Trait Not Known Yet", noticeX, noticeY, "rd");
+                    gv.DrawText(c, "Trait Not Known Yet", noticeX, noticeY, "rd");
                 }
             }
 
@@ -250,7 +251,7 @@ namespace IBbasic
                 else { btn.glowOn = false; }
 
 
-                btn.Draw();
+                btn.Draw(c);
                 cntSlot++;
             }
 
@@ -274,15 +275,15 @@ namespace IBbasic
                 description.tbHeight = pH * 80;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
             }
 
-            btnHelp.Draw();
-            btnExit.Draw();
-            btnSelect.Draw();
+            btnHelp.Draw(c);
+            btnExit.Draw(c);
+            btnSelect.Draw(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTraitUseSelector(int eX, int eY, MouseEventType.EventType eventType, bool inCombat)

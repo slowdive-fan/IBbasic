@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,7 +54,7 @@ namespace IBbasic
             color = clr;
         }
 
-        public void DrawString(string text, float x, float y, string fontColor)
+        public void DrawString(SKCanvas canvas, string text, float x, float y, string fontColor)
         {
             //if ((y > -2) && (y <= tbHeight - gv.fontHeight))
             //{
@@ -63,7 +64,7 @@ namespace IBbasic
                     {
                         for (int yy = 0; yy <= 2; yy++)
                         {
-                            gv.DrawText(text, x + xx, y + yy, "bk");
+                            gv.DrawText(canvas, text, x + xx, y + yy, "bk");
                         }
                     }
                 }
@@ -84,7 +85,7 @@ namespace IBbasic
                 {
                     colr = "rd";
                 }
-                gv.DrawText(text, x , y , colr);
+                gv.DrawText(canvas, text, x , y , colr);
             //}
         }
 
@@ -115,7 +116,7 @@ namespace IBbasic
             timeToLive = timeToLive * linesList.Count / 2;
         }
 
-        public void onDrawTextBox()
+        public void onDrawTextBox(SKCanvas canvas)
         {
             //location.X should be the the props actual map location in squares (not screen location)            
             //only draw lines needed to fill textbox
@@ -127,7 +128,7 @@ namespace IBbasic
                 //loop through each line and print each word
                 foreach (IBminiFormattedWord word in linesList[i].wordsList)
                 {
-                    DrawString(word.text + " ", xLoc, yLoc, word.color);
+                    DrawString(canvas, word.text + " ", xLoc, yLoc, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
                 xLoc = (location.X + gv.playerOffsetX - 2 - gv.mod.PlayerLocationX) * (gv.squareSize * gv.scaler) + gv.screenMainMap.mapStartLocXinPixels;

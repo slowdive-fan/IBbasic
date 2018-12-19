@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -113,7 +114,7 @@ namespace IBbasic
 
         }
 
-        public void redrawJournal()
+        public void redrawJournal(SKCanvas c)
         {            
     	    int pW = (int)((float)gv.screenWidth / 100.0f);
 		    int pH = (int)((float)gv.screenHeight / 100.0f);
@@ -132,7 +133,7 @@ namespace IBbasic
     	    //DRAW BACKGROUND IMAGE
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("journalback").Width, gv.cc.GetFromBitmapList("journalback").Height);
             IbRect dst = new IbRect(0, 0, (gv.uiSquaresInWidth) * gv.uiSquareSize, (gv.uiSquaresInHeight) * gv.uiSquareSize);
-            gv.DrawBitmap(gv.cc.GetFromBitmapList("journalback"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromBitmapList("journalback"), src, dst);
         
             //MAKE SURE NO OUT OF INDEX ERRORS
     	    if (gv.mod.partyJournalQuests.Count > 0)
@@ -150,7 +151,7 @@ namespace IBbasic
             //DRAW QUESTS
             locY = ctrlUpArrow.Y + ctrlUpArrow.Height;
             string color = "bk";
-            gv.DrawText("Active Quests:", ctrlUpArrow.X, leftStartY, "bu");
+            gv.DrawText(c, "Active Quests:", ctrlUpArrow.X, leftStartY, "bu");
             //gv.DrawText("--------------", locX, locY += spacing, "bk");
             if (gv.mod.partyJournalQuests.Count > 0)
     	    {
@@ -159,14 +160,14 @@ namespace IBbasic
 			    {
                     if (journalScreenQuestIndex == cnt) { color = "gn"; }
 				    else { color = "bk"; }	
-                    gv.DrawText(jq.Name, ctrlUpArrow.X, locY += spacing, color);
+                    gv.DrawText(c, jq.Name, ctrlUpArrow.X, locY += spacing, color);
 				    cnt++;
 			    }
     	    }
 
             //DRAW QUEST ENTRIES
             locY = ctrlLeftArrow.Y + ctrlLeftArrow.Height;
-            gv.DrawText("Quest Entry:", ctrlLeftArrow.X, leftStartY, "bu");
+            gv.DrawText(c, "Quest Entry:", ctrlLeftArrow.X, leftStartY, "bu");
             //gv.DrawText("--------------", locX, locY += spacing, "bk");	
             if (gv.mod.partyJournalQuests.Count > 0)
             {
@@ -182,7 +183,7 @@ namespace IBbasic
                 description.tbHeight = pH * 80;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
             }
 
             int leftNum = journalScreenEntryIndex + 1;
@@ -195,12 +196,12 @@ namespace IBbasic
             btnPageIndex.Text = leftNumStrg + "/" + rightNum;
 
             //DRAW ALL CONTROLS
-            btnPageIndex.Draw();
-            ctrlUpArrow.Draw();
-            ctrlDownArrow.Draw();
-            ctrlLeftArrow.Draw();
-            ctrlRightArrow.Draw();
-            btnReturnJournal.Draw();
+            btnPageIndex.Draw(c);
+            ctrlUpArrow.Draw(c);
+            ctrlDownArrow.Draw(c);
+            ctrlLeftArrow.Draw(c);
+            ctrlRightArrow.Draw(c);
+            btnReturnJournal.Draw(c);
         }
     
 	    public void onTouchJournal(int eX, int eY, MouseEventType.EventType eventType)

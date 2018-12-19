@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,40 +78,40 @@ namespace IBbasic
 
         }
 
-        public void redrawTsDataCheck()
+        public void redrawTsDataCheck(SKCanvas c)
         {
             setControlsStart();
             int shiftForFont = (btnCheckAreas.Height / 2) - (gv.fontHeight / 2);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
-            gv.DrawText("MODULE DATA CHECKING", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "MODULE DATA CHECKING", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
 
-            btnCheckAreas.Draw();
-            gv.DrawText(" Checking areas for data errors", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont - gv.fontHeight, "wh");
-            gv.DrawText(" (this can take a few seconds", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont, "wh");
-            gv.DrawText(" to complete)", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont + gv.fontHeight, "wh");
+            btnCheckAreas.Draw(c);
+            gv.DrawText(c, " Checking areas for data errors", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont - gv.fontHeight, "wh");
+            gv.DrawText(c, " (this can take a few seconds", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont, "wh");
+            gv.DrawText(c, " to complete)", btnCheckAreas.X + btnCheckAreas.Width + gv.scaler, btnCheckAreas.Y + shiftForFont + gv.fontHeight, "wh");
 
-            btnCheckEncounters.Draw();
-            gv.DrawText(" Checking encounters for data", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont - gv.fontHeight, "wh");
-            gv.DrawText(" errors (this can take a few", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont, "wh");
-            gv.DrawText(" seconds to complete)", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont + gv.fontHeight, "wh");
+            btnCheckEncounters.Draw(c);
+            gv.DrawText(c, " Checking encounters for data", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont - gv.fontHeight, "wh");
+            gv.DrawText(c, " errors (this can take a few", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont, "wh");
+            gv.DrawText(c, " seconds to complete)", btnCheckEncounters.X + btnCheckEncounters.Width + gv.scaler, btnCheckEncounters.Y + shiftForFont + gv.fontHeight, "wh");
 
-            btnCheckConvos.Draw();
-            gv.DrawText(" Checking conversations for data", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont - gv.fontHeight, "wh");
-            gv.DrawText(" errors (this can take a few", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont, "wh");
-            gv.DrawText(" seconds to complete)", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont + gv.fontHeight, "wh");
+            btnCheckConvos.Draw(c);
+            gv.DrawText(c, " Checking conversations for data", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont - gv.fontHeight, "wh");
+            gv.DrawText(c, " errors (this can take a few", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont, "wh");
+            gv.DrawText(c, " seconds to complete)", btnCheckConvos.X + btnCheckConvos.Width + gv.scaler, btnCheckConvos.Y + shiftForFont + gv.fontHeight, "wh");
 
-            btnCheckMisc.Draw();
-            gv.DrawText(" Checking other miscellaneous", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont - gv.fontHeight, "wh");
-            gv.DrawText(" data for errors (this can", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont, "wh");
-            gv.DrawText(" take a few seconds to complete)", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont + gv.fontHeight, "wh");
+            btnCheckMisc.Draw(c);
+            gv.DrawText(c, " Checking other miscellaneous", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont - gv.fontHeight, "wh");
+            gv.DrawText(c, " data for errors (this can", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont, "wh");
+            gv.DrawText(c, " take a few seconds to complete)", btnCheckMisc.X + btnCheckMisc.Width + gv.scaler, btnCheckMisc.Y + shiftForFont + gv.fontHeight, "wh");
 
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTsDataCheck(int eX, int eY, MouseEventType.EventType eventType)

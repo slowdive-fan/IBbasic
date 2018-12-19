@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace IBbasic
             return false;
         }
 
-        public void Draw()
+        public void Draw(SKCanvas c)
         {
             if (show)
             {
@@ -92,21 +93,21 @@ namespace IBbasic
                 
                 if ((this.glowOn) && (this.Glow != null))
                 {
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(Glow), srcGlow, dstGlow);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Glow), srcGlow, dstGlow);
                 }
 
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgBG), src, dstBG);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgBG), src, dstBG);
 
                 if (this.Img != null)
                 {
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(Img), src2, dst);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(Img), src2, dst);
                 }
 
                 if (this.ImgLU != null)
                 {
                     if (levelUpOn)
                     {
-                        gv.DrawBitmap(gv.cc.GetFromBitmapList(ImgLU), src3, dstLU);
+                        gv.DrawBitmap(c, gv.cc.GetFromBitmapList(ImgLU), src3, dstLU);
                     }
                 }
 
@@ -128,10 +129,10 @@ namespace IBbasic
                 {
                     for (int y = 0; y <= 2; y++)
                     {
-                        gv.DrawText(TextHP, this.X + ulX + x, this.Y + ulY - pH + y, "bk");
+                        gv.DrawText(c, TextHP, this.X + ulX + x, this.Y + ulY - pH + y, "bk");
                     }
                 }
-                gv.DrawText(TextHP, this.X + ulX, this.Y + ulY - pH, "gn");
+                gv.DrawText(c, TextHP, this.X + ulX, this.Y + ulY - pH, "gn");
 
 
                 //DRAW SP/SPmax
@@ -142,10 +143,10 @@ namespace IBbasic
                 {
                     for (int y = 0; y <= 2; y++)
                     {
-                        gv.DrawText(TextSP, this.X + ulX - pW + x, this.Y + ulY - pH + y, "bk");
+                        gv.DrawText(c, TextSP, this.X + ulX - pW + x, this.Y + ulY - pH + y, "bk");
                     }
                 }
-                gv.DrawText(TextSP, this.X + ulX - pW, this.Y + ulY - pH, "yl");
+                gv.DrawText(c, TextSP, this.X + ulX - pW, this.Y + ulY - pH, "yl");
             }
         }
     }

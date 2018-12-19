@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,11 +23,11 @@ namespace IBbasic
             gv = g;
         }
 
-        public void DrawString(string text, float x, float y, string fontColor)
+        public void DrawString(SKCanvas canvas, string text, float x, float y, string fontColor)
         {
             if ((y > -2) && (y <= (tbHeight * gv.scaler) - gv.fontHeight))
             {
-                gv.DrawText(text, x + tbXloc + gv.pS, y, fontColor);
+                gv.DrawText(canvas, text, x + tbXloc + gv.pS, y, fontColor);
             }
         }
 
@@ -55,13 +56,13 @@ namespace IBbasic
                 }
             }
         }
-        public void onDrawLogBox()
+        public void onDrawLogBox(SKCanvas canvas)
         {
             currentLocX = 2 * gv.uiSquareSize;
             currentLocY = 60;
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_tooltip").Width, gv.cc.GetFromBitmapList("ui_bg_tooltip").Height);
             IbRect dst = new IbRect((int)(currentLocX), (int)(currentLocY * gv.scaler), (int)(Width * gv.scaler), (int)(Height * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_tooltip"), src, dst);
+            gv.DrawBitmap(canvas, gv.cc.GetFromBitmapList("ui_bg_tooltip"), src, dst);
 
             //only draw lines needed to fill textbox
             float xLoc = 0.0f;
@@ -73,7 +74,7 @@ namespace IBbasic
                 {
                     int xLoc2 = (int)((currentLocX + xLoc));
                     int yLoc2 = (int)((currentLocY * gv.scaler + yLoc));
-                    DrawString(word.text + " ", xLoc2, yLoc2, word.color);
+                    DrawString(canvas, word.text + " ", xLoc2, yLoc2, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
                 xLoc = 0;

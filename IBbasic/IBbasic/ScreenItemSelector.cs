@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -182,7 +183,7 @@ namespace IBbasic
 	    }
 	
 	    //INVENTORY SCREEN (COMBAT and MAIN)
-        public void redrawItemSelector()
+        public void redrawItemSelector(SKCanvas c)
         {            
     	    //IF CONTROLS ARE NULL, CREATE THEM
     	    if (btnAction == null)
@@ -215,12 +216,12 @@ namespace IBbasic
     	
             //DRAW TEXT		
 		    locY = (pH * 2);
-		    gv.DrawText("Item Selection", locX + (gv.uiSquareSize * 7), locY, "wh");
+		    gv.DrawText(c, "Item Selection", locX + (gv.uiSquareSize * 7), locY, "wh");
 		    
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
-		    btnPageIndex.Draw();
-		    btnInventoryLeft.Draw();
-		    btnInventoryRight.Draw();		
+		    btnPageIndex.Draw(c);
+		    btnInventoryLeft.Draw(c);
+		    btnInventoryRight.Draw(c);		
 		
 		    //DRAW ALL INVENTORY SLOTS		
 		    int cntSlot = 0;
@@ -247,7 +248,7 @@ namespace IBbasic
 				    btn.Img2 = null;
 				    btn.Quantity = "";
 			    }
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -288,18 +289,18 @@ namespace IBbasic
                 description.tbHeight = 8 * gv.uiSquareSize;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
-		    btnInfo.Draw();	
-		    btnAction.Draw();
-            btnExit.Draw();
+		    btnInfo.Draw(c);	
+		    btnAction.Draw(c);
+            btnExit.Draw(c);
             if ((itemSelectorType.Equals("container")) || (itemSelectorType.Equals("equip")))
             {
-                btnAction2.Draw();
+                btnAction2.Draw(c);
             }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public string isUseableBy(Item it)

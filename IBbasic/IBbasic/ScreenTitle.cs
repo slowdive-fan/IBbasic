@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -102,7 +103,7 @@ namespace IBbasic
         }
 
 	    //TITLE SCREEN  
-        public void redrawTitle()
+        public void redrawTitle(SKCanvas c)
         {
             setControlsStart();       
     	    //DRAW TITLE SCREEN
@@ -110,7 +111,7 @@ namespace IBbasic
             //do narration with image setup    	
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList(gv.mod.titleImageName).Width, gv.cc.GetFromBitmapList(gv.mod.titleImageName).Height);
             IbRect dst = new IbRect(0 - gv.oXshift, 0 - gv.oYshift, gv.screenWidth, (int)dstHeight);
-            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.titleImageName), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.titleImageName), src, dst);
 
             //Draw This Module's Version Number or engine version number
             int pH = (int)((float)gv.screenHeight / 100.0f);
@@ -126,27 +127,27 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("v" + textVer, xLoc + x, yLoc + y, "bk");
+                    gv.DrawText(c, "v" + textVer, xLoc + x, yLoc + y, "bk");
                 }
             }
-            gv.DrawText("v" + textVer, xLoc, yLoc, "wh");
+            gv.DrawText(c, "v" + textVer, xLoc, yLoc, "wh");
 
-            drawTitleControls();
+            drawTitleControls(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawTitleControls()
+        public void drawTitleControls(SKCanvas c)
 	    {    	
-		    btnNewGame.Draw();		
-		    btnLoadSavedGame.Draw();		
-		    btnPlayerGuide.Draw();
-		    btnBeginnerGuide.Draw();           
-		    btnAbout.Draw();
+		    btnNewGame.Draw(c);		
+		    btnLoadSavedGame.Draw(c);		
+		    btnPlayerGuide.Draw(c);
+		    btnBeginnerGuide.Draw(c);           
+		    btnAbout.Draw(c);
             if (!gv.fixedModule.Equals(""))
             {
-                btnRate.Draw();
+                btnRate.Draw(c);
             }
 	    }
         public void onTouchTitle(int eX, int eY, MouseEventType.EventType eventType)

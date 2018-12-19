@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -120,7 +121,7 @@ namespace IBbasic
             }
         }
 
-        public void Draw(GameView gv)
+        public void Draw(SKCanvas c, GameView gv)
         {
             IbRect src = new IbRect(currentFrameIndex * frameHeight, 0, frameHeight, frameHeight);
             IbRect dst = new IbRect(0, 0, 0, 0);
@@ -140,11 +141,11 @@ namespace IBbasic
             }
             if (numberOFFramesForAnimationsMadeFromSeveralBitmaps == 0)
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(bitmap), src, dst, angle, false);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(bitmap), src, dst, angle, false);
             }
             else
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(bitmap + currentFrameIndex.ToString()), src, dst, angle, false);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(bitmap + currentFrameIndex.ToString()), src, dst, angle, false);
             }   
         }
     }    

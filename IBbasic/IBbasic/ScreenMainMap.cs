@@ -931,7 +931,7 @@ namespace IBbasic
                 }
             }
         }        
-        public void redrawMain()
+        public void redrawMain(SKCanvas c)
         {
             //hideTriggerImageIfNotEnabled();
 
@@ -944,47 +944,47 @@ namespace IBbasic
 
             if (gv.mod.currentArea.Is3dArea)
             {
-                draw3dView();
+                draw3dView(c);
             }
             else
             {                
                 if (!gv.mod.currentArea.areaDark)
                 {
-                    drawWorldMap();
+                    drawWorldMap(c);
                     //drawProps();
                     if (gv.mod.map_showGrid)
                     {
-                        drawGrid();
+                        drawGrid(c);
                     }
                 }
-                drawPlayer();
+                drawPlayer(c);
 
                 if (!gv.mod.currentArea.areaDark)
                 {
                     if (gv.mod.currentArea.UseDayNightCycle)
                     {
-                        drawOverlayTints();
+                        drawOverlayTints(c);
                     }
-                    drawFogOfWar();
+                    drawFogOfWar(c);
                 }
             }
 
             if ((showClock) && (!hideClock))
             {
-                drawMainMapClockText();
+                drawMainMapClockText(c);
             }
-            drawUiLayout();
-            drawMiniMap();
+            drawUiLayout(c);
+            drawMiniMap(c);
 
-            drawFloatyTextPool();
-            drawMainMapFloatyText();
+            drawFloatyTextPool(c);
+            drawMainMapFloatyText(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void draw3dView()
+        public void draw3dView(SKCanvas c)
         {
             map3DViewStartLocXinPixels = gv.uiSquareSize / 2;
             float scaler = (gv.scaler * 2);
@@ -1009,7 +1009,7 @@ namespace IBbasic
                 }
             }
             IbRect dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((1 * gv.squareSize * gv.scaler)), (int)(88 * scaler), (int)(88 * scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
 
             if (IsSquareOnMap(0, 1))
             {
@@ -1031,7 +1031,7 @@ namespace IBbasic
                     }
                 }
                 dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((1 * gv.squareSize * gv.scaler)) + (int)(16 * scaler), (int)(88 * scaler), (int)(56 * scaler));
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
             }
 
             if (IsSquareOnMap(0, 2))
@@ -1054,7 +1054,7 @@ namespace IBbasic
                     }
                 }
                 dst = new IbRect(map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), (int)((1 * gv.squareSize * gv.scaler)) + (int)(32 * scaler), (int)(88 * scaler), (int)(24 * scaler));
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(backdrop), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(backdrop), src, dst);
             }
                         
             //draw far row
@@ -1083,11 +1083,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else if (col == 2)
@@ -1100,11 +1100,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else
@@ -1123,11 +1123,11 @@ namespace IBbasic
                             dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                             if (!wallset.Equals("none"))
                             {
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                             }
                             if (!overlay.Equals("none"))
                             {
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                             }
                         }
                     }
@@ -1166,11 +1166,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         //draw right side
                         tlX = (int)(8 * scaler);
@@ -1180,11 +1180,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     else if (col == -1)
@@ -1197,11 +1197,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1211,7 +1211,7 @@ namespace IBbasic
                             brX = (int)(12 * scaler);
                             brY = (int)(12 * scaler);
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                         //draw right side
                         tlX = (int)(32 * scaler);
@@ -1221,11 +1221,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                 }
@@ -1261,11 +1261,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                         //draw front (8)
                         tlX = (int)(72 * scaler);
@@ -1275,11 +1275,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1289,7 +1289,7 @@ namespace IBbasic
                             brX = (int)(2 * scaler);
                             brY = (int)(12 * scaler);
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     else if (col == 1)
@@ -1302,11 +1302,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                         //draw front (24)
                         tlX = (int)(48 * scaler);
@@ -1316,11 +1316,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1330,7 +1330,7 @@ namespace IBbasic
                             brX = (int)(12 * scaler);
                             brY = (int)(12 * scaler);
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     else if (col == 0)
@@ -1343,11 +1343,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                         if (!trigImage.Equals("none"))
                         {
@@ -1357,7 +1357,7 @@ namespace IBbasic
                             brX = (int)(12 * scaler);
                             brY = (int)(12 * scaler);
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                 }
@@ -1395,11 +1395,11 @@ namespace IBbasic
                         }
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     catch { }
@@ -1426,11 +1426,11 @@ namespace IBbasic
                         }
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                     }
                     catch { }
@@ -1473,11 +1473,11 @@ namespace IBbasic
                     }
                     if (!wallset.Equals("none"))
                     {
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                     }
                     if (!overlay.Equals("none"))
                     {
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                     }
                     if (!trigImage.Equals("none"))
                     {
@@ -1503,7 +1503,7 @@ namespace IBbasic
                             brX = (int)(24 * scaler);
                         }
                         dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                     }
                 }
                 catch { }
@@ -1534,11 +1534,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst);
                         }
                     }
                     catch { }
@@ -1560,11 +1560,11 @@ namespace IBbasic
                         dst = new IbRect(tlX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
                         if (!wallset.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(wallset), src, dst, true);
                         }
                         if (!overlay.Equals("none"))
                         {
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(overlay), src, dst, true);
                         }
                     }
                     catch { }
@@ -1595,7 +1595,7 @@ namespace IBbasic
                             int brX = (int)(48 * scaler);
                             int brY = (int)(48 * scaler);
                             dst = new IbRect(tlXX + map3DViewStartLocXinPixels + (int)((2 * gv.squareSize * gv.scaler)), tlYY + (int)((1 * gv.squareSize * gv.scaler)), brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                     }
                     catch { }
@@ -2178,7 +2178,7 @@ namespace IBbasic
             }
             return "none";
         }
-        public void drawWorldMap()
+        public void drawWorldMap(SKCanvas c)
         {
             int offset = gv.playerOffset;
 
@@ -2210,7 +2210,7 @@ namespace IBbasic
                         //bool mirror = false;
                         //if (gv.mod.currentArea.Layer1Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
                         //gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst, gv.mod.currentArea.Layer1Rotate[y * gv.mod.currentArea.MapSizeX + x], mirror);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2239,7 +2239,7 @@ namespace IBbasic
                         IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                         //bool mirror = false;
                         //if (gv.mod.currentArea.Layer2Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2270,7 +2270,7 @@ namespace IBbasic
                             IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                             //bool mirror = false;
                             //if (gv.mod.currentArea.Layer3Mirror[y * gv.mod.currentArea.MapSizeX + x] == 1) { mirror = true; }
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2300,7 +2300,7 @@ namespace IBbasic
                         {
                             IbRect src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(trigImage).Width, gv.cc.GetFromTileBitmapList(trigImage).Height);
                             IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(trigImage), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(trigImage), src, dst);
                         }
                         catch { }
                     }
@@ -2340,7 +2340,7 @@ namespace IBbasic
                 }
             }
         }*/
-        public void drawMiniMap()
+        public void drawMiniMap(SKCanvas c)
         {
             if (showMiniMap)
             {
@@ -2386,7 +2386,7 @@ namespace IBbasic
                                 src = new IbRect(32, 64, 24, 24);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2411,7 +2411,7 @@ namespace IBbasic
                                 src = new IbRect(32, 16, 56, 56);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2436,7 +2436,7 @@ namespace IBbasic
                                 src = new IbRect(32, 16, 56, 56);
                             }
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -2458,15 +2458,15 @@ namespace IBbasic
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                             if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
                             {
-                                gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                                gv.DrawBitmap(c, gv.cc.losBlocked, src, dst);
                             }
                             if (gv.mod.currentArea.Walkable[y * gv.mod.currentArea.MapSizeX + x] == 0)
                             {
-                                gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                                gv.DrawBitmap(c, gv.cc.walkBlocked, src, dst);
                             }
                             else
                             {
-                                gv.DrawBitmap(gv.cc.walkPass, src, dst);
+                                gv.DrawBitmap(c, gv.cc.walkPass, src, dst);
                             }
                         }
                     }
@@ -2485,7 +2485,7 @@ namespace IBbasic
                             int brY = (int)(gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler);
                             src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                             dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
                         }
                     }
                 }
@@ -2508,7 +2508,7 @@ namespace IBbasic
                                 dst = new IbRect(tlX + shiftX, tlY + shiftY, brX, brY);
                                 if (gv.mod.currentArea.Visible[y * gv.mod.currentArea.MapSizeX + x] == 0)
                                 {
-                                    gv.DrawBitmap(gv.cc.black_tile, src, dst);
+                                    gv.DrawBitmap(c, gv.cc.black_tile, src, dst);
                                 }
                             }
                             catch { }
@@ -2528,7 +2528,7 @@ namespace IBbasic
                         string tile = "minimap_location_n";
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                         dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2539,7 +2539,7 @@ namespace IBbasic
                         string tile = "minimap_location_e";
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                         dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2550,7 +2550,7 @@ namespace IBbasic
                         string tile = "minimap_location_s";
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                         dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2561,7 +2561,7 @@ namespace IBbasic
                         string tile = "minimap_location_w";
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                         dst = new IbRect(tlX2 + shiftX, tlY2 + shiftY, brX2, brY2);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                 }
@@ -2573,10 +2573,10 @@ namespace IBbasic
                 int brX1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler) * gv.mod.currentArea.MapSizeX);
                 int brY1 = (int)((gv.squareSize / (mapSquareSizeScaler * 2) * (int)gv.scaler) * gv.mod.currentArea.MapSizeY);
                 dst = new IbRect(tlX1 + shiftX, tlY1 + shiftY, brX1, brY1);
-                gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_minimap_frame"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList("ui_minimap_frame"), src, dst);
             }
         }
-        public void drawPlayer()
+        public void drawPlayer(SKCanvas c)
         {
             int offset = gv.playerOffset;
             /*if (use11x11)
@@ -2594,7 +2594,7 @@ namespace IBbasic
             IbRect dst = new IbRect(x + mapStartLocXinPixels, y, (int)(gv.squareSize * gv.scaler), (int)(gv.squareSize * gv.scaler));
             if (gv.mod.showPartyToken)
             {
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.partyTokenFilename), src, dst, !gv.mod.playerList[0].combatFacingLeft);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.partyTokenFilename), src, dst, !gv.mod.playerList[0].combatFacingLeft);
             }
             else
             {
@@ -2614,12 +2614,12 @@ namespace IBbasic
                         if ((i == 0) && (i != gv.mod.selectedPartyLeader))
                         {
                             dst = new IbRect(x + shift + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
                         if ((i == 1) && (i != gv.mod.selectedPartyLeader))
                         {
                             dst = new IbRect(x - shift + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
                         if ((i == 2) && (i != gv.mod.selectedPartyLeader))
                         {
@@ -2635,7 +2635,7 @@ namespace IBbasic
                             {
                                 dst = new IbRect(x + (shift * 175 / 100) + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
                             }
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
                         if ((i == 3) && (i != gv.mod.selectedPartyLeader))
                         {
@@ -2655,7 +2655,7 @@ namespace IBbasic
                             {
                                 dst = new IbRect(x - (shift * 175 / 100) + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
                             }
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
                         if ((i == 4) && (i != gv.mod.selectedPartyLeader))
                         {
@@ -2679,7 +2679,7 @@ namespace IBbasic
                             {
                                 dst = new IbRect(x + (shift * 250 / 100) + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
                             }
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
 
                         if ((i == 5) && (i != gv.mod.selectedPartyLeader))
@@ -2708,7 +2708,7 @@ namespace IBbasic
                             {
                                 dst = new IbRect(x - (shift * 250 / 100) + mapStartLocXinPixels, y + reducedSquareSize * 47 / 100, reducedSquareSize, reducedSquareSize);
                             }
-                            gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
+                            gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[i].tokenFilename), src, dst, !gv.mod.playerList[i].combatFacingLeft);
                         }
                     }
                     
@@ -2790,11 +2790,11 @@ namespace IBbasic
                         dst = new IbRect(x + mapStartLocXinPixels, y, (int)(gv.squareSize * gv.scaler), (int)(gv.squareSize * gv.scaler));
                     }
                 }                
-                gv.DrawBitmap(gv.cc.GetFromBitmapList(gv.mod.playerList[gv.mod.selectedPartyLeader].tokenFilename), src, dst, !gv.mod.playerList[gv.mod.selectedPartyLeader].combatFacingLeft);
+                gv.DrawBitmap(c, gv.cc.GetFromBitmapList(gv.mod.playerList[gv.mod.selectedPartyLeader].tokenFilename), src, dst, !gv.mod.playerList[gv.mod.selectedPartyLeader].combatFacingLeft);
                 shift = storeShift;
             }
         }
-        public void drawGrid()
+        public void drawGrid(SKCanvas c)
         {
             int offset = gv.playerOffset;
             /*if (use11x11)
@@ -2824,22 +2824,22 @@ namespace IBbasic
                     IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                     if (gv.mod.currentArea.LoSBlocked[y * gv.mod.currentArea.MapSizeX + x] == 1)
                     {
-                        gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.losBlocked, src, dst);
                     }
                     if (gv.mod.currentArea.Walkable[y * gv.mod.currentArea.MapSizeX + x] == 0)
                     {
-                        gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkBlocked, src, dst);
                     }
                     else
                     {
-                        gv.DrawBitmap(gv.cc.walkPass, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkPass, src, dst);
                     }
                 }
             }
         }
-        public void drawMainMapFloatyText()
+        public void drawMainMapFloatyText(SKCanvas c)
         {
-            floatyTextBox.onDrawTextBox();
+            floatyTextBox.onDrawTextBox(c);
             /*
             int txtH = (int)gv.fontHeight;
 
@@ -2854,7 +2854,7 @@ namespace IBbasic
             gv.DrawText(gv.cc.floatyText, gv.cc.floatyTextLoc.X + mapStartLocXinPixels, gv.cc.floatyTextLoc.Y + txtH, "wh");
             */
         }
-        public void drawOverlayTints()
+        public void drawOverlayTints(SKCanvas c)
         {
             int offset = gv.playerOffset;
             /*if (use11x11)
@@ -2875,11 +2875,11 @@ namespace IBbasic
             int time = gv.mod.WorldTime % 1440;
             if ((time >= dawn) && (time < sunrise))
             {
-                gv.DrawBitmap(gv.cc.tint_dawn, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_dawn, src, dst);
             }
             else if ((time >= sunrise) && (time < day))
             {
-                gv.DrawBitmap(gv.cc.tint_sunrise, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_sunrise, src, dst);
             }
             else if ((time >= day) && (time < sunset))
             {
@@ -2887,19 +2887,19 @@ namespace IBbasic
             }
             else if ((time >= sunset) && (time < dusk))
             {
-                gv.DrawBitmap(gv.cc.tint_sunset, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_sunset, src, dst);
             }
             else if ((time >= dusk) && (time < night))
             {
-                gv.DrawBitmap(gv.cc.tint_dusk, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_dusk, src, dst);
             }
             else if ((time >= night) || (time < dawn))
             {
-                gv.DrawBitmap(gv.cc.tint_night, src, dst);
+                gv.DrawBitmap(c, gv.cc.tint_night, src, dst);
             }
 
         }
-        public void drawMainMapClockText()
+        public void drawMainMapClockText(SKCanvas c)
         {
             int timeofday = gv.mod.WorldTime % (24 * 60);
             int hour = timeofday / 60;
@@ -2941,24 +2941,24 @@ namespace IBbasic
                 {
                     if (gv.mod.useRationSystem)
                     {
-                        gv.DrawText(hour + ":" + sMinute + " Rations(" + gv.mod.numberOfRationsRemaining.ToString() + ")" + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
+                        gv.DrawText(c, hour + ":" + sMinute + " Rations(" + gv.mod.numberOfRationsRemaining.ToString() + ")" + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
                     }
                     else
                     {
-                        gv.DrawText(hour + ":" + sMinute + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
+                        gv.DrawText(c, hour + ":" + sMinute + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, x + xLoc, y + yLoc, "bk");
                     }
                 }
             }
             if (gv.mod.useRationSystem)
             {
-                gv.DrawText(hour + ":" + sMinute + " Rations(" + gv.mod.numberOfRationsRemaining.ToString() + ")" + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
+                gv.DrawText(c, hour + ":" + sMinute + " Rations(" + gv.mod.numberOfRationsRemaining.ToString() + ")" + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
             }
             else
             {
-                gv.DrawText(hour + ":" + sMinute + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
+                gv.DrawText(c, hour + ":" + sMinute + " (" + gv.mod.PlayerLocationX + "," + gv.mod.PlayerLocationY + ") " + direction, xLoc, yLoc, "wh");
             }
         }
-        public void drawFogOfWar()
+        public void drawFogOfWar(SKCanvas c)
         {
             /*int minX = gv.mod.PlayerLocationX - gv.playerOffsetX-1;
             if (minX < 0) { minX = 0; }
@@ -3012,14 +3012,14 @@ namespace IBbasic
                         IbRect dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                         if (gv.mod.currentArea.Visible[y * gv.mod.currentArea.MapSizeX + x] == 0)
                         {
-                            gv.DrawBitmap(gv.cc.black_tile, src, dst);
+                            gv.DrawBitmap(c, gv.cc.black_tile, src, dst);
                         }                        
                     }
                     catch { }
                 }
             }
         }
-        public void drawFloatyTextPool()
+        public void drawFloatyTextPool(SKCanvas c)
         {
             if (floatyTextPool.Count > 0)
             {
@@ -3033,7 +3033,7 @@ namespace IBbasic
                         continue; //out of range from view so skip drawing floaty message
                     }
 
-                    ft.onDrawTextBox();
+                    ft.onDrawTextBox(c);
 
                     /*
                     //location.X should be the the props actual map location in squares (not screen location)
@@ -3073,7 +3073,7 @@ namespace IBbasic
                 }
             }
         }
-        public void drawUiLayout()
+        public void drawUiLayout(SKCanvas c)
         {
             if (gv.mod.currentArea.Is3dArea)
             {
@@ -3081,7 +3081,7 @@ namespace IBbasic
                 int height3 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png").Height;
                 IbRect src3 = new IbRect(0, 0, width3, height3);
                 IbRect dst3 = new IbRect((int)(0 - (170 * gv.scaler)), (int)(0 - (102 * gv.scaler)), (int)(width3 * gv.scaler), (int)(height3 * gv.scaler));
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png"), src3, dst3);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_3d.png"), src3, dst3);
             }
             else
             {
@@ -3089,49 +3089,49 @@ namespace IBbasic
                 int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
                 IbRect src2 = new IbRect(0, 0, width2, height2);
                 IbRect dst2 = new IbRect((int)(0 - (170 * gv.scaler)), (int)(0 - (102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
             }
             
             int width = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Width;
             int height = gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png").Height;
             IbRect src = new IbRect(0, 0, width, height);
             IbRect dst = new IbRect((int)(gv.log.tbXloc - (2 * gv.scaler)), gv.log.tbYloc, (int)(width * gv.scaler), (int)(height * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_log_2d.png"), src, dst);
 
             createArrowsPanel();
             if (gv.mod.currentArea.Is3dArea)
             {
-                btnArrowTurnLeft.Draw();
-                btnArrowTurnRight.Draw();
+                btnArrowTurnLeft.Draw(c);
+                btnArrowTurnRight.Draw(c);
             }
             else
             {
-                btnArrowDown.Draw();
+                btnArrowDown.Draw(c);
             }
-            btnArrowUp.Draw();
-            btnArrowLeft.Draw();
-            btnArrowRight.Draw();
-            btnArrowWait.Draw();
+            btnArrowUp.Draw(c);
+            btnArrowLeft.Draw(c);
+            btnArrowRight.Draw(c);
+            btnArrowWait.Draw(c);
 
             createButtonsPanel();            
-            btnParty.Draw();
-            btnInventory.Draw();
-            btnJournal.Draw();
+            btnParty.Draw(c);
+            btnInventory.Draw(c);
+            btnJournal.Draw(c);
             //btnUseTraitOnMainMap.Draw();
-            btnCastOnMainMap.Draw();
-            btnSave.Draw();
-            tglSettings.Draw();
+            btnCastOnMainMap.Draw(c);
+            btnSave.Draw(c);
+            tglSettings.Draw(c);
 
             createTogglesPanel();
-            tglMiniMap.Draw();
-            tglPortraits.Draw();
-            tglFullParty.Draw();
-            tglGrid.Draw();
-            tglClock.Draw();
-            tglDebugMode.Draw();
-            tglZoom.Draw();
-            tglSound.Draw();
-            tglHelp.Draw();
+            tglMiniMap.Draw(c);
+            tglPortraits.Draw(c);
+            tglFullParty.Draw(c);
+            tglGrid.Draw(c);
+            tglClock.Draw(c);
+            tglDebugMode.Draw(c);
+            tglZoom.Draw(c);
+            tglSound.Draw(c);
+            tglHelp.Draw(c);
 
             createPortraitsPanel();
             //SET PORTRAITS
@@ -3286,14 +3286,14 @@ namespace IBbasic
                 }
             }
 
-            btnPort0.Draw();
-            btnPort1.Draw();
-            btnPort2.Draw();
-            btnPort3.Draw();
-            btnPort4.Draw();
-            btnPort5.Draw();
+            btnPort0.Draw(c);
+            btnPort1.Draw(c);
+            btnPort2.Draw(c);
+            btnPort3.Draw(c);
+            btnPort4.Draw(c);
+            btnPort5.Draw(c);
 
-            gv.log.onDrawLogBox();
+            gv.log.onDrawLogBox(c);
         }
 
         public void addFloatyText(int sqrX, int sqrY, string value, string color, int length)

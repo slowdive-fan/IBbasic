@@ -1030,19 +1030,19 @@ namespace IBbasic
             tglEventParm4.Width = (int)(gv.ibbMiniTglWidth * gv.scaler);
         }
 
-        public void redrawTsEncEditor()
+        public void redrawTsEncEditor(SKCanvas c)
         {
             setControlsStart();
-            drawAreaMap();
-            drawTriggers();
-            drawCreaturesAndPCs();
-            drawGrid();
+            drawAreaMap(c);
+            drawTriggers(c);
+            drawCreaturesAndPCs(c);
+            drawGrid(c);
 
             int width2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Width;
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             IbRect src2 = new IbRect(0, 0, width2, height2);
             IbRect dst2 = new IbRect(0 - (int)((170 * gv.scaler)), 0 - (int)((102 * gv.scaler)), (int)(width2 * gv.scaler), (int)(height2 * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src2, dst2);
 
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
@@ -1051,54 +1051,54 @@ namespace IBbasic
             {
                 encToEdit = gv.mod.currentEncounter.encounterName;
             }
-            gv.DrawText("ENCOUNTER EDITOR: " + encToEdit, 1 * gv.uiSquareSize, 2 * gv.scaler, "yl");
+            gv.DrawText(c, "ENCOUNTER EDITOR: " + encToEdit, 1 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
             if (currentMode.Equals("Info"))
             {
                 setupInfoPanelControls();
-                drawInfoPanel();
+                drawInfoPanel(c);
             }
             else if (currentMode.Equals("Tiles"))
             {
                 setupTilesPanelControls();
-                drawTilesPanel();
+                drawTilesPanel(c);
             }
             else if (currentMode.Equals("Triggers"))
             {
                 setupTriggerPanelControls();
-                drawTriggersPanel();
+                drawTriggersPanel(c);
             }
             else if (currentMode.Equals("WalkLoS"))
             {
                 setupWalkLoSPanelControls();
-                drawWalkLoSPanel();
+                drawWalkLoSPanel(c);
             }
             else if (currentMode.Equals("Crt"))
             {
                 setupCrtPanelControls();
-                drawCrtPanel();
+                drawCrtPanel(c);
             }
             else if (currentMode.Equals("Settings"))
             {
                 setupSettingsPanelControls();
-                drawSettingsPanel();
+                drawSettingsPanel(c);
             }
 
-            btnInfo.Draw();
-            btnTiles.Draw();
-            btnTriggers.Draw();
-            btnWalkLoS.Draw();
-            btnCrt.Draw();
-            btnSettings.Draw();
+            btnInfo.Draw(c);
+            btnTiles.Draw(c);
+            btnTriggers.Draw(c);
+            btnWalkLoS.Draw(c);
+            btnCrt.Draw(c);
+            btnSettings.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawAreaMap()
+        public void drawAreaMap(SKCanvas c)
         {
             #region Draw Layer 1
             if (rbtnShowLayer1.toggleOn)
@@ -1117,7 +1117,7 @@ namespace IBbasic
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -1141,7 +1141,7 @@ namespace IBbasic
                         {
                             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                         }
                         catch { }
                     }
@@ -1167,7 +1167,7 @@ namespace IBbasic
                             {
                                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                                 dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                             }
                             catch { }
                         }
@@ -1176,7 +1176,7 @@ namespace IBbasic
             }
             #endregion
         }
-        public void drawTriggers()
+        public void drawTriggers(SKCanvas c)
         {
             foreach (Trigger t in gv.mod.currentEncounter.Triggers)
             {
@@ -1211,13 +1211,13 @@ namespace IBbasic
                     int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
                     src = new IbRect(0, 0, gv.cc.GetFromBitmapList(TrigColor).Width, gv.cc.GetFromBitmapList(TrigColor).Height);
                     dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(TrigColor), src, dst, !t.ImageFacingLeft);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(TrigColor), src, dst, !t.ImageFacingLeft);
 
                     if ((!t.ImageFileName.Equals("none")) && (t.isShown))
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromBitmapList(t.ImageFileName).Width, gv.cc.GetFromBitmapList(t.ImageFileName).Height);
                         dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
+                        gv.DrawBitmap(c, gv.cc.GetFromBitmapList(t.ImageFileName), src, dst, !t.ImageFacingLeft);
                     }
 
                     /*int dx = (int)((p.X * gv.squareSize / mapSquareSizeScaler * gv.scaler) + mapStartLocXinPixels);
@@ -1260,7 +1260,7 @@ namespace IBbasic
                 }
             }
         }
-        public void drawCreaturesAndPCs()
+        public void drawCreaturesAndPCs(SKCanvas c)
         {
             foreach (CreatureRefs crtRef in gv.mod.currentEncounter.encounterCreatureRefsList)
             {
@@ -1275,7 +1275,7 @@ namespace IBbasic
                     if (scalerY == 0) { scalerY = 1.0f; }
                     src = new IbRect(0, 0, gv.cc.GetFromBitmapList(crt.cr_tokenFilename).Width, gv.cc.GetFromBitmapList(crt.cr_tokenFilename).Height / 2);
                     dst = new IbRect((int)cspx, (int)cspy, (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler * scalerX), (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler * scalerY));
-                    gv.DrawBitmap(gv.cc.GetFromBitmapList(crt.cr_tokenFilename), src, dst, !crt.combatFacingLeft);
+                    gv.DrawBitmap(c, gv.cc.GetFromBitmapList(crt.cr_tokenFilename), src, dst, !crt.combatFacingLeft);
                 }
             }
 
@@ -1284,11 +1284,11 @@ namespace IBbasic
             {
                 int cspx = (int)(PCpoint.X * gv.squareSize / mapSquareSizeScaler * gv.scaler + mapStartLocXinPixels);
                 int cspy = (int)(PCpoint.Y * gv.squareSize / mapSquareSizeScaler * gv.scaler + (int)(1.5 * gv.fontHeight));
-                gv.DrawText("PC" + (cnt + 1).ToString(), cspx + 5, cspy, "yl");
+                gv.DrawText(c, "PC" + (cnt + 1).ToString(), cspx + 5, cspy, "yl");
                 cnt++;
             }
         }
-        public void drawGrid()
+        public void drawGrid(SKCanvas c)
         {
             for (int x = 0; x <= gv.mod.currentEncounter.MapSizeX - 1; x++)
             {
@@ -1302,31 +1302,31 @@ namespace IBbasic
                     dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
                     if (gv.mod.currentEncounter.LoSBlocked[y * gv.mod.currentEncounter.MapSizeX + x] == 1)
                     {
-                        gv.DrawBitmap(gv.cc.losBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.losBlocked, src, dst);
                     }
                     if (gv.mod.currentEncounter.Walkable[y * gv.mod.currentEncounter.MapSizeX + x] == 0)
                     {
-                        gv.DrawBitmap(gv.cc.walkBlocked, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkBlocked, src, dst);
                     }
                     else
                     {
-                        gv.DrawBitmap(gv.cc.walkPass, src, dst);
+                        gv.DrawBitmap(c, gv.cc.walkPass, src, dst);
                     }
                 }
             }
         }
-        public void drawInfoPanel()
+        public void drawInfoPanel(SKCanvas c)
         {
             int index = selectedSquare.Y * gv.mod.currentEncounter.MapSizeX + selectedSquare.X;
 
-            gv.DrawText("INFO OF TILE", panelLeftLocation, panelTopLocation + (1 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-            gv.DrawText("Tile: (" + selectedSquare.X + "," + selectedSquare.Y + ")", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 1:", panelLeftLocation, panelTopLocation + (4 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentEncounter.Layer1Filename[index], panelLeftLocation, panelTopLocation + (5 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 2:", panelLeftLocation, panelTopLocation + (7 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentEncounter.Layer2Filename[index], panelLeftLocation, panelTopLocation + (8 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-            gv.DrawText("Layer 3:", panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(gv.mod.currentEncounter.Layer3Filename[index], panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "INFO OF TILE", panelLeftLocation, panelTopLocation + (1 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "Tile: (" + selectedSquare.X + "," + selectedSquare.Y + ")", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 1:", panelLeftLocation, panelTopLocation + (4 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.Layer1Filename[index], panelLeftLocation, panelTopLocation + (5 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 2:", panelLeftLocation, panelTopLocation + (7 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.Layer2Filename[index], panelLeftLocation, panelTopLocation + (8 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Layer 3:", panelLeftLocation, panelTopLocation + (10 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.Layer3Filename[index], panelLeftLocation, panelTopLocation + (11 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
 
             //info on creature
             string crtTag = "none";
@@ -1334,13 +1334,13 @@ namespace IBbasic
             {
                 crtTag = gv.mod.currentEncounter.getCreatureRefByLocation(selectedSquare.X, selectedSquare.Y).creatureTag;
             }
-            gv.DrawText("Creature Tag:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(crtTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Creature Tag:", panelLeftLocation, panelTopLocation + (13 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, crtTag, panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
 
             //Move Creature Mode
-            tglMoveCrtMode.Draw();
-            gv.DrawText("MOVE CREATURE:", tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y, "yl");
-            gv.DrawText(crtTag, tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglMoveCrtMode.Draw(c);
+            gv.DrawText(c, "MOVE CREATURE:", tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y, "yl");
+            gv.DrawText(c, crtTag, tglMoveCrtMode.X + tglMoveCrtMode.Width + gv.scaler, tglMoveCrtMode.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
 
             //info on trigger
@@ -1349,28 +1349,28 @@ namespace IBbasic
             {
                 trigTag = gv.mod.currentEncounter.getTriggerByLocation(selectedSquare.X, selectedSquare.Y).TriggerTag;
             }
-            gv.DrawText("Trigger:", panelLeftLocation, panelTopLocation + (18 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-            gv.DrawText(trigTag, panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+            gv.DrawText(c, "Trigger:", panelLeftLocation, panelTopLocation + (18 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, trigTag, panelLeftLocation, panelTopLocation + (19 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             //info on walk/LoS
-            gv.DrawText("Walkable:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, "Walkable:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentEncounter.Walkable[index] == 1)
             {
-                gv.DrawText("OPEN", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "OPEN", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "BLOCKED", panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //info on walk/LoS
-            gv.DrawText("Line-Of-Sight:", panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+            gv.DrawText(c, "Line-Of-Sight:", panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
             if (gv.mod.currentEncounter.LoSBlocked[index] == 1)
             {
-                gv.DrawText("BLOCKED", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "BLOCKED", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
             else
             {
-                gv.DrawText("VISIBLE", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "VISIBLE", panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
 
             //draw selected info tile highlight
@@ -1380,11 +1380,11 @@ namespace IBbasic
             int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawTilesPanel()
+        public void drawTilesPanel(SKCanvas c)
         {
             int cnt = 0;
             for (int x = 0; x < 4; x++)
@@ -1429,7 +1429,7 @@ namespace IBbasic
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(tile).Width, gv.cc.GetFromTileBitmapList(tile).Height);
                         dst = new IbRect(tlX + panelLeftLocation, tlY + panelTopLocation, brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(tile), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(tile), src, dst);
                     }
                     catch { }
                     cnt++;
@@ -1444,69 +1444,69 @@ namespace IBbasic
             int brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c,gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
             //Description     
-            gv.DrawText("PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "PAINT TILES", panelLeftLocation, panelTopLocation, "gn");
 
-            tglMiscTiles.Draw();
-            tglWallFloorTiles.Draw();
-            tglPropTiles.Draw();
-            tglUserTiles.Draw();
+            tglMiscTiles.Draw(c);
+            tglWallFloorTiles.Draw(c);
+            tglPropTiles.Draw(c);
+            tglUserTiles.Draw(c);
 
-            btnTilesLeft.Draw();
-            btnTilesPageIndex.Draw();
+            btnTilesLeft.Draw(c);
+            btnTilesPageIndex.Draw(c);
             tlX2 = (int)(btnTilesPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
             tlY2 = (int)(btnTilesPageIndex.Y + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
             brX2 = (int)(gv.squareSize * gv.scaler);
             brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(currentTile).Width, gv.cc.GetFromTileBitmapList(currentTile).Height);
             dst = new IbRect(tlX2, tlY2, brX2, brY2);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentTile), src, dst);
-            btnTilesRight.Draw();
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(currentTile), src, dst);
+            btnTilesRight.Draw(c);
 
             int shiftForFont = (rbtnShowLayer1.Height / 2) - (gv.fontHeight / 2);
-            gv.DrawText("SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            rbtnShowLayer1.Draw();
-            gv.DrawText("Lyr1", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
-            rbtnShowLayer2.Draw();
-            gv.DrawText("Lyr2", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
-            rbtnShowLayer3.Draw();
-            gv.DrawText("Lyr3", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
+            gv.DrawText(c, "SHOW", rbtnShowLayer1.X + gv.scaler, rbtnShowLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            rbtnShowLayer1.Draw(c);
+            gv.DrawText(c, "Lyr1", rbtnShowLayer1.X + rbtnShowLayer1.Width + gv.scaler, rbtnShowLayer1.Y + shiftForFont, "wh");
+            rbtnShowLayer2.Draw(c);
+            gv.DrawText(c, "Lyr2", rbtnShowLayer2.X + rbtnShowLayer2.Width + gv.scaler, rbtnShowLayer2.Y + shiftForFont, "wh");
+            rbtnShowLayer3.Draw(c);
+            gv.DrawText(c, "Lyr3", rbtnShowLayer3.X + rbtnShowLayer3.Width + gv.scaler, rbtnShowLayer3.Y + shiftForFont, "wh");
 
-            gv.DrawText("EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
-            rbtnEditLayer1.Draw();
-            gv.DrawText("Lyr1", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
-            rbtnEditLayer2.Draw();
-            gv.DrawText("Lyr2", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
-            rbtnEditLayer3.Draw();
-            gv.DrawText("Lyr3", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
+            gv.DrawText(c, "EDIT", rbtnEditLayer1.X + gv.scaler, rbtnEditLayer1.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+            rbtnEditLayer1.Draw(c);
+            gv.DrawText(c, "Lyr1", rbtnEditLayer1.X + rbtnEditLayer1.Width + gv.scaler, rbtnEditLayer1.Y + shiftForFont, "wh");
+            rbtnEditLayer2.Draw(c);
+            gv.DrawText(c, "Lyr2", rbtnEditLayer2.X + rbtnEditLayer2.Width + gv.scaler, rbtnEditLayer2.Y + shiftForFont, "wh");
+            rbtnEditLayer3.Draw(c);
+            gv.DrawText(c, "Lyr3", rbtnEditLayer3.X + rbtnEditLayer3.Width + gv.scaler, rbtnEditLayer3.Y + shiftForFont, "wh");
         }
-        public void drawTriggersPanel()
+        public void drawTriggersPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("TRIGGERS", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "TRIGGERS", panelLeftLocation, panelTopLocation + (0 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            rbtnViewInfoTrigger.Draw();
-            gv.DrawText("View", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y, "wh");
-            gv.DrawText("Info", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnViewInfoTrigger.Draw(c);
+            gv.DrawText(c, "View", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y, "wh");
+            gv.DrawText(c, "Info", rbtnViewInfoTrigger.X + rbtnViewInfoTrigger.Width + gv.scaler, rbtnViewInfoTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            rbtnPlaceNewTrigger.Draw();
-            gv.DrawText("Create", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y, "wh");
-            gv.DrawText("New", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnPlaceNewTrigger.Draw(c);
+            gv.DrawText(c, "Create", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y, "wh");
+            gv.DrawText(c, "New", rbtnPlaceNewTrigger.X + rbtnPlaceNewTrigger.Width + gv.scaler, rbtnPlaceNewTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (selectedTrigger != null)
             {
-                rbtnEditTrigger.Draw();
-                gv.DrawText("Edit Last", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y, "wh");
-                gv.DrawText("Selected Trigger", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                rbtnEditTrigger.Draw(c);
+                gv.DrawText(c, "Edit Last", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y, "wh");
+                gv.DrawText(c, "Selected Trigger", rbtnEditTrigger.X + rbtnEditTrigger.Width + gv.scaler, rbtnEditTrigger.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
             }
 
             if (selectedTrigger != null)
             {
-                rbtnTriggerProperties.Draw();
-                gv.DrawText("Main", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y, "wh");
-                gv.DrawText("Info", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                rbtnTriggerProperties.Draw(c);
+                gv.DrawText(c, "Main", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y, "wh");
+                gv.DrawText(c, "Info", rbtnTriggerProperties.X + rbtnTriggerProperties.Width + gv.scaler, rbtnTriggerProperties.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                 string color = "wh";
                 if (selectedTrigger != null)
@@ -1517,9 +1517,9 @@ namespace IBbasic
                     else if (selectedTrigger.Event1Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event1Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent1Properties.Draw();
-                gv.DrawText("Event", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y, color);
-                gv.DrawText("one", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent1Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y, color);
+                gv.DrawText(c, "one", rbtnEvent1Properties.X + rbtnEvent1Properties.Width + gv.scaler, rbtnEvent1Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
 
                 color = "wh";
                 if (selectedTrigger != null)
@@ -1530,9 +1530,9 @@ namespace IBbasic
                     else if (selectedTrigger.Event2Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event2Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent2Properties.Draw();
-                gv.DrawText("Event", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y, color);
-                gv.DrawText("two", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent2Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y, color);
+                gv.DrawText(c, "two", rbtnEvent2Properties.X + rbtnEvent2Properties.Width + gv.scaler, rbtnEvent2Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
 
                 color = "wh";
                 if (selectedTrigger != null)
@@ -1543,216 +1543,216 @@ namespace IBbasic
                     else if (selectedTrigger.Event3Type.Equals("transition")) { color = "gn"; }
                     else if (selectedTrigger.Event3Type.Equals("container")) { color = "ma"; }
                 }
-                rbtnEvent3Properties.Draw();
-                gv.DrawText("Event", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y, color);
-                gv.DrawText("three", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
+                rbtnEvent3Properties.Draw(c);
+                gv.DrawText(c, "Event", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y, color);
+                gv.DrawText(c, "three", rbtnEvent3Properties.X + rbtnEvent3Properties.Width + gv.scaler, rbtnEvent3Properties.Y + gv.fontHeight + gv.fontLineSpacing, color);
 
                 if (rbtnTriggerProperties.toggleOn)
                 {
-                    tglTriggerTag.Draw();
-                    gv.DrawText("Trigger Tag:", tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.TriggerTag, tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglTriggerTag.Draw(c);
+                    gv.DrawText(c, "Trigger Tag:", tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.TriggerTag, tglTriggerTag.X + tglTriggerTag.Width + gv.scaler, tglTriggerTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Enabled) { tglTriggerEnabled.toggleOn = true; }
                     else { tglTriggerEnabled.toggleOn = false; }
-                    tglTriggerEnabled.Draw();
-                    gv.DrawText("Trigger", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
-                    gv.DrawText("Enabled", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglTriggerEnabled.Draw(c);
+                    gv.DrawText(c, "Trigger", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglTriggerEnabled.X + tglTriggerEnabled.Width + gv.scaler, tglTriggerEnabled.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnly) { tglTriggerDoOnce.toggleOn = true; }
                     else { tglTriggerDoOnce.toggleOn = false; }
-                    tglTriggerDoOnce.Draw();
-                    gv.DrawText("Do Once", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y, "gy");
-                    gv.DrawText("Only", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglTriggerDoOnce.Draw(c);
+                    gv.DrawText(c, "Do Once", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y, "gy");
+                    gv.DrawText(c, "Only", tglTriggerDoOnce.X + tglTriggerDoOnce.Width + gv.scaler, tglTriggerDoOnce.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglImageFilename.Draw();
-                    gv.DrawText("Image Filename:", tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y, "gy");
-                    gv.DrawText(selectedTrigger.ImageFileName, tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglImageFilename.Draw(c);
+                    gv.DrawText(c, "Image Filename:", tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.ImageFileName, tglImageFilename.X + tglImageFilename.Width + gv.scaler, tglImageFilename.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.ImageFacingLeft) { tglImageFacingLeft.toggleOn = true; }
                     else { tglImageFacingLeft.toggleOn = false; }
-                    tglImageFacingLeft.Draw();
-                    gv.DrawText("Face", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y, "gy");
-                    gv.DrawText("Left", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglImageFacingLeft.Draw(c);
+                    gv.DrawText(c, "Face", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y, "gy");
+                    gv.DrawText(c, "Left", tglImageFacingLeft.X + tglImageFacingLeft.Width + gv.scaler, tglImageFacingLeft.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.isShown) { tglIsShown.toggleOn = true; }
                     else { tglIsShown.toggleOn = false; }
-                    tglIsShown.Draw();
-                    gv.DrawText("Is", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y, "gy");
-                    gv.DrawText("Shown", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglIsShown.Draw(c);
+                    gv.DrawText(c, "Is", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y, "gy");
+                    gv.DrawText(c, "Shown", tglIsShown.X + tglIsShown.Width + gv.scaler, tglIsShown.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    gv.DrawText("COMBAT ONLY:", tglNumberOfScriptCallsRemaining.X, tglNumberOfScriptCallsRemaining.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+                    gv.DrawText(c, "COMBAT ONLY:", tglNumberOfScriptCallsRemaining.X, tglNumberOfScriptCallsRemaining.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
 
-                    tglNumberOfScriptCallsRemaining.Draw();
-                    gv.DrawText("Num of Calls", tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y, "gy");
-                    gv.DrawText(selectedTrigger.numberOfScriptCallsRemaining.ToString(), tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglNumberOfScriptCallsRemaining.Draw(c);
+                    gv.DrawText(c, "Num of Calls", tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.numberOfScriptCallsRemaining.ToString(), tglNumberOfScriptCallsRemaining.X + tglNumberOfScriptCallsRemaining.Width + gv.scaler, tglNumberOfScriptCallsRemaining.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.canBeTriggeredByPc) { tglCanBeTriggeredByPc.toggleOn = true; }
                     else { tglCanBeTriggeredByPc.toggleOn = false; }
-                    tglCanBeTriggeredByPc.Draw();
-                    gv.DrawText("Triggered", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y, "gy");
-                    gv.DrawText("by PC", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglCanBeTriggeredByPc.Draw(c);
+                    gv.DrawText(c, "Triggered", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y, "gy");
+                    gv.DrawText(c, "by PC", tglCanBeTriggeredByPc.X + tglCanBeTriggeredByPc.Width + gv.scaler, tglCanBeTriggeredByPc.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.canBeTriggeredByCreature) { tglCanBeTriggeredByCreature.toggleOn = true; }
                     else { tglCanBeTriggeredByCreature.toggleOn = false; }
-                    tglCanBeTriggeredByCreature.Draw();
-                    gv.DrawText("Triggered", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y, "gy");
-                    gv.DrawText("by Creatures", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglCanBeTriggeredByCreature.Draw(c);
+                    gv.DrawText(c, "Triggered", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y, "gy");
+                    gv.DrawText(c, "by Creatures", tglCanBeTriggeredByCreature.X + tglCanBeTriggeredByCreature.Width + gv.scaler, tglCanBeTriggeredByCreature.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
                 }
                 if (rbtnEvent1Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent1) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent1) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event1Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event1Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event1FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event1FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event1Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c,"Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event1Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event1Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event1Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
                 if (rbtnEvent2Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent2) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent2) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event2Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event2Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event2FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event2FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event2Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c, "Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event2Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event2Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event2Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
                 if (rbtnEvent3Properties.toggleOn)
                 {
                     if (selectedTrigger.EnabledEvent3) { tglEnabledEvent.toggleOn = true; }
                     else { tglEnabledEvent.toggleOn = false; }
-                    tglEnabledEvent.Draw();
-                    gv.DrawText("Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
-                    gv.DrawText("Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglEnabledEvent.Draw(c);
+                    gv.DrawText(c, "Event", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y, "gy");
+                    gv.DrawText(c, "Enabled", tglEnabledEvent.X + tglEnabledEvent.Width + gv.scaler, tglEnabledEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
                     if (selectedTrigger.DoOnceOnlyEvent3) { tglDoOnceOnlyEvent.toggleOn = true; }
                     else { tglDoOnceOnlyEvent.toggleOn = false; }
-                    tglDoOnceOnlyEvent.Draw();
-                    gv.DrawText("Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
-                    gv.DrawText("Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
+                    tglDoOnceOnlyEvent.Draw(c);
+                    gv.DrawText(c, "Do Event", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y, "gy");
+                    gv.DrawText(c, "Once Only", tglDoOnceOnlyEvent.X + tglDoOnceOnlyEvent.Width + gv.scaler, tglDoOnceOnlyEvent.Y + gv.fontHeight + gv.fontLineSpacing, "gy");
 
-                    tglEventType.Draw();
-                    gv.DrawText("TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event3Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventType.Draw(c);
+                    gv.DrawText(c, "TYPE:", tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event3Type, tglEventType.X + tglEventType.Width + gv.scaler, tglEventType.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                    tglEventFilenameOrTag.Draw();
-                    gv.DrawText("Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
-                    gv.DrawText(selectedTrigger.Event3FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                    tglEventFilenameOrTag.Draw(c);
+                    gv.DrawText(c, "Filename/tag", tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y, "gy");
+                    gv.DrawText(c, selectedTrigger.Event3FilenameOrTag, tglEventFilenameOrTag.X + tglEventFilenameOrTag.Width + gv.scaler, tglEventFilenameOrTag.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
                     if (selectedTrigger.Event3Type.Equals("transition"))
                     {
-                        tglEventTransPointX.Draw();
-                        gv.DrawText("Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointX.Draw(c);
+                        gv.DrawText(c, "Loc X:", tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3TransPointX.ToString(), tglEventTransPointX.X + tglEventTransPointX.Width + gv.scaler, tglEventTransPointX.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventTransPointY.Draw();
-                        gv.DrawText("Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventTransPointY.Draw(c);
+                        gv.DrawText(c, "Loc Y:", tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3TransPointY.ToString(), tglEventTransPointY.X + tglEventTransPointY.Width + gv.scaler, tglEventTransPointY.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
 
                     if (selectedTrigger.Event3Type.Equals("script"))
                     {
-                        tglEventParm1.Draw();
-                        gv.DrawText("Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm1.Draw(c);
+                        gv.DrawText(c, "Parm 1:", tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm1, tglEventParm1.X + tglEventParm1.Width + gv.scaler, tglEventParm1.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm2.Draw();
-                        gv.DrawText("Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm2.Draw(c);
+                        gv.DrawText(c, "Parm 2:", tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm2, tglEventParm2.X + tglEventParm2.Width + gv.scaler, tglEventParm2.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm3.Draw();
-                        gv.DrawText("Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm3.Draw(c);
+                        gv.DrawText(c, "Parm 3:", tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm3, tglEventParm3.X + tglEventParm3.Width + gv.scaler, tglEventParm3.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-                        tglEventParm4.Draw();
-                        gv.DrawText("Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
-                        gv.DrawText(selectedTrigger.Event3Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+                        tglEventParm4.Draw(c);
+                        gv.DrawText(c, "Parm 4:", tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y, "gy");
+                        gv.DrawText(c, selectedTrigger.Event3Parm4, tglEventParm4.X + tglEventParm4.Width + gv.scaler, tglEventParm4.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
                     }
                 }
             }
@@ -1764,45 +1764,45 @@ namespace IBbasic
             int brY = (int)(gv.squareSize / mapSquareSizeScaler * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX + mapStartLocXinPixels, tlY, brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawWalkLoSPanel()
+        public void drawWalkLoSPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("WALKABLE", panelLeftLocation, panelTopLocation + gv.fontHeight + gv.fontLineSpacing, "gn");
-            gv.DrawText("LINE-OF-SIGHT", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "WALKABLE", panelLeftLocation, panelTopLocation + gv.fontHeight + gv.fontLineSpacing, "gn");
+            gv.DrawText(c, "LINE-OF-SIGHT", panelLeftLocation, panelTopLocation + (2 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            rbtnWalkOpen.Draw();
-            gv.DrawText("WALKABLE", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y, "wh");
-            gv.DrawText("OPEN", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnWalkBlocking.Draw();
-            gv.DrawText("WALKABLE", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y, "wh");
-            gv.DrawText("BLOCK", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnSightOpen.Draw();
-            gv.DrawText("Line-of-Sight", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y, "wh");
-            gv.DrawText("Visible", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
-            rbtnSightBlocking.Draw();
-            gv.DrawText("Line-of-Sight", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y, "wh");
-            gv.DrawText("Blocked", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnWalkOpen.Draw(c);
+            gv.DrawText(c, "WALKABLE", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y, "wh");
+            gv.DrawText(c, "OPEN", rbtnWalkOpen.X + rbtnWalkOpen.Width + gv.scaler, rbtnWalkOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnWalkBlocking.Draw(c);
+            gv.DrawText(c, "WALKABLE", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y, "wh");
+            gv.DrawText(c, "BLOCK", rbtnWalkBlocking.X + rbtnWalkBlocking.Width + gv.scaler, rbtnWalkBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnSightOpen.Draw(c);
+            gv.DrawText(c, "Line-of-Sight", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y, "wh");
+            gv.DrawText(c, "Visible", rbtnSightOpen.X + rbtnSightOpen.Width + gv.scaler, rbtnSightOpen.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            rbtnSightBlocking.Draw(c);
+            gv.DrawText(c, "Line-of-Sight", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y, "wh");
+            gv.DrawText(c, "Blocked", rbtnSightBlocking.X + rbtnSightBlocking.Width + gv.scaler, rbtnSightBlocking.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            gv.DrawText("MAP SIZE (NO UNDO)", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+            gv.DrawText(c, "MAP SIZE (NO UNDO)", panelLeftLocation, panelTopLocation + (14 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
 
-            btnPlusLeft.Draw();
-            gv.DrawText("X=" + gv.mod.currentEncounter.MapSizeX, btnPlusLeft.X + btnPlusLeft.Width + gv.scaler, btnPlusLeft.Y + btnPlusLeft.Height / 4, "yl");
-            btnMinusLeft.Draw();
-            gv.DrawText("Y=" + gv.mod.currentEncounter.MapSizeY, btnMinusLeft.X + btnMinusLeft.Width + gv.scaler, btnMinusLeft.Y + btnMinusLeft.Height / 4, "yl");
-            btnPlusRight.Draw();
-            btnMinusRight.Draw();
-            btnPlusTop.Draw();
-            btnMinusTop.Draw();
-            btnPlusBottom.Draw();
-            btnMinusBottom.Draw();
+            btnPlusLeft.Draw(c);
+            gv.DrawText(c, "X=" + gv.mod.currentEncounter.MapSizeX, btnPlusLeft.X + btnPlusLeft.Width + gv.scaler, btnPlusLeft.Y + btnPlusLeft.Height / 4, "yl");
+            btnMinusLeft.Draw(c);
+            gv.DrawText(c, "Y=" + gv.mod.currentEncounter.MapSizeY, btnMinusLeft.X + btnMinusLeft.Width + gv.scaler, btnMinusLeft.Y + btnMinusLeft.Height / 4, "yl");
+            btnPlusRight.Draw(c);
+            btnMinusRight.Draw(c);
+            btnPlusTop.Draw(c);
+            btnMinusTop.Draw(c);
+            btnPlusBottom.Draw(c);
+            btnMinusBottom.Draw(c);
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawPropsPanel()
+        public void drawPropsPanel(SKCanvas c)
         {
             //Description            
             int yLoc = 0 * gv.uiSquareSize;
@@ -1815,67 +1815,67 @@ namespace IBbasic
             textToSpan += gv.mod.moduleDescription;
             description.linesList.Clear();
             description.AddFormattedTextToTextBox(textToSpan);
-            description.onDrawTextBox();
+            description.onDrawTextBox(c);
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawSettingsPanel()
+        public void drawSettingsPanel(SKCanvas c)
         {
             //Description     
-            gv.DrawText("ENCOUNTER SETTINGS", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "ENCOUNTER SETTINGS", panelLeftLocation, panelTopLocation, "gn");
 
             int shiftForFont = (tglSettingEncounterName.Height / 2) - (gv.fontHeight / 2);
 
-            tglSettingEncounterName.Draw();
-            gv.DrawText("Encounter Name:", tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y, "yl");
-            gv.DrawText(gv.mod.currentEncounter.encounterName, tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingEncounterName.Draw(c);
+            gv.DrawText(c, "Encounter Name:", tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y, "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.encounterName, tglSettingEncounterName.X + tglSettingEncounterName.Width + gv.scaler, tglSettingEncounterName.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            tglAreaMusic.Draw();
-            gv.DrawText("Area Music: ", tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y, "yl");
-            gv.DrawText(gv.mod.currentEncounter.AreaMusic, tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglAreaMusic.Draw(c);
+            gv.DrawText(c, "Area Music: ", tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y, "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.AreaMusic, tglAreaMusic.X + tglAreaMusic.Width + gv.scaler, tglAreaMusic.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
-            tglSettingGoldDrop.Draw();
-            gv.DrawText("Gold Drop:", tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y, "yl");
-            gv.DrawText(gv.mod.currentEncounter.goldDrop.ToString(), tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
+            tglSettingGoldDrop.Draw(c);
+            gv.DrawText(c, "Gold Drop:", tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y, "yl");
+            gv.DrawText(c, gv.mod.currentEncounter.goldDrop.ToString(), tglSettingGoldDrop.X + tglSettingGoldDrop.Width + gv.scaler, tglSettingGoldDrop.Y + gv.fontHeight + gv.fontLineSpacing, "wh");
 
             if (gv.mod.currentEncounter.UseDayNightCycle) { tglSettingUseDayNightCycle.toggleOn = true; }
             else { tglSettingUseDayNightCycle.toggleOn = false; }
-            tglSettingUseDayNightCycle.Draw();
-            gv.DrawText("Uses Day/", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "yl");
-            gv.DrawText("Night Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingUseDayNightCycle.Draw(c);
+            gv.DrawText(c, "Uses Day/", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y, "yl");
+            gv.DrawText(c, "Night Cycle", tglSettingUseDayNightCycle.X + tglSettingUseDayNightCycle.Width + gv.scaler, tglSettingUseDayNightCycle.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
-            tglSettingPlacePCs.Draw();
-            gv.DrawText("Place PC Start", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y, "yl");
-            gv.DrawText("Locations Mode", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingPlacePCs.Draw(c);
+            gv.DrawText(c, "Place PC Start", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y, "yl");
+            gv.DrawText(c, "Locations Mode", tglSettingPlacePCs.X + tglSettingPlacePCs.Width + gv.scaler, tglSettingPlacePCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
-            tglSettingRemoveAllPCs.Draw();
-            gv.DrawText("Remove", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y, "yl");
-            gv.DrawText("PCs", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingRemoveAllPCs.Draw(c);
+            gv.DrawText(c, "Remove", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y, "yl");
+            gv.DrawText(c, "PCs", tglSettingRemoveAllPCs.X + tglSettingRemoveAllPCs.Width + gv.scaler, tglSettingRemoveAllPCs.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
-            tglSettingRemoveAllCrts.Draw();
-            gv.DrawText("Remove", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y, "yl");
-            gv.DrawText("Crturs", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingRemoveAllCrts.Draw(c);
+            gv.DrawText(c, "Remove", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y, "yl");
+            gv.DrawText(c, "Crturs", tglSettingRemoveAllCrts.X + tglSettingRemoveAllCrts.Width + gv.scaler, tglSettingRemoveAllCrts.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
-            gv.DrawText("Encounter Loot", tglSettingAddItem.X, tglSettingAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
+            gv.DrawText(c, "Encounter Loot", tglSettingAddItem.X, tglSettingAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "gn");
 
-            tglSettingAddItem.Draw();
-            gv.DrawText("Add", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y, "yl");
-            gv.DrawText("Item", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingAddItem.Draw(c);
+            gv.DrawText(c, "Add", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y, "yl");
+            gv.DrawText(c, "Item", tglSettingAddItem.X + tglSettingAddItem.Width + gv.scaler, tglSettingAddItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
-            tglSettingRemoveItem.Draw();
-            gv.DrawText("Remove", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y, "yl");
-            gv.DrawText("Item", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
+            tglSettingRemoveItem.Draw(c);
+            gv.DrawText(c, "Remove", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y, "yl");
+            gv.DrawText(c, "Item", tglSettingRemoveItem.X + tglSettingRemoveItem.Width + gv.scaler, tglSettingRemoveItem.Y + gv.fontHeight + gv.fontLineSpacing, "yl");
 
             int cnt = 0;
             //gv.mod.currentEncounter.encounterInventoryRefsList.Add(new ItemRefs());
             foreach (ItemRefs it in gv.mod.currentEncounter.encounterInventoryRefsList)
             {
-                gv.DrawText(it.name, tglSettingAddItem.X, tglSettingAddItem.Y + (cnt + 2) * (gv.fontHeight + gv.fontLineSpacing), "wh");
+                gv.DrawText(c, it.name, tglSettingAddItem.X, tglSettingAddItem.Y + (cnt + 2) * (gv.fontHeight + gv.fontLineSpacing), "wh");
                 cnt++;
             }
-            btnHelp.Draw();
+            btnHelp.Draw(c);
         }
-        public void drawCrtPanel()
+        public void drawCrtPanel(SKCanvas c)
         {
             int cnt = 0;
             for (int x = 0; x < 4; x++)
@@ -1896,7 +1896,7 @@ namespace IBbasic
                     {
                         src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(crt).Width, gv.cc.GetFromTileBitmapList(crt).Width);
                         dst = new IbRect(tlX + panelLeftLocation, tlY + panelTopLocation, brX, brY);
-                        gv.DrawBitmap(gv.cc.GetFromTileBitmapList(crt), src, dst);
+                        gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(crt), src, dst);
                     }
                     catch { }
                     cnt++;
@@ -1911,13 +1911,13 @@ namespace IBbasic
             int brY2 = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magenta").Width, gv.cc.GetFromTileBitmapList("highlight_magenta").Height);
             dst = new IbRect(tlX2 + panelLeftLocation, tlY2 + panelTopLocation, brX2, brY2);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
 
             //Description     
-            gv.DrawText("PLACE CREATURES", panelLeftLocation, panelTopLocation, "gn");
+            gv.DrawText(c, "PLACE CREATURES", panelLeftLocation, panelTopLocation, "gn");
 
-            btnCrtLeft.Draw();
-            btnCrtPageIndex.Draw();
+            btnCrtLeft.Draw(c);
+            btnCrtPageIndex.Draw(c);
             if (currentCrt != null)
             {
                 tlX2 = (int)(btnCrtPageIndex.X + ((gv.uiSquareSize - (gv.squareSize * gv.scaler)) / 2));
@@ -1926,18 +1926,18 @@ namespace IBbasic
                 brY2 = (int)(gv.squareSize * gv.scaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename).Width, gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename).Width);
                 dst = new IbRect(tlX2, tlY2, brX2, brY2);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(currentCrt.cr_tokenFilename), src, dst);
             }
-            btnCrtRight.Draw();
+            btnCrtRight.Draw(c);
             if (currentCrt != null)
             {
-                gv.DrawText("CREATURE INFO", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
-                gv.DrawText("Name:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
-                gv.DrawText(currentCrt.cr_name, panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("AC: " + currentCrt.AC.ToString(), panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("HP: " + currentCrt.hp.ToString(), panelLeftLocation + (7 * gv.fontWidth), panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("Attack BAB: " + currentCrt.cr_att.ToString(), panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
-                gv.DrawText("Attack Range: " + currentCrt.cr_attRange.ToString(), panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "CREATURE INFO", panelLeftLocation, panelTopLocation + (20 * (gv.fontHeight + gv.fontLineSpacing)), "gn");
+                gv.DrawText(c, "Name:", panelLeftLocation, panelTopLocation + (21 * (gv.fontHeight + gv.fontLineSpacing)), "yl");
+                gv.DrawText(c, currentCrt.cr_name, panelLeftLocation, panelTopLocation + (22 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "AC: " + currentCrt.AC.ToString(), panelLeftLocation, panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "HP: " + currentCrt.hp.ToString(), panelLeftLocation + (7 * gv.fontWidth), panelTopLocation + (23 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "Attack BAB: " + currentCrt.cr_att.ToString(), panelLeftLocation, panelTopLocation + (24 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
+                gv.DrawText(c, "Attack Range: " + currentCrt.cr_attRange.ToString(), panelLeftLocation, panelTopLocation + (25 * (gv.fontHeight + gv.fontLineSpacing)), "wh");
             }
         }
 

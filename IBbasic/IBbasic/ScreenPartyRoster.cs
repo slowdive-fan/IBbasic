@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -162,7 +163,7 @@ namespace IBbasic
 	    }
 	
 	    //PARTY SCREEN
-        public void redrawPartyRoster()
+        public void redrawPartyRoster(SKCanvas c)
         {            
     	    if (partyScreenPcIndex >= gv.mod.playerList.Count)
     	    {
@@ -202,7 +203,7 @@ namespace IBbasic
             int textWidth = strg.Length * (gv.fontWidth + gv.fontCharSpacing);
             //int textWidth = (int)gv.cc.MeasureString("Current Party Members [" + gv.mod.MaxPartySize + " Maximum]", SharpDX.DirectWrite.FontWeight.Normal, SharpDX.DirectWrite.FontStyle.Normal, gv.drawFontRegHeight);
             int ulX = (gv.screenWidth / 2) - (textWidth / 2);
-		    gv.DrawText("Current Party Members [" + gv.mod.MaxPartySize + " Maximum]", ulX, pH * 3, "gy");
+		    gv.DrawText(c, "Current Party Members [" + gv.mod.MaxPartySize + " Maximum]", ulX, pH * 3, "gy");
 		    		    
 		    //DRAW EACH PC BUTTON
 		    this.refreshPlayerTokens();
@@ -214,7 +215,7 @@ namespace IBbasic
 			    {
 				    if (cntPCs == partyScreenPcIndex) {btn.glowOn = true;}
 				    else {btn.glowOn = false;}					
-				    btn.Draw();
+				    btn.Draw(c);
 			    }
 			    cntPCs++;
 		    }
@@ -224,7 +225,7 @@ namespace IBbasic
             textWidth = strg.Length * (gv.fontWidth + gv.fontCharSpacing);
             //textWidth = (int)gv.cc.MeasureString("Party Roster [Players in Reserve]", SharpDX.DirectWrite.FontWeight.Normal, SharpDX.DirectWrite.FontStyle.Normal, gv.drawFontRegHeight);
             ulX = (gv.screenWidth / 2) - (textWidth / 2);
-		    gv.DrawText("Party Roster [Players in Reserve]", ulX, 3 * gv.uiSquareSize + (pH * 0), "gy");
+		    gv.DrawText(c, "Party Roster [Players in Reserve]", ulX, 3 * gv.uiSquareSize + (pH * 0), "gy");
 
             //DRAW EACH ROSTER PC BUTTON
             this.refreshRosterPlayerTokens();
@@ -236,33 +237,33 @@ namespace IBbasic
                 {
                     if (cntPCs == partyRosterPcIndex) {btn.glowOn = true;}
                     else {btn.glowOn = false;}
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntPCs++;
             }
 		
-		    btnDown.Draw();
-		    btnUp.Draw();
-		    btnHelp.Draw();
-		    btnReturn.Draw();
+		    btnDown.Draw(c);
+		    btnUp.Draw(c);
+		    btnHelp.Draw(c);
+		    btnReturn.Draw(c);
 
 		    if (pc != null)
 		    {
 			    //DRAW LEFT STATS
-			    gv.DrawText("Name: " + pc.name, locX, locY += leftStartY, "wh");
-			    gv.DrawText("Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
+			    gv.DrawText(c, "Name: " + pc.name, locX, locY += leftStartY, "wh");
+			    gv.DrawText(c, "Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
 			    if (pc.isMale)
 			    {
-				    gv.DrawText("Gender: Male", locX, locY += spacing, "wh");
+				    gv.DrawText(c, "Gender: Male", locX, locY += spacing, "wh");
 			    }
 			    else
 			    {
-				    gv.DrawText("Gender: Female", locX, locY += spacing, "wh");
+				    gv.DrawText(c, "Gender: Female", locX, locY += spacing, "wh");
 			    }
-			    gv.DrawText("Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");			
-			    gv.DrawText("Level: " + pc.classLevel, locX, locY += spacing, "wh");
-			    gv.DrawText("XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
-			    gv.DrawText("---------------", locX, locY += spacing, "wh");
+			    gv.DrawText(c, "Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");			
+			    gv.DrawText(c, "Level: " + pc.classLevel, locX, locY += spacing, "wh");
+			    gv.DrawText(c, "XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
+			    gv.DrawText(c, "---------------", locX, locY += spacing, "wh");
 			
 			    //draw spells known list
 			    string allSpells = "";
@@ -271,7 +272,7 @@ namespace IBbasic
 				    Spell sp = gv.cc.getSpellByTag(s);
 				    allSpells += sp.name + ", ";
 			    }
-			    gv.DrawText(gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + ": " + allSpells, locX, locY += spacing, "wh");
+			    gv.DrawText(c, gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + ": " + allSpells, locX, locY += spacing, "wh");
 			
 			    //draw traits known list
 			    string allTraits = "";
@@ -280,27 +281,27 @@ namespace IBbasic
 				    Trait tr = gv.cc.getTraitByTag(s);
 				    allTraits += tr.name + ", ";
 			    }
-			    gv.DrawText("Traits: " + allTraits, locX, locY += spacing, "wh");
+			    gv.DrawText(c, "Traits: " + allTraits, locX, locY += spacing, "wh");
 			
 			    //DRAW RIGHT STATS
                 int actext = 0;
                 if (gv.mod.ArmorClassAscending) { actext = pc.AC; }
                 else { actext = 20 - pc.AC; }
 			    locY = 0;
-			    gv.DrawText("STR: " + pc.strength, tabX, locY += leftStartY, "wh");
-			    gv.DrawText("AC: " + actext, tabX2, locY, "wh");
-			    gv.DrawText("DEX: " + pc.dexterity, tabX, locY += spacing, "wh");
-			    gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY, "wh");
-			    gv.DrawText("CON: " + pc.constitution, tabX, locY += spacing, "wh");
-			    gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, tabX2, locY, "wh");
-			    gv.DrawText("INT: " + pc.intelligence, tabX, locY += spacing, "wh");
-			    gv.DrawText("BAB: " + pc.baseAttBonus, tabX2, locY, "wh");
-                gv.DrawText("WIS: " + pc.wisdom, tabX, locY += spacing, "wh");
-                gv.DrawText("CHA: " + pc.charisma, tabX, locY += spacing, "wh");
+			    gv.DrawText(c, "STR: " + pc.strength, tabX, locY += leftStartY, "wh");
+			    gv.DrawText(c, "AC: " + actext, tabX2, locY, "wh");
+			    gv.DrawText(c, "DEX: " + pc.dexterity, tabX, locY += spacing, "wh");
+			    gv.DrawText(c, "HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY, "wh");
+			    gv.DrawText(c, "CON: " + pc.constitution, tabX, locY += spacing, "wh");
+			    gv.DrawText(c, "SP: " + pc.sp + "/" + pc.spMax, tabX2, locY, "wh");
+			    gv.DrawText(c, "INT: " + pc.intelligence, tabX, locY += spacing, "wh");
+			    gv.DrawText(c, "BAB: " + pc.baseAttBonus, tabX2, locY, "wh");
+                gv.DrawText(c, "WIS: " + pc.wisdom, tabX, locY += spacing, "wh");
+                gv.DrawText(c, "CHA: " + pc.charisma, tabX, locY += spacing, "wh");
 		    }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchPartyRoster(int eX, int eY, MouseEventType.EventType eventType)

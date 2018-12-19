@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -105,7 +106,7 @@ namespace IBbasic
 	    }
 	
 	    //CAST SELECTOR SCREEN (COMBAT and MAIN)
-        public void redrawTraitLevelUp(bool inPcCreation)
+        public void redrawTraitLevelUp(SKCanvas c, bool inPcCreation)
         {
             traitsToLearnTagsList.Clear();
     	    fillToLearnList();
@@ -126,7 +127,7 @@ namespace IBbasic
             {
                 //DRAW TEXT		
                 locY = (gv.uiSquareSize * 0) + (pH * 2);
-                gv.DrawText("Select " + traitToLearnIndex + " of " + gv.cc.getPlayerClass(pc.classTag).traitsToLearnAtLevelTable[pc.classLevel] + " Traits to Learn", noticeX, pH * 1, "gy");
+                gv.DrawText(c, "Select " + traitToLearnIndex + " of " + gv.cc.getPlayerClass(pc.classTag).traitsToLearnAtLevelTable[pc.classLevel] + " Traits to Learn", noticeX, pH * 1, "gy");
                 
                 //DRAW NOTIFICATIONS
                 if (isSelectedTraitSlotInKnownTraitsRange())
@@ -137,25 +138,25 @@ namespace IBbasic
                     if ((pc.knownTraitsTags.Contains(tr.tag)) || (pc.learningTraitsTags.Contains(tr.tag)))
                     {
                         //say that you already know this one
-                        gv.DrawText("Already Known", noticeX, noticeY, "yl");
+                        gv.DrawText(c, "Already Known", noticeX, noticeY, "yl");
                     }
                     else //trait not known
                     {
                         //check if available to learn
                         if (isAvailableToLearn(tr.tag))
                         {
-                            gv.DrawText("Available to Learn", noticeX, noticeY, "gn");
+                            gv.DrawText(c, "Available to Learn", noticeX, noticeY, "gn");
                         }
                         else //not available yet
                         {
-                            gv.DrawText("Trait Not Available to Learn Yet", noticeX, noticeY, "rd");
+                            gv.DrawText(c, "Trait Not Available to Learn Yet", noticeX, noticeY, "rd");
                         }
                     }
                 }
             }
             else
             {
-                gv.DrawText("Traits Known or Available for this Class", noticeX, pH * 1, "gy");
+                gv.DrawText(c, "Traits Known or Available for this Class", noticeX, pH * 1, "gy");
             }
 		
 		    //DRAW ALL TRAIT SLOTS		
@@ -211,7 +212,7 @@ namespace IBbasic
                     btn.Img = "btn_small_off"; 
 				    btn.Img2 = null;
 			    }			
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -233,24 +234,24 @@ namespace IBbasic
                 description.tbHeight = pH * 80;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
 
             if (infoOnly)
             {
                 btnSelect.Text = "RETURN";
-                btnSelect.Draw();
+                btnSelect.Draw(c);
             }
             else
             {
                 btnSelect.Text = "LEARN SELECTED TRAIT";
-                btnHelp.Draw();
-                btnExit.Draw();
-                btnSelect.Draw();
+                btnHelp.Draw(c);
+                btnExit.Draw(c);
+                btnSelect.Draw(c);
             }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTraitLevelUp(int eX, int eY, MouseEventType.EventType eventType, bool inPcCreation)

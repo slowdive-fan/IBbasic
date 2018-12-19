@@ -996,7 +996,7 @@ namespace IBbasic
             */
         }
 
-        public void redrawTsArtEditor()
+        public void redrawTsArtEditor(SKCanvas c)
         {
             setControlsStart();
 
@@ -1085,7 +1085,7 @@ namespace IBbasic
 
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
             dst = new IbRect(mapStartLocXinPixels, 0, (int)(drawingSurfaceSize * artScaler), (int)(drawingSurfaceSize * artScaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(background), src, dst);
 
             int tknWidth = (int)(drawingSurfaceSize * artScaler * ((float)myBitmapGDI.Width / (float)zoomBoxSize));
             int tknHeight = (int)(drawingSurfaceSize * artScaler * ((float)(myBitmapGDI.Height / 2) / (float)zoomBoxSize));
@@ -1100,7 +1100,7 @@ namespace IBbasic
                     src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
                 }
                 dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
-                gv.DrawBitmap(myBitmapGDI, src, dst);
+                gv.DrawBitmap(c, myBitmapGDI, src, dst);
             }
             //if combat token, show idle or attack
             else if ((myBitmapGDI.Width != myBitmapGDI.Height) || (myBitmapGDI.Height == 96))
@@ -1116,7 +1116,7 @@ namespace IBbasic
                         src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
                     }
                     dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
-                    gv.DrawBitmap(myBitmapGDI, src, dst);
+                    gv.DrawBitmap(c, myBitmapGDI, src, dst);
                 }
                 else //attack layer on top
                 {
@@ -1127,7 +1127,7 @@ namespace IBbasic
                         src = new IbRect(panSquareX / previewScaler, myBitmapGDI.Height / 2 + panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
                     }
                     dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknHeight);
-                    gv.DrawBitmap(myBitmapGDI, src, dst);
+                    gv.DrawBitmap(c, myBitmapGDI, src, dst);
                 }
             }
             else
@@ -1138,7 +1138,7 @@ namespace IBbasic
                     src = new IbRect(panSquareX / previewScaler, panSquareY / previewScaler, zoomBoxSize, zoomBoxSize);
                 }
                 dst = new IbRect(mapStartLocXinPixels, 0, tknWidth, tknWidth);
-                gv.DrawBitmap(myBitmapGDI, src, dst);
+                gv.DrawBitmap(c, myBitmapGDI, src, dst);
             }
 
             //DRAW GRID
@@ -1160,11 +1160,11 @@ namespace IBbasic
             }*/
             for (int x = 0; x < myBitmapGDI.Height; x++)
             {
-                gv.DrawLine(mapStartLocXinPixels + (int)(x * pixelSize), 0, mapStartLocXinPixels + (int)(x * pixelSize), (int)(myBitmapGDI.Height * pixelSize / pencilSize), "black", 1);
+                gv.DrawLine(c, mapStartLocXinPixels + (int)(x * pixelSize), 0, mapStartLocXinPixels + (int)(x * pixelSize), (int)(myBitmapGDI.Height * pixelSize / pencilSize), "black", 1);
             }
             for (int y = 0; y < myBitmapGDI.Width; y++)
             {
-                gv.DrawLine(mapStartLocXinPixels + 0, (int)(y * pixelSize), mapStartLocXinPixels + (int)(myBitmapGDI.Width * pixelSize / pencilSize), (int)(y * pixelSize), "black", 1);
+                gv.DrawLine(c, mapStartLocXinPixels + 0, (int)(y * pixelSize), mapStartLocXinPixels + (int)(myBitmapGDI.Width * pixelSize / pencilSize), (int)(y * pixelSize), "black", 1);
             }
 
             //DRAW SWAP COLOR LIST
@@ -1179,7 +1179,7 @@ namespace IBbasic
                             if ((cr.X == x) && (cr.Y == y))
                             {
                                 dst = new IbRect(mapStartLocXinPixels + (int)(x * pixelSize / pencilSize), (int)(y * pixelSize / pencilSize), (int)(pixelSize / pencilSize), (int)(pixelSize / pencilSize));
-                                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
+                                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
                             }
                         }
                     }
@@ -1191,10 +1191,10 @@ namespace IBbasic
             int height2 = gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png").Height;
             src = new IbRect(0, 0, width2, height2);
             dst = new IbRect(0 - (int)((176 * gv.scaler)), 0 - (int)((106 * gv.scaler)), (int)((width2 * gv.scaler) + (gv.scaler * 16)), (int)((height2 * gv.scaler) + (gv.scaler * 10)));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("ui_bg_fullscreen_2d.png"), src, dst);
 
             //Page Title
-            gv.DrawText("IBBASIC ART EDITOR: " + filename, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
+            gv.DrawText(c, "IBBASIC ART EDITOR: " + filename, 2 * gv.uiSquareSize, 2 * gv.scaler, "yl");
 
             //PREVIEW
             background = grass;
@@ -1217,7 +1217,7 @@ namespace IBbasic
 
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(background).Width, gv.cc.GetFromTileBitmapList(background).Height);
             dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(drawingPreviewSize * artScaler), (int)(drawingPreviewSize * artScaler));
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(background), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(background), src, dst);
 
 
             //if combat token, show idle or attack
@@ -1235,7 +1235,7 @@ namespace IBbasic
                 src = new IbRect(0, 0, myBitmapGDI.Width, myBitmapGDI.Height);
             }
             dst = new IbRect((int)previewLocX, (int)previewLocY, (int)(previewImageWidth * artScaler * previewScaler), (int)(previewImageHeight * artScaler * previewScaler));
-            gv.DrawBitmap(myBitmapGDI, src, dst);
+            gv.DrawBitmap(c, myBitmapGDI, src, dst);
 
 
             //draw selected color square
@@ -1244,7 +1244,7 @@ namespace IBbasic
             //myBitmapDX = gv.cc.ConvertGDIBitmapToD2D(myBitmapGDI);
             src = new IbRect(0, 0, 1, 1);
             dst = new IbRect((int)(8.6 * gv.uiSquareSize), (int)(4.5 * gv.uiSquareSize), (int)(0.8 * gv.uiSquareSize), (int)(0.8 * gv.uiSquareSize));
-            gv.DrawBitmap(selectedColorBitmapGDI, src, dst);
+            gv.DrawBitmap(c, selectedColorBitmapGDI, src, dst);
 
             if (zoomScaler > 1)
             {
@@ -1255,31 +1255,31 @@ namespace IBbasic
                 int brY = (int)(drawingPreviewSize * artScaler / zoomScaler);
                 src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Width, gv.cc.GetFromTileBitmapList("highlight_magentaTrig").Height);
                 dst = new IbRect(tlX, tlY, brX, brY);
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magentaTrig"), src, dst);
             }
 
             //CONTROLS            
-            btnNew.Draw();
-            btnBucketFill.Draw();
-            btnSwitchPalette.Draw();
-            btnTransform.Draw();
-            btnToggleLayer.Draw();
-            tglPencil.Draw();
-            tglSwapColor.Draw();
-            btnEraser.Draw();
-            btnGetColor.Draw();
-            btnCanvasBackground.Draw();
+            btnNew.Draw(c);
+            btnBucketFill.Draw(c);
+            btnSwitchPalette.Draw(c);
+            btnTransform.Draw(c);
+            btnToggleLayer.Draw(c);
+            tglPencil.Draw(c);
+            tglSwapColor.Draw(c);
+            btnEraser.Draw(c);
+            btnGetColor.Draw(c);
+            btnCanvasBackground.Draw(c);
             //btnPreviewBackground.Draw();
-            btnUndo.Draw();
-            btnRedo.Draw();
-            tglZoom.Draw();
-            palette.Draw();
+            btnUndo.Draw(c);
+            btnRedo.Draw(c);
+            tglZoom.Draw(c);
+            palette.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
 
@@ -1796,11 +1796,11 @@ namespace IBbasic
             gv.tsArtEditor.currentColor = bmpGDI.GetPixel(col, row);
             lastClickedColorLocation = new Coordinate((int)(col * squareSize), (int)(row * squareSize));
         }
-        public void Draw()
+        public void Draw(SKCanvas c)
         {
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(Img).Width, gv.cc.GetFromTileBitmapList(Img).Height);
             dst = new IbRect(this.X, this.Y, this.Width, this.Height);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(Img), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(Img), src, dst);
 
             //draw selected info tile highlight
             int tlX = this.X + lastClickedColorLocation.X;
@@ -1811,11 +1811,11 @@ namespace IBbasic
             dst = new IbRect(tlX, tlY, brX, brY);
             if ((lastClickedColorLocation.X > (5 * this.Width / 20)) && (lastClickedColorLocation.X < (12 * this.Width / 20)))
             {
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_magenta"), src, dst);
             }
             else
             {
-                gv.DrawBitmap(gv.cc.GetFromTileBitmapList("highlight_greenTrig"), src, dst);
+                gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList("highlight_greenTrig"), src, dst);
             }
         }
     }

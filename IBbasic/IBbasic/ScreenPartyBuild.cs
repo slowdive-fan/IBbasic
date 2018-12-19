@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -268,7 +269,7 @@ namespace IBbasic
         }
 
         //PARTY SCREEN
-        public void redrawPartyBuild()
+        public void redrawPartyBuild(SKCanvas c)
         {
             //setControlsStart();
             if (partyScreenPcIndex >= gv.mod.playerList.Count)
@@ -309,7 +310,7 @@ namespace IBbasic
             int stringSize = text.Length * (gv.fontWidth + gv.fontCharSpacing);
             //place in the center
             int ulX = (gv.uiSquareSize * gv.uiSquaresInWidth / 2) - ((int)stringSize / 2);
-            gv.DrawText(text, ulX, pH * 3, "wh");
+            gv.DrawText(c, text, ulX, pH * 3, "wh");
 
             //DRAW EACH PC BUTTON
             this.refreshPlayerTokens();
@@ -321,19 +322,19 @@ namespace IBbasic
                 {
                     if (cntPCs == partyScreenPcIndex) { btn.glowOn = true; }
                     else { btn.glowOn = false; }
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntPCs++;
             }
 
-            btnLeft.Draw();
-            btnRight.Draw();
-            btnAdd.Draw();
-            btnRemove.Draw();
-            btnCreate.Draw();
-            btnHelp.Draw();
-            btnReturn.Draw();
-            btnImport.Draw();
+            btnLeft.Draw(c);
+            btnRight.Draw(c);
+            btnAdd.Draw(c);
+            btnRemove.Draw(c);
+            btnCreate.Draw(c);
+            btnHelp.Draw(c);
+            btnReturn.Draw(c);
+            btnImport.Draw(c);
 
             if (pcList.Count > 0)
             {
@@ -344,25 +345,25 @@ namespace IBbasic
             {
                 btnPcListIndex.Img2 = null;
             }
-            btnPcListIndex.Draw();
+            btnPcListIndex.Draw(c);
 
             if (pc != null)
             {
 
                 //DRAW LEFT STATS
-                gv.DrawText("Name: " + pc.name, locX, locY += leftStartY, "wh");
-                gv.DrawText("Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
+                gv.DrawText(c, "Name: " + pc.name, locX, locY += leftStartY, "wh");
+                gv.DrawText(c, "Race: " + gv.cc.getRace(pc.raceTag).name, locX, locY += spacing, "wh");
                 if (pc.isMale)
                 {
-                    gv.DrawText("Gender: Male", locX, locY += spacing, "wh");
+                    gv.DrawText(c, "Gender: Male", locX, locY += spacing, "wh");
                 }
                 else
                 {
-                    gv.DrawText("Gender: Female", locX, locY += spacing, "wh");
+                    gv.DrawText(c, "Gender: Female", locX, locY += spacing, "wh");
                 }
-                gv.DrawText("Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
-                gv.DrawText("Level: " + pc.classLevel, locX, locY += spacing, "wh");
-                gv.DrawText("XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
+                gv.DrawText(c, "Class: " + gv.cc.getPlayerClass(pc.classTag).name, locX, locY += spacing, "wh");
+                gv.DrawText(c, "Level: " + pc.classLevel, locX, locY += spacing, "wh");
+                gv.DrawText(c, "XP: " + pc.XP + "/" + pc.XPNeeded, locX, locY += spacing, "wh");
                 //gv.DrawText("---------------", locX, locY += spacing, "wh");
 
                 //draw spells known list
@@ -375,7 +376,7 @@ namespace IBbasic
                         allSpells += sp.name + ", ";
                     }
                 }
-                gv.DrawText(gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + ": " + allSpells, locX, locY += spacing, "wh");
+                gv.DrawText(c, gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + ": " + allSpells, locX, locY += spacing, "wh");
 
                 //draw traits known list
                 string allTraits = "";
@@ -387,7 +388,7 @@ namespace IBbasic
                         allTraits += tr.name + ", ";
                     }
                 }
-                gv.DrawText("Traits: " + allTraits, locX, locY += spacing, "wh");
+                gv.DrawText(c, "Traits: " + allTraits, locX, locY += spacing, "wh");
 
                 //DRAW RIGHT STATS
                 int actext = 0;
@@ -396,22 +397,22 @@ namespace IBbasic
                 locY = 0;
                 int locY2 = 0;
                 
-                gv.DrawText("STR: " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", tabX, locY += leftStartY, "wh");
-                gv.DrawText("AC: " + actext + ",  BAB: " + pc.baseAttBonus, tabX2, locY2 += leftStartY, "wh");
-                gv.DrawText("DEX: " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", tabX, locY += spacing, "wh");
-                gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY2 += spacing, "wh");
-                gv.DrawText("CON: " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", tabX, locY += spacing, "wh");
-                gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, tabX2, locY2 += spacing, "wh");
-                gv.DrawText("INT: " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", tabX, locY += spacing, "wh");
-                gv.DrawText("FORT: " + pc.fortitude, tabX2, locY2 += spacing, "wh");
-                gv.DrawText("REF:  " + pc.reflex, tabX2, locY2 += spacing, "wh");
-                gv.DrawText("WILL: " + pc.will, tabX2, locY2 += spacing, "wh");
-                gv.DrawText("WIS: " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", tabX, locY += spacing, "wh");
-                gv.DrawText("CHA: " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", tabX, locY += spacing, "wh");
+                gv.DrawText(c, "STR: " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", tabX, locY += leftStartY, "wh");
+                gv.DrawText(c, "AC: " + actext + ",  BAB: " + pc.baseAttBonus, tabX2, locY2 += leftStartY, "wh");
+                gv.DrawText(c, "DEX: " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", tabX, locY += spacing, "wh");
+                gv.DrawText(c, "HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY2 += spacing, "wh");
+                gv.DrawText(c, "CON: " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", tabX, locY += spacing, "wh");
+                gv.DrawText(c, "SP: " + pc.sp + "/" + pc.spMax, tabX2, locY2 += spacing, "wh");
+                gv.DrawText(c, "INT: " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", tabX, locY += spacing, "wh");
+                gv.DrawText(c, "FORT: " + pc.fortitude, tabX2, locY2 += spacing, "wh");
+                gv.DrawText(c, "REF:  " + pc.reflex, tabX2, locY2 += spacing, "wh");
+                gv.DrawText(c, "WILL: " + pc.will, tabX2, locY2 += spacing, "wh");
+                gv.DrawText(c, "WIS: " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", tabX, locY += spacing, "wh");
+                gv.DrawText(c, "CHA: " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", tabX, locY += spacing, "wh");
             }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchPartyBuild(int eX, int eY, MouseEventType.EventType eventType)

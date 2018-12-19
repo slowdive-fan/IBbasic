@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -263,7 +264,7 @@ namespace IBbasic
 	    }
 	
 	    //INVENTORY SCREEN (COMBAT and MAIN)
-        public void redrawPortraitSelector()
+        public void redrawPortraitSelector(SKCanvas c)
         {
             //IF CONTROLS ARE NULL, CREATE THEM
     	    if (btnAction == null)
@@ -285,12 +286,12 @@ namespace IBbasic
     	
             //DRAW TEXT		
 		    locY = (pH * 2);
-		    gv.DrawText("Portrait Selection", locX, locY, "wh");
+		    gv.DrawText(c, "Portrait Selection", locX, locY, "wh");
 		    
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
-		    btnPageIndex.Draw();
-		    btnPortraitsLeft.Draw();
-		    btnPortraitsRight.Draw();		
+		    btnPageIndex.Draw(c);
+		    btnPortraitsLeft.Draw(c);
+		    btnPortraitsRight.Draw(c);		
 		
 		    //DRAW ALL INVENTORY SLOTS		
 		    int cntSlot = 0;
@@ -307,12 +308,12 @@ namespace IBbasic
 			    {
 				    btn.Img = null;
 			    }
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }		
 		    
-		    btnAction.Draw();
-            btnExit.Draw();
+		    btnAction.Draw(c);
+            btnExit.Draw(c);
         }
         public void onTouchPortraitSelector(int eX, int eY, MouseEventType.EventType eventType)
 	    {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -180,7 +181,7 @@ namespace IBbasic
             }
         }
 	    //INVENTORY SCREEN (COMBAT and MAIN)
-        public void redrawInventory()
+        public void redrawInventory(SKCanvas c)
         {
             //IF CONTROLS ARE NULL, CREATE THEM
     	    if (btnReturn == null)
@@ -204,16 +205,16 @@ namespace IBbasic
     	
             //DRAW TEXT		
 		    locY = gv.uiSquareSize / 2;
-		    gv.DrawText("Party", locX + (gv.uiSquareSize * 1) + pW * 2, locY, "wh");
-            gv.DrawText("Inventory", locX + (gv.uiSquareSize * 1) + pW * 2, locY += spacing, "wh");
+		    gv.DrawText(c, "Party", locX + (gv.uiSquareSize * 1) + pW * 2, locY, "wh");
+            gv.DrawText(c, "Inventory", locX + (gv.uiSquareSize * 1) + pW * 2, locY += spacing, "wh");
 		    locY = gv.uiSquareSize / 2;
-            gv.DrawText("Party", tabX2 + (gv.uiSquareSize * 2), locY, "yl");
-            gv.DrawText(gv.mod.goldLabelPlural + ": " + gv.mod.partyGold, tabX2 + (gv.uiSquareSize * 2), locY += spacing, "yl");
+            gv.DrawText(c, "Party", tabX2 + (gv.uiSquareSize * 2), locY, "yl");
+            gv.DrawText(c, gv.mod.goldLabelPlural + ": " + gv.mod.partyGold, tabX2 + (gv.uiSquareSize * 2), locY += spacing, "yl");
 
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
-		    btnPageIndex.Draw();
-		    btnInventoryLeft.Draw();
-		    btnInventoryRight.Draw();		
+		    btnPageIndex.Draw(c);
+		    btnInventoryLeft.Draw(c);
+		    btnInventoryRight.Draw(c);		
 		
 		    //DRAW ALL INVENTORY SLOTS		
 		    int cntSlot = 0;
@@ -221,7 +222,7 @@ namespace IBbasic
 		    {
 			    if (cntSlot == inventorySlotIndex) {btn.glowOn = true;}
 			    else {btn.glowOn = false;}
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 		
@@ -265,14 +266,14 @@ namespace IBbasic
                 description.tbHeight = 8 * gv.uiSquareSize;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
 		    }
-		    btnHelp.Draw();	
-		    btnInfo.Draw();	
-		    btnReturn.Draw();
+		    btnHelp.Draw(c);	
+		    btnInfo.Draw(c);	
+		    btnReturn.Draw(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public string isUseableBy(Item it)

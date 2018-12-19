@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1029,20 +1030,20 @@ namespace IBbasic
             btnRemoveClass.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsItemEditor()
+        public void redrawTsItemEditor(SKCanvas c)
         {
             sortItemList();
             setControlsStart();
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             int shiftForFont = (tglMain.Height / 2) - (gv.fontHeight / 2);
             //Page Title
-            gv.DrawText("ITEM EDITOR", center - (5 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "ITEM EDITOR", center - (5 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
 
             //label      
-            gv.DrawText("ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddItem.Draw();
-            btnRemoveItem.Draw();
-            btnCopyItem.Draw();
+            gv.DrawText(c, "ITEMS", btnAddItem.X, btnAddItem.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddItem.Draw(c);
+            btnRemoveItem.Draw(c);
+            btnCopyItem.Draw(c);
 
             //string lastCategory = "";
             numberOfLinesToShow = 16;
@@ -1056,7 +1057,7 @@ namespace IBbasic
                 //if -1 then grab the category of the next index
                 if (indexList[idx] == -1)
                 {
-                    gv.DrawText("" + gv.cc.allItemsList[indexList[idx + 1]].ItemCategoryName, tlX, tlY, "bu");
+                    gv.DrawText(c, "" + gv.cc.allItemsList[indexList[idx + 1]].ItemCategoryName, tlX, tlY, "bu");
                     catCnt++;
                 }
                 else //if not -1, use index
@@ -1064,17 +1065,17 @@ namespace IBbasic
                     tlY = startY + (gv.fontHeight + gv.fontLineSpacing) * cnt;
                     if (indexList[idx] == itemListIndex)
                     {
-                        gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gn");
+                        gv.DrawText(c, " " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gn");
                     }
                     else
                     {
                         if (gv.cc.allItemsList[indexList[idx]].moduleItem)
                         {
-                            gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "wh");
+                            gv.DrawText(c, " " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "wh");
                         }
                         else
                         {
-                            gv.DrawText(" " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gy");
+                            gv.DrawText(c, " " + gv.cc.allItemsList[indexList[idx]].name, tlX, tlY, "gy");
                         }
                     }
                 }
@@ -1125,323 +1126,323 @@ namespace IBbasic
                 crtCnt++;
             }*/
 
-            tglMain.Draw();
-            gv.DrawText("MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
-            tglAttack.Draw();
-            gv.DrawText("ATTACK/DEFEND", tglAttack.X + tglAttack.Width + gv.scaler, tglAttack.Y + shiftForFont, "ma");
-            tglMisc.Draw();
-            gv.DrawText("MISC", tglMisc.X + tglMisc.Width + gv.scaler, tglMisc.Y + shiftForFont, "ma");
+            tglMain.Draw(c);
+            gv.DrawText(c, "MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
+            tglAttack.Draw(c);
+            gv.DrawText(c, "ATTACK/DEFEND", tglAttack.X + tglAttack.Width + gv.scaler, tglAttack.Y + shiftForFont, "ma");
+            tglMisc.Draw(c);
+            gv.DrawText(c, "MISC", tglMisc.X + tglMisc.Width + gv.scaler, tglMisc.Y + shiftForFont, "ma");
 
-            tglRegen.Draw();
-            gv.DrawText("REGENS/SAVES", tglRegen.X + tglRegen.Width + gv.scaler, tglRegen.Y + shiftForFont, "ma");
-            tglMod.Draw();
-            gv.DrawText("MODIFIERS", tglMod.X + tglMod.Width + gv.scaler, tglMod.Y + shiftForFont, "ma");
-            tglResistance.Draw();
-            gv.DrawText("RESISTANCES", tglResistance.X + tglResistance.Width + gv.scaler, tglResistance.Y + shiftForFont, "ma");
+            tglRegen.Draw(c);
+            gv.DrawText(c, "REGENS/SAVES", tglRegen.X + tglRegen.Width + gv.scaler, tglRegen.Y + shiftForFont, "ma");
+            tglMod.Draw(c);
+            gv.DrawText(c, "MODIFIERS", tglMod.X + tglMod.Width + gv.scaler, tglMod.Y + shiftForFont, "ma");
+            tglResistance.Draw(c);
+            gv.DrawText(c, "RESISTANCES", tglResistance.X + tglResistance.Width + gv.scaler, tglResistance.Y + shiftForFont, "ma");
 
-            tglImage.Draw();
-            gv.DrawText("IMAGES", tglImage.X + tglImage.Width + gv.scaler, tglImage.Y + shiftForFont, "ma");
-            tglBehavior.Draw();
-            gv.DrawText("BEHAVIOR", tglBehavior.X + tglBehavior.Width + gv.scaler, tglBehavior.Y + shiftForFont, "ma");
-            tglClass.Draw();
-            gv.DrawText("CLASSES", tglClass.X + tglClass.Width + gv.scaler, tglClass.Y + shiftForFont, "ma");
+            tglImage.Draw(c);
+            gv.DrawText(c, "IMAGES", tglImage.X + tglImage.Width + gv.scaler, tglImage.Y + shiftForFont, "ma");
+            tglBehavior.Draw(c);
+            gv.DrawText(c, "BEHAVIOR", tglBehavior.X + tglBehavior.Width + gv.scaler, tglBehavior.Y + shiftForFont, "ma");
+            tglClass.Draw(c);
+            gv.DrawText(c, "CLASSES", tglClass.X + tglClass.Width + gv.scaler, tglClass.Y + shiftForFont, "ma");
 
             if (currentMode.Equals("Main"))
             {
                 setMainControlsStart();
-                drawMain();
+                drawMain(c);
             }
             else if (currentMode.Equals("Attack"))
             {
                 setAttackControlsStart();
-                drawAttack();
+                drawAttack(c);
             }
             else if (currentMode.Equals("Misc"))
             {
                 setMiscControlsStart();
-                drawMisc();
+                drawMisc(c);
             }
             else if (currentMode.Equals("Regen"))
             {
                 setRegenControlsStart();
-                drawRegen();
+                drawRegen(c);
             }
             else if (currentMode.Equals("Mod"))
             {
                 setModControlsStart();
-                drawMod();
+                drawMod(c);
             }
             else if (currentMode.Equals("Resistance"))
             {
                 setResistanceControlsStart();
-                drawResistance();
+                drawResistance(c);
             }
             else if (currentMode.Equals("Image"))
             {
                 setImageControlsStart();
-                drawImage();
+                drawImage(c);
             }
             else if (currentMode.Equals("Behavior"))
             {
                 setBehaviorControlsStart();
-                drawBehavior();
+                drawBehavior(c);
             }
             else if (currentMode.Equals("Class"))
             {
                 setClassControlsStart();
-                drawClass();
+                drawClass(c);
             }
 
             
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawMain()
+        public void drawMain(SKCanvas c)
         {
 
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
-            btnItName.Draw();
-            gv.DrawText("NAME: " + gv.cc.allItemsList[itemListIndex].name, btnItName.X + btnItName.Width + gv.scaler, btnItName.Y + shiftForFont, "wh");
-            btnItResRef.Draw();
-            gv.DrawText("RESREF: " + gv.cc.allItemsList[itemListIndex].resref, btnItResRef.X + btnItResRef.Width + gv.scaler, btnItResRef.Y + shiftForFont, "wh");
-            btnItDesc.Draw();
-            gv.DrawText("DESC: " + gv.cc.allItemsList[itemListIndex].desc, btnItDesc.X + btnItDesc.Width + gv.scaler, btnItDesc.Y + shiftForFont, "wh");
-            btnItDescFull.Draw();
-            gv.DrawText("DESC FULL: " + gv.cc.allItemsList[itemListIndex].descFull, btnItDescFull.X + btnItDescFull.Width + gv.scaler, btnItDescFull.Y + shiftForFont, "wh");
-            btnItCategory.Draw();
-            gv.DrawText("CATEGORY: " + gv.cc.allItemsList[itemListIndex].category, btnItCategory.X + btnItCategory.Width + gv.scaler, btnItCategory.Y + shiftForFont, "wh");
-            btnItValue.Draw();
-            gv.DrawText("VALUE: " + gv.cc.allItemsList[itemListIndex].value, btnItValue.X + btnItValue.Width + gv.scaler, btnItValue.Y + shiftForFont, "wh");
-            btnItAmmoType.Draw();
-            gv.DrawText("AMMO TYPE: " + gv.cc.allItemsList[itemListIndex].ammoType, btnItAmmoType.X + btnItAmmoType.Width + gv.scaler, btnItAmmoType.Y + shiftForFont, "wh");
-            btnItParentNodeName.Draw();
-            gv.DrawText("ORG CATEGORY: " + gv.cc.allItemsList[itemListIndex].ItemCategoryName, btnItParentNodeName.X + btnItParentNodeName.Width + gv.scaler, btnItParentNodeName.Y + shiftForFont, "wh");
+            btnItName.Draw(c);
+            gv.DrawText(c, "NAME: " + gv.cc.allItemsList[itemListIndex].name, btnItName.X + btnItName.Width + gv.scaler, btnItName.Y + shiftForFont, "wh");
+            btnItResRef.Draw(c);
+            gv.DrawText(c, "RESREF: " + gv.cc.allItemsList[itemListIndex].resref, btnItResRef.X + btnItResRef.Width + gv.scaler, btnItResRef.Y + shiftForFont, "wh");
+            btnItDesc.Draw(c);
+            gv.DrawText(c, "DESC: " + gv.cc.allItemsList[itemListIndex].desc, btnItDesc.X + btnItDesc.Width + gv.scaler, btnItDesc.Y + shiftForFont, "wh");
+            btnItDescFull.Draw(c);
+            gv.DrawText(c, "DESC FULL: " + gv.cc.allItemsList[itemListIndex].descFull, btnItDescFull.X + btnItDescFull.Width + gv.scaler, btnItDescFull.Y + shiftForFont, "wh");
+            btnItCategory.Draw(c);
+            gv.DrawText(c, "CATEGORY: " + gv.cc.allItemsList[itemListIndex].category, btnItCategory.X + btnItCategory.Width + gv.scaler, btnItCategory.Y + shiftForFont, "wh");
+            btnItValue.Draw(c);
+            gv.DrawText(c, "VALUE: " + gv.cc.allItemsList[itemListIndex].value, btnItValue.X + btnItValue.Width + gv.scaler, btnItValue.Y + shiftForFont, "wh");
+            btnItAmmoType.Draw(c);
+            gv.DrawText(c, "AMMO TYPE: " + gv.cc.allItemsList[itemListIndex].ammoType, btnItAmmoType.X + btnItAmmoType.Width + gv.scaler, btnItAmmoType.Y + shiftForFont, "wh");
+            btnItParentNodeName.Draw(c);
+            gv.DrawText(c, "ORG CATEGORY: " + gv.cc.allItemsList[itemListIndex].ItemCategoryName, btnItParentNodeName.X + btnItParentNodeName.Width + gv.scaler, btnItParentNodeName.Y + shiftForFont, "wh");
 
         }
-        public void drawAttack()
+        public void drawAttack(SKCanvas c)
         {
 
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
-            btnItAttackBonus.Draw();
-            gv.DrawText("ATTACK BONUS: " + gv.cc.allItemsList[itemListIndex].attackBonus, btnItAttackBonus.X + btnItAttackBonus.Width + gv.scaler, btnItAttackBonus.Y + shiftForFont, "wh");
-            btnItAttackRange.Draw();
-            gv.DrawText("ATTACK RANGE: " + gv.cc.allItemsList[itemListIndex].attackRange, btnItAttackRange.X + btnItAttackRange.Width + gv.scaler, btnItAttackRange.Y + shiftForFont, "wh");
-            btnItDamageNumDice.Draw();
-            gv.DrawText("DAMAGE NUM OF DICE: " + gv.cc.allItemsList[itemListIndex].damageNumDice, btnItDamageNumDice.X + btnItDamageNumDice.Width + gv.scaler, btnItDamageNumDice.Y + shiftForFont, "wh");
-            btnItDamageDie.Draw();
-            gv.DrawText("DAMAGE DICE: " + gv.cc.allItemsList[itemListIndex].damageDie, btnItDamageDie.X + btnItDamageDie.Width + gv.scaler, btnItDamageDie.Y + shiftForFont, "wh");
-            btnItDamageAdder.Draw();
-            gv.DrawText("DAMAGE ADDER: " + gv.cc.allItemsList[itemListIndex].damageAdder, btnItDamageAdder.X + btnItDamageAdder.Width + gv.scaler, btnItDamageAdder.Y + shiftForFont, "wh");
-            btnItArmorBonus.Draw();
-            gv.DrawText("ARMOR BONUS: " + gv.cc.allItemsList[itemListIndex].armorBonus, btnItArmorBonus.X + btnItArmorBonus.Width + gv.scaler, btnItArmorBonus.Y + shiftForFont, "wh");
-            btnItMaxDexBonus.Draw();
-            gv.DrawText("MAX DEX BONUS: " + gv.cc.allItemsList[itemListIndex].maxDexBonus, btnItMaxDexBonus.X + btnItMaxDexBonus.Width + gv.scaler, btnItMaxDexBonus.Y + shiftForFont, "wh");
-            btnItTypeOfDamage.Draw();
-            gv.DrawText("TYPE OF DAMAGE: " + gv.cc.allItemsList[itemListIndex].typeOfDamage, btnItTypeOfDamage.X + btnItTypeOfDamage.Width + gv.scaler, btnItTypeOfDamage.Y + shiftForFont, "wh");
+            btnItAttackBonus.Draw(c);
+            gv.DrawText(c, "ATTACK BONUS: " + gv.cc.allItemsList[itemListIndex].attackBonus, btnItAttackBonus.X + btnItAttackBonus.Width + gv.scaler, btnItAttackBonus.Y + shiftForFont, "wh");
+            btnItAttackRange.Draw(c);
+            gv.DrawText(c, "ATTACK RANGE: " + gv.cc.allItemsList[itemListIndex].attackRange, btnItAttackRange.X + btnItAttackRange.Width + gv.scaler, btnItAttackRange.Y + shiftForFont, "wh");
+            btnItDamageNumDice.Draw(c);
+            gv.DrawText(c, "DAMAGE NUM OF DICE: " + gv.cc.allItemsList[itemListIndex].damageNumDice, btnItDamageNumDice.X + btnItDamageNumDice.Width + gv.scaler, btnItDamageNumDice.Y + shiftForFont, "wh");
+            btnItDamageDie.Draw(c);
+            gv.DrawText(c, "DAMAGE DICE: " + gv.cc.allItemsList[itemListIndex].damageDie, btnItDamageDie.X + btnItDamageDie.Width + gv.scaler, btnItDamageDie.Y + shiftForFont, "wh");
+            btnItDamageAdder.Draw(c);
+            gv.DrawText(c, "DAMAGE ADDER: " + gv.cc.allItemsList[itemListIndex].damageAdder, btnItDamageAdder.X + btnItDamageAdder.Width + gv.scaler, btnItDamageAdder.Y + shiftForFont, "wh");
+            btnItArmorBonus.Draw(c);
+            gv.DrawText(c, "ARMOR BONUS: " + gv.cc.allItemsList[itemListIndex].armorBonus, btnItArmorBonus.X + btnItArmorBonus.Width + gv.scaler, btnItArmorBonus.Y + shiftForFont, "wh");
+            btnItMaxDexBonus.Draw(c);
+            gv.DrawText(c, "MAX DEX BONUS: " + gv.cc.allItemsList[itemListIndex].maxDexBonus, btnItMaxDexBonus.X + btnItMaxDexBonus.Width + gv.scaler, btnItMaxDexBonus.Y + shiftForFont, "wh");
+            btnItTypeOfDamage.Draw(c);
+            gv.DrawText(c, "TYPE OF DAMAGE: " + gv.cc.allItemsList[itemListIndex].typeOfDamage, btnItTypeOfDamage.X + btnItTypeOfDamage.Width + gv.scaler, btnItTypeOfDamage.Y + shiftForFont, "wh");
 
         }
-        public void drawMisc()
+        public void drawMisc(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
 
             if (gv.cc.allItemsList[itemListIndex].canNotBeUnequipped) { btnItCanNotBeUnequipped.toggleOn = true; }
             else { btnItCanNotBeUnequipped.toggleOn = false; }
-            btnItCanNotBeUnequipped.Draw();
-            gv.DrawText("CANNOT BE UNEQUIPPED", btnItCanNotBeUnequipped.X + btnItCanNotBeUnequipped.Width + gv.scaler, btnItCanNotBeUnequipped.Y + shiftForFont, "wh");
+            btnItCanNotBeUnequipped.Draw(c);
+            gv.DrawText(c, "CANNOT BE UNEQUIPPED", btnItCanNotBeUnequipped.X + btnItCanNotBeUnequipped.Width + gv.scaler, btnItCanNotBeUnequipped.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].plotItem) { btnItPlotItem.toggleOn = true; }
             else { btnItPlotItem.toggleOn = false; }
-            btnItPlotItem.Draw();
-            gv.DrawText("IS PLOT ITEM", btnItPlotItem.X + btnItPlotItem.Width + gv.scaler, btnItPlotItem.Y + shiftForFont, "wh");
+            btnItPlotItem.Draw(c);
+            gv.DrawText(c, "IS PLOT ITEM", btnItPlotItem.X + btnItPlotItem.Width + gv.scaler, btnItPlotItem.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].isRation) { btnItIsRation.toggleOn = true; }
             else { btnItIsRation.toggleOn = false; }
-            btnItIsRation.Draw();
-            gv.DrawText("IS RATION", btnItIsRation.X + btnItIsRation.Width + gv.scaler, btnItIsRation.Y + shiftForFont, "wh");
+            btnItIsRation.Draw(c);
+            gv.DrawText(c, "IS RATION", btnItIsRation.X + btnItIsRation.Width + gv.scaler, btnItIsRation.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].twoHanded) { btnItTwoHanded.toggleOn = true; }
             else { btnItTwoHanded.toggleOn = false; }
-            btnItTwoHanded.Draw();
-            gv.DrawText("IS TWO HANDED", btnItTwoHanded.X + btnItTwoHanded.Width + gv.scaler, btnItTwoHanded.Y + shiftForFont, "wh");
+            btnItTwoHanded.Draw(c);
+            gv.DrawText(c, "IS TWO HANDED", btnItTwoHanded.X + btnItTwoHanded.Width + gv.scaler, btnItTwoHanded.Y + shiftForFont, "wh");
 
-            btnItQuantity.Draw();
-            gv.DrawText("QUANTITY: " + gv.cc.allItemsList[itemListIndex].quantity, btnItQuantity.X + btnItQuantity.Width + gv.scaler, btnItQuantity.Y + shiftForFont, "wh");
-            btnItGroupSizeForSellingStackableItems.Draw();
-            gv.DrawText("GROUP SIZE FOR SELLING STACKABLES: " + gv.cc.allItemsList[itemListIndex].groupSizeForSellingStackableItems, btnItGroupSizeForSellingStackableItems.X + btnItGroupSizeForSellingStackableItems.Width + gv.scaler, btnItGroupSizeForSellingStackableItems.Y + shiftForFont, "wh");
-            btnItCharges.Draw();
-            gv.DrawText("CHARGES: " + gv.cc.allItemsList[itemListIndex].charges, btnItCharges.X + btnItCharges.Width + gv.scaler, btnItCharges.Y + shiftForFont, "wh");
+            btnItQuantity.Draw(c);
+            gv.DrawText(c, "QUANTITY: " + gv.cc.allItemsList[itemListIndex].quantity, btnItQuantity.X + btnItQuantity.Width + gv.scaler, btnItQuantity.Y + shiftForFont, "wh");
+            btnItGroupSizeForSellingStackableItems.Draw(c);
+            gv.DrawText(c, "GROUP SIZE FOR SELLING STACKABLES: " + gv.cc.allItemsList[itemListIndex].groupSizeForSellingStackableItems, btnItGroupSizeForSellingStackableItems.X + btnItGroupSizeForSellingStackableItems.Width + gv.scaler, btnItGroupSizeForSellingStackableItems.Y + shiftForFont, "wh");
+            btnItCharges.Draw(c);
+            gv.DrawText(c, "CHARGES: " + gv.cc.allItemsList[itemListIndex].charges, btnItCharges.X + btnItCharges.Width + gv.scaler, btnItCharges.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].isStackable) { btnItIsStackable.toggleOn = true; }
             else { btnItIsStackable.toggleOn = false; }
-            btnItIsStackable.Draw();
-            gv.DrawText("IS STACKABLE", btnItIsStackable.X + btnItIsStackable.Width + gv.scaler, btnItIsStackable.Y + shiftForFont, "wh");
+            btnItIsStackable.Draw(c);
+            gv.DrawText(c, "IS STACKABLE", btnItIsStackable.X + btnItIsStackable.Width + gv.scaler, btnItIsStackable.Y + shiftForFont, "wh");
 
         }
 
-        public void drawRegen()
+        public void drawRegen(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
 
-            btnItSpRegenPerRoundInCombat.Draw();
-            gv.DrawText("SP REGEN IN COMBAT: " + gv.cc.allItemsList[itemListIndex].spRegenPerRoundInCombat, btnItSpRegenPerRoundInCombat.X + btnItSpRegenPerRoundInCombat.Width + gv.scaler, btnItSpRegenPerRoundInCombat.Y + shiftForFont, "wh");
-            btnItHpRegenPerRoundInCombat.Draw();
-            gv.DrawText("HP REGEN IN COMBAT: " + gv.cc.allItemsList[itemListIndex].hpRegenPerRoundInCombat, btnItHpRegenPerRoundInCombat.X + btnItHpRegenPerRoundInCombat.Width + gv.scaler, btnItHpRegenPerRoundInCombat.Y + shiftForFont, "wh");
-            btnItRoundsPerSpRegenOutsideCombat.Draw();
-            gv.DrawText("SP REGEN OUT OF COMBAT: " + gv.cc.allItemsList[itemListIndex].roundsPerSpRegenOutsideCombat, btnItRoundsPerSpRegenOutsideCombat.X + btnItRoundsPerSpRegenOutsideCombat.Width + gv.scaler, btnItRoundsPerSpRegenOutsideCombat.Y + shiftForFont, "wh");
-            btnItRoundsPerHpRegenOutsideCombat.Draw();
-            gv.DrawText("HP REGEN OUT OF COMBAT: " + gv.cc.allItemsList[itemListIndex].roundsPerHpRegenOutsideCombat, btnItRoundsPerHpRegenOutsideCombat.X + btnItRoundsPerHpRegenOutsideCombat.Width + gv.scaler, btnItRoundsPerHpRegenOutsideCombat.Y + shiftForFont, "wh");
-            btnItSavingThrowModifierReflex.Draw();
-            gv.DrawText("REFLEX: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierReflex, btnItSavingThrowModifierReflex.X + btnItSavingThrowModifierReflex.Width + gv.scaler, btnItSavingThrowModifierReflex.Y + shiftForFont, "wh");
-            btnItSavingThrowModifierFortitude.Draw();
-            gv.DrawText("FORTITUDE: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierFortitude, btnItSavingThrowModifierFortitude.X + btnItSavingThrowModifierFortitude.Width + gv.scaler, btnItSavingThrowModifierFortitude.Y + shiftForFont, "wh");
-            btnItSavingThrowModifierWill.Draw();
-            gv.DrawText("WILL: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierWill, btnItSavingThrowModifierWill.X + btnItSavingThrowModifierWill.Width + gv.scaler, btnItSavingThrowModifierWill.Y + shiftForFont, "wh");
-            btnItUseableInSituation.Draw();
-            gv.DrawText("USEABLE IN SITUATION: " + gv.cc.allItemsList[itemListIndex].useableInSituation, btnItUseableInSituation.X + btnItUseableInSituation.Width + gv.scaler, btnItUseableInSituation.Y + shiftForFont, "wh");
+            btnItSpRegenPerRoundInCombat.Draw(c);
+            gv.DrawText(c, "SP REGEN IN COMBAT: " + gv.cc.allItemsList[itemListIndex].spRegenPerRoundInCombat, btnItSpRegenPerRoundInCombat.X + btnItSpRegenPerRoundInCombat.Width + gv.scaler, btnItSpRegenPerRoundInCombat.Y + shiftForFont, "wh");
+            btnItHpRegenPerRoundInCombat.Draw(c);
+            gv.DrawText(c, "HP REGEN IN COMBAT: " + gv.cc.allItemsList[itemListIndex].hpRegenPerRoundInCombat, btnItHpRegenPerRoundInCombat.X + btnItHpRegenPerRoundInCombat.Width + gv.scaler, btnItHpRegenPerRoundInCombat.Y + shiftForFont, "wh");
+            btnItRoundsPerSpRegenOutsideCombat.Draw(c);
+            gv.DrawText(c, "SP REGEN OUT OF COMBAT: " + gv.cc.allItemsList[itemListIndex].roundsPerSpRegenOutsideCombat, btnItRoundsPerSpRegenOutsideCombat.X + btnItRoundsPerSpRegenOutsideCombat.Width + gv.scaler, btnItRoundsPerSpRegenOutsideCombat.Y + shiftForFont, "wh");
+            btnItRoundsPerHpRegenOutsideCombat.Draw(c);
+            gv.DrawText(c, "HP REGEN OUT OF COMBAT: " + gv.cc.allItemsList[itemListIndex].roundsPerHpRegenOutsideCombat, btnItRoundsPerHpRegenOutsideCombat.X + btnItRoundsPerHpRegenOutsideCombat.Width + gv.scaler, btnItRoundsPerHpRegenOutsideCombat.Y + shiftForFont, "wh");
+            btnItSavingThrowModifierReflex.Draw(c);
+            gv.DrawText(c, "REFLEX: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierReflex, btnItSavingThrowModifierReflex.X + btnItSavingThrowModifierReflex.Width + gv.scaler, btnItSavingThrowModifierReflex.Y + shiftForFont, "wh");
+            btnItSavingThrowModifierFortitude.Draw(c);
+            gv.DrawText(c, "FORTITUDE: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierFortitude, btnItSavingThrowModifierFortitude.X + btnItSavingThrowModifierFortitude.Width + gv.scaler, btnItSavingThrowModifierFortitude.Y + shiftForFont, "wh");
+            btnItSavingThrowModifierWill.Draw(c);
+            gv.DrawText(c, "WILL: " + gv.cc.allItemsList[itemListIndex].savingThrowModifierWill, btnItSavingThrowModifierWill.X + btnItSavingThrowModifierWill.Width + gv.scaler, btnItSavingThrowModifierWill.Y + shiftForFont, "wh");
+            btnItUseableInSituation.Draw(c);
+            gv.DrawText(c, "USEABLE IN SITUATION: " + gv.cc.allItemsList[itemListIndex].useableInSituation, btnItUseableInSituation.X + btnItUseableInSituation.Width + gv.scaler, btnItUseableInSituation.Y + shiftForFont, "wh");
 
         }
-        public void drawMod()
+        public void drawMod(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
 
-            btnItAttributeBonusModifierStr.Draw();
-            gv.DrawText("STR MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierStr, btnItAttributeBonusModifierStr.X + btnItAttributeBonusModifierStr.Width + gv.scaler, btnItAttributeBonusModifierStr.Y + shiftForFont, "wh");
-            btnItAttributeBonusModifierDex.Draw();
-            gv.DrawText("DEX MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierDex, btnItAttributeBonusModifierDex.X + btnItAttributeBonusModifierDex.Width + gv.scaler, btnItAttributeBonusModifierDex.Y + shiftForFont, "wh");
-            btnItAttributeBonusModifierInt.Draw();
-            gv.DrawText("INT MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierInt, btnItAttributeBonusModifierInt.X + btnItAttributeBonusModifierInt.Width + gv.scaler, btnItAttributeBonusModifierInt.Y + shiftForFont, "wh");
-            btnItAttributeBonusModifierCha.Draw();
-            gv.DrawText("CHA MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierCha, btnItAttributeBonusModifierCha.X + btnItAttributeBonusModifierCha.Width + gv.scaler, btnItAttributeBonusModifierCha.Y + shiftForFont, "wh");
-            btnItAttributeBonusModifierCon.Draw();
-            gv.DrawText("CON MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierCon, btnItAttributeBonusModifierCon.X + btnItAttributeBonusModifierCon.Width + gv.scaler, btnItAttributeBonusModifierCon.Y + shiftForFont, "wh");
-            btnItAttributeBonusModifierWis.Draw();
-            gv.DrawText("WIS MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierWis, btnItAttributeBonusModifierWis.X + btnItAttributeBonusModifierWis.Width + gv.scaler, btnItAttributeBonusModifierWis.Y + shiftForFont, "wh");
-            btnItMovementPointModifier.Draw();
-            gv.DrawText("MOVEMENT MODIFIER: " + gv.cc.allItemsList[itemListIndex].MovementPointModifier, btnItMovementPointModifier.X + btnItMovementPointModifier.Width + gv.scaler, btnItMovementPointModifier.Y + shiftForFont, "wh");
-            btnItArmorWeightType.Draw();
-            gv.DrawText("ARMOR WEIGHT TYPE: " + gv.cc.allItemsList[itemListIndex].ArmorWeightType, btnItArmorWeightType.X + btnItArmorWeightType.Width + gv.scaler, btnItArmorWeightType.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierStr.Draw(c);
+            gv.DrawText(c, "STR MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierStr, btnItAttributeBonusModifierStr.X + btnItAttributeBonusModifierStr.Width + gv.scaler, btnItAttributeBonusModifierStr.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierDex.Draw(c);
+            gv.DrawText(c, "DEX MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierDex, btnItAttributeBonusModifierDex.X + btnItAttributeBonusModifierDex.Width + gv.scaler, btnItAttributeBonusModifierDex.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierInt.Draw(c);
+            gv.DrawText(c, "INT MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierInt, btnItAttributeBonusModifierInt.X + btnItAttributeBonusModifierInt.Width + gv.scaler, btnItAttributeBonusModifierInt.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierCha.Draw(c);
+            gv.DrawText(c, "CHA MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierCha, btnItAttributeBonusModifierCha.X + btnItAttributeBonusModifierCha.Width + gv.scaler, btnItAttributeBonusModifierCha.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierCon.Draw(c);
+            gv.DrawText(c, "CON MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierCon, btnItAttributeBonusModifierCon.X + btnItAttributeBonusModifierCon.Width + gv.scaler, btnItAttributeBonusModifierCon.Y + shiftForFont, "wh");
+            btnItAttributeBonusModifierWis.Draw(c);
+            gv.DrawText(c, "WIS MODIFIER: " + gv.cc.allItemsList[itemListIndex].attributeBonusModifierWis, btnItAttributeBonusModifierWis.X + btnItAttributeBonusModifierWis.Width + gv.scaler, btnItAttributeBonusModifierWis.Y + shiftForFont, "wh");
+            btnItMovementPointModifier.Draw(c);
+            gv.DrawText(c, "MOVEMENT MODIFIER: " + gv.cc.allItemsList[itemListIndex].MovementPointModifier, btnItMovementPointModifier.X + btnItMovementPointModifier.Width + gv.scaler, btnItMovementPointModifier.Y + shiftForFont, "wh");
+            btnItArmorWeightType.Draw(c);
+            gv.DrawText(c, "ARMOR WEIGHT TYPE: " + gv.cc.allItemsList[itemListIndex].ArmorWeightType, btnItArmorWeightType.X + btnItArmorWeightType.Width + gv.scaler, btnItArmorWeightType.Y + shiftForFont, "wh");
 
         }
-        public void drawResistance()
+        public void drawResistance(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
 
-            btnItResistAcid.Draw();
-            gv.DrawText("RESIST ACID MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueAcid, btnItResistAcid.X + btnItResistAcid.Width + gv.scaler, btnItResistAcid.Y + shiftForFont, "wh");
-            btnItResistNormal.Draw();
-            gv.DrawText("RESIST NORMAL MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueNormal, btnItResistNormal.X + btnItResistNormal.Width + gv.scaler, btnItResistNormal.Y + shiftForFont, "wh");
-            btnItResistCold.Draw();
-            gv.DrawText("RESIST COLD MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueCold, btnItResistCold.X + btnItResistCold.Width + gv.scaler, btnItResistCold.Y + shiftForFont, "wh");
-            btnItResistElectricity.Draw();
-            gv.DrawText("RESIST ELECTRICITY MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueElectricity, btnItResistElectricity.X + btnItResistElectricity.Width + gv.scaler, btnItResistElectricity.Y + shiftForFont, "wh");
-            btnItResistFire.Draw();
-            gv.DrawText("RESIST FIRE MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueFire, btnItResistFire.X + btnItResistFire.Width + gv.scaler, btnItResistFire.Y + shiftForFont, "wh");
-            btnItResistMagic.Draw();
-            gv.DrawText("RESIST MAGIC MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueMagic, btnItResistMagic.X + btnItResistMagic.Width + gv.scaler, btnItResistMagic.Y + shiftForFont, "wh");
-            btnItResistPoison.Draw();
-            gv.DrawText("RESIST POISON MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValuePoison, btnItResistPoison.X + btnItResistPoison.Width + gv.scaler, btnItResistPoison.Y + shiftForFont, "wh");
+            btnItResistAcid.Draw(c);
+            gv.DrawText(c, "RESIST ACID MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueAcid, btnItResistAcid.X + btnItResistAcid.Width + gv.scaler, btnItResistAcid.Y + shiftForFont, "wh");
+            btnItResistNormal.Draw(c);
+            gv.DrawText(c, "RESIST NORMAL MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueNormal, btnItResistNormal.X + btnItResistNormal.Width + gv.scaler, btnItResistNormal.Y + shiftForFont, "wh");
+            btnItResistCold.Draw(c);
+            gv.DrawText(c, "RESIST COLD MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueCold, btnItResistCold.X + btnItResistCold.Width + gv.scaler, btnItResistCold.Y + shiftForFont, "wh");
+            btnItResistElectricity.Draw(c);
+            gv.DrawText(c, "RESIST ELECTRICITY MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueElectricity, btnItResistElectricity.X + btnItResistElectricity.Width + gv.scaler, btnItResistElectricity.Y + shiftForFont, "wh");
+            btnItResistFire.Draw(c);
+            gv.DrawText(c, "RESIST FIRE MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueFire, btnItResistFire.X + btnItResistFire.Width + gv.scaler, btnItResistFire.Y + shiftForFont, "wh");
+            btnItResistMagic.Draw(c);
+            gv.DrawText(c, "RESIST MAGIC MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValueMagic, btnItResistMagic.X + btnItResistMagic.Width + gv.scaler, btnItResistMagic.Y + shiftForFont, "wh");
+            btnItResistPoison.Draw(c);
+            gv.DrawText(c, "RESIST POISON MODIFIER: " + gv.cc.allItemsList[itemListIndex].damageTypeResistanceValuePoison, btnItResistPoison.X + btnItResistPoison.Width + gv.scaler, btnItResistPoison.Y + shiftForFont, "wh");
 
         }
 
-        public void drawImage()
+        public void drawImage(SKCanvas c)
         {
 
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
-            btnItImage.Draw();
+            btnItImage.Draw(c);
             string token = gv.cc.allItemsList[itemListIndex].itemImage;
             int brX = (int)(gv.squareSize * gv.scaler);
             int brY = (int)(gv.squareSize * gv.scaler);
-            gv.DrawText("IMAGE FILENAME: " + token, btnItImage.X + btnItImage.Width + gv.scaler, btnItImage.Y + shiftForFont, "wh");
+            gv.DrawText(c, "IMAGE FILENAME: " + token, btnItImage.X + btnItImage.Width + gv.scaler, btnItImage.Y + shiftForFont, "wh");
             //only frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnItImage.X, btnItImage.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
-            btnItSpriteProjectileFilename.Draw();
-            gv.DrawText("PROJECTILE IMAGE: " + gv.cc.allItemsList[itemListIndex].projectileSpriteFilename, btnItSpriteProjectileFilename.X + btnItSpriteProjectileFilename.Width + gv.scaler, btnItSpriteProjectileFilename.Y + shiftForFont, "wh");
+            btnItSpriteProjectileFilename.Draw(c);
+            gv.DrawText(c, "PROJECTILE IMAGE: " + gv.cc.allItemsList[itemListIndex].projectileSpriteFilename, btnItSpriteProjectileFilename.X + btnItSpriteProjectileFilename.Width + gv.scaler, btnItSpriteProjectileFilename.Y + shiftForFont, "wh");
             token = gv.cc.allItemsList[itemListIndex].projectileSpriteFilename;
             brX = (int)(gv.squareSize * gv.scaler * 4);
             brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnItSpriteProjectileFilename.X, btnItSpriteProjectileFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
-            btnItSpriteEndingFilename.Draw();
-            gv.DrawText("PROJECTILE ENDING IMAGE: " + gv.cc.allItemsList[itemListIndex].spriteEndingFilename, btnItSpriteEndingFilename.X + btnItSpriteEndingFilename.Width + gv.scaler, btnItSpriteEndingFilename.Y + shiftForFont, "wh");
+            btnItSpriteEndingFilename.Draw(c);
+            gv.DrawText(c, "PROJECTILE ENDING IMAGE: " + gv.cc.allItemsList[itemListIndex].spriteEndingFilename, btnItSpriteEndingFilename.X + btnItSpriteEndingFilename.Width + gv.scaler, btnItSpriteEndingFilename.Y + shiftForFont, "wh");
             token = gv.cc.allItemsList[itemListIndex].spriteEndingFilename;
             brX = (int)(gv.squareSize * gv.scaler * 4);
             brY = (int)(gv.squareSize * gv.scaler);
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height);
             dst = new IbRect(btnItSpriteEndingFilename.X, btnItSpriteEndingFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
-            btnItOnUseSound.Draw();
-            gv.DrawText("ON USE SOUND: " + gv.cc.allItemsList[itemListIndex].itemOnUseSound, btnItOnUseSound.X + btnItOnUseSound.Width + gv.scaler, btnItOnUseSound.Y + shiftForFont, "wh");
+            btnItOnUseSound.Draw(c);
+            gv.DrawText(c, "ON USE SOUND: " + gv.cc.allItemsList[itemListIndex].itemOnUseSound, btnItOnUseSound.X + btnItOnUseSound.Width + gv.scaler, btnItOnUseSound.Y + shiftForFont, "wh");
 
-            btnItEndSound.Draw();
-            gv.DrawText("ON USE ENDING SOUND: " + gv.cc.allItemsList[itemListIndex].itemEndSound, btnItEndSound.X + btnItEndSound.Width + gv.scaler, btnItEndSound.Y + shiftForFont, "wh");
+            btnItEndSound.Draw(c);
+            gv.DrawText(c, "ON USE ENDING SOUND: " + gv.cc.allItemsList[itemListIndex].itemEndSound, btnItEndSound.X + btnItEndSound.Width + gv.scaler, btnItEndSound.Y + shiftForFont, "wh");
 
         }
-        public void drawBehavior()
+        public void drawBehavior(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
 
             if (gv.cc.allItemsList[itemListIndex].automaticallyHitsTarget) { btnItAutomaticallyHitsTarget.toggleOn = true; }
             else { btnItAutomaticallyHitsTarget.toggleOn = false; }
-            btnItAutomaticallyHitsTarget.Draw();
-            gv.DrawText("AUTOMATICALLY HITS TARGET", btnItAutomaticallyHitsTarget.X + btnItAutomaticallyHitsTarget.Width + gv.scaler, btnItAutomaticallyHitsTarget.Y + shiftForFont, "wh");
+            btnItAutomaticallyHitsTarget.Draw(c);
+            gv.DrawText(c, "AUTOMATICALLY HITS TARGET", btnItAutomaticallyHitsTarget.X + btnItAutomaticallyHitsTarget.Width + gv.scaler, btnItAutomaticallyHitsTarget.Y + shiftForFont, "wh");
 
-            btnItAreaOfEffect.Draw();
-            gv.DrawText("AOE RADIUS: " + gv.cc.allItemsList[itemListIndex].AreaOfEffect, btnItAreaOfEffect.X + btnItAreaOfEffect.Width + gv.scaler, btnItAreaOfEffect.Y + shiftForFont, "wh");
+            btnItAreaOfEffect.Draw(c);
+            gv.DrawText(c, "AOE RADIUS: " + gv.cc.allItemsList[itemListIndex].AreaOfEffect, btnItAreaOfEffect.X + btnItAreaOfEffect.Width + gv.scaler, btnItAreaOfEffect.Y + shiftForFont, "wh");
 
-            btnItAoeShape.Draw();
-            gv.DrawText("AOE SHAPE: " + gv.cc.allItemsList[itemListIndex].aoeShape, btnItAoeShape.X + btnItAoeShape.Width + gv.scaler, btnItAoeShape.Y + shiftForFont, "wh");
+            btnItAoeShape.Draw(c);
+            gv.DrawText(c, "AOE SHAPE: " + gv.cc.allItemsList[itemListIndex].aoeShape, btnItAoeShape.X + btnItAoeShape.Width + gv.scaler, btnItAoeShape.Y + shiftForFont, "wh");
 
-            btnItOnScoringHitCastSpellTag.Draw();
-            gv.DrawText("ON SCORING HIT SPELL: " + gv.cc.allItemsList[itemListIndex].onScoringHitCastSpellTag, btnItOnScoringHitCastSpellTag.X + btnItOnScoringHitCastSpellTag.Width + gv.scaler, btnItOnScoringHitCastSpellTag.Y + shiftForFont, "wh");
+            btnItOnScoringHitCastSpellTag.Draw(c);
+            gv.DrawText(c, "ON SCORING HIT SPELL: " + gv.cc.allItemsList[itemListIndex].onScoringHitCastSpellTag, btnItOnScoringHitCastSpellTag.X + btnItOnScoringHitCastSpellTag.Width + gv.scaler, btnItOnScoringHitCastSpellTag.Y + shiftForFont, "wh");
 
-            btnItOnUseItemCastSpellTag.Draw();
-            gv.DrawText("ON USE ITEM SPELL: " + gv.cc.allItemsList[itemListIndex].onUseItemCastSpellTag, btnItOnUseItemCastSpellTag.X + btnItOnUseItemCastSpellTag.Width + gv.scaler, btnItOnUseItemCastSpellTag.Y + shiftForFont, "wh");
+            btnItOnUseItemCastSpellTag.Draw(c);
+            gv.DrawText(c, "ON USE ITEM SPELL: " + gv.cc.allItemsList[itemListIndex].onUseItemCastSpellTag, btnItOnUseItemCastSpellTag.X + btnItOnUseItemCastSpellTag.Width + gv.scaler, btnItOnUseItemCastSpellTag.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].destroyItemAfterOnUseItemCastSpell) { btnItDestroyItemAfterOnUseItemCastSpell.toggleOn = true; }
             else { btnItDestroyItemAfterOnUseItemCastSpell.toggleOn = false; }
-            btnItDestroyItemAfterOnUseItemCastSpell.Draw();
-            gv.DrawText("DESTROY ITEM AFTER ON USE ITEM SPELL", btnItDestroyItemAfterOnUseItemCastSpell.X + btnItDestroyItemAfterOnUseItemCastSpell.Width + gv.scaler, btnItDestroyItemAfterOnUseItemCastSpell.Y + shiftForFont, "wh");
+            btnItDestroyItemAfterOnUseItemCastSpell.Draw(c);
+            gv.DrawText(c, "DESTROY ITEM AFTER ON USE ITEM SPELL", btnItDestroyItemAfterOnUseItemCastSpell.X + btnItDestroyItemAfterOnUseItemCastSpell.Width + gv.scaler, btnItDestroyItemAfterOnUseItemCastSpell.Y + shiftForFont, "wh");
 
-            btnItLevelOfItemForCastSpell.Draw();
-            gv.DrawText("LEVEL OF ITEM FOR CAST SPELL: " + gv.cc.allItemsList[itemListIndex].levelOfItemForCastSpell, btnItLevelOfItemForCastSpell.X + btnItLevelOfItemForCastSpell.Width + gv.scaler, btnItLevelOfItemForCastSpell.Y + shiftForFont, "wh");
+            btnItLevelOfItemForCastSpell.Draw(c);
+            gv.DrawText(c, "LEVEL OF ITEM FOR CAST SPELL: " + gv.cc.allItemsList[itemListIndex].levelOfItemForCastSpell, btnItLevelOfItemForCastSpell.X + btnItLevelOfItemForCastSpell.Width + gv.scaler, btnItLevelOfItemForCastSpell.Y + shiftForFont, "wh");
 
             if (gv.cc.allItemsList[itemListIndex].usePlayerClassLevelForOnUseItemCastSpell) { btnItUsePlayerClassLevelForOnUseItemCastSpell.toggleOn = true; }
             else { btnItUsePlayerClassLevelForOnUseItemCastSpell.toggleOn = false; }
-            btnItUsePlayerClassLevelForOnUseItemCastSpell.Draw();
-            gv.DrawText("USE PC LEVEL FOR ON USE ITEM SPELL", btnItUsePlayerClassLevelForOnUseItemCastSpell.X + btnItUsePlayerClassLevelForOnUseItemCastSpell.Width + gv.scaler, btnItUsePlayerClassLevelForOnUseItemCastSpell.Y + shiftForFont, "wh");
+            btnItUsePlayerClassLevelForOnUseItemCastSpell.Draw(c);
+            gv.DrawText(c, "USE PC LEVEL FOR ON USE ITEM SPELL", btnItUsePlayerClassLevelForOnUseItemCastSpell.X + btnItUsePlayerClassLevelForOnUseItemCastSpell.Width + gv.scaler, btnItUsePlayerClassLevelForOnUseItemCastSpell.Y + shiftForFont, "wh");
 
         }
-        public void drawClass()
+        public void drawClass(SKCanvas c)
         {
             int shiftForFont = (btnItName.Height / 2) - (gv.fontHeight / 2);
             //label      
-            gv.DrawText("CLASSES THAT CAN USE ITEM:", btnAddClass.X, btnAddClass.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddClass.Draw();
-            btnRemoveClass.Draw();
+            gv.DrawText(c, "CLASSES THAT CAN USE ITEM:", btnAddClass.X, btnAddClass.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddClass.Draw(c);
+            btnRemoveClass.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddClass.X;
             int startY = btnAddClass.Y + btnAddClass.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (string c in gv.cc.allItemsList[itemListIndex].classesAllowed)
+            foreach (string c2 in gv.cc.allItemsList[itemListIndex].classesAllowed)
             {
                 if (cnt == classListIndex)
                 {
-                    gv.DrawText(c, startX, startY += incY, "gn");
+                    gv.DrawText(c, c2, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(c, startX, startY += incY, "wh");
+                    gv.DrawText(c, c2, startX, startY += incY, "wh");
                 }
                 cnt++;
             }

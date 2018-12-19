@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -108,7 +109,7 @@ namespace IBbasic
 	    }
 	
 	    //CAST SELECTOR SCREEN (COMBAT and MAIN)
-        public void redrawSpellLevelUp(bool inPcCreation)
+        public void redrawSpellLevelUp(SKCanvas c, bool inPcCreation)
         {
             Player pc = getCastingPlayer();
 
@@ -133,8 +134,8 @@ namespace IBbasic
             {
                 //DRAW TEXT		
                 locY = (gv.uiSquareSize * 0) + (pH * 2);
-                gv.DrawText("Select " + spellToLearnIndex + " of " + gv.cc.getPlayerClass(pc.classTag).spellsToLearnAtLevelTable[getCastingPlayer().classLevel] + " " + gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + " to Learn", noticeX, pH * 1, "gy");
-                gv.DrawText(getCastingPlayer().name + " SP: " + getCastingPlayer().sp + "/" + getCastingPlayer().spMax, pW * 50, pH * 1, "yl");
+                gv.DrawText(c, "Select " + spellToLearnIndex + " of " + gv.cc.getPlayerClass(pc.classTag).spellsToLearnAtLevelTable[getCastingPlayer().classLevel] + " " + gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + " to Learn", noticeX, pH * 1, "gy");
+                gv.DrawText(c, getCastingPlayer().name + " SP: " + getCastingPlayer().sp + "/" + getCastingPlayer().spMax, pW * 50, pH * 1, "yl");
 
                 //DRAW NOTIFICATIONS
                 if (isSelectedSpellSlotInKnownSpellsRange())
@@ -145,25 +146,25 @@ namespace IBbasic
                     if ((pc.knownSpellsTags.Contains(sp.tag)) || (pc.learningSpellsTags.Contains(sp.tag)))
                     {
                         //say that you already know this one
-                        gv.DrawText("Already Known", noticeX, noticeY, "yl");
+                        gv.DrawText(c, "Already Known", noticeX, noticeY, "yl");
                     }
                     else //spell not known
                     {
                         //check if available to learn
                         if (isAvailableToLearn(sp.tag))
                         {
-                            gv.DrawText("Available to Learn", noticeX, noticeY, "gn");
+                            gv.DrawText(c, "Available to Learn", noticeX, noticeY, "gn");
                         }
                         else //not available yet
                         {
-                            gv.DrawText(gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " Not Available to Learn Yet", noticeX, noticeY, "rd");
+                            gv.DrawText(c, gv.cc.getPlayerClass(pc.classTag).spellLabelSingular + " Not Available to Learn Yet", noticeX, noticeY, "rd");
                         }
                     }
                 }
             }
             else
             {
-                gv.DrawText(gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + " Known or Available for this Class", noticeX, pH * 1, "gy");
+                gv.DrawText(c, gv.cc.getPlayerClass(pc.classTag).spellLabelPlural + " Known or Available for this Class", noticeX, pH * 1, "gy");
             }
 
             //DRAW ALL SPELL SLOTS		
@@ -230,7 +231,7 @@ namespace IBbasic
                     btn.Img = "btn_small_off"; // BitmapFactory.decodeResource(gv.getResources(), R.drawable.btn_small_off);
 				    btn.Img2 = null;
 			    }			
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }
 
@@ -255,24 +256,24 @@ namespace IBbasic
                 description.tbHeight = pH * 80;
                 description.logLinesList.Clear();
                 description.AddHtmlTextToLog(textToSpan);
-                description.onDrawLogBox();
+                description.onDrawLogBox(c);
             }
 
             if (infoOnly)
             {
                 btnSelect.Text = "RETURN";
-                btnSelect.Draw();
+                btnSelect.Draw(c);
             }
             else
             {
                 btnSelect.Text = "LEARN SELECTED " + gv.cc.getPlayerClass(pc.classTag).spellLabelSingular.ToUpper();
-                btnHelp.Draw();
-                btnExit.Draw();
-                btnSelect.Draw();
+                btnHelp.Draw(c);
+                btnExit.Draw(c);
+                btnSelect.Draw(c);
             }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchSpellLevelUp(int eX, int eY, MouseEventType.EventType eventType, bool inPcCreation)

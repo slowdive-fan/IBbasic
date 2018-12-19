@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -587,20 +588,20 @@ namespace IBbasic
             btnRemoveKnownSpell.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsPlayerEditor()
+        public void redrawTsPlayerEditor(SKCanvas c)
         {
             sortPlayerList();
             setControlsStart();
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             int shiftForFont = (tglMain.Height / 2) - (gv.fontHeight / 2);
             //Page Title
-            gv.DrawText("PLAYER EDITOR", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "PLAYER EDITOR", center - (7 * (gv.fontWidth + gv.fontCharSpacing)), 2 * gv.scaler, "yl");
 
             //label      
-            gv.DrawText("PLAYERS", btnAddPlayer.X, btnAddPlayer.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddPlayer.Draw();
-            btnRemovePlayer.Draw();
-            btnCopyPlayer.Draw();
+            gv.DrawText(c, "PLAYERS", btnAddPlayer.X, btnAddPlayer.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddPlayer.Draw(c);
+            btnRemovePlayer.Draw(c);
+            btnCopyPlayer.Draw(c);
 
             string lastCategory = "";
             numberOfLinesToShow = 23;
@@ -614,27 +615,27 @@ namespace IBbasic
             {
                 if (cnt == playerListIndex)
                 {
-                    gv.DrawText(pc.name, startX, startY += incY, "gn");
+                    gv.DrawText(c, pc.name, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(pc.name, startX, startY += incY, "wh");
+                    gv.DrawText(c, pc.name, startX, startY += incY, "wh");
                 }
                 cnt++;
             }
 
-            tglMain.Draw();
-            gv.DrawText("MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
-            tglAttributes.Draw();
-            gv.DrawText("ATTRIBUTES", tglAttributes.X + tglAttributes.Width + gv.scaler, tglAttributes.Y + shiftForFont, "ma");
-            tglImages.Draw();
-            gv.DrawText("IMAGES", tglImages.X + tglImages.Width + gv.scaler, tglImages.Y + shiftForFont, "ma");
-            tglItems.Draw();
-            gv.DrawText("EQUIP ITEMS", tglItems.X + tglItems.Width + gv.scaler, tglItems.Y + shiftForFont, "ma");
-            tglTraits.Draw();
-            gv.DrawText("TRAITS", tglTraits.X + tglTraits.Width + gv.scaler, tglTraits.Y + shiftForFont, "ma");
-            tglSpells.Draw();
-            gv.DrawText("SPELLS", tglSpells.X + tglSpells.Width + gv.scaler, tglSpells.Y + shiftForFont, "ma");
+            tglMain.Draw(c);
+            gv.DrawText(c, "MAIN", tglMain.X + tglMain.Width + gv.scaler, tglMain.Y + shiftForFont, "ma");
+            tglAttributes.Draw(c);
+            gv.DrawText(c, "ATTRIBUTES", tglAttributes.X + tglAttributes.Width + gv.scaler, tglAttributes.Y + shiftForFont, "ma");
+            tglImages.Draw(c);
+            gv.DrawText(c, "IMAGES", tglImages.X + tglImages.Width + gv.scaler, tglImages.Y + shiftForFont, "ma");
+            tglItems.Draw(c);
+            gv.DrawText(c, "EQUIP ITEMS", tglItems.X + tglItems.Width + gv.scaler, tglItems.Y + shiftForFont, "ma");
+            tglTraits.Draw(c);
+            gv.DrawText(c, "TRAITS", tglTraits.X + tglTraits.Width + gv.scaler, tglTraits.Y + shiftForFont, "ma");
+            tglSpells.Draw(c);
+            gv.DrawText(c, "SPELLS", tglSpells.X + tglSpells.Width + gv.scaler, tglSpells.Y + shiftForFont, "ma");
 
             if (gv.mod.companionPlayerList.Count > 0)
             {
@@ -651,179 +652,179 @@ namespace IBbasic
                 if (currentMode.Equals("Main"))
                 {
                     setMainControlsStart();
-                    drawMain();
+                    drawMain(c);
                 }
                 else if (currentMode.Equals("Attributes"))
                 {
                     setAttributesControlsStart();
-                    drawAttributes();
+                    drawAttributes(c);
                 }
                 else if (currentMode.Equals("Images"))
                 {
                     setImagesControlsStart();
-                    drawImages();
+                    drawImages(c);
                 }
                 else if (currentMode.Equals("Items"))
                 {
                     setEquippedItemsControlsStart();
-                    drawItems();
+                    drawItems(c);
                 }
                 else if (currentMode.Equals("Traits"))
                 {
                     setTraitsControlsStart();
-                    drawTraits();
+                    drawTraits(c);
                 }
                 else if (currentMode.Equals("Spells"))
                 {
                     setSpellsControlsStart();
-                    drawSpells();
+                    drawSpells(c);
                 }
             }
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-        public void drawMain()
+        public void drawMain(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
-            btnPcName.Draw();
-            gv.DrawText("NAME: " + gv.mod.companionPlayerList[playerListIndex].name, btnPcName.X + btnPcName.Width + gv.scaler, btnPcName.Y + shiftForFont, "wh");
-            btnPcTag.Draw();
-            gv.DrawText("TAG: " + gv.mod.companionPlayerList[playerListIndex].tag, btnPcTag.X + btnPcTag.Width + gv.scaler, btnPcTag.Y + shiftForFont, "wh");
-            btnNonRemoveable.Draw();
-            gv.DrawText("NON-REMOVEABLE: " + gv.mod.companionPlayerList[playerListIndex].nonRemoveablePc, btnNonRemoveable.X + btnNonRemoveable.Width + gv.scaler, btnNonRemoveable.Y + shiftForFont, "wh");
-            btnPcLevel.Draw();
-            gv.DrawText("LEVEL: " + gv.mod.companionPlayerList[playerListIndex].classLevel, btnPcLevel.X + btnPcLevel.Width + gv.scaler, btnPcLevel.Y + shiftForFont, "wh");
-            btnPcClass.Draw();
-            gv.DrawText("CALSS TAG: " + gv.mod.companionPlayerList[playerListIndex].classTag, btnPcClass.X + btnPcClass.Width + gv.scaler, btnPcClass.Y + shiftForFont, "wh");
-            btnPcRace.Draw();
-            gv.DrawText("RACE TAG: " + gv.mod.companionPlayerList[playerListIndex].raceTag, btnPcRace.X + btnPcRace.Width + gv.scaler, btnPcRace.Y + shiftForFont, "wh");
-            btnGender.Draw();
-            gv.DrawText("IS MALE: " + gv.mod.companionPlayerList[playerListIndex].isMale, btnGender.X + btnGender.Width + gv.scaler, btnGender.Y + shiftForFont, "wh");
-            btnPcXP.Draw();
-            gv.DrawText("XP: " + gv.mod.companionPlayerList[playerListIndex].XP, btnPcXP.X + btnPcXP.Width + gv.scaler, btnPcXP.Y + shiftForFont, "wh");
+            btnPcName.Draw(c);
+            gv.DrawText(c, "NAME: " + gv.mod.companionPlayerList[playerListIndex].name, btnPcName.X + btnPcName.Width + gv.scaler, btnPcName.Y + shiftForFont, "wh");
+            btnPcTag.Draw(c);
+            gv.DrawText(c, "TAG: " + gv.mod.companionPlayerList[playerListIndex].tag, btnPcTag.X + btnPcTag.Width + gv.scaler, btnPcTag.Y + shiftForFont, "wh");
+            btnNonRemoveable.Draw(c);
+            gv.DrawText(c, "NON-REMOVEABLE: " + gv.mod.companionPlayerList[playerListIndex].nonRemoveablePc, btnNonRemoveable.X + btnNonRemoveable.Width + gv.scaler, btnNonRemoveable.Y + shiftForFont, "wh");
+            btnPcLevel.Draw(c);
+            gv.DrawText(c, "LEVEL: " + gv.mod.companionPlayerList[playerListIndex].classLevel, btnPcLevel.X + btnPcLevel.Width + gv.scaler, btnPcLevel.Y + shiftForFont, "wh");
+            btnPcClass.Draw(c);
+            gv.DrawText(c, "CALSS TAG: " + gv.mod.companionPlayerList[playerListIndex].classTag, btnPcClass.X + btnPcClass.Width + gv.scaler, btnPcClass.Y + shiftForFont, "wh");
+            btnPcRace.Draw(c);
+            gv.DrawText(c, "RACE TAG: " + gv.mod.companionPlayerList[playerListIndex].raceTag, btnPcRace.X + btnPcRace.Width + gv.scaler, btnPcRace.Y + shiftForFont, "wh");
+            btnGender.Draw(c);
+            gv.DrawText(c, "IS MALE: " + gv.mod.companionPlayerList[playerListIndex].isMale, btnGender.X + btnGender.Width + gv.scaler, btnGender.Y + shiftForFont, "wh");
+            btnPcXP.Draw(c);
+            gv.DrawText(c, "XP: " + gv.mod.companionPlayerList[playerListIndex].XP, btnPcXP.X + btnPcXP.Width + gv.scaler, btnPcXP.Y + shiftForFont, "wh");
         }
-        public void drawAttributes()
+        public void drawAttributes(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
-            btnPcStrBase.Draw();
-            gv.DrawText("STR: " + gv.mod.companionPlayerList[playerListIndex].baseStr, btnPcStrBase.X + btnPcStrBase.Width + gv.scaler, btnPcStrBase.Y + shiftForFont, "wh");
-            btnPcDexBase.Draw();
-            gv.DrawText("DEX: " + gv.mod.companionPlayerList[playerListIndex].baseDex, btnPcDexBase.X + btnPcDexBase.Width + gv.scaler, btnPcDexBase.Y + shiftForFont, "wh");
-            btnPcConBase.Draw();
-            gv.DrawText("CON: " + gv.mod.companionPlayerList[playerListIndex].baseCon, btnPcConBase.X + btnPcConBase.Width + gv.scaler, btnPcConBase.Y + shiftForFont, "wh");
-            btnPcIntBase.Draw();
-            gv.DrawText("INT: " + gv.mod.companionPlayerList[playerListIndex].baseInt, btnPcIntBase.X + btnPcIntBase.Width + gv.scaler, btnPcIntBase.Y + shiftForFont, "wh");
-            btnPcWisBase.Draw();
-            gv.DrawText("WIS: " + gv.mod.companionPlayerList[playerListIndex].baseWis, btnPcWisBase.X + btnPcWisBase.Width + gv.scaler, btnPcWisBase.Y + shiftForFont, "wh");
-            btnPcChaBase.Draw();
-            gv.DrawText("CHA: " + gv.mod.companionPlayerList[playerListIndex].baseCha, btnPcChaBase.X + btnPcChaBase.Width + gv.scaler, btnPcChaBase.Y + shiftForFont, "wh");
+            btnPcStrBase.Draw(c);
+            gv.DrawText(c, "STR: " + gv.mod.companionPlayerList[playerListIndex].baseStr, btnPcStrBase.X + btnPcStrBase.Width + gv.scaler, btnPcStrBase.Y + shiftForFont, "wh");
+            btnPcDexBase.Draw(c);
+            gv.DrawText(c, "DEX: " + gv.mod.companionPlayerList[playerListIndex].baseDex, btnPcDexBase.X + btnPcDexBase.Width + gv.scaler, btnPcDexBase.Y + shiftForFont, "wh");
+            btnPcConBase.Draw(c);
+            gv.DrawText(c, "CON: " + gv.mod.companionPlayerList[playerListIndex].baseCon, btnPcConBase.X + btnPcConBase.Width + gv.scaler, btnPcConBase.Y + shiftForFont, "wh");
+            btnPcIntBase.Draw(c);
+            gv.DrawText(c, "INT: " + gv.mod.companionPlayerList[playerListIndex].baseInt, btnPcIntBase.X + btnPcIntBase.Width + gv.scaler, btnPcIntBase.Y + shiftForFont, "wh");
+            btnPcWisBase.Draw(c);
+            gv.DrawText(c, "WIS: " + gv.mod.companionPlayerList[playerListIndex].baseWis, btnPcWisBase.X + btnPcWisBase.Width + gv.scaler, btnPcWisBase.Y + shiftForFont, "wh");
+            btnPcChaBase.Draw(c);
+            gv.DrawText(c, "CHA: " + gv.mod.companionPlayerList[playerListIndex].baseCha, btnPcChaBase.X + btnPcChaBase.Width + gv.scaler, btnPcChaBase.Y + shiftForFont, "wh");
             int yLoc = btnPcChaBase.Y;
             //btnPcReflex.Draw();
-            gv.DrawText("Reflex: " + gv.mod.companionPlayerList[playerListIndex].reflex, btnPcReflex.X, yLoc + (2 * gv.fontHeight), "wh");
+            gv.DrawText(c, "Reflex: " + gv.mod.companionPlayerList[playerListIndex].reflex, btnPcReflex.X, yLoc + (2 * gv.fontHeight), "wh");
             //btnPcWill.Draw();
-            gv.DrawText("Will: " + gv.mod.companionPlayerList[playerListIndex].will, btnPcWill.X, yLoc + (3 * gv.fontHeight), "wh");
+            gv.DrawText(c, "Will: " + gv.mod.companionPlayerList[playerListIndex].will, btnPcWill.X, yLoc + (3 * gv.fontHeight), "wh");
             //btnPcFortitude.Draw();
-            gv.DrawText("Fortitude: " + gv.mod.companionPlayerList[playerListIndex].fortitude, btnPcFortitude.X, yLoc + (4 * gv.fontHeight), "wh");
-            gv.DrawText("HP: " + gv.mod.companionPlayerList[playerListIndex].hp + " HPmax: " + gv.mod.companionPlayerList[playerListIndex].hpMax,
+            gv.DrawText(c, "Fortitude: " + gv.mod.companionPlayerList[playerListIndex].fortitude, btnPcFortitude.X, yLoc + (4 * gv.fontHeight), "wh");
+            gv.DrawText(c, "HP: " + gv.mod.companionPlayerList[playerListIndex].hp + " HPmax: " + gv.mod.companionPlayerList[playerListIndex].hpMax,
                         btnPcFortitude.X, yLoc + (5 * gv.fontHeight), "wh");
-            gv.DrawText("SP: " + gv.mod.companionPlayerList[playerListIndex].sp + " SPmax: " + gv.mod.companionPlayerList[playerListIndex].spMax,
+            gv.DrawText(c, "SP: " + gv.mod.companionPlayerList[playerListIndex].sp + " SPmax: " + gv.mod.companionPlayerList[playerListIndex].spMax,
                         btnPcFortitude.X, yLoc + (6 * gv.fontHeight), "wh");
 
         }
-        public void drawImages()
+        public void drawImages(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
-            btnPcTokenFilename.Draw();
+            btnPcTokenFilename.Draw(c);
             string token = gv.mod.companionPlayerList[playerListIndex].tokenFilename;
             int brX = (int)(gv.squareSize * gv.scaler);
             int brY = (int)(gv.squareSize * gv.scaler);
-            gv.DrawText("TOKEN FILENAME: " + token, btnPcTokenFilename.X + btnPcTokenFilename.Width + gv.scaler, btnPcTokenFilename.Y + shiftForFont, "wh");
+            gv.DrawText(c, "TOKEN FILENAME: " + token, btnPcTokenFilename.X + btnPcTokenFilename.Width + gv.scaler, btnPcTokenFilename.Y + shiftForFont, "wh");
             //top frame
             src = new IbRect(0, 0, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);
             dst = new IbRect(btnPcTokenFilename.X, btnPcTokenFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
             //bottom frame
             src = new IbRect(0, gv.cc.GetFromTileBitmapList(token).Height / 2, gv.cc.GetFromTileBitmapList(token).Width, gv.cc.GetFromTileBitmapList(token).Height / 2);
             dst = new IbRect(btnPcTokenFilename.X + brX, btnPcTokenFilename.Y + (gv.uiSquareSize / 2), brX, brY);
-            gv.DrawBitmap(gv.cc.GetFromTileBitmapList(token), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromTileBitmapList(token), src, dst);
 
         }
-        public void drawItems()
+        public void drawItems(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
-            btnPcHead.Draw();
-            gv.DrawText("HEAD: " + gv.mod.companionPlayerList[playerListIndex].HeadRefs.name, btnPcHead.X + btnPcHead.Width + gv.scaler, btnPcHead.Y + shiftForFont, "wh");
-            btnPcNeck.Draw();
-            gv.DrawText("NECK: " + gv.mod.companionPlayerList[playerListIndex].NeckRefs.name, btnPcNeck.X + btnPcNeck.Width + gv.scaler, btnPcNeck.Y + shiftForFont, "wh");
-            btnPcBody.Draw();
-            gv.DrawText("BODY: " + gv.mod.companionPlayerList[playerListIndex].BodyRefs.name, btnPcBody.X + btnPcBody.Width + gv.scaler, btnPcBody.Y + shiftForFont, "wh");
-            btnPcMainHand.Draw();
-            gv.DrawText("MAIN HAND: " + gv.mod.companionPlayerList[playerListIndex].MainHandRefs.name, btnPcMainHand.X + btnPcMainHand.Width + gv.scaler, btnPcMainHand.Y + shiftForFont, "wh");
-            btnPcOffHand.Draw();
-            gv.DrawText("OFF HAND: " + gv.mod.companionPlayerList[playerListIndex].OffHandRefs.name, btnPcOffHand.X + btnPcOffHand.Width + gv.scaler, btnPcOffHand.Y + shiftForFont, "wh");
-            btnPcRing1.Draw();
-            gv.DrawText("RING 1: " + gv.mod.companionPlayerList[playerListIndex].RingRefs.name, btnPcRing1.X + btnPcRing1.Width + gv.scaler, btnPcRing1.Y + shiftForFont, "wh");
-            btnPcRing2.Draw();
-            gv.DrawText("RING 2: " + gv.mod.companionPlayerList[playerListIndex].Ring2Refs.name, btnPcRing2.X + btnPcRing2.Width + gv.scaler, btnPcRing2.Y + shiftForFont, "wh");
-            btnPcFeet.Draw();
-            gv.DrawText("FEET: " + gv.mod.companionPlayerList[playerListIndex].FeetRefs.name, btnPcFeet.X + btnPcFeet.Width + gv.scaler, btnPcFeet.Y + shiftForFont, "wh");
-            btnPcAmmo.Draw();
-            gv.DrawText("AMMO: " + gv.mod.companionPlayerList[playerListIndex].AmmoRefs.name, btnPcAmmo.X + btnPcAmmo.Width + gv.scaler, btnPcAmmo.Y + shiftForFont, "wh");
+            btnPcHead.Draw(c);
+            gv.DrawText(c, "HEAD: " + gv.mod.companionPlayerList[playerListIndex].HeadRefs.name, btnPcHead.X + btnPcHead.Width + gv.scaler, btnPcHead.Y + shiftForFont, "wh");
+            btnPcNeck.Draw(c);
+            gv.DrawText(c, "NECK: " + gv.mod.companionPlayerList[playerListIndex].NeckRefs.name, btnPcNeck.X + btnPcNeck.Width + gv.scaler, btnPcNeck.Y + shiftForFont, "wh");
+            btnPcBody.Draw(c);
+            gv.DrawText(c, "BODY: " + gv.mod.companionPlayerList[playerListIndex].BodyRefs.name, btnPcBody.X + btnPcBody.Width + gv.scaler, btnPcBody.Y + shiftForFont, "wh");
+            btnPcMainHand.Draw(c);
+            gv.DrawText(c, "MAIN HAND: " + gv.mod.companionPlayerList[playerListIndex].MainHandRefs.name, btnPcMainHand.X + btnPcMainHand.Width + gv.scaler, btnPcMainHand.Y + shiftForFont, "wh");
+            btnPcOffHand.Draw(c);
+            gv.DrawText(c, "OFF HAND: " + gv.mod.companionPlayerList[playerListIndex].OffHandRefs.name, btnPcOffHand.X + btnPcOffHand.Width + gv.scaler, btnPcOffHand.Y + shiftForFont, "wh");
+            btnPcRing1.Draw(c);
+            gv.DrawText(c, "RING 1: " + gv.mod.companionPlayerList[playerListIndex].RingRefs.name, btnPcRing1.X + btnPcRing1.Width + gv.scaler, btnPcRing1.Y + shiftForFont, "wh");
+            btnPcRing2.Draw(c);
+            gv.DrawText(c, "RING 2: " + gv.mod.companionPlayerList[playerListIndex].Ring2Refs.name, btnPcRing2.X + btnPcRing2.Width + gv.scaler, btnPcRing2.Y + shiftForFont, "wh");
+            btnPcFeet.Draw(c);
+            gv.DrawText(c, "FEET: " + gv.mod.companionPlayerList[playerListIndex].FeetRefs.name, btnPcFeet.X + btnPcFeet.Width + gv.scaler, btnPcFeet.Y + shiftForFont, "wh");
+            btnPcAmmo.Draw(c);
+            gv.DrawText(c, "AMMO: " + gv.mod.companionPlayerList[playerListIndex].AmmoRefs.name, btnPcAmmo.X + btnPcAmmo.Width + gv.scaler, btnPcAmmo.Y + shiftForFont, "wh");
 
         }
-        public void drawTraits()
+        public void drawTraits(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
             //label      
-            gv.DrawText("KNOWN TRAITS", btnAddKnownTrait.X, btnAddKnownTrait.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddKnownTrait.Draw();
-            btnRemoveKnownTrait.Draw();
+            gv.DrawText(c, "KNOWN TRAITS", btnAddKnownTrait.X, btnAddKnownTrait.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddKnownTrait.Draw(c);
+            btnRemoveKnownTrait.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownTrait.X;
             int startY = btnAddKnownTrait.Y + btnAddKnownTrait.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (string c in gv.mod.companionPlayerList[playerListIndex].knownTraitsTags)
+            foreach (string c2 in gv.mod.companionPlayerList[playerListIndex].knownTraitsTags)
             {
                 if (cnt == knownTraitListIndex)
                 {
-                    gv.DrawText(gv.cc.getTraitByTag(c).name, startX, startY += incY, "gn");
+                    gv.DrawText(c, gv.cc.getTraitByTag(c2).name, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(gv.cc.getTraitByTag(c).name, startX, startY += incY, "wh");
+                    gv.DrawText(c, gv.cc.getTraitByTag(c2).name, startX, startY += incY, "wh");
                 }
                 cnt++;
             }
         }
-        public void drawSpells()
+        public void drawSpells(SKCanvas c)
         {
             int shiftForFont = (btnPcName.Height / 2) - (gv.fontHeight / 2);
             //label      
-            gv.DrawText("KNOWN SPELLS", btnAddKnownSpell.X, btnAddKnownSpell.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
-            btnAddKnownSpell.Draw();
-            btnRemoveKnownSpell.Draw();
+            gv.DrawText(c, "KNOWN SPELLS", btnAddKnownSpell.X, btnAddKnownSpell.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            btnAddKnownSpell.Draw(c);
+            btnRemoveKnownSpell.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = btnAddKnownSpell.X;
             int startY = btnAddKnownSpell.Y + btnAddKnownSpell.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (string c in gv.mod.companionPlayerList[playerListIndex].knownSpellsTags)
+            foreach (string c2 in gv.mod.companionPlayerList[playerListIndex].knownSpellsTags)
             {
                 if (cnt == knownSpellListIndex)
                 {
-                    gv.DrawText(gv.cc.getSpellByTag(c).name, startX, startY += incY, "gn");
+                    gv.DrawText(c, gv.cc.getSpellByTag(c2).name, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(gv.cc.getSpellByTag(c).name, startX, startY += incY, "wh");
+                    gv.DrawText(c, gv.cc.getSpellByTag(c2).name, startX, startY += incY, "wh");
                 }
                 cnt++;
             }

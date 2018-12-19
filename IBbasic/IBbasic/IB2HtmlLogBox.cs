@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +46,11 @@ namespace IBbasic
             numberOfLinesToShow = (int)((tbHeight) / (gv.fontHeight + gv.fontLineSpacing)) - 1;
         }
 
-        public void DrawString(string text, float x, float y, string fontColor)
+        public void DrawString(SKCanvas canvas, string text, float x, float y, string fontColor)
         {
             if ((y > -2) && (y <= (tbHeight) - gv.fontHeight))
             {
-                gv.DrawText(text, x + gv.pS, y, fontColor);                
+                gv.DrawText(canvas, text, x + gv.pS, y, fontColor);                
             }
         }
 
@@ -78,7 +79,7 @@ namespace IBbasic
             }
             scrollToEnd();
         }
-        public void onDrawLogBox()
+        public void onDrawLogBox(SKCanvas canvas)
         {
             numberOfLinesToShow = (int)((tbHeight) / (gv.fontHeight + gv.fontLineSpacing)) - 1;
             //ratio of #lines to #pixels
@@ -102,7 +103,7 @@ namespace IBbasic
                 {
                     int xLoc2 = (int)((this.tbXloc + xLoc));
                     int yLoc2 = (int)((this.tbYloc + yLoc));
-                    DrawString(word.text + " ", xLoc2, yLoc2, word.color);
+                    DrawString(canvas, word.text + " ", xLoc2, yLoc2, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
                 xLoc = 0;

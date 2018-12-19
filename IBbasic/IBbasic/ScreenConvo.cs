@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -73,11 +74,11 @@ namespace IBbasic
         }
 	
 	    //CONVO SCREEN
-	    public void redrawConvo()
+	    public void redrawConvo(SKCanvas c)
         {
-            drawPortrait();
-		    drawNpcNode();
-		    drawPcNode();
+            drawPortrait(c);
+		    drawNpcNode(c);
+		    drawPcNode(c);
 
             //DRAW EACH LINE BUTTON
             int cntLine = 0;
@@ -85,7 +86,7 @@ namespace IBbasic
             {
                 if (cntLine < currentPcNodeList.Count)
                 {
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntLine++;
             }
@@ -100,17 +101,17 @@ namespace IBbasic
 				    {
 					    if (cntPCs == gv.mod.selectedPartyLeader) {btn.glowOn = true;}
 					    else {btn.glowOn = false;}					
-					    btn.Draw();
+					    btn.Draw(c);
 				    }
 				    cntPCs++;
 			    }
 		    }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
-	    public void drawPortrait()
+	    public void drawPortrait(SKCanvas c)
 	    {
             int pH = (int)((float)gv.screenHeight / 100.0f);
 		    int sX = gv.uiSquareSize * 0 + gv.uiSquareSize / 4;
@@ -135,19 +136,22 @@ namespace IBbasic
             }
 		    if (convoBitmap != null)
 		    {
-			    gv.DrawBitmap(convoBitmap, src, dst);
-                if ((gv.mod.useUIBackground) && (!gv.mod.currentConvo.Narration))
+			    gv.DrawBitmap(c, convoBitmap, src, dst);
+                if (gv.cc.ui_portrait_frame != null)
                 {
-                    IbRect srcFrame = new IbRect(0, 0, gv.cc.ui_portrait_frame.Width, gv.cc.ui_portrait_frame.Height);
-                    IbRect dstFrame = new IbRect(dst.Left - (int)(2 * gv.scaler),
-                                            dst.Top - (int)(2 * gv.scaler),
-                                            (int)((float)dst.Width) + (int)(4 * gv.scaler),
-                                            (int)((float)dst.Height) + (int)(4 * gv.scaler));
-                    gv.DrawBitmap(gv.cc.ui_portrait_frame, srcFrame, dstFrame);
+                    if ((gv.mod.useUIBackground) && (!gv.mod.currentConvo.Narration))
+                    {
+                        IbRect srcFrame = new IbRect(0, 0, gv.cc.ui_portrait_frame.Width, gv.cc.ui_portrait_frame.Height);
+                        IbRect dstFrame = new IbRect(dst.Left - (int)(2 * gv.scaler),
+                                                dst.Top - (int)(2 * gv.scaler),
+                                                (int)((float)dst.Width) + (int)(4 * gv.scaler),
+                                                (int)((float)dst.Height) + (int)(4 * gv.scaler));
+                        gv.DrawBitmap(c, gv.cc.ui_portrait_frame, srcFrame, dstFrame);
+                    }
                 }
             }
 	    }
-	    public void drawNpcNode()
+	    public void drawNpcNode(SKCanvas c)
 	    {
             int pW = (int)((float)gv.screenWidth / 100.0f);
             int pH = (int)((float)gv.screenHeight / 100.0f);
@@ -180,14 +184,14 @@ namespace IBbasic
             htmltext.AddFormattedTextToTextBox(textToSpan);
             int totalHeight = htmltext.linesList.Count * (gv.fontHeight + gv.fontLineSpacing);
             htmltext.tbHeight = totalHeight;
-            htmltext.onDrawTextBox();
+            htmltext.onDrawTextBox(c);
             /*foreach (FormattedLine fl in htmltext.logLinesList)
             {
                 totalHeight += fl.lineHeight;
             }*/
             npcNodeEndY = startY + totalHeight;
 	    }
-	    public void drawPcNode()
+	    public void drawPcNode(SKCanvas c)
 	    {
 		    currentPcNodeRectList.Clear();
 
@@ -234,7 +238,7 @@ namespace IBbasic
                 htmltext.tbHeight = pH * 50;
                 htmltext.linesList.Clear();
                 htmltext.AddFormattedTextToTextBox(textToSpan);
-                htmltext.onDrawTextBox();
+                htmltext.onDrawTextBox(c);
 
                 int totalHeight = htmltext.linesList.Count * (gv.fontHeight + gv.fontLineSpacing);
                 //float totalHeight = 0;

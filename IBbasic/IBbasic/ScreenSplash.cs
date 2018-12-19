@@ -170,24 +170,24 @@ namespace IBbasic
         }
 
         //TITLE SCREEN
-        public void redrawSplash()
+        public void redrawSplash(SKCanvas c)
         {
             //DRAW TITLE SCREEN
             float dstHeight = ((float)gv.screenWidth / (float)titleBitmap.Width) * (float)titleBitmap.Height;
             //do narration with image setup
             IbRect src = new IbRect(0, 0, titleBitmap.Width, titleBitmap.Height);
             IbRect dst = new IbRect(0 - gv.oXshift, 0 - gv.oYshift, gv.screenWidth, (int)dstHeight);
-            gv.DrawBitmap(titleBitmap, src, dst);
+            gv.DrawBitmap(c, titleBitmap, src, dst);
 
-            btnPlay.Draw();
-            btnCreate.Draw();
-            btnZip.Draw();
-            btnUnZip.Draw();
-            btnNews.Draw();
-            btnTwitter.Draw();
-            btnWebsite.Draw();
-            btnSubmitModule.Draw();
-            btnComment.Draw();
+            btnPlay.Draw(c);
+            btnCreate.Draw(c);
+            btnZip.Draw(c);
+            btnUnZip.Draw(c);
+            btnNews.Draw(c);
+            btnTwitter.Draw(c);
+            btnWebsite.Draw(c);
+            btnSubmitModule.Draw(c);
+            btnComment.Draw(c);
 
             //Draw IceBlink2RPG Engine Version Number
             int xLoc = (gv.uiSquaresInWidth * gv.uiSquareSize / 2) - (4 * gv.fontWidth);
@@ -196,14 +196,14 @@ namespace IBbasic
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    gv.DrawText("v" + gv.versionNum, xLoc + x, yLoc + y, "bk");
+                    gv.DrawText(c, "v" + gv.versionNum, xLoc + x, yLoc + y, "bk");
                 }
             }
-            gv.DrawText("v" + gv.versionNum, xLoc, yLoc, "wh");
+            gv.DrawText(c, "v" + gv.versionNum, xLoc, yLoc, "wh");
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
 

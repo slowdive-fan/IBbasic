@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -305,7 +306,7 @@ namespace IBbasic
             
         }
 
-        public void redrawPcCreation()
+        public void redrawPcCreation(SKCanvas c)
         {
             setControlsStart();
             //Player pc = gv.mod.playerList.get(0);
@@ -329,7 +330,7 @@ namespace IBbasic
             int tokenRectPad = pW * 1;
 
             //Page Title
-            gv.DrawText("CREATE CHARACTER", pW * 40 + gv.uiSquareSize, pH * 1, "yl");
+            gv.DrawText(c, "CREATE CHARACTER", pW * 40 + gv.uiSquareSize, pH * 1, "yl");
 
             //Color color = Color.White;
 
@@ -339,24 +340,24 @@ namespace IBbasic
             
             if (!gv.mod.use3d6)
             {
-                gv.DrawText("Rolling: 2d6 + 6", locX + pW, locY += (spacing), "gy");
+                gv.DrawText(c, "Rolling: 2d6 + 6", locX + pW, locY += (spacing), "gy");
             }
             else if (gv.mod.use3d6)
             {
-                gv.DrawText("Rolling: 3d6", locX + pW, locY += (spacing), "gy");
+                gv.DrawText(c, "Rolling: 3d6", locX + pW, locY += (spacing), "gy");
             }
-            gv.DrawText("STR: " + pc.baseStr + " + " + (pc.strength - pc.baseStr) + " = " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", locX + pW, locY += (spacing), "wh");
-            gv.DrawText("AC: " + actext + ", BAB: " + pc.baseAttBonus, tabX2, locY2 += (spacing * 2), "wh");
-            gv.DrawText("DEX: " + pc.baseDex + " + " + (pc.dexterity - pc.baseDex) + " = " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
-            gv.DrawText("HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY2 += spacing, "wh");
-            gv.DrawText("CON: " + pc.baseCon + " + " + (pc.constitution - pc.baseCon) + " = " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
-            gv.DrawText("SP: " + pc.sp + "/" + pc.spMax, tabX2, locY2 += spacing, "wh");
-            gv.DrawText("INT: " + pc.baseInt + " + " + (pc.intelligence - pc.baseInt) + " = " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
-            gv.DrawText("FORT: " + pc.fortitude, tabX2, locY2 += spacing, "wh");
-            gv.DrawText("REF:  " + pc.reflex, tabX2, locY2 += spacing, "wh");
-            gv.DrawText("WILL: " + pc.will, tabX2, locY2 += spacing, "wh");
-            gv.DrawText("WIS: " + pc.baseWis + " + " + (pc.wisdom - pc.baseWis) + " = " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
-            gv.DrawText("CHA: " + pc.baseCha + " + " + (pc.charisma - pc.baseCha) + " = " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
+            gv.DrawText(c, "STR: " + pc.baseStr + " + " + (pc.strength - pc.baseStr) + " = " + pc.strength + " (" + ((pc.strength - 10) / 2) + ")", locX + pW, locY += (spacing), "wh");
+            gv.DrawText(c, "AC: " + actext + ", BAB: " + pc.baseAttBonus, tabX2, locY2 += (spacing * 2), "wh");
+            gv.DrawText(c, "DEX: " + pc.baseDex + " + " + (pc.dexterity - pc.baseDex) + " = " + pc.dexterity + " (" + ((pc.dexterity - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
+            gv.DrawText(c, "HP: " + pc.hp + "/" + pc.hpMax, tabX2, locY2 += spacing, "wh");
+            gv.DrawText(c, "CON: " + pc.baseCon + " + " + (pc.constitution - pc.baseCon) + " = " + pc.constitution + " (" + ((pc.constitution - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
+            gv.DrawText(c, "SP: " + pc.sp + "/" + pc.spMax, tabX2, locY2 += spacing, "wh");
+            gv.DrawText(c, "INT: " + pc.baseInt + " + " + (pc.intelligence - pc.baseInt) + " = " + pc.intelligence + " (" + ((pc.intelligence - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
+            gv.DrawText(c, "FORT: " + pc.fortitude, tabX2, locY2 += spacing, "wh");
+            gv.DrawText(c, "REF:  " + pc.reflex, tabX2, locY2 += spacing, "wh");
+            gv.DrawText(c, "WILL: " + pc.will, tabX2, locY2 += spacing, "wh");
+            gv.DrawText(c, "WIS: " + pc.baseWis + " + " + (pc.wisdom - pc.baseWis) + " = " + pc.wisdom + " (" + ((pc.wisdom - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
+            gv.DrawText(c, "CHA: " + pc.baseCha + " + " + (pc.charisma - pc.baseCha) + " = " + pc.charisma + " (" + ((pc.charisma - 10) / 2) + ")", locX + pW, locY += spacing, "wh");
 
             //Description
             int yLoc = 0 * gv.uiSquareSize + gv.uiSquareSize / 2;
@@ -379,16 +380,16 @@ namespace IBbasic
             //IbRect rect = new IbRect(tabX + gv.squareSize - pW, yLoc, pW * 35, pH * 50);            
             description.linesList.Clear();
             description.AddFormattedTextToTextBox(textToSpan);
-            description.onDrawTextBox();
+            description.onDrawTextBox(c);
             //gv.DrawText(textToSpan, rect, 1.0f, Color.White);
 
             //btnPortrait.Img = pc.portraitFilename;
             //btnPortrait.Draw();
-            btnToken.Draw();
+            btnToken.Draw(c);
             btnName.Text = pc.name;
-            btnName.Draw();
+            btnName.Draw(c);
             btnRace.Text = pc.race.name;
-            btnRace.Draw();
+            btnRace.Draw(c);
             if (pc.isMale)
             {
                 btnGender.Text = "Male";
@@ -397,17 +398,17 @@ namespace IBbasic
             {
                 btnGender.Text = "Female";
             }
-            btnGender.Draw();
+            btnGender.Draw(c);
             btnClass.Text = pc.playerClass.name;
-            btnClass.Draw();
+            btnClass.Draw(c);
 
-            btnRollStats.Draw();
-            btnFinished.Draw();
-            btnHelp.Draw();
-            btnAbort.Draw();
+            btnRollStats.Draw(c);
+            btnFinished.Draw(c);
+            btnHelp.Draw(c);
+            btnAbort.Draw(c);
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchPcCreation(int eX, int eY, MouseEventType.EventType eventType)

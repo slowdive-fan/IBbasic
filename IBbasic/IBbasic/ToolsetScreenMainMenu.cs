@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -270,29 +271,29 @@ namespace IBbasic
             btnExit.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsMainMenu()
+        public void redrawTsMainMenu(SKCanvas c)
         {
             createLeftPanel();
             createBottomPanel();
 
-            tglMainMenu.Draw();
+            tglMainMenu.Draw(c);
             if (showMainMenuPanels)
             {
-                btnAreaEditor.Draw();
-                btnEncounterEditor.Draw();
-                btnConvoEditor.Draw();
-                btnContainerEditor.Draw();
-                btnShopEditor.Draw();
-                btnJournalEditor.Draw();
-                btnSave.Draw();
-                btnBackUpModule.Draw();
-                btnModuleEditor.Draw();
-                btnCreatureEditor.Draw();
-                btnItem.Draw();
-                btnPlayer.Draw();
-                btnArt.Draw();
-                tglZoom.Draw();
-                btnExit.Draw();
+                btnAreaEditor.Draw(c);
+                btnEncounterEditor.Draw(c);
+                btnConvoEditor.Draw(c);
+                btnContainerEditor.Draw(c);
+                btnShopEditor.Draw(c);
+                btnJournalEditor.Draw(c);
+                btnSave.Draw(c);
+                btnBackUpModule.Draw(c);
+                btnModuleEditor.Draw(c);
+                btnCreatureEditor.Draw(c);
+                btnItem.Draw(c);
+                btnPlayer.Draw(c);
+                btnArt.Draw(c);
+                tglZoom.Draw(c);
+                btnExit.Draw(c);
             }    
         }
         public bool onTouchTsMainMenu(int eX, int eY, MouseEventType.EventType eventType)

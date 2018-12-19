@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,11 +64,11 @@ namespace IBbasic
             btnReturn.Y = (int)(currentLocY * gv.scaler) + (int)(Height * gv.scaler) - (int)(gv.ibbheight * gv.scaler) - (int)((gv.ibbheight / 4) * gv.scaler);                
          }
 
-        public void DrawString(string text, float x, float y, string fontColor)
+        public void DrawString(SKCanvas c, string text, float x, float y, string fontColor)
         {
             if ((y > -2) && (y <= (tbHeight * gv.scaler) - gv.fontHeight))
             {
-                gv.DrawText(text, x + tbXloc + gv.pS, y, fontColor);
+                gv.DrawText(c, text, x + tbXloc + gv.pS, y, fontColor);
             }
         }
 
@@ -96,12 +97,12 @@ namespace IBbasic
             }
             scrollToEnd();
         }
-        public void onDrawLogBox()
+        public void onDrawLogBox(SKCanvas c)
         {
             setControlsStart();
             IbRect src = new IbRect(0, 0, gv.cc.GetFromBitmapList("ui_bg_log").Width, gv.cc.GetFromBitmapList("ui_bg_log").Height);
             IbRect dst = new IbRect((int)(currentLocX * gv.scaler), (int)(currentLocY * gv.scaler), (int)(Width * gv.scaler), (int)(Height * gv.scaler));
-            gv.DrawBitmap(gv.cc.GetFromBitmapList("ui_bg_log"), src, dst);
+            gv.DrawBitmap(c, gv.cc.GetFromBitmapList("ui_bg_log"), src, dst);
 
             //ratio of #lines to #pixels
             float ratio = (float)(logLinesList.Count) / (float)(tbHeight * gv.scaler);
@@ -126,13 +127,13 @@ namespace IBbasic
                 {
                     int xLoc2 = (int)((currentLocX * gv.scaler + xLoc));
                     int yLoc2 = (int)((currentLocY * gv.scaler + yLoc));
-                    DrawString(word.text + " ", xLoc2, yLoc2, word.color);
+                    DrawString(c, word.text + " ", xLoc2, yLoc2, word.color);
                     xLoc += (word.text.Length + 1) * (gv.fontWidth + gv.fontCharSpacing);
                 }
                 xLoc = 0;
                 yLoc += gv.fontHeight + gv.fontLineSpacing;
             }
-            btnReturn.Draw();
+            btnReturn.Draw(c);
         }
 
         public void scrollToEnd()

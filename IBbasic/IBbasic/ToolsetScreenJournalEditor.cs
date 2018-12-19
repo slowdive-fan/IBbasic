@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -171,49 +172,49 @@ namespace IBbasic
             btnHelp.Width = (int)(gv.ibbwidthR * gv.scaler);
         }
 
-        public void redrawTsJournalEditor()
+        public void redrawTsJournalEditor(SKCanvas c)
         {
             setControlsStart();
             int shiftForFont = (btnJournalTag.Height / 2) - (gv.fontHeight / 2);
             int center = 6 * gv.uiSquareSize - (gv.uiSquareSize / 2);
             //Page Title
-            gv.DrawText("JOURNAL EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
+            gv.DrawText(c, "JOURNAL EDITOR", center - (9 * gv.fontWidth), 2 * gv.scaler, "yl");
 
             //label for Containers in module      
-            gv.DrawText("JOURNAL CATEGORIES", btnAddJournal.X, btnAddJournal.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+            gv.DrawText(c, "JOURNAL CATEGORIES", btnAddJournal.X, btnAddJournal.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
             //on the left draw the add and remove buttons
-            btnAddJournal.Draw();
-            btnRemoveJournal.Draw();
+            btnAddJournal.Draw(c);
+            btnRemoveJournal.Draw(c);
             //list all containers (tap on a container in the list to show elements for editing)
             int startX = 1 * gv.fontWidth;
             int startY = btnAddJournal.Y + btnAddJournal.Height - gv.fontHeight;
             int incY = gv.fontHeight + gv.fontLineSpacing;
             int cnt = 0;
-            foreach (JournalQuest c in gv.mod.moduleJournal)
+            foreach (JournalQuest c2 in gv.mod.moduleJournal)
             {
                 if (cnt == journalListIndex)
                 {
-                    gv.DrawText(c.Tag, startX, startY += incY, "gn");
+                    gv.DrawText(c, c2.Tag, startX, startY += incY, "gn");
                 }
                 else
                 {
-                    gv.DrawText(c.Tag, startX, startY += incY, "wh");
+                    gv.DrawText(c, c2.Tag, startX, startY += incY, "wh");
                 }
                 cnt++;
             }
 
             if (gv.mod.moduleJournal.Count > 0)
             {
-                btnJournalTag.Draw();
-                gv.DrawText("JOURNAL TAG: " + gv.mod.moduleJournal[journalListIndex].Tag, btnJournalTag.X + btnJournalTag.Width + gv.scaler, btnJournalTag.Y + shiftForFont, "wh");
-                btnJournalName.Draw();
-                gv.DrawText("JOURNAL NAME: " + gv.mod.moduleJournal[journalListIndex].Name, btnJournalName.X + btnJournalName.Width + gv.scaler, btnJournalName.Y + shiftForFont, "wh");
+                btnJournalTag.Draw(c);
+                gv.DrawText(c, "JOURNAL TAG: " + gv.mod.moduleJournal[journalListIndex].Tag, btnJournalTag.X + btnJournalTag.Width + gv.scaler, btnJournalTag.Y + shiftForFont, "wh");
+                btnJournalName.Draw(c);
+                gv.DrawText(c, "JOURNAL NAME: " + gv.mod.moduleJournal[journalListIndex].Name, btnJournalName.X + btnJournalName.Width + gv.scaler, btnJournalName.Y + shiftForFont, "wh");
 
                 //label for item list
-                gv.DrawText("JOURNAL ENTRIES", btnAddEntry.X, btnAddEntry.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
+                gv.DrawText(c, "JOURNAL ENTRIES", btnAddEntry.X, btnAddEntry.Y - gv.fontHeight - gv.fontLineSpacing, "yl");
                 //on the left draw the add and remove buttons
-                btnAddEntry.Draw();
-                btnRemoveEntry.Draw();
+                btnAddEntry.Draw(c);
+                btnRemoveEntry.Draw(c);
                 //list all containers (tap on a container in the list to show elements for editing)
                 startX = btnAddEntry.X;
                 startY = btnAddEntry.Y + btnAddEntry.Height - gv.fontHeight;
@@ -230,11 +231,11 @@ namespace IBbasic
                     //need to check if should start new column after list hits end of screen
                     if (cnt == entryListIndex)
                     {
-                        gv.DrawText(itr.Tag, startX, startY += incY, "gn");
+                        gv.DrawText(c, itr.Tag, startX, startY += incY, "gn");
                     }
                     else
                     {
-                        gv.DrawText(itr.Tag, startX, startY += incY, "wh");
+                        gv.DrawText(c, itr.Tag, startX, startY += incY, "wh");
                     }
                     cnt++;
                     columncount++;
@@ -248,14 +249,14 @@ namespace IBbasic
 
                 if (gv.mod.moduleJournal[journalListIndex].Entries.Count > 0)
                 {
-                    btnEntryName.Draw();
-                    gv.DrawText("NAME: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryTitle, btnEntryName.X + btnEntryName.Width + gv.scaler, btnEntryName.Y + shiftForFont, "wh");
-                    btnEntryTag.Draw();
-                    gv.DrawText("TAG: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].Tag, btnEntryTag.X + btnEntryTag.Width + gv.scaler, btnEntryTag.Y + shiftForFont, "wh");
-                    btnEntryID.Draw();
-                    gv.DrawText("ID: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryId, btnEntryID.X + btnEntryID.Width + gv.scaler, btnEntryID.Y + shiftForFont, "wh");
-                    btnEntryText.Draw();
-                    gv.DrawText("TEXT: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryText, btnEntryText.X + btnEntryText.Width + gv.scaler, btnEntryText.Y + shiftForFont, "wh");
+                    btnEntryName.Draw(c);
+                    gv.DrawText(c, "NAME: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryTitle, btnEntryName.X + btnEntryName.Width + gv.scaler, btnEntryName.Y + shiftForFont, "wh");
+                    btnEntryTag.Draw(c);
+                    gv.DrawText(c, "TAG: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].Tag, btnEntryTag.X + btnEntryTag.Width + gv.scaler, btnEntryTag.Y + shiftForFont, "wh");
+                    btnEntryID.Draw(c);
+                    gv.DrawText(c, "ID: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryId, btnEntryID.X + btnEntryID.Width + gv.scaler, btnEntryID.Y + shiftForFont, "wh");
+                    btnEntryText.Draw(c);
+                    gv.DrawText(c, "TEXT: " + gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryText, btnEntryText.X + btnEntryText.Width + gv.scaler, btnEntryText.Y + shiftForFont, "wh");
 
                     //Entry Text
                     description.tbXloc = 1 * gv.uiSquareSize;
@@ -267,17 +268,17 @@ namespace IBbasic
                     textToSpan += gv.mod.moduleJournal[journalListIndex].Entries[entryListIndex].EntryText;
                     description.linesList.Clear();
                     description.AddFormattedTextToTextBox(textToSpan);
-                    description.onDrawTextBox();
+                    description.onDrawTextBox(c);
                 }
             }
 
-            btnHelp.Draw();
+            btnHelp.Draw(c);
 
-            gv.tsMainMenu.redrawTsMainMenu();
+            gv.tsMainMenu.redrawTsMainMenu(c);
 
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchTsJournalEditor(int eX, int eY, MouseEventType.EventType eventType)

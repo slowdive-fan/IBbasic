@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -384,10 +385,10 @@ namespace IBbasic
         }
 
         //PARTY SCREEN
-        public void redrawPartyCampaign()
+        public void redrawPartyCampaign(SKCanvas c)
         {
             setControlsStart();
-            btnReturn.Draw();
+            btnReturn.Draw(c);
 
             int pW = (int)((float)gv.screenWidth / 100.0f);
             int pH = (int)((float)gv.screenHeight / 100.0f);
@@ -401,7 +402,7 @@ namespace IBbasic
             }
             if (partiesList.Count == 0)
             {
-                gv.DrawText("No Campaign Parties to Import", btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, "yl");
+                gv.DrawText(c, "No Campaign Parties to Import", btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, "yl");
                 return;
             }
             string color1 = "yl";
@@ -415,13 +416,13 @@ namespace IBbasic
             }
             //Draw screen title name
             string text = partiesList[partyIndex].partyName;
-            gv.DrawText("Name: ", btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, color1);
-            gv.DrawText("      " + text, btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, color2);
+            gv.DrawText(c, "Name: ", btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, color1);
+            gv.DrawText(c, "      " + text, btnPartyName.X + btnPartyName.Width, btnPartyName.Y + padH, color2);
             text = "Party Notes";
-            gv.DrawText(text, btnPartyNotes.X + btnPartyNotes.Width, btnPartyNotes.Y + padH, color1);
+            gv.DrawText(c, text, btnPartyNotes.X + btnPartyNotes.Width, btnPartyNotes.Y + padH, color1);
             text = partiesList[partyIndex].partyFilename;
-            gv.DrawText("File: ", btnPartyFilename.X + btnPartyFilename.Width, btnPartyFilename.Y + padH, color1);
-            gv.DrawText("      " + text, btnPartyFilename.X + btnPartyFilename.Width, btnPartyFilename.Y + padH, color2);
+            gv.DrawText(c, "File: ", btnPartyFilename.X + btnPartyFilename.Width, btnPartyFilename.Y + padH, color1);
+            gv.DrawText(c, "      " + text, btnPartyFilename.X + btnPartyFilename.Width, btnPartyFilename.Y + padH, color2);
 
             //DRAW EACH PC BUTTON
             this.refreshPlayerTokens();
@@ -431,13 +432,13 @@ namespace IBbasic
             {
                 if (cntPCs < partiesList[partyIndex].playerList.Count)
                 {
-                    btn.Draw();
+                    btn.Draw(c);
                 }
                 cntPCs++;
             }
 
-            btnLeft.Draw();
-            btnRight.Draw();
+            btnLeft.Draw(c);
+            btnRight.Draw(c);
             
             if ((partyIndex > 0) && (sendingScreen.Equals("party")))
             {
@@ -456,10 +457,10 @@ namespace IBbasic
             {
                 btnExport.Text = "IMPORT";
             }
-            btnExport.Draw();
-            btnPartyName.Draw();
-            btnPartyNotes.Draw();
-            btnPartyFilename.Draw();
+            btnExport.Draw(c);
+            btnPartyName.Draw(c);
+            btnPartyNotes.Draw(c);
+            btnPartyFilename.Draw(c);
 
             int locY = 1 * gv.uiSquareSize;
             int locX = 1 * gv.uiSquareSize + (gv.uiSquareSize / 4);
@@ -483,16 +484,16 @@ namespace IBbasic
                 else { actext = 20 - pc.AC; }
 
                 string line = pc.name + ", " + gv.cc.getRace(pc.raceTag).name + ", " + gender + ", " + gv.cc.getPlayerClass(pc.classTag).name;
-                gv.DrawText(line, locX, locY * pcIdx, color3);
+                gv.DrawText(c, line, locX, locY * pcIdx, color3);
                 line = "LVL:" + pc.classLevel + ", XP:" + pc.XP + "/" + pc.XPNeeded + ", AC:" + actext + ",  BAB:" + pc.baseAttBonus + ", HP:" + pc.hp + "/" + pc.hpMax + ", SP:" + pc.sp + "/" + pc.spMax;
-                gv.DrawText(line, locX, locY * pcIdx + spacing, color2);
+                gv.DrawText(c, line, locX, locY * pcIdx + spacing, color2);
                 line = "STR:" + pc.strength + ", DEX:" + pc.dexterity + ", CON:" + pc.constitution + ", INT:" + pc.intelligence + ", WIS:" + pc.wisdom + ", CHA:" + pc.charisma;
-                gv.DrawText(line, locX, locY * pcIdx + spacing + spacing, color2);
+                gv.DrawText(c, line, locX, locY * pcIdx + spacing + spacing, color2);
                 pcIdx++;
             }
             if (gv.showMessageBox)
             {
-                gv.messageBox.onDrawLogBox();
+                gv.messageBox.onDrawLogBox(c);
             }
         }
         public void onTouchPartyCampaign(int eX, int eY, MouseEventType.EventType eventType)

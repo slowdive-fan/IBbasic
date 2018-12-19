@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -315,7 +316,7 @@ namespace IBbasic
 	    }
 	
 	    //INVENTORY SCREEN (COMBAT and MAIN)
-        public void redrawTokenSelector()
+        public void redrawTokenSelector(SKCanvas c)
         {
             //IF CONTROLS ARE NULL, CREATE THEM
     	    if (btnAction == null)
@@ -338,12 +339,12 @@ namespace IBbasic
     	
             //DRAW TEXT		
 		    locY = (pH * 2);
-		    gv.DrawText("Token Selection", locX, locY, "wh");
+		    gv.DrawText(c, "Token Selection", locX, locY, "wh");
 		    
 		    //DRAW LEFT/RIGHT ARROWS and PAGE INDEX
-		    btnPageIndex.Draw();
-		    btnTokensLeft.Draw();
-		    btnTokensRight.Draw();
+		    btnPageIndex.Draw(c);
+		    btnTokensLeft.Draw(c);
+		    btnTokensRight.Draw(c);
 
             //DRAW SELECTED ITEM NAME
             if (playerTokenList.Count > 0)
@@ -353,7 +354,7 @@ namespace IBbasic
                 {
                     if (callingScreen.StartsWith("ts"))
                     {
-                        gv.DrawText(playerTokenList[GetIndex()], btnPageIndex.X, btnPageIndex.Y + btnPageIndex.Height + gv.fontHeight / 2, "wh");
+                        gv.DrawText(c, playerTokenList[GetIndex()], btnPageIndex.X, btnPageIndex.Y + btnPageIndex.Height + gv.fontHeight / 2, "wh");
                     }
                 }
             }
@@ -373,12 +374,12 @@ namespace IBbasic
 			    {
 				    btn.Img2 = null;
 			    }
-			    btn.Draw();
+			    btn.Draw(c);
 			    cntSlot++;
 		    }		
 		    
-		    btnAction.Draw();
-            btnExit.Draw();
+		    btnAction.Draw(c);
+            btnExit.Draw(c);
         }
         public void onTouchTokenSelector(int eX, int eY, MouseEventType.EventType eventType)
 	    {
