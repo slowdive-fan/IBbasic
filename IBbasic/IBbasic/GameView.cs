@@ -15,7 +15,7 @@ namespace IBbasic
 {
     public class GameView
     {
-        public string versionNum = "1.0.21";
+        public string versionNum = "1.0.28";
         public int numOfTrackerEventHitsInThisSession = 0;
         public ContentPage cp;
         //public SKCanvas canvas;
